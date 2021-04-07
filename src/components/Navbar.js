@@ -12,7 +12,7 @@ function Home() {
             </label> */}
             <div class="sidebar">
                 <div className="headerText">
-                    <h1>Bhandify</h1>
+                    <h1>Bandhify</h1>
                 </div>
                 <ul>
                     <li><a href="/" style={{ borderTopWidth: '1px', borderTopColor: '#fff', borderTopStyle: 'solid' }}><i class="fas fa-home"></i>Home</a></li>

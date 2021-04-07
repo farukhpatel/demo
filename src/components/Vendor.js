@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { APICall } from '../Utils/CommonFunctions'
+import API from '../Utils/ApiConstant'
 
 function Vendor() {
     const arr = [1, 2, 3, 4, 5, 6, 7]
+
+    const [vendors, setVendors] = useState([])
+
+    useEffect(() => {
+
+        let object = {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer 26|6bYRNtajwuS3lbav2rCk8A5Npgew0RMS2664hdhD`
+            },
+        }
+        APICall(API.VENDOR_API, object, (error, result) => {
+            if (error)
+                console.log(error)
+
+            else if (result.status) {
+                console.log(result)
+                setVendors(result.shop)
+            }
+
+            else
+                alert("Something went wrong")
+        })
+    }, [])
+
     return (
         <>
 
@@ -40,16 +69,31 @@ function Vendor() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            arr.map((value, index) => {
+                                        {/* arr.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row">{index + 1}</th>
-                                                        <td>Shubham Kumar</td>
-                                                        <td><p style={{ fontWeight: 'bold' }}>Panchamrat Dairy</p></td>
-                                                        <td>302BF 27 Sica School Road</td>
-                                                        <td style={{ color: 'green' }}>Online</td>
-                                                        <td><button>Disabled</button></td>
+                                            <th scope="row">{index + 1}</th>
+                                            <td>Shubham Kumar</td>
+                                            <td><p style={{ fontWeight: 'bold' }}>Panchamrat Dairy</p></td>
+                                            <td>302BF 27 Sica School Road</td>
+                                            <td style={{ color: 'green' }}>Online</td>
+                                            <td><button>Disabled</button></td>
+                                        </tr>
+                                                )
+                                            }) */}
+                                        {
+
+                                            vendors.map((value, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <th scope='row'>{index + 1}</th>
+                                                        <td>{value?.user_id}</td>
+                                                        <td>
+                                                            <p style={{ fontWeight: 'bold ' }}>{value?.shop_name}</p>
+                                                        </td>
+                                                        <td>address</td>
+                                                        <td>{value?.shop_approval}</td>
+                                                        <td><button>{value?.updated_at}</button></td>
                                                     </tr>
                                                 )
                                             })
