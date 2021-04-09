@@ -12,6 +12,8 @@ import OrderDetails from './components/OrderDetails';
 import AssignedOrders from './components/AssignedOrders';
 import OutforDelivery from './components/OutForDelivery';
 import NotPicked from './components/NotPicked';
+import AddVendoreForm from './components/AddVendorForm';
+import UnassignedOrders from './components/UnassignedOrders';
 function App() {
   return (
     <>
@@ -27,6 +29,8 @@ function App() {
         <Route exact path="/assigned" component={AssignedOrders} />
         <Route exact path="/outfordelivery" component={OutforDelivery} />
         <Route exact path="/notpicked" component={NotPicked} />
+        <Route exact path="/unassignedorders" component={UnassignedOrders} />
+        <Route exact path="/addvendor" component={AddVendoreForm} />
       </Switch>
     </>
   );

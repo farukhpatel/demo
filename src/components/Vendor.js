@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { APICall } from '../Utils/CommonFunctions'
 import API from '../Utils/ApiConstant'
+import './SuperUser.css'
 
 function Vendor() {
     const arr = [1, 2, 3, 4, 5, 6, 7]
@@ -35,9 +36,12 @@ function Vendor() {
         <>
 
             <div className="main-outer-div">
+                <div className="add-vendor">
+                    <a href="/addvendor"><button>Add Vendor</button></a>
+                </div>
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div">
 
+                    <div className="myorders-inner-div vendor-inner-div">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                             <li class="nav-item" role="presentation">

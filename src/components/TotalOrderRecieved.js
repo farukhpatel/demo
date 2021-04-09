@@ -29,15 +29,12 @@ function TotalOrderRecieved() {
                                     </div>
                                 </div>
 
-                                {/* <List list = {list} /> */}
                                 <table class="table table-striped" style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
                                             <th scope="col">S.No</th>
                                             <th scope="col">Order Id</th>
-                                            {/* <th scope="col">Customer Id.</th> */}
                                             <th scope="col">Customer Name</th>
-                                            {/* <th scope="col">Phone No.</th> */}
                                             <th scope="col">Dairy Name</th>
                                             <th scope="col">Time Alloted</th>
                                             <th scope="col">Assigned</th>
@@ -50,9 +47,7 @@ function TotalOrderRecieved() {
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
                                                         <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        {/* <td>{index + 1}</td> */}
                                                         <td><a href="/customerdetails"><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></a></td>
-                                                        {/* <td>9898987876</td> */}
                                                         <td>Harish Dairy</td>
                                                         <td>{Time}</td>
                                                         <td><button>Assign</button></td>

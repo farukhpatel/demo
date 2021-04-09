@@ -51,7 +51,7 @@ function Home() {
                     </div>
                     <div className="home-top-right">
                         <a href="/notpicked"><div className="item-1"><h3>5</h3><h5>Not Picked</h5>  </div></a>
-                        <div className="item-1"><h3>8</h3><h5>Unassigned Orders</h5></div>
+                        <a href="/unassignedorders"><div className="item-1"><h3>8</h3><h5>Unassigned Orders</h5></div></a>
                     </div>
                 </div>
             </div>
