@@ -14,6 +14,8 @@ import OutforDelivery from './components/OutForDelivery';
 import NotPicked from './components/NotPicked';
 import AddVendoreForm from './components/AddVendorForm';
 import UnassignedOrders from './components/UnassignedOrders';
+import SignUp from './components/SignUp';
+import LogIn from './components/LogIn';
 function App() {
   return (
     <>
@@ -31,7 +33,10 @@ function App() {
         <Route exact path="/notpicked" component={NotPicked} />
         <Route exact path="/unassignedorders" component={UnassignedOrders} />
         <Route exact path="/addvendor" component={AddVendoreForm} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={LogIn} />
       </Switch>
+      {/* <SignUp /> */}
     </>
   );
 }

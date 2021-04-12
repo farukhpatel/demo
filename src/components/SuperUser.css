@@ -344,8 +344,40 @@ tbody td button:hover {
 .vendor-form .form-group label {
   font-weight: bold;
 }
-
 /* Vendor add css end */
+
+/* sign-up-form css start */
+/* .sidebar {
+  display: none;
+} */
+/* .main-outer-div{
+
+} */
+.signup-login-outer-div {
+  margin-left: 0;
+  /* z-index: 10000; */
+}
+.sign-up .sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sign-up-form .form-group {
+  width: 40%;
+  font-family: "Poppins";
+  padding: 1%;
+}
+/* .sign-up-form {
+  height: 75vh;
+} */
+.sign-up-form .form-group label {
+  font-weight: bold;
+}
+.btn-vendor-sign-up-login {
+  margin-bottom: 2% !important;
+}
+/* sign-up-form css end */
 
 /* Sales Report Css Start */
 .dateclass,
@@ -451,3 +483,7 @@ a {
 /* Total Order Recieved Css start */
 
 /* Total Order Recieved Css End */
+
+.hide__navbar {
+  display: none;
+}
