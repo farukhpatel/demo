@@ -1,16 +1,22 @@
 // import { FilePicker } from 'react-file-picker'
-import moment from 'moment'
 import React, { useState } from 'react'
+
 import MultiSelect from "react-multi-select-component";
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+
 import Grid from '@material-ui/core/Grid'           //clock
 import MomentUtils from '@date-io/moment'        //clock
+import moment from 'moment'   //for clock time
 import 'date-fns';
 
 import './SuperUser.css'
+//for Api
 import { APICall } from '../Utils/CommonFunctions';
 import API from '../Utils/ApiConstant';
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+// toast.configure()
 function AddVendorForm() {
     // multiselect
     const options = [
@@ -33,7 +39,8 @@ function AddVendorForm() {
     const [licenseNumber, setLicenseNumber] = useState('')
     const [foundationDate, setFoundationDate] = useState('')
     const [deliveryRange, setDeliveryRange] = useState('')
-    const [schedules, setSchedules] = useState([])
+    // const [shopName, setShopName] = useState('')
+    const [password, setPassword] = useState('')
 
     // clock
     const [startTime, setStartTime] = useState(new Date())
@@ -48,51 +55,120 @@ function AddVendorForm() {
             setEndTime(e)
     }
 
+    // form1
     const submit = e => {
         e.preventDefault()
+        // if (!shopname) {
 
-        let temp = selected
-        let shop_schedules = temp.map(item => {
-            item.key = item.label
-            item.start = moment(startTime._d).format('hh:mm:ss A')
-            item.end = moment(endTime._d).format('hh:mm:ss A')
-            return item
-        })
-        // console.log(shop_schedules)
-        // let object = {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //         Authorization: '',
-        //     },
-        //     body: JSON.stringify({
-        //         'user_id': userid,
-        //         'shop_name': shopname,
-        //         'shop_phone': phone,
-        //         'shop_description': description,
-        //         'shop_profile': '',
-        //         'shop_license_number': licenseNumber,
-        //         'shop_founding_date': foundationDate,
-        //         'shop_delivery_range': deliveryRange,
-        //         'shop_schedules': shop_schedules
-        //     })
         // }
+        // else if (!phone) {
 
-        let body = new FormData()
-        body.append('image', file[0])
-        console.log(file[0])
+        // }
+        // else if (!password) {
+
+        // }
+        // else {
         let object = {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer 73|h9StLsaj9kJik7CIYgrt1KjuCj1gVfL2NUimk7w5`
+                'Content-Type': 'application/json',
+                Authorization: `Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas`
             },
-            body: body
+            body: JSON.stringify({
+                'name': shopname,
+                'phone': phone,
+                'password': password,
+                'role_id': 2
+            })
         }
+
+        APICall(API.CREATE_USER, object, (err, result) => {
+            if (err)
+                console.log(err)
+
+            else if (result.status) {
+                setUserid(result.user.id)
+                document.querySelector('.vendor-form-1').classList.add('hide__form1')
+                document.querySelector('.vendor-form-2').classList.add('show-form2')
+            }
+
+            else {
+                toast('Something went wrong')
+                alert('Something went wrong')
+                console.log(result)
+                //ONLY TOAST
+            }
+        })
+        // }
+    }
+
+    const finalSubmit = e => {
+        e.preventDefault()
+        let headers = new Headers()
+        headers.append("Authorization", "Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas")
+        let formdata = new FormData()
+        console.log(file[0])
+        formdata.append("image", file[0])
+        let object = {
+            method: 'POST',
+            headers: headers,
+            body: formdata,
+            redirect: 'follow'
+        }
+
         APICall(API.IMAGE_UPLOAD, object, (err, result) => {
-            console.log(result)
+            if (err)
+                console.log(err)
+
+            else if (result.status) {
+                let temp = selected
+                let shop_schedules = temp.map(item => {
+                    item.key = item.label
+                    item.start = moment(startTime._d).format('hh:mm:ss A')
+                    item.end = moment(endTime._d).format('hh:mm:ss A')
+                    return item
+                })
+                let obj = {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas`
+                    },
+                    body: JSON.stringify({
+                        'user_id': userid,
+                        'shop_name': shopname,
+                        'shop_phone': phone,
+                        'shop_description': description,
+                        'shop_profile': result.image_url,
+                        'shop_license_number': licenseNumber,
+                        //UPDATE FOUNDING DATE VALUE
+                        "shop_founding_date": "2021-03-18",
+                        'shop_delivery_range': deliveryRange,
+                        'shop_schedules': shop_schedules
+                    })
+                }
+
+                APICall(API.CREATE_SHOP, obj, (error, res) => {
+                    if (error)
+                        console.log(error)
+
+                    else if (result.status) {
+                        //SHOW TOAST MESSAGE OF SUCCESSFUL CREATION AND REDIRECT TO SOME OTHER PAGE
+                        // <ToastContainer />
+                        toast('Successful creation of shop')
+                        console.log('Success')
+                        window.location.href = '/vendor'
+                    }
+                    else {
+                        alert('Something went wrong')
+                        //SHOW TOAST OF ERROR ADN REDIRECT TO /VENDOR
+                        toast('somthing went wrong')
+                        window.location.href = '/vendor'
+                    }
+                })
+            }
         })
     }
 
@@ -101,19 +177,36 @@ function AddVendorForm() {
 
             <div className="main-outer-div">
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div vendor-inner-div">
+                    <div className="myorders-inner-div vendor-inner-div vendor-form-1">
                         <form className="vendor-form">
                             <div class="form-group">
+                                <label for="shopName">Shop Name</label>
+                                <input type="text" class="form-control" id="shopName" placeholder="Shop Name" onChange={e => setShopname(e.target.value)} />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Phone Number" onChange={e => setPhone(e.target.value)} />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={submit}>Submit</button>
+                        </form>
+                    </div>
+                    <div className="myorders-inner-div vendor-inner-div vendor-form-2">
+                        <form className='vendor-form'>
+                            <div class="form-group">
                                 <label for="userid">User Id:</label>
-                                <input type="text" class="form-control" id="userid" placeholder="Enter User Id" onChange={e => setUserid(e.target.value)} />
+                                <input type="text" class="form-control" id="userid" placeholder={userid} readOnly />
                             </div>
                             <div class="form-group">
-                                <label for="shopname">Shop Name:</label>
-                                <input type="text" class="form-control" id="shopname" placeholder="Enter Shop Name" onChange={e => setShopname(e.target.value)} />
+                                <label for="shopName">Shop Name</label>
+                                <input type="text" class="form-control" id="shopName" placeholder={shopname} readOnly />
                             </div>
                             <div class="form-group">
-                                <label for="phone">Phone Number:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="1234567890" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}" required onChange={e => setPhone(e.target.value)} />
+                                <label for="shopPhone">Shop Phone</label>
+                                <input type="text" class="form-control" id="shopPhone" placeholder={phone} readOnly />
                             </div>
                             <div class="form-group">
                                 <label for="shopdescription">Shop Description</label>
@@ -123,7 +216,6 @@ function AddVendorForm() {
                                 <label for="profile">Profile:</label>
                                 <input type="file" class="form-control" id="profile" name="profile" onChange={e => setFile(e.target.files)} />
                             </div>
-
                             <div class="form-group">
                                 <label for="shoplicensenumber">Shop License Number</label>
                                 <input type="text" class="form-control" id="shoplicensenumber" onChange={e => setLicenseNumber(e.target.value)} />
@@ -138,9 +230,6 @@ function AddVendorForm() {
                             </div>
                             <div class="form-group">
                                 <label for="shopschedule">Shop Schedule</label>
-                                {/* <input type="text" class="form-control" id="shopschedule" placeholder="" /> */}
-
-                                {/* <pre>{JSON.stringify(selected)}</pre> */}
                                 <MultiSelect
                                     options={options}
                                     value={selected}
@@ -150,7 +239,6 @@ function AddVendorForm() {
                             </div>
                             <div class="form-group">
                                 <label for="shopschedulestart">Shop Schedule Start</label>
-                                {/* <input type="text" class="form-control" id="shopschedulestart" placeholder="" /> */}
                                 <MuiPickersUtilsProvider
                                     utils={MomentUtils}
                                 >
@@ -187,9 +275,7 @@ function AddVendorForm() {
                                     </Grid>
                                 </MuiPickersUtilsProvider>
                             </div>
-
-
-                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={submit}>Submit</button>
+                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={finalSubmit}>Submit</button>
                         </form>
                     </div>
                 </div>

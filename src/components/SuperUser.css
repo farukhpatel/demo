@@ -15,6 +15,7 @@ body {
   overflow-x: hidden;
   font-family: "Roboto", sans-serif;
 }
+/* Navebar Css Start */
 .sidebar {
   top: 0;
   position: fixed;
@@ -37,7 +38,6 @@ body {
 }
 .headerText h1 {
   color: white;
-
   font-family: "Kaushan Script", cursive;
 }
 
@@ -63,6 +63,7 @@ ul li:hover a {
 .sidebar ul a i {
   margin-right: 1rem;
 }
+/* Navebar Css End */
 
 /* Home Page Css Start */
 .main-outer-div {
@@ -235,6 +236,7 @@ tbody tr td {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 .myorders-inner-div {
   width: 95%;
@@ -327,7 +329,7 @@ tbody td button:hover {
 }
 /* Vendor Page Css End */
 
-/* Vendor add css start */
+/* Vendoradd css start */
 .vendor-inner-div .vendor-form {
   display: flex;
   flex-direction: column;
@@ -336,6 +338,29 @@ tbody td button:hover {
   /* width: 65%; */
   /* background-color: #13081a; */
 }
+
+.vendor-inner-div {
+  position: relative;
+}
+
+.vendor-form-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: none;
+}
+
+.hide__form1 {
+  display: none;
+  pointer-events: none;
+}
+
+.show-form2 {
+  display: block;
+  pointer-events: all;
+}
+
 .vendor-form .form-group {
   width: 40%;
   font-family: "Poppins";

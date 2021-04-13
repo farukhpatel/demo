@@ -1,15 +1,9 @@
 import React from 'react';
-// import Home from './Home';
 import './SuperUser.css';
 
 function Home() {
     return (
         <>
-            {/* <input type="checkbox" id="check" />
-            <label for="check">
-                <i class="fas fa-bars" id="btn"></i>
-                <i class="fas fa-times" id="cancel"></i>
-            </label> */}
             <div class="sidebar">
                 <div className="headerText">
                     <h1>Bandhify</h1>
@@ -21,7 +15,6 @@ function Home() {
                     <li><a href="/salesreport"><i class="far fa-address-book"></i>Sales Report</a></li>
                 </ul>
             </div>
-
         </>
     );
 }
