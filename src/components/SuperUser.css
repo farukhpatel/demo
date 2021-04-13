@@ -372,15 +372,8 @@ tbody td button:hover {
 /* Vendor add css end */
 
 /* sign-up-form css start */
-/* .sidebar {
-  display: none;
-} */
-/* .main-outer-div{
-
-} */
 .signup-login-outer-div {
   margin-left: 0;
-  /* z-index: 10000; */
 }
 .sign-up .sign-up-form {
   display: flex;
@@ -393,9 +386,7 @@ tbody td button:hover {
   font-family: "Poppins";
   padding: 1%;
 }
-/* .sign-up-form {
-  height: 75vh;
-} */
+
 .sign-up-form .form-group label {
   font-weight: bold;
 }
@@ -475,7 +466,6 @@ a {
   display: flex;
   justify-content: space-between;
   width: 95%;
-  /* border-bottom: 1px solid gray; */
 }
 .customer-details-content h4,
 .customer-details-content p {
@@ -505,10 +495,7 @@ a {
 }
 /* customer details css end */
 
-/* Total Order Recieved Css start */
-
-/* Total Order Recieved Css End */
-
+/* extra */
 .hide__navbar {
   display: none;
 }
