@@ -15,7 +15,7 @@ function Vendor() {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer 26|6bYRNtajwuS3lbav2rCk8A5Npgew0RMS2664hdhD`
+                Authorization: `Bearer 129|NcB0KsEMsz0eZZ6mYAswwANot2teoZWwVq8UY7wQ`
             },
         }
         APICall(API.VENDOR_API, object, (error, result) => {
@@ -40,14 +40,14 @@ function Vendor() {
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div vendor-inner-div">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="current-orders" data-bs-toggle="tab" data-bs-target="#currentorders" type="button" role="tab" aria-controls="current-orders" aria-selected="true">Current Orders</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="previous-orders" data-bs-toggle="tab" data-bs-target="#previousorders" type="button" role="tab" aria-controls="previous-orders" aria-selected="false">Previous Orders</button>
                             </li>
-                        </ul>
+                        </ul> */}
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active " id="currentorders" role="tabpanel" aria-labelledby="current-orders">
                                 <div className="btn-position">
@@ -55,7 +55,7 @@ function Vendor() {
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                         <input placeholder="Search..." className="SearchInput" />
                                     </div>
-                                    <button>New sales Order</button>
+                                    {/* <button>New sales Order</button> */}
                                 </div>
                                 <table class="table table-striped">
                                     <thead>

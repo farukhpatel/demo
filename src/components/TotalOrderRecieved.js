@@ -29,15 +29,20 @@ function TotalOrderRecieved() {
                                     </div>
                                 </div>
 
-                                <table class="table table-striped" style={{ overflow: "scroll" }}>
+                                <table class="table table-striped only-cards" >
                                     <thead>
                                         <tr>
-                                            <th scope="col">S.No</th>
+                                            {/* <th scope="col">S.No</th> */}
                                             <th scope="col">Order Id</th>
                                             <th scope="col">Customer Name</th>
-                                            <th scope="col">Dairy Name</th>
+                                            <th scope="col">Seller Name</th>
                                             <th scope="col">Time Alloted</th>
-                                            <th scope="col">Assigned</th>
+                                            {/* <th scope="col">Address</th> */}
+                                            <th scope="col">Delivery Slot</th>
+                                            <th scope="col">Locality</th>
+                                            <th scope="col">Order Status</th>
+                                            <th scope="col">Payment Status</th>
+                                            {/* <th scope="col">Assigned</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -45,12 +50,17 @@ function TotalOrderRecieved() {
                                             arr.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row">{index + 1}</th>
+                                                        {/* <th scope="row">{index + 1}</th> */}
                                                         <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        <td><a href="/customerdetails"><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></a></td>
+                                                        <td><a href="/orderdetails"><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></a></td>
                                                         <td>Harish Dairy</td>
                                                         <td>{Time}</td>
-                                                        <td><button>Assign</button></td>
+                                                        {/* <td>Address</td> */}
+                                                        <td>DeliverySlot</td>
+                                                        <td>Locality</td>
+                                                        <td>Out for Delivery</td>
+                                                        <td style={{ textAlign: 'center', color: 'green' }}>Paid</td>
+                                                        {/* <td><button>Assign</button></td> */}
                                                     </tr>
                                                 )
                                             })

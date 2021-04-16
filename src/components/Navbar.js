@@ -13,6 +13,10 @@ function Home() {
                     <li><a href="/user"><i class="far fa-user"></i>User</a></li>
                     <li><a href="/vendor"><i class="fas fa-link"></i>Vendor</a></li>
                     <li><a href="/salesreport"><i class="far fa-address-book"></i>Sales Report</a></li>
+                    <li><a href="/productlist"><i class="far fa-file-alt"></i>Product List</a></li>
+                    <li><a href="/deliverymanage"><i class="fas fa-tasks"></i>Delivery Management</a></li>
+                    <li><a href="/paymentsettle"><i class="far fa-money-bill-alt"></i>Payment Settlement</a></li>
+                    <li><a href="/review"><i class="far fa-comment-dots"></i>Review</a></li>
                 </ul>
             </div>
         </>

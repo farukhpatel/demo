@@ -6,7 +6,8 @@ const API = {
     LOGIN: Config.BASE_URL + 'api/auth.login',
     IMAGE_UPLOAD: Config.BASE_URL + 'api/image/upload',
     CREATE_USER: Config.BASE_URL + 'api/user/create',
-    CREATE_SHOP: Config.BASE_URL + 'api/shop/create'
+    CREATE_SHOP: Config.BASE_URL + 'api/shop/create',
+    PRODUCT_LIST: Config.BASE_URL + 'api/product/all'
 }
 
 export default API

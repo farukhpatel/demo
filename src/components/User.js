@@ -20,10 +20,10 @@ function User() {
                   aria-controls="current-orders"
                   aria-selected="true"
                 >
-                  Current Orders
+                  Users List
                 </button>
               </li>
-              <li class="nav-item" role="presentation">
+              {/* <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
                   id="previous-orders"
@@ -36,7 +36,7 @@ function User() {
                 >
                   Previous Orders
                 </button>
-              </li>
+              </li> */}
             </ul>
             <div class="tab-content" id="myTabContent">
               <div
@@ -65,7 +65,7 @@ function User() {
                       return (
                         <tr
                           onClick={() =>
-                            (window.location.href = "/customerdetails")
+                            (window.location.href = "/orderdetails")
                           }
                           style={{ cursor: "pointer" }}
                         >
@@ -81,19 +81,19 @@ function User() {
                   </tbody>
                 </table>
               </div>
-              <div
+              {/* <div
                 class="tab-pane fade"
                 id="previousorders"
                 role="tabpanel"
                 aria-labelledby="previous-orders"
-              >
-                <div className="btn-position">
+              > */}
+              {/* <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
-                </div>
-                <table class="table table-striped">
+                </div> */}
+              {/* <table class="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">S.No</th>
@@ -122,8 +122,8 @@ function User() {
                       );
                     })}
                   </tbody>
-                </table>
-              </div>
+                </table> */}
+              {/* </div> */}
             </div>
           </div>
         </div>

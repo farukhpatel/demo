@@ -2,6 +2,8 @@ import React from 'react'
 
 function NotPicked() {
     const arr = [1, 2, 3, 4, 5, 6, 7];
+    const date = new Date();
+    const Time = date.toLocaleTimeString();
     return (
         <>
             <div className="main-outer-div">
@@ -24,16 +26,23 @@ function NotPicked() {
                                 </div>
 
                                 {/* <List list = {list} /> */}
-                                <table class="table table-striped">
+                                <table class="table table-striped only-cards">
                                     <thead>
                                         <tr>
-                                            <th scope="col">S.No</th>
+                                            {/* <th scope="col">S.No</th> */}
                                             <th scope="col">Order Id</th>
                                             <th scope="col">Customer Id.</th>
-                                            <th scope="col">Customer Name</th>
-                                            <th scope="col">Phone No.</th>
-                                            <th scope="col">Dairy Name</th>
-                                            <th scope="col">Assigned To</th>
+                                            {/* <th scope="col">Customer Name</th> */}
+                                            {/* <th scope="col">Phone No.</th> */}
+                                            {/* <th scope="col">Address.</th> */}
+                                            {/* <th scope="col">Dairy Name</th> */}
+                                            {/* <th scope="col">Assigned To</th> */}
+                                            <th scope="col">Seller Name</th>
+                                            <th scope="col">Time Alloted</th>
+                                            <th scope="col">Delivery Slot</th>
+                                            <th scope="col">Locality</th>
+                                            <th scope="col">Order Status</th>
+                                            <th scope="col">Payment Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -41,13 +50,20 @@ function NotPicked() {
                                             arr.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row">{index + 1}</th>
+                                                        {/* <th scope="row">{index + 1}</th> */}
                                                         <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        <td><a href="/customerdetails">{index + 1}</a></td>
-                                                        <td><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></td>
-                                                        <td>9898987876</td>
+                                                        <td><a href="/orderdetails">{index + 1}</a></td>
+                                                        {/* <td><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></td> */}
+                                                        {/* <td>9898987876</td>
+                                                        <td>Address</td>
                                                         <td>Harish Dairy</td>
-                                                        <td>Ravi Kishan</td>
+                                                        <td>Ravi Kishan</td> */}
+                                                        <td>Harish Dairy</td>
+                                                        <td>{Time}</td>
+                                                        <td>9am to 12pm</td>
+                                                        <td>Locality</td>
+                                                        <td>Out for Delivery</td>
+                                                        <td style={{ textAlign: 'center', color: 'green' }}>Paid</td>
                                                     </tr>
                                                 )
                                             })

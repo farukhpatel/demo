@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 
 import MultiSelect from "react-multi-select-component";
-import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { KeyboardTimePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import Grid from '@material-ui/core/Grid'           //clock
 import MomentUtils from '@date-io/moment'        //clock
@@ -10,13 +10,14 @@ import moment from 'moment'   //for clock time
 import 'date-fns';
 
 import './SuperUser.css'
+
 //for Api
 import { APICall } from '../Utils/CommonFunctions';
 import API from '../Utils/ApiConstant';
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-// toast.configure()
+
 function AddVendorForm() {
     // multiselect
     const options = [
@@ -37,16 +38,20 @@ function AddVendorForm() {
     const [phone, setPhone] = useState('')
     const [description, setDescription] = useState('')
     const [licenseNumber, setLicenseNumber] = useState('')
-    const [foundationDate, setFoundationDate] = useState('')
+    const [foundationDate, setFoundationDate] = useState(new Date())
     const [deliveryRange, setDeliveryRange] = useState('')
     // const [shopName, setShopName] = useState('')
     const [password, setPassword] = useState('')
 
-    // clock
+    // date picker
+    const handleDateChange = (e) => {
+        setFoundationDate(e)
+    }
+    // time picker
     const [startTime, setStartTime] = useState(new Date())
     const [endTime, setEndTime] = useState(new Date())
 
-    const handleDateChange = (e, time) => {
+    const handleTimeChange = (e, time) => {
 
         // const { _d } = e
         if (time === 'start')
@@ -55,52 +60,55 @@ function AddVendorForm() {
             setEndTime(e)
     }
 
+
     // form1
     const submit = e => {
         e.preventDefault()
-        // if (!shopname) {
+        if (!shopname) {
+            toast('Shope name length atleast 5letters')
+        }
+        else if (!phone) {
+            toast('at least 10 digit no')
 
-        // }
-        // else if (!phone) {
+        }
+        else if (!password) {
+            toast('length at least 5')
 
-        // }
-        // else if (!password) {
+        }
+        else {
+            let object = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer 129|NcB0KsEMsz0eZZ6mYAswwANot2teoZWwVq8UY7wQ`
+                },
+                body: JSON.stringify({
+                    'name': shopname,
+                    'phone': phone,
+                    'password': password,
+                    'role_id': 2
+                })
+            }
 
-        // }
-        // else {
-        let object = {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas`
-            },
-            body: JSON.stringify({
-                'name': shopname,
-                'phone': phone,
-                'password': password,
-                'role_id': 2
+            APICall(API.CREATE_USER, object, (err, result) => {
+                if (err)
+                    console.log(err)
+
+                else if (result.status) {
+                    setUserid(result.user.id)
+                    document.querySelector('.vendor-form-1').classList.add('hide__form1')
+                    document.querySelector('.vendor-form-2').classList.add('show-form2')
+                }
+
+                else {
+                    toast('Something went wrong')
+                    alert('Something went wrong')
+                    console.log(result)
+                    //ONLY TOAST
+                }
             })
         }
-
-        APICall(API.CREATE_USER, object, (err, result) => {
-            if (err)
-                console.log(err)
-
-            else if (result.status) {
-                setUserid(result.user.id)
-                document.querySelector('.vendor-form-1').classList.add('hide__form1')
-                document.querySelector('.vendor-form-2').classList.add('show-form2')
-            }
-
-            else {
-                toast('Something went wrong')
-                alert('Something went wrong')
-                console.log(result)
-                //ONLY TOAST
-            }
-        })
-        // }
     }
 
     const finalSubmit = e => {
@@ -144,7 +152,7 @@ function AddVendorForm() {
                         'shop_profile': result.image_url,
                         'shop_license_number': licenseNumber,
                         //UPDATE FOUNDING DATE VALUE
-                        "shop_founding_date": "2021-03-18",
+                        "shop_founding_date": foundationDate,
                         'shop_delivery_range': deliveryRange,
                         'shop_schedules': shop_schedules
                     })
@@ -156,7 +164,7 @@ function AddVendorForm() {
 
                     else if (result.status) {
                         //SHOW TOAST MESSAGE OF SUCCESSFUL CREATION AND REDIRECT TO SOME OTHER PAGE
-                        // <ToastContainer />
+
                         toast('Successful creation of shop')
                         console.log('Success')
                         window.location.href = '/vendor'
@@ -222,7 +230,24 @@ function AddVendorForm() {
                             </div>
                             <div class="form-group">
                                 <label for="shopfoundationdate">Shop Foundation Date</label>
-                                <input type="tel" class="form-control" id="shopfoundationdate" onChange={e => setFoundationDate(e.target.value)} />
+                                {/* <input type="tel" class="form-control" id="shopfoundationdate" onChange={e => setFoundationDate(e.target.value)} /> */}
+                                <MuiPickersUtilsProvider
+                                    utils={MomentUtils}
+                                >
+                                    <Grid container justify='space-around'>
+                                        <KeyboardDatePicker
+                                            margin="normal"
+                                            id="date-picker-dialog"
+                                            label="Date picker dialog"
+                                            format="DD/MM/yyyy"
+                                            value={foundationDate}
+                                            onChange={e => handleDateChange(e)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </Grid>
+                                </MuiPickersUtilsProvider>
                             </div>
                             <div class="form-group">
                                 <label for="deliveryrange">Delivery Range</label>
@@ -248,7 +273,7 @@ function AddVendorForm() {
                                             id="time-picker"
                                             label="Time picker"
                                             value={startTime}
-                                            onChange={e => handleDateChange(e, 'start')}
+                                            onChange={e => handleTimeChange(e, 'start')}
                                             KeyboardButtonProps={{
                                                 'aria-label': 'change time',
                                             }}

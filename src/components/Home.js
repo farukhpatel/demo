@@ -11,34 +11,34 @@ function Home() {
     const arr = [1, 2, 3, 4, 5, 6, 7];
 
     // calender
-    const [value, onChange] = useState(new Date());
+    // const [value, onChange] = useState(new Date());
 
     // For Bar Graph
-    const state = {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        datasets: [
-            {
-                backgroundColor: ['#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5'],
-                borderColor: '#b687cb',
-                borderWidth: 4,
-                data: [35, 45, 80, 81, 56, 54, 32, 5, 6]
-            }
-        ]
-    }
+    // const state = {
+    //     labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    //     datasets: [
+    //         {
+    //             backgroundColor: ['#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5'],
+    //             borderColor: '#b687cb',
+    //             borderWidth: 4,
+    //             data: [35, 45, 80, 81, 56, 54, 32, 5, 6]
+    //         }
+    //     ]
+    // }
 
-    const option = {
+    // const option = {
 
-        title: {
-            display: false,
-            text: 'Sales Detail',
-            fontSize: 20
-        },
-        legend: {
-            display: false,
-            position: 'right'
-        }
+    //     title: {
+    //         display: false,
+    //         text: 'Sales Detail',
+    //         fontSize: 20
+    //     },
+    //     legend: {
+    //         display: false,
+    //         position: 'right'
+    //     }
 
-    }
+    // }
 
 
     return (<>
@@ -59,7 +59,6 @@ function Home() {
             <div className="home-outer-div">
                 <div className="home-middle">
                     <div className="home-middle-left">
-
                         <div className="home-middle-left-top">
                             <a href="/totalorderrecieved">
                                 <div className="total_orders_received">
@@ -70,10 +69,10 @@ function Home() {
                                 <a href="/totalorderrecieved"> <h3>20</h3></a>
                                 {/* <h2>{date}</h2> */}
                                 {/* <h2><Calendar /></h2> */}
-                                <Calendar
+                                {/* <Calendar
                                     onChange={onChange}
                                     value={value}
-                                />
+                                /> */}
                             </div>
                         </div>
 
@@ -88,6 +87,26 @@ function Home() {
                     </div>
                     <div className="home-middle-right">
                         <div className="home-middle-right-top">
+                            <a href="/totalorderrecieved">
+                                <div className="active_user_count">
+                                    <h5>Active Users</h5>
+                                </div>
+                            </a>
+                            <div>
+                                <a href="/totalorderrecieved"> <h3>50</h3></a>
+                            </div>
+                        </div>
+                        <div className="home-middle-right-bottom">
+                            <a href="/deliverymanage">
+                                <div className="active_delivery_count">
+                                    <h5>Total Delivery Boys</h5>
+                                </div>
+                            </a>
+                            <div>
+                                <a href="/deliverymanage"> <h3>6</h3></a>
+                            </div>
+                        </div>
+                        {/* <div className="home-middle-right-top">
                             <div className="home-middle-right-top-left">
                                 <h5>Total Revenue</h5>
                             </div>
@@ -98,7 +117,8 @@ function Home() {
                             </div>
                         </div>
                         <div className="home-middle-right-bottom">
-                            <Bar data={state} options={option} />                        </div>
+                            <Bar data={state} options={option} />                        
+                        </div> */}
                     </div>
                 </div>
             </div>

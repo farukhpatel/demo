@@ -14,11 +14,16 @@ function OrderDetails() {
                                 <div className="details-content">
                                     <h2>Shop Name XYZ</h2>
                                     <p>Lane 33A Amit Gram Gumaniwala, Rishikesh</p>
+                                    <h5>Delivery Boy:<span style={{ marginLeft: "2%", fontWeight: "normal", color: "#7c7c7c" }}>Thakur Dada</span></h5>
+                                    <h5>Delivery Status:<button className="assign-btn">Status</button></h5>
+                                    {/* <div className="details-div-right">
+                                        <button className="assign-btn">Status</button>
+                                    </div> */}
                                 </div>
                             </div>
-                            <div className="details-div-right">
-                                <button className="assign-btn">Assign</button>
-                            </div>
+                            {/* <div className="details-div-right">
+                                <button className="assign-btn">Status</button>
+                            </div> */}
                         </div>
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -53,6 +58,10 @@ function OrderDetails() {
                                             <div className="content"><h4>Email</h4></div>
                                             <div className="content"><p>abcxyz@gmail.com</p></div>
                                         </div>
+                                        <div className="customer-details-content">
+                                            <div className="content"><h4>Address</h4></div>
+                                            <div className="content"><p>Ncr sector 15 govind vihar New,Delhi</p></div>
+                                        </div>
                                     </div>
                                     <div className="customer-details-content-outer-div-bottom">
                                         <button>Blocked</button>
@@ -73,9 +82,15 @@ function OrderDetails() {
                                     <thead>
                                         <tr>
                                             <th scope="col">S.No</th>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Product Id</th>
-                                            <th scope="col">Email</th>
+                                            {/* <th scope="col">Order Id</th>
+                                            <th scope="col">Product Id</th> */}
+                                            {/* <th scope="col">Email</th>
+                                            <th scope="col">Address</th> */}
+                                            <th scope="col">Item Name</th>
+                                            <th scope="col">Item Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total Price</th>
+                                            <th scope="col">Delivery Boy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,9 +100,15 @@ function OrderDetails() {
 
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
-                                                        <td>{index + 1}</td>
+                                                        {/* <td>{index + 1}</td>
                                                         <td><p>MNS101</p></td>
                                                         <td>yoyo@email.com</td>
+                                                        <td>Address</td> */}
+                                                        <td>Soap</td>
+                                                        <td>₹15</td>
+                                                        <td>₹3</td>
+                                                        <td>₹45</td>
+                                                        <td>Thakur Dada</td>
                                                     </tr>
                                                 )
                                             })
