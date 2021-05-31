@@ -20,8 +20,10 @@ function AddProductForm() {
         <>
             <div className="main-outer-div">
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div productlist-inner-div">
+                    <div className=" productlist-inner-div-form">
+                        <h1>Add Product</h1>
                         <form className="productadd-form">
+                            <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="productName">Product Name</label>
                                 <input type="text" class="form-control" id="productName" placeholder="Product Name" onChange={e => setProductName(e.target.value)} />
@@ -34,7 +36,7 @@ function AddProductForm() {
                                 <label for="baseUnit">Password</label>
                                 <input type="text" class="form-control" id="baseUnit" placeholder="eg: 1KG,5L etc" onChange={e => setBaseUnit(e.target.value)} />
                             </div>
-                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={submit}>Submit</button>
+                            <button type="submit" class="btn btn-primary submitBtn" onClick={submit}>Submit</button>
                         </form>
                     </div>
                 </div>

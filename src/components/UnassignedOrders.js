@@ -50,7 +50,7 @@ function UnassignedOrders() {
                                     </div>
                                 </div>
 
-                                <table class="table table-striped only-cards" >
+                                <table class="table table-striped " >
                                     <thead>
                                         <tr>
                                             {/* <th scope="col">S.No</th> */}

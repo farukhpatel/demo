@@ -64,8 +64,8 @@ function OrderDetails() {
                                         </div>
                                     </div>
                                     <div className="customer-details-content-outer-div-bottom">
-                                        <button>Blocked</button>
-                                        <button>Reject</button>
+                                        <button className="btn btn-primary">Blocked</button>
+                                        <button className="btn btn-primary">Reject</button>
                                     </div>
                                 </div>
                             </div>

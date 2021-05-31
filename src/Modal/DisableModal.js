@@ -6,8 +6,8 @@ import '../components/SuperUser.css'
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid'           //clock
-import MomentUtils from '@date-io/moment'        //clock
+import Grid from '@material-ui/core/Grid'
+import MomentUtils from '@date-io/moment'
 // import moment from 'moment'   //for clock time
 import 'date-fns';
 
@@ -15,7 +15,7 @@ import 'date-fns';
 
 function DisableModal() {
 
-    const arr = [1, 2, 3, 4, 5, 6, 7]
+    // const arr = [1, 2, 3, 4, 5, 6, 7]
     // date pickers
     const useStyles = makeStyles((theme) => ({
         formControl: {

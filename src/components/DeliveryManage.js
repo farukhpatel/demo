@@ -1,31 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import { APICall } from '../Utils/CommonFunctions'
-import API from '../Utils/ApiConstant'
+import React from "react";
 
 //popup
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import DisableModal from '../Modal/DisableModal'
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import DisableModal from "../Modal/DisableModal";
 
-
+// const PopupExample = () => (
+//     <Popup trigger={<button> Trigger</button>} position="right center">
+//         <div>Popup content here !!</div>
+//     </Popup>
+// );
 const DeliveryManage = () => {
-    const arr = [1, 2, 3, 4, 5, 6, 7]
+    const arr = [1, 2, 3, 4, 5, 6, 7];
+
+
     return (
         <>
+            {/* <PopupExample /> */}
             <div className="main-outer-div">
                 <div className="add-delivery-boy">
-                    <a href="/adddeliveryboy"><button>Add Delivery Boy</button></a>
+                    <a href="/adddeliveryboy">
+                        <button className="btn btn-primary">Add Delivery Boy</button>
+                    </a>
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div deliveryboy-inner-div">
-
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="deliveryboy-list" data-bs-toggle="tab" data-bs-target="#deliveryboylist" type="button" role="tab" aria-controls="deliveryboy-list" aria-selected="true">Delivery Boy Details</button>
+                                <button
+                                    class="nav-link active"
+                                    id="deliveryboy-list"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#deliveryboylist"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="deliveryboy-list"
+                                    aria-selected="true"
+                                >
+                                    Delivery Boy Details
+                                </button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active " id="deliveryboylist" role="tabpanel" aria-labelledby="deliveryboy-list">
+                            <div
+                                class="tab-pane fade show active "
+                                id="deliveryboylist"
+                                role="tabpanel"
+                                aria-labelledby="deliveryboy-list"
+                            >
                                 <div className="btn-position">
                                     <div className="searchStyle">
                                         <i class="fa fa-search" aria-hidden="true"></i>
@@ -44,23 +66,30 @@ const DeliveryManage = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            arr.map((value, index) => {
-                                                return (
-                                                    <tr>
-                                                        <th scope="row">{index + 1}</th>
-                                                        <td>Anuj</td>
-                                                        <td>8877665577</td>
-                                                        <td>Yes</td>
-                                                        <Popup trigger={<td style={{ cursor: "pointer" }}><button>Disable</button></td>} position="right center" modal>
-                                                            <DisableModal />
-                                                        </Popup>
-
-                                                        <td><button>Block</button></td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
+                                        {arr.map((value, index) => {
+                                            return (
+                                                <tr>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>Anuj</td>
+                                                    <td>8877665577</td>
+                                                    <td>Yes</td>
+                                                    <Popup
+                                                        trigger={
+                                                            <td style={{ cursor: "pointer" }}>
+                                                                <button>Disable</button>
+                                                            </td>
+                                                        }
+                                                        position="right center"
+                                                        modal
+                                                    >
+                                                        <DisableModal />
+                                                    </Popup>
+                                                    <td>
+                                                        <button>Block</button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -69,9 +98,8 @@ const DeliveryManage = () => {
                 </div>
             </div>
 
-
         </>
-    )
-}
+    );
+};
 
-export default DeliveryManage
+export default DeliveryManage;

@@ -15,7 +15,7 @@ function Vendor() {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer 129|NcB0KsEMsz0eZZ6mYAswwANot2teoZWwVq8UY7wQ`
+                Authorization: `Bearer 1063|Is6FuVoMmjsLfopxdgEs5FvQO1WoWJUXYe0ijgSU`
             },
         }
         APICall(API.VENDOR_API, object, (error, result) => {
@@ -36,7 +36,7 @@ function Vendor() {
         <>
             <div className="main-outer-div">
                 <div className="add-vendor">
-                    <a href="/addvendor"><button>Add Vendor</button></a>
+                    <a href="/addvendor"><button className="btn btn-primary" btn btn-primary>Add Vendor</button></a>
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div vendor-inner-div">

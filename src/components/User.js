@@ -1,13 +1,53 @@
 import React from "react";
 import "./SuperUser.css";
+import { Checkbox, FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
+
 import { Link } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 function User() {
+  // assgin select
+  const classes = useStyles()
+  const [coupon, setCoupon] = React.useState('');
+
+  const handleChange = (event) => {
+    setCoupon(event.target.value);
+  };
   const arr = [1, 2, 3, 4, 5, 6, 7];
   return (
     <>
       <div className="main-outer-div">
+        {/* <div className="add-vendor"> */}
+        {/* <a href="/addvendor"><button>Add Coupon</button></a> */}
+        <FormControl variant="outlined" className={classes.formControl} style={{
+          marginTop: "3%", marginLeft: "3%",
+        }}>
+          <InputLabel id="demo-simple-select-outlined-label">Coupon</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            value={coupon}
+            onChange={handleChange}
+            label="Coupon"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>30%off</MenuItem>
+            <MenuItem value={20}>10%off</MenuItem>
+            <MenuItem value={30}>5%off</MenuItem>
+          </Select>
+        </FormControl>
+        {/* </div> */}
         <div className="myorders-outer-div">
-          <div className="myorders-inner-div">
+          <div className="myorders-inner-div vendor-inner-div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button
@@ -63,16 +103,17 @@ function User() {
                   <tbody>
                     {arr.map((value, index) => {
                       return (
-                        <tr
-                          onClick={() =>
+                        <tr>
+                          <th style={{}}><input type="checkbox" style={{ marginRight: "7%" }} />{index + 1}</th>
+                          <td onClick={() =>
                             (window.location.href = "/orderdetails")
                           }
-                          style={{ cursor: "pointer" }}
-                        >
-                          <th scope="row">{index + 1}</th>
-                          <td>{index + 1}</td>
-                          <td>
-                            <p style={{ fontWeight: "bold" }}>Anoop Soni</p>
+                            style={{ cursor: "pointer" }}>{index + 1}</td>
+                          <td onClick={() =>
+                            (window.location.href = "/orderdetails")
+                          }
+                            style={{ cursor: "pointer" }}>
+                            <p >Anoop Soni</p>
                           </td>
                           <td>9898987876</td>
                         </tr>

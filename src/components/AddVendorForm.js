@@ -185,25 +185,29 @@ function AddVendorForm() {
 
             <div className="main-outer-div">
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div vendor-inner-div vendor-form-1">
+                    <div className="vendor-form-1">
+                        <h1>Add Vendor</h1>
                         <form className="vendor-form">
+                            <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="shopName">Shop Name</label>
-                                <input type="text" class="form-control" id="shopName" placeholder="Shop Name" onChange={e => setShopname(e.target.value)} />
+                                <input type="text" class="form-control" id="shopName" placeholder="Type here..." onChange={e => setShopname(e.target.value)} />
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Phone Number" onChange={e => setPhone(e.target.value)} />
+                                <input type="text" class="form-control" id="phone" placeholder="Type here..." onChange={e => setPhone(e.target.value)} />
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                                <input type="password" class="form-control" id="password" placeholder="Type here..." onChange={e => setPassword(e.target.value)} />
                             </div>
-                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={submit}>Submit</button>
+                            <button type="submit" class="btn btn-primary submitBtn" onClick={submit}>Submit</button>
                         </form>
                     </div>
-                    <div className="myorders-inner-div vendor-inner-div vendor-form-2">
+                    <div className=" vendor-form-2">
+                        <h1>Add Vendor Details</h1>
                         <form className='vendor-form'>
+                            <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="userid">User Id:</label>
                                 <input type="text" class="form-control" id="userid" placeholder={userid} readOnly />
@@ -300,7 +304,7 @@ function AddVendorForm() {
                                     </Grid>
                                 </MuiPickersUtilsProvider>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" onClick={finalSubmit}>Submit</button>
+                            <button type="submit" class="btn btn-primary submitBtn" onClick={finalSubmit}>Submit</button>
                         </form>
                     </div>
                 </div>

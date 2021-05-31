@@ -1,4 +1,6 @@
 
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom'
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -22,33 +24,67 @@ import AddProductForm from './components/AddProductForm';
 import DeliveryManage from './components/DeliveryManage';
 import AddDeliveryBoyForm from './components/AddDeliveryBoyForm';
 import PaymentSettlement from './components/PaymentSettlement';
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/user" component={User} />
-        <Route exact path="/vendor" component={Vendor} />
-        <Route exact path="/salesreport" component={SalesReport} />
-        <Route exact path="/productlist" component={ProductList} />
+import Banner from './components/Banner';
 
-        <Route exact path="/totalorderrecieved" component={TotalOrderRecievede} />
-        <Route exact path="/customerdetails" component={CustomerDetails} />
-        <Route exact path="/orderdetails" component={OrderDetails} />
-        <Route exact path="/assigned" component={AssignedOrders} />
-        <Route exact path="/outfordelivery" component={OutforDelivery} />
-        <Route exact path="/notpicked" component={NotPicked} />
-        <Route exact path="/unassignedorders" component={UnassignedOrders} />
-        <Route exact path="/addvendor" component={AddVendoreForm} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/addproduct" component={AddProductForm} />
-        <Route exact path="/deliverymanage" component={DeliveryManage} />
-        <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
-        <Route exact path="/paymentsettle" component={PaymentSettlement} />
-      </Switch>
-    </>
+function App() {
+
+  const getWindowsSize = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+
+  const [windowDimensions, setWindowDimensions] = useState(getWindowsSize())
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowsSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
+
+  return (
+    windowDimensions.width < 768
+      ?
+      <div className="notSupported">
+        <div>
+          <i class="fas fa-bug fa-4x "></i>
+          <h1>Oops!!</h1>
+          <h3>Not Compatible With Mobile Phones</h3>
+          <p>For Best User Experience Open It Again In Desktop </p>
+        </div>
+      </div>
+      :
+      <>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/user" component={User} />
+          <Route exact path="/vendor" component={Vendor} />
+          <Route exact path="/salesreport" component={SalesReport} />
+          <Route exact path="/productlist" component={ProductList} />s
+          <Route exact path="/totalorderrecieved" component={TotalOrderRecievede} />
+          <Route exact path="/customerdetails" component={CustomerDetails} />
+          <Route exact path="/orderdetails" component={OrderDetails} />
+          <Route exact path="/assigned" component={AssignedOrders} />
+          <Route exact path="/outfordelivery" component={OutforDelivery} />
+          <Route exact path="/notpicked" component={NotPicked} />
+          <Route exact path="/unassignedorders" component={UnassignedOrders} />
+          <Route exact path="/addvendor" component={AddVendoreForm} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/login" component={LogIn} />
+          <Route exact path="/addproduct" component={AddProductForm} />
+          <Route exact path="/deliverymanage" component={DeliveryManage} />
+          <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
+          <Route exact path="/paymentsettle" component={PaymentSettlement} />
+          <Route exact path="/banner" component={Banner} />
+
+        </Switch>
+      </>
   );
 }
 
