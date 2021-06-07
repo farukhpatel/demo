@@ -6,7 +6,23 @@ import couponPhoto from '../assets/coupon.jpg'
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+
+    },
+}));
+
 function Coupon() {
+    const classes = useStyles();
     const [value, onChange] = useState(new Date());
 
     const [ar, setAr] = useState([
@@ -40,7 +56,7 @@ function Coupon() {
                 </div>
                 <div className="myorders-outer-div coupon-area-outer " style={{ background: "white" }}>
                     <div className="coupon-area">
-                        <img src={couponPhoto} alt="" className="couponImage" />
+                        {/* <img src={couponPhoto} alt="" className="couponImage" /> */}
 
                         <div className="coupon-form">
                             <form>
@@ -50,7 +66,7 @@ function Coupon() {
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" placeholder="Type here..." />
+                                    <textarea class="form-control" id="description" cols="10" rows="5" placeholder="Type here..." />
                                 </div>
                                 <div class="form-group">
                                     <label for="discount">Discount</label>
@@ -58,16 +74,37 @@ function Coupon() {
                                 </div>
                                 <div class="form-group">
                                     <label for="startdate">Start Date</label><br />
-                                    <DateTimePicker
+                                    {/* <DateTimePicker
                                         onChange={onChange}
                                         value={value}
+                                    /> */}
+
+                                    <TextField
+                                        id="datetime-local"
+                                        label=""
+                                        type="datetime-local"
+                                        defaultValue="2017-05-24T10:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                            shrink: false,
+                                        }}
                                     />
                                 </div>
                                 <div class="form-group">
                                     <label for="startdate">End Date</label><br />
-                                    <DateTimePicker
+                                    {/* <DateTimePicker
                                         onChange={onChange}
                                         value={value}
+                                    /> */}
+                                    <TextField
+                                        id="datetime-local"
+                                        label=""
+                                        type="datetime-local"
+                                        defaultValue="2017-05-24T10:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     />
                                 </div>
                                 <div class="form-group">
@@ -79,9 +116,12 @@ function Coupon() {
                                         <option>Eid</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group " style={{ paddingBottom: "10px", marginBottom: "12px" }}>
                                     <button type="submit" class="btn btn-primary coupounBtn">Submit</button>
                                 </div>
+                                {/* <div style={{ paddingBottom: "20px", marginBottom: "32px" }}>
+                                    <button className="coupounBtn">Submit</button>
+                                </div> */}
                             </form>
                         </div>
                         <div className="available-coupon">

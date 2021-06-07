@@ -1216,6 +1216,7 @@ a {
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-top: 5%;
 }
 .couponImage {
   position: absolute;
@@ -1224,17 +1225,22 @@ a {
   transform: rotate(20deg);
 }
 .coupon-form {
-  height: 50%;
-  width: 100%;
+  width: 95%;
   display: flex;
-  justify-content: center;
-  padding-top: 1rem;
+  /* justify-content: center; */
+  /* padding-top: 1rem; */
   margin-bottom: 1rem;
   overflow-y: scroll;
+  border: 1px dashed #aaa;
+  /* margin-left: 1rem; */
+  padding-bottom: 5%;
+}
+.coupon-form::-webkit-scrollbar {
+  display: none;
 }
 .coupon-form form {
-  width: 40%;
-  padding: 2rem;
+  width: 100%;
+  padding: 0 2rem 2rem 2rem;
   position: relative;
 }
 .coupon-form form .form-group {
@@ -1262,16 +1268,25 @@ a {
   padding-left: 12px;
   border-radius: 4px;
 }
+
+.makeStyles-textField-6 {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.makeStyles-textField-4 {
+  width: 100% !important;
+}
 .coupon-form form div input ::placeholder {
   font-size: 0.4rem !important;
 }
-.coupon-form form .coupounBtn {
-  float: right;
-  width: 35%;
-  height: 45px;
+.coupounBtn {
+  width: 25%;
+  height: 50px;
   font-family: "Poppins";
   background-color: #230132 !important;
-  margin-bottom: 1rem !important;
+  color: #fff;
+  /* text-transform: uppercase; */
+  font-size: 1.5rem;
 }
 .available-coupon {
   width: 100%;
