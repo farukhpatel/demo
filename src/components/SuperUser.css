@@ -819,12 +819,19 @@ tbody td button:hover {
 .addDeliveryboy-form .form-group label {
   font-weight: bold;
 }
-/* deliverymanage and delivery boy add Css start */
+.DisableDeliveryBoyBtn {
+  width: 100%;
+  height: 45px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+}
+/* deliverymanage and delivery boy add Css End */
 
 /* Payment Settlement Css start */
 .paymentsettle-inner-div {
   margin-top: 4%;
   position: relative;
+  width: 100%;
 }
 .payment-settlement-inputs {
   margin-top: 3%;
@@ -858,6 +865,18 @@ tbody td button:hover {
 .no-box-shadow {
   box-shadow: none !important;
 }
+.DateSelectSubmitBtn,
+.SettlePayBtn {
+  /* float: right; */
+  width: 15%;
+  height: 45px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+}
+.SettlePayBtn {
+  width: 100%;
+}
+
 /* Payment Settlement Css End */
 
 /* signup-Login-form css start */
@@ -1097,6 +1116,194 @@ a {
   background-color: #26132e;
 }
 /* Banner Css End */
+
+/* Review Css start */
+
+.reviewImage {
+  width: 400px;
+  height: 350px;
+  mix-blend-mode: multiply;
+  position: fixed;
+  right: 2%;
+}
+.reviewMain-div {
+  padding: 1rem;
+  padding-top: 2rem;
+  /* background-color: #aaa; */
+  position: relative;
+}
+.reviewDiv {
+  display: flex;
+  /* background-color: #3cfc45; */
+  width: 60%;
+  border: 1px solid #dec1eb;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.reviewDiv > .reviewImg {
+  margin-right: 5px;
+}
+.reviewDescription {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* background-color: #77d86a; */
+  padding-top: 12px;
+}
+.reviewDescription-text > h3,
+.reviewDescription-text > p {
+  font-family: "Poppins";
+  color: #3a4a55;
+}
+.reviewDescription-text > p {
+  font-family: "Poppins";
+  padding-left: 10px;
+}
+.reviewDescription-Btn {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 5px;
+}
+
+.reviewDescription-Btn button {
+  width: 40%;
+  height: 50px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+}
+/* modal */
+.ReviewSure-text {
+  width: fit-content;
+  /* background-color: #aaa; */
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+.ReviewSure-text h6 {
+  font-weight: normal;
+  font-family: "Poppins";
+}
+.ReviewSure-text button {
+  width: 25%;
+  height: 45px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+  margin-left: 10px;
+  text-align: center;
+}
+.my-popup-content {
+  margin: auto;
+  background: #ffffff;
+  width: fit-content !important;
+  height: 10rem;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+}
+/* Review Css end */
+
+/* Coupon Section Css Start */
+.coupon-area-outer {
+  height: 100vh;
+}
+.coupon-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.couponImage {
+  position: absolute;
+  right: 3rem;
+  width: 300px;
+  transform: rotate(20deg);
+}
+.coupon-form {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+}
+.coupon-form form {
+  width: 40%;
+  padding: 2rem;
+  position: relative;
+}
+.coupon-form form .form-group {
+  margin: 2.4% 0;
+  width: 100% !important;
+}
+.coupon-form form .form-group label {
+  font-family: "Poppins";
+}
+.coupon-form form .customSelect {
+  width: 100%;
+  margin-top: 4px;
+  height: 45px;
+  border: 1px solid #f2f2f2;
+  font-family: "Poppins";
+  padding-left: 12px;
+  border-radius: 4px;
+}
+.coupon-form form div input {
+  width: 100%;
+  margin-top: 4px;
+  height: 45px;
+  border: 1px solid #f2f2f2;
+  font-family: "Poppins";
+  padding-left: 12px;
+  border-radius: 4px;
+}
+.coupon-form form div input ::placeholder {
+  font-size: 0.4rem !important;
+}
+.coupon-form form .coupounBtn {
+  float: right;
+  width: 35%;
+  height: 45px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+  margin-bottom: 1rem !important;
+}
+.available-coupon {
+  width: 100%;
+  padding: 2rem;
+  height: 50%;
+  border-top: 1px solid violet;
+}
+.coupon-details {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid violet;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+.coupon-details-btn {
+  /* background: purple; */
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-left: 1px solid violet;
+}
+.coupon-details-btn button {
+  width: 25%;
+  height: 45px;
+  font-family: "Poppins";
+  background-color: #230132 !important;
+  margin-left: 10px;
+  text-align: center;
+}
+/* Coupon Section Css End */
 
 /* extra */
 .only-cards {

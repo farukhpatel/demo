@@ -6,12 +6,13 @@ const ProductList = () => {
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
+    const tokenValue = localStorage.getItem("token");
     let object = {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer 1068|hzYg5FK1kU66WzqbXozcNwGawU7jeRCiRU6Ci2VY`,
+        Authorization: `Bearer ${tokenValue}`,
       },
     };
     APICall(API.PRODUCT_LIST, object, (error, result) => {

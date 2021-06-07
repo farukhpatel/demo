@@ -40,6 +40,7 @@ function AssignedOrders() {
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
                 </div>
+
                 <TableData orderType="ASSIGNED_ORDERS" />
 
                 {/* <table className=" table" style={{ background: "white" }}>

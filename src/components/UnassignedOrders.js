@@ -1,7 +1,10 @@
 
 import { FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { APICall } from '../Utils/CommonFunctions';
+import API from '../Utils/ApiConstant'
 // import List from './List';
+
 import './SuperUser.css';
 
 // select 
@@ -29,6 +32,34 @@ function UnassignedOrders() {
     const date = new Date();
     const Time = date.toLocaleTimeString();
 
+    const [unassigned, setUnassigned] = useState([]);
+
+    useEffect(() => {
+        const tokenValue = localStorage.getItem("token");
+        let object = {
+            method: 'Get',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenValue}`,
+            },
+        };
+        APICall(API.UNASSIGNED_ORDERS, object, (error, result) => {
+            if (error)
+                console.log(error)
+
+            else if (result.status) {
+                console.log(result)
+                setUnassigned(result.orders)
+            }
+
+            else
+                alert("Something went wrong")
+
+        })
+        console.log(unassigned);
+    }, [])
+
     return (
         <>
             <div className="main-outer-div">
@@ -53,14 +84,8 @@ function UnassignedOrders() {
                                 <table class="table table-striped " >
                                     <thead>
                                         <tr>
-                                            {/* <th scope="col">S.No</th> */}
                                             <th scope="col">Order Id</th>
                                             <th scope="col">Customer Id</th>
-                                            {/* <th scope="col">Customer Name</th> */}
-                                            {/* <th scope="col">Dairy Name</th>
-                                            <th scope="col">Address</th>
-                                            <th scope="col">Time Alloted</th> */}
-                                            {/* <th scope="col">Assigned</th> */}
                                             <th scope="col">Seller Name</th>
                                             <th scope="col">Time Alloted</th>
                                             <th scope="col">Delivery Slot</th>
@@ -71,19 +96,15 @@ function UnassignedOrders() {
                                     </thead>
                                     <tbody>
                                         {
-                                            arr.map((value, index) => {
+                                            unassigned.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        {/* <th scope="row">{index + 1}</th> */}
-                                                        <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        {/* <td><a href="/orderdetails"><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></a></td> */}
-                                                        <td>Harish Dairy</td>
-                                                        {/* <td>Address</td> */}
-                                                        <td>{Time}</td>
-                                                        <td>9am to 12pm</td>
-                                                        <td>Locality</td>
-                                                        {/* <td><button>Assgin</button></td> */}
+                                                        <td><a href="/orderdetails">{value?.order_id}</a></td>
+                                                        <td><a href="/orderdetails">{value?.user_id}</a></td>
+                                                        <td>{value?.shop?.shop_name}</td>
+                                                        <td>{value?.delivery_date}</td>
+                                                        <td>{value?.slot}</td>
+                                                        <td>{value?.address?.locality?.locality}</td>
                                                         <td>
                                                             <FormControl variant="outlined" className={classes.formControl}>
                                                                 <InputLabel id="demo-simple-select-outlined-label">Assign</InputLabel>
@@ -104,7 +125,7 @@ function UnassignedOrders() {
                                                             </FormControl>
 
                                                         </td>
-                                                        <td style={{ textAlign: 'center', color: 'green' }}>Paid</td>
+                                                        <td>{value?.payment_status}</td>
 
                                                     </tr>
                                                 )

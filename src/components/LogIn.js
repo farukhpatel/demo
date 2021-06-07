@@ -28,12 +28,12 @@ function LogIn() {
       }),
     };
 
-    APICall(API.SIGNUP, object, (error, result) => {
+    APICall(API.LOGIN, object, (error, result) => {
       console.log(result);
       if (error) console.log(error);
-      else if (result.status) {
+      else if (result.status && result.code === 200) {
         console.log(result?.accessToken);
-        localStorage.setItem("token", result?.accessToken);
+        localStorage.setItem("token", result?.accessToken.toString());
       } else alert("Something went wrong");
     });
   };

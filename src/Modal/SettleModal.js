@@ -13,7 +13,7 @@ function SettleModal() {
         <>
             <div className="main-outer-div Modal">
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div paymentsettle-inner-div">
+                    <div className="paymentsettle-inner-div">
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -22,12 +22,6 @@ function SettleModal() {
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active " id="settledetails" role="tabpanel" aria-labelledby="settle-details">
-                                {/* <div className="btn-position">
-                                    <div className="searchStyle">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                        <input placeholder="Search..." className="SearchInput" />
-                                    </div>
-                                </div> */}
                                 <div className="customer-details-content-outer-div">
                                     <div className="customer-details-content-outer-div-top no-box-shadow">
                                         <div className="customer-details-content">
@@ -43,7 +37,7 @@ function SettleModal() {
                                             <div className="content"><p>₹75</p></div>
                                         </div>
 
-                                        <button className=" btn btn-primary btn-vendor-sign-up-login">Pay</button>
+                                        <button className=" btn btn-primary SettlePayBtn">Pay</button>
 
                                     </div>
                                     {/* <div className="customer-details-content-outer-div-bottom">

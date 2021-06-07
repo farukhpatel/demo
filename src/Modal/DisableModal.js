@@ -30,7 +30,7 @@ function DisableModal() {
         <>
             <div className="main-outer-div Modal">
                 <div className="myorders-outer-div">
-                    <div className="myorders-inner-div paymentsettle-inner-div">
+                    <div className=" paymentsettle-inner-div">
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -87,7 +87,7 @@ function DisableModal() {
                                             <div className="content"><h4>Delivery Boy</h4></div>
                                             <div className="content"><p>Kishore</p></div>
                                         </div> */}
-                                        <button className=" btn btn-primary btn-vendor-sign-up-login">Disable</button>
+                                        <button className=" btn btn-primary DisableDeliveryBoyBtn">Disable</button>
                                     </div>
                                 </div>
                             </div>

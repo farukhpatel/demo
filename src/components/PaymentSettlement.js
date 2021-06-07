@@ -103,7 +103,7 @@ function PaymentSettlement() {
                                 {/* <FormHelperText>Without label</FormHelperText> */}
                             </FormControl>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-vendor-sign-up-login" >Submit</button>
+                        <button type="submit" class="btn btn-primary DateSelectSubmitBtn  " >Submit</button>
                     </form>
                 </div>
                 <div className="myorders-outer-div">

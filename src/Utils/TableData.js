@@ -78,7 +78,7 @@ const columns = [
   },
 ];
 
-function TableData(props) {
+const TableData = ({ orderType }) => {
   const classes = useStyles();
 
   // API integration
@@ -92,10 +92,10 @@ function TableData(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer 1068|hzYg5FK1kU66WzqbXozcNwGawU7jeRCiRU6Ci2VY`,
+        Authorization: `Bearer ${tokenValue}`,
       },
     };
-    APICall(API[props.orderType], object, (error, result) => {
+    APICall(API[orderType], object, (error, result) => {
       if (error) console.log(error);
       else if (result.status) {
         console.log(result.orders, "orders");
@@ -127,36 +127,36 @@ function TableData(props) {
           <TableBody>
             {assigned.length !== 0
               ? assigned.map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column?.id === "user_id" ||
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column?.id === "user_id" ||
                             column?.id === "order_id" ? (
-                              <div
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                  (window.location.href = "/orderdetails")
-                                }
-                              >
-                                {" "}
-                                {`${value}`}
-                              </div>
-                            ) : column?.id === "shop" ? (
-                              `${value?.address?.locality}`
-                            ) : column?.id === "assigned_to" ? (
-                              `${JSON.stringify(value?.name)}`
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })
+                            <div
+                              style={{ cursor: "pointer" }}
+                              onClick={() =>
+                                (window.location.href = "/orderdetails")
+                              }
+                            >
+                              {" "}
+                              {`${value}`}
+                            </div>
+                          ) : column?.id === "shop" ? (
+                            `${value?.address?.locality}`
+                          ) : column?.id === "assigned_to" ? (
+                            `${JSON.stringify(value?.name)}`
+                          ) : (
+                            value
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
               : "No Data"}
           </TableBody>
         </Table>

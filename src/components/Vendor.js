@@ -9,15 +9,15 @@ function Vendor() {
     const [vendors, setVendors] = useState([])
 
     useEffect(() => {
-
+        const tokenValue = localStorage.getItem("token");
         let object = {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer 1063|Is6FuVoMmjsLfopxdgEs5FvQO1WoWJUXYe0ijgSU`
+                Authorization: `Bearer ${tokenValue}`,
             },
-        }
+        };
         APICall(API.VENDOR_API, object, (error, result) => {
             if (error)
                 console.log(error)
@@ -55,7 +55,6 @@ function Vendor() {
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                         <input placeholder="Search..." className="SearchInput" />
                                     </div>
-                                    {/* <button>New sales Order</button> */}
                                 </div>
                                 <table class="table table-striped">
                                     <thead>
@@ -69,18 +68,7 @@ function Vendor() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* arr.map((value, index) => {
-                                                return (
-                                                    <tr>
-                                            <th scope="row">{index + 1}</th>
-                                            <td>Shubham Kumar</td>
-                                            <td><p style={{ fontWeight: 'bold' }}>Panchamrat Dairy</p></td>
-                                            <td>302BF 27 Sica School Road</td>
-                                            <td style={{ color: 'green' }}>Online</td>
-                                            <td><button>Disabled</button></td>
-                                        </tr>
-                                                )
-                                            }) */}
+
                                         {
 
                                             vendors.map((value, index) => {
