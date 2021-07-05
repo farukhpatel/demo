@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import API from "../Utils/ApiConstant";
 import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
@@ -12,6 +13,7 @@ function LogIn() {
   // api
   const [phoneno, setPhoneno] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const login = (e) => {
     e.preventDefault();
@@ -34,12 +36,20 @@ function LogIn() {
       else if (result.status && result.code === 200) {
         console.log(result?.accessToken);
         localStorage.setItem("token", result?.accessToken.toString());
+        setRedirect(true)
       } else alert("Something went wrong");
     });
   };
 
+  const shouldRedirect = () => {
+          if(redirect) {
+              return <Redirect to="/"/>
+          }
+      }
+
   return (
     <>
+      {shouldRedirect(redirect)}
       <div className="main-outer-div signup-login-outer-div ">
         <div className="myorders-outer-div ">
           <div className="signup-login-form-div">

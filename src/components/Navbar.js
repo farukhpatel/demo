@@ -2,6 +2,13 @@ import React from 'react';
 import './SuperUser.css';
 
 function Home() {
+
+    const signout = next => {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+        }
+    };
+    
     return (
         <>
             <div class="sidebar">
@@ -19,9 +26,11 @@ function Home() {
                     <li><a href="/banner"><i class="far fa-clone"></i>Banner</a></li>
                     <li><a href="/coupon"><i class="fas fa-tags"></i>Coupon</a></li>
                     <li><a href="/review"><i class="far fa-comment-dots"></i>Review</a></li>
+                    <li onClick={signout}><a href="/login"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                 </ul>
             </div>
         </>
     );
-}
+    }
+    
 export default Home;
