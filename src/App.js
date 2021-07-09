@@ -11,10 +11,11 @@ import TotalOrderRecievede from "./components/TotalOrderRecieved";
 import CustomerDetails from "./components/CustomerDetails";
 import OrderDetails from "./components/OrderDetails";
 import AssignedOrders from "./components/AssignedOrders";
-import OutforDelivery from "./components/OutForDelivery";
+import PickedOrders from "./components/PickedOrders";
 import NotPicked from "./components/NotPicked";
 import AddVendoreForm from "./components/AddVendorForm";
 import UnassignedOrders from "./components/UnassignedOrders";
+import DeliveredOrders from "./components/DeliveredOrders";
 import SignUp from "./components/SignUp";
 import LogIn from "./components/LogIn";
 import AddProductForm from "./components/AddProductForm";
@@ -75,9 +76,10 @@ function App() {
           <Route exact path="/customerdetails" component={CustomerDetails} />
           <Route exact path="/orderdetails" component={OrderDetails} />
           <Route exact path="/assigned" component={AssignedOrders} />
-          <Route exact path="/outfordelivery" component={OutforDelivery} />
+          <Route exact path="/outfordelivery" component={PickedOrders} />
           <Route exact path="/notpicked" component={NotPicked} />
           <Route exact path="/unassignedorders" component={UnassignedOrders} />
+          <Route exact path="/deliveredorders" component={DeliveredOrders} />
           <Route exact path="/addvendor" component={AddVendoreForm} />
           <Route exact path="/addproduct" component={AddProductForm} />
           <Route exact path="/deliverymanage" component={DeliveryManage} />

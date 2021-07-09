@@ -1,7 +1,9 @@
 import React from "react";
+// import List from './List';
+import "./SuperUser.css";
 import TableData from "../Utils/TableData";
+function Delivered() {
 
-function AssignedOrders() {
   return (
     <>
       <div className="main-outer-div">
@@ -19,7 +21,7 @@ function AssignedOrders() {
                   aria-controls="total-orders-recieved"
                   aria-selected="true"
                 >
-                  Assigned Orders{" "}
+                  Total Orders Recieved
                 </button>
               </li>
             </ul>
@@ -36,9 +38,7 @@ function AssignedOrders() {
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
                 </div>
-
-                <TableData orderType="ASSIGNED_ORDERS" />
-
+                <TableData orderType="DELIVERED" />
               </div>
             </div>
           </div>
@@ -47,4 +47,4 @@ function AssignedOrders() {
     </>
   );
 }
-export default AssignedOrders;
+export default Delivered;

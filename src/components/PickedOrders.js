@@ -1,7 +1,6 @@
 import React from "react";
 import TableData from "../Utils/TableData";
-
-function AssignedOrders() {
+function OutForDelivery() {
   return (
     <>
       <div className="main-outer-div">
@@ -19,7 +18,7 @@ function AssignedOrders() {
                   aria-controls="total-orders-recieved"
                   aria-selected="true"
                 >
-                  Assigned Orders{" "}
+                  Picked Orders{" "}
                 </button>
               </li>
             </ul>
@@ -36,9 +35,7 @@ function AssignedOrders() {
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
                 </div>
-
-                <TableData orderType="ASSIGNED_ORDERS" />
-
+                <TableData orderType="PICKED" />
               </div>
             </div>
           </div>
@@ -47,4 +44,4 @@ function AssignedOrders() {
     </>
   );
 }
-export default AssignedOrders;
+export default OutForDelivery;

@@ -7,11 +7,11 @@ const API = {
   // SIGNUP LOGIN API END
 
   // DASHBOARD API START
-  ASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=1",
-  OUT_FOR_DELIVERY: Config.BASE_URL + "api/order/all?order_status=1",
-  NOT_PICKED: Config.BASE_URL + "api/order/all?order_status=1",
-  TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
   UNASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=1",
+  ASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=2",
+  PICKED: Config.BASE_URL + "api/order/all?order_status=3",
+  DELIVERED: Config.BASE_URL + "api/order/all?order_status=4",
+  TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
   // DASHBOARD API START END
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",
