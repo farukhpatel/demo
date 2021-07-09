@@ -16,7 +16,7 @@ function Home() {
                     <h1>Bandhify</h1>
                 </div>
                 <ul>
-                    <li><a href="/" style={{ borderTopWidth: '1px', borderTopColor: '#fff', borderTopStyle: 'solid' }}><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="/dashboard" style={{ borderTopWidth: '1px', borderTopColor: '#fff', borderTopStyle: 'solid' }}><i class="fas fa-home"></i>Home</a></li>
                     <li><a href="/user"><i class="far fa-user"></i>User</a></li>
                     <li><a href="/vendor"><i class="fas fa-link"></i>Vendor</a></li>
                     <li><a href="/salesreport"><i class="far fa-address-book"></i>Sales Report</a></li>

@@ -36,16 +36,16 @@ function LogIn() {
       else if (result.status && result.code === 200) {
         console.log(result?.accessToken);
         localStorage.setItem("token", result?.accessToken.toString());
-        setRedirect(true)
+        setRedirect(true);
       } else alert("Something went wrong");
     });
   };
 
   const shouldRedirect = () => {
-          if(redirect) {
-              return <Redirect to="/"/>
-          }
-      }
+    if (redirect) {
+      return <Redirect to="/dashboard" />;
+    }
+  };
 
   return (
     <>
@@ -53,7 +53,9 @@ function LogIn() {
       <div className="main-outer-div signup-login-outer-div ">
         <div className="myorders-outer-div ">
           <div className="signup-login-form-div">
-            <h1>Login</h1>
+            <div className="heading-login">
+              <h1>Login</h1>
+            </div>
             <form className="signup-login-form">
               <span className="customSpan"></span>
               <div class="form-group">

@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom'
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -63,7 +62,9 @@ function App() {
       <>
         <Navbar />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={LogIn} />
+          {/* <Route exact path="/login" component={LogIn} /> */}
+          <Route exact path="/dashboard" component={Home} />
           <Route exact path="/user" component={User} />
           <Route exact path="/vendor" component={Vendor} />
           <Route exact path="/salesreport" component={SalesReport} />
@@ -77,7 +78,6 @@ function App() {
           <Route exact path="/unassignedorders" component={UnassignedOrders} />
           <Route exact path="/addvendor" component={AddVendoreForm} />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={LogIn} />
           <Route exact path="/addproduct" component={AddProductForm} />
           <Route exact path="/deliverymanage" component={DeliveryManage} />
           <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />

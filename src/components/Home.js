@@ -1,47 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SuperUser.css';
-import { Avatar, IconButton } from '@material-ui/core';
-import Calendar from 'react-calendar';
 
 import dairy from '../assets/dairy.jpg';
-import { Bar } from 'react-chartjs-2'
 function Home() {
-
-    // date
-    let d = new Date();
-    let date = d.toDateString();
-    const arr = [1, 2, 3, 4, 5, 6, 7];
-
-    // calender
-    // const [value, onChange] = useState(new Date());
-
-    // For Bar Graph
-    // const state = {
-    //     labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    //     datasets: [
-    //         {
-    //             backgroundColor: ['#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5', '#b687cb', '#9d5eb9', '#9550b3', '#a66cbf', '#ae79c5'],
-    //             borderColor: '#b687cb',
-    //             borderWidth: 4,
-    //             data: [35, 45, 80, 81, 56, 54, 32, 5, 6]
-    //         }
-    //     ]
-    // }
-
-    // const option = {
-
-    //     title: {
-    //         display: false,
-    //         text: 'Sales Detail',
-    //         fontSize: 20
-    //     },
-    //     legend: {
-    //         display: false,
-    //         position: 'right'
-    //     }
-
-    // }
-
 
     return (<>
 
