@@ -4,7 +4,6 @@ import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
 
 function SignUp() {
-
   // api
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

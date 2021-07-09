@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../Utils/ApiConstant";
 import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
 
-function LogIn() {
+function LogIn(props) {
 
   // api
   const [phoneno, setPhoneno] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(token)
+    props.history.push("/dashboard")
+  }, [])
 
   const login = (e) => {
     e.preventDefault();
