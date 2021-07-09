@@ -103,6 +103,7 @@ const TableData = ({ orderType }) => {
       } else alert("Something went wrong");
     });
   }, []);
+  
   useEffect(() => {
     console.log(assigned);
   }, [assigned]);

@@ -58,7 +58,7 @@ function User() {
   return (
     <>
       <div className="main-outer-div">
-        <FormControl variant="outlined" className={classes.formControl} style={{
+        {/* <FormControl variant="outlined" className={classes.formControl} style={{
           marginTop: "3%", marginLeft: "3%",
         }}>
           <InputLabel id="demo-simple-select-outlined-label">Coupon</InputLabel>
@@ -76,7 +76,7 @@ function User() {
             <MenuItem value={20}>10%off</MenuItem>
             <MenuItem value={30}>5%off</MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
         <div className="myorders-outer-div">
           <div className="myorders-inner-div vendor-inner-div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

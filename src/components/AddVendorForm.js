@@ -34,13 +34,13 @@ function AddVendorForm() {
     // form fields var 
     const [file, setFile] = useState(null)
     const [userid, setUserid] = useState('')
-    const [shopname, setShopname] = useState('')
+    const [vendorName, setVendorName] = useState('')
     const [phone, setPhone] = useState('')
     const [description, setDescription] = useState('')
     const [licenseNumber, setLicenseNumber] = useState('')
     const [foundationDate, setFoundationDate] = useState(new Date())
     const [deliveryRange, setDeliveryRange] = useState('')
-    // const [shopName, setShopName] = useState('')
+    // const [vendorName, setVendorName] = useState('')
     const [password, setPassword] = useState('')
 
     // date picker
@@ -60,11 +60,13 @@ function AddVendorForm() {
             setEndTime(e)
     }
 
+    console.log(localStorage.getItem('token'))
+
 
     // form1
     const submit = e => {
         e.preventDefault()
-        if (!shopname) {
+        if (!vendorName) {
             toast('Shope name length atleast 5letters')
         }
         else if (!phone) {
@@ -81,10 +83,10 @@ function AddVendorForm() {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer 129|NcB0KsEMsz0eZZ6mYAswwANot2teoZWwVq8UY7wQ`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    'name': shopname,
+                    'name': vendorName,
                     'phone': phone,
                     'password': password,
                     'role_id': 2
@@ -92,15 +94,14 @@ function AddVendorForm() {
             }
 
             APICall(API.CREATE_USER, object, (err, result) => {
-                if (err)
+                if (err) {
                     console.log(err)
-
+                }
                 else if (result.status) {
                     setUserid(result.user.id)
                     document.querySelector('.vendor-form-1').classList.add('hide__form1')
                     document.querySelector('.vendor-form-2').classList.add('show-form2')
                 }
-
                 else {
                     toast('Something went wrong')
                     alert('Something went wrong')
@@ -114,7 +115,7 @@ function AddVendorForm() {
     const finalSubmit = e => {
         e.preventDefault()
         let headers = new Headers()
-        headers.append("Authorization", "Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas")
+        headers.append("Authorization", `Bearer ${localStorage.getItem('token')}`)
         let formdata = new FormData()
         console.log(file[0])
         formdata.append("image", file[0])
@@ -126,9 +127,9 @@ function AddVendorForm() {
         }
 
         APICall(API.IMAGE_UPLOAD, object, (err, result) => {
-            if (err)
+            if (err) {
                 console.log(err)
-
+            }
             else if (result.status) {
                 let temp = selected
                 let shop_schedules = temp.map(item => {
@@ -142,11 +143,11 @@ function AddVendorForm() {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer 86|sAsV4pXwIqX6mkrJet3NBjwVJC3f63YRzULurxas`
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify({
                         'user_id': userid,
-                        'shop_name': shopname,
+                        'shop_name': vendorName,
                         'shop_phone': phone,
                         'shop_description': description,
                         'shop_profile': result.image_url,
@@ -159,9 +160,9 @@ function AddVendorForm() {
                 }
 
                 APICall(API.CREATE_SHOP, obj, (error, res) => {
-                    if (error)
+                    if (error) {
                         console.log(error)
-
+                    }
                     else if (result.status) {
                         //SHOW TOAST MESSAGE OF SUCCESSFUL CREATION AND REDIRECT TO SOME OTHER PAGE
 
@@ -190,8 +191,8 @@ function AddVendorForm() {
                         <form className="vendor-form">
                             <span className="customSpan"></span>
                             <div class="form-group">
-                                <label for="shopName">Shop Name</label>
-                                <input type="text" class="form-control" id="shopName" placeholder="Type here..." onChange={e => setShopname(e.target.value)} />
+                                <label for="vendorName">Vendor Name</label>
+                                <input type="text" class="form-control" id="vendorName" placeholder="Type here..." onChange={e => setVendorName(e.target.value)} />
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
@@ -204,7 +205,7 @@ function AddVendorForm() {
                             <button type="submit" class="btn btn-primary submitBtn" onClick={submit}>Submit</button>
                         </form>
                     </div>
-                    <div className=" vendor-form-2">
+                    <div className="vendor-form-2">
                         <h1>Add Vendor Details</h1>
                         <form className='vendor-form'>
                             <span className="customSpan"></span>
@@ -213,8 +214,8 @@ function AddVendorForm() {
                                 <input type="text" class="form-control" id="userid" placeholder={userid} readOnly />
                             </div>
                             <div class="form-group">
-                                <label for="shopName">Shop Name</label>
-                                <input type="text" class="form-control" id="shopName" placeholder={shopname} readOnly />
+                                <label for="vendorName">Shop Name</label>
+                                <input type="text" class="form-control" id="vendorName" placeholder={vendorName} readOnly />
                             </div>
                             <div class="form-group">
                                 <label for="shopPhone">Shop Phone</label>
@@ -296,7 +297,7 @@ function AddVendorForm() {
                                             id="time-picker"
                                             label="Time picker"
                                             value={endTime}
-                                            onChange={e => handleDateChange(e, 'end')}
+                                            onChange={e => handleTimeChange(e, 'end')}
                                             KeyboardButtonProps={{
                                                 'aria-label': 'change time',
                                             }}
