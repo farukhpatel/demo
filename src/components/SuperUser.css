@@ -888,9 +888,6 @@ tbody td button:hover {
 /* Payment Settlement Css End */
 
 /* signup-Login-form css start */
-.hide__navbar {
-  display: none;
-}
 .signup-login-outer-div {
   margin: 0;
 }

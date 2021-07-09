@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import API from "../Utils/ApiConstant";
 import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
 
 function SignUp() {
-  //    to hide navbar
-  useEffect(() => {
-    document.querySelector(".sidebar").classList.add("hide__navbar");
-  }, []);
 
   // api
   const [userName, setUserName] = useState("");

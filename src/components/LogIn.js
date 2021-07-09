@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import API from "../Utils/ApiConstant";
 import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
 
 function LogIn() {
-  //to hide navbar
-  useEffect(() => {
-    document.querySelector(".sidebar").classList.add("hide__navbar");
-  }, []);
 
   // api
   const [phoneno, setPhoneno] = useState("");
