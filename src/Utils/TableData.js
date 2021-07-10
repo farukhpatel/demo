@@ -36,7 +36,7 @@ const columns = [
     align: "left",
   },
   {
-    id: "assigned_to",
+    id: "shop",
     label: "Seller Name",
     minWidth: 200,
     align: "left",
@@ -145,13 +145,14 @@ const TableData = ({ orderType }) => {
                               {" "}
                               {`${value}`}
                             </div>
-                          ) : column?.id === "shop" ? (
-                            `${value?.address?.locality}`
+                          ) : column?.id === "shop" && column?.label==="Locality" ? (
+                            `${value?.address?.locality?.locality}`
                           ) : column?.id === "assigned_to" ? (
                             `${JSON.stringify(value?.name)}`
-                          ) : (
-                            value
-                          )}
+                          ) : column?.id === "shop" && column?.label ==="Seller Name" ?(
+                            (value?.shop_name)
+                          ):
+                          value}
                         </TableCell>
                       );
                     })}
