@@ -40,14 +40,6 @@ function Vendor() {
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div vendor-inner-div">
-                        {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="current-orders" data-bs-toggle="tab" data-bs-target="#currentorders" type="button" role="tab" aria-controls="current-orders" aria-selected="true">Current Orders</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="previous-orders" data-bs-toggle="tab" data-bs-target="#previousorders" type="button" role="tab" aria-controls="previous-orders" aria-selected="false">Previous Orders</button>
-                            </li>
-                        </ul> */}
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active " id="currentorders" role="tabpanel" aria-labelledby="current-orders">
                                 <div className="btn-position">

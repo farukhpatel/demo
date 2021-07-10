@@ -21,16 +21,12 @@ const useStyles = makeStyles((theme) => ({
 function UnassignedOrders() {
     // assgin select
     const classes = useStyles()
-    const [deliveryBoy, setDeliveryBoy] = React.useState('');
+    const [deliveryBoy, setDeliveryBoy] = React.useState({});
 
-    const handleChange = (event) => {
-        setDeliveryBoy(event.target.value);
+    const handleChange = (event, id) => {
+        setDeliveryBoy({...deliveryBoy,[id]:event.target.value})
     };
 
-    // array and date
-    const arr = [1, 2, 3, 4, 5, 6, 7];
-    const date = new Date();
-    const Time = date.toLocaleTimeString();
 
     const [unassigned, setUnassigned] = useState([]);
 
@@ -111,8 +107,8 @@ function UnassignedOrders() {
                                                                 <Select
                                                                     labelId="demo-simple-select-outlined-label"
                                                                     id="demo-simple-select-outlined"
-                                                                    value={deliveryBoy}
-                                                                    onChange={handleChange}
+                                                                    value={deliveryBoy[value?.order_id] || ""}
+                                                                    onChange={(event)=>handleChange(event,value?.order_id)}
                                                                     label="Age"
                                                                 >
                                                                     <MenuItem value="">

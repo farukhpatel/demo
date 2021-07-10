@@ -1,5 +1,5 @@
 // import { FilePicker } from 'react-file-picker'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import MultiSelect from "react-multi-select-component";
 import { KeyboardTimePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
@@ -43,6 +43,10 @@ function AddVendorForm() {
     // const [vendorName, setVendorName] = useState('')
     const [password, setPassword] = useState('')
 
+    useEffect(() => {
+        console.log(foundationDate)
+    }, [foundationDate])
+
     // date picker
     const handleDateChange = (e) => {
         setFoundationDate(e)
@@ -53,7 +57,6 @@ function AddVendorForm() {
 
     const handleTimeChange = (e, time) => {
 
-        // const { _d } = e
         if (time === 'start')
             setStartTime(e)
         else
@@ -96,15 +99,17 @@ function AddVendorForm() {
             APICall(API.CREATE_USER, object, (err, result) => {
                 if (err) {
                     console.log(err)
+                    toast.error(err)
                 }
                 else if (result.status) {
+                    
                     setUserid(result.user.id)
                     document.querySelector('.vendor-form-1').classList.add('hide__form1')
                     document.querySelector('.vendor-form-2').classList.add('show-form2')
                 }
                 else {
-                    toast('Something went wrong')
-                    alert('Something went wrong')
+                    toast.error(result?.error)
+                    // alert('Something went wrong')
                     console.log(result)
                     //ONLY TOAST
                 }
@@ -185,6 +190,7 @@ function AddVendorForm() {
         <>
 
             <div className="main-outer-div">
+            <ToastContainer/>
                 <div className="myorders-outer-div">
                     <div className="vendor-form-1">
                         <h1>Add Vendor</h1>
@@ -207,6 +213,7 @@ function AddVendorForm() {
                     </div>
                     <div className="vendor-form-2">
                         <h1>Add Vendor Details</h1>
+                        <div className="vendor-form2-container">
                         <form className='vendor-form'>
                             <span className="customSpan"></span>
                             <div class="form-group">
@@ -307,6 +314,7 @@ function AddVendorForm() {
                             </div>
                             <button type="submit" class="btn btn-primary submitBtn" onClick={finalSubmit}>Submit</button>
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>
