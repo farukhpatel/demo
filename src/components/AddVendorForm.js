@@ -44,6 +44,7 @@ function AddVendorForm() {
   const [licenseNumber, setLicenseNumber] = useState("");
   const [foundationDate, setFoundationDate] = useState(new Date());
   const [deliveryRange, setDeliveryRange] = useState("");
+  const [shopName, setShopName] = useState("")
   // const [vendorName, setVendorName] = useState('')
   const [password, setPassword] = useState("");
 
@@ -137,7 +138,7 @@ function AddVendorForm() {
             },
             body: JSON.stringify({
               user_id: userid,
-              shop_name: vendorName,
+              shop_name: shopName,
               shop_phone: phone,
               shop_description: description,
               shop_profile: result.image_url,
@@ -155,12 +156,10 @@ function AddVendorForm() {
                   console.log(error)
               }
               else if (result.status) {
-                  //SHOW TOAST MESSAGE OF SUCCESSFUL CREATION AND REDIRECT TO SOME OTHER PAGE
                   toast.success('Successful creation of shop')
                   window.location.href = '/vendor'
               }
               else {
-                  //SHOW TOAST OF ERROR AND REDIRECT TO /VENDOR
                   toast.error(result?.error)
                   window.location.href = '/vendor'
               }
@@ -241,8 +240,8 @@ function AddVendorForm() {
                     type="text"
                     class="form-control"
                     id="vendorName"
-                    placeholder={vendorName}
-                    readOnly
+                    placeholder={"Enter Shop Name"}
+                    onChange={(e) => setShopName(e.target.value)}
                   />
                 </div>
                 <div class="form-group">

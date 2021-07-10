@@ -56,7 +56,7 @@ function Vendor() {
                                             <th scope="col">Dairy Name</th>
                                             <th scope="col">Dairy Address</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Last Updated</th>
+                                            <th scope="col">Shop Founding Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,14 +66,17 @@ function Vendor() {
                                             vendors.map((value, index) => {
                                                 return (
                                                     <tr key={index}>
-                                                        <th scope='row'>{index + 1}</th>
+                                                        {/* <th scope='row'>{index + 1}</th> */}
                                                         <td>{value?.user_id}</td>
+                                                        <td>
+                                                            <p style={{ fontWeight: 'bold ' }}>{value?.shop_owner?.name}</p>
+                                                        </td>
                                                         <td>
                                                             <p style={{ fontWeight: 'bold ' }}>{value?.shop_name}</p>
                                                         </td>
                                                         <td>address</td>
                                                         <td>{value?.shop_approval}</td>
-                                                        <td><button>{value?.updated_at}</button></td>
+                                                        <td>{value?.shop_founding_date}</td>
                                                     </tr>
                                                 )
                                             })
