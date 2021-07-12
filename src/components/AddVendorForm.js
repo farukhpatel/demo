@@ -156,7 +156,7 @@ function AddVendorForm() {
                   console.log(error)
               }
               else if (result.status) {
-                  toast.success('Successful creation of shop')
+                  toast.success('Successful creation of Vendor.')
                   window.location.href = '/vendor'
               }
               else {

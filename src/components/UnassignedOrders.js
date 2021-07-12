@@ -9,6 +9,7 @@ import API from '../Utils/ApiConstant'
 import './SuperUser.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom';
 
 // select 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,6 @@ function UnassignedOrders() {
                 console.log(error)
 
             else if (result.status) {
-                console.log(result)
                 setUnassigned(result.orders)
             }
 
@@ -74,7 +74,6 @@ function UnassignedOrders() {
                 console.log(error)
 
             else if (result.status) {
-                console.log(result)
                 setDeliveryBoysList(result.users)
             }
 
@@ -98,13 +97,12 @@ function UnassignedOrders() {
                 assigned_to: deliveryBoyId,
             })
         };
-        console.log(object,"obj")
         APICall(API.ASSIGN_DELIVERY_BOY, object, (error, result) => {
             if (error)
                 console.log(error)
 
             else if (result.status) {
-                console.log(result)
+                toast.success("Delivery Boy Asssigned uccessfully.")
             }
 
             else
@@ -158,8 +156,8 @@ function UnassignedOrders() {
                                             unassigned.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        <td><a href="/orderdetails">{value?.order_id}</a></td>
-                                                        <td><a href="/orderdetails">{value?.user_id}</a></td>
+                                                        <td><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.order_id}</Link></td>
+                                                        <td><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.user_id}</Link></td>
                                                         <td>{value?.shop?.shop_name}</td>
                                                         <td>{value?.delivery_date}</td>
                                                         <td>{value?.slot}</td>

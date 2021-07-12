@@ -11,6 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Link } from "react-router-dom";
 
 // Table js
 const useStyles = makeStyles({
@@ -86,7 +87,6 @@ const TableData = ({ orderType }) => {
 
   useEffect(() => {
     const tokenValue = localStorage.getItem("token");
-    console.log("tokenValue", tokenValue);
     let object = {
       method: "GET",
       headers: {
@@ -98,15 +98,11 @@ const TableData = ({ orderType }) => {
     APICall(API[orderType], object, (error, result) => {
       if (error) console.log(error);
       else if (result.status) {
-        console.log(result.orders, "orders");
         setAssigned(result.orders);
       } else alert("Something went wrong");
     });
   }, []);
   
-  useEffect(() => {
-    console.log(assigned);
-  }, [assigned]);
 
   return (
     <Paper className={classes.root}>
@@ -136,15 +132,10 @@ const TableData = ({ orderType }) => {
                         <TableCell key={column.id} align={column.align}>
                           {column?.id === "user_id" ||
                             column?.id === "order_id" ? (
-                            <div
-                              style={{ cursor: "pointer" }}
-                              onClick={() =>
-                                (window.location.href = "/orderdetails")
-                              }
-                            >
+                              <Link to={{pathname:"/orderdetails", state:{order:row}}}>
                               {" "}
                               {`${value}`}
-                            </div>
+                            </Link>
                           ) : column?.id === "shop" && column?.label==="Locality" ? (
                             `${value?.address?.locality?.locality}`
                           ) : column?.id === "assigned_to" ? (
