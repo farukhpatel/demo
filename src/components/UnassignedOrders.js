@@ -93,11 +93,12 @@ function UnassignedOrders() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${tokenValue}`,
             },
-            body:{
+            body:JSON.stringify({
                 order_status: 2,
                 assigned_to: deliveryBoyId,
-            }
+            })
         };
+        console.log(object,"obj")
         APICall(API.ASSIGN_DELIVERY_BOY, object, (error, result) => {
             if (error)
                 console.log(error)

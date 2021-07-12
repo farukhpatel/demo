@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import User from "./components/User";
@@ -59,9 +61,10 @@ function App() {
     <>
       <Switch>
         <Route exact path="/" component={LogIn} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={LogIn} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={LogIn} />
         <div>
+          <ToastContainer />
           <Navbar />
           <Route exact path="/dashboard" component={Home} />
           <Route exact path="/user" component={User} />

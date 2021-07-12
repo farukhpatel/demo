@@ -690,7 +690,7 @@ tbody td button:hover {
 }
 .productlist-inner-div-form form div {
   margin: 2.4% 0;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 .productlist-inner-div-form form div input {
   width: 100%;
@@ -721,13 +721,25 @@ tbody td button:hover {
   font-weight: 400 !important;
 }
 .productadd-form .form-group {
-  width: 40%;
   font-family: "Poppins";
   padding: 1%;
+  display: flex;
+  align-items: center;
 }
 .productadd-form .form-group label {
   font-weight: bold;
+  margin-right: 1rem;
 }
+.productadd-form .form-group option {
+  width: 100%;
+  margin-top: 4px;
+  height: 45px;
+  border: 1px solid #f2f2f2;
+  font-family: "Poppins";
+  padding-left: 12px;
+  border-radius: 4px;
+}
+
 /*productlist and Productadd Css end*/
 
 /* deliverymanage and delivery boy add Css start */

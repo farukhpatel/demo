@@ -15,17 +15,18 @@ function Home() {
           <div className="home-top">
             <div className="home-top-left">
               {/* <a href="/assigned"> */}
-              <a href="/assigned">
+              <a href="/unassignedorders">
                 <div className="item-1">
                   <h3>12</h3>
-                  <h5>Assigned Orders</h5>
+                  <h5>Unassigned Orders</h5>
                 </div>
               </a>
               {/* <a href="/outfordelivery"> */}
-              <a href="/unassignedorders">
+              
+              <a href="/assigned">
                 <div className="item-1">
                   <h3>7</h3>
-                  <h5>Unassigned Orders</h5>{" "}
+                  <h5>Assigned Orders</h5>{" "}
                 </div>
               </a>
             </div>

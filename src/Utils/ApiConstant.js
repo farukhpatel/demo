@@ -16,11 +16,12 @@ const API = {
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
-  ASSIGN_DELIVERY_BOY: Config.BASE_URL + "/api/order/update/3",
+  ASSIGN_DELIVERY_BOY: Config.BASE_URL + "api/order/update/3",
   VENDOR_API: Config.BASE_URL + "api/shop/all",
   IMAGE_UPLOAD: Config.BASE_URL + "api/image/upload",
   CREATE_USER: Config.BASE_URL + "api/user/create",
   CREATE_SHOP: Config.BASE_URL + "api/shop/create",
+  CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
 };
 
