@@ -64,7 +64,7 @@ function AddProductForm() {
               }
               else {
                   toast.error(result?.error)
-                  window.location.href = '/productlist'
+                  // window.location.href = '/productlist'
               }
           })
         }
