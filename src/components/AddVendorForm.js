@@ -40,11 +40,12 @@ function AddVendorForm() {
   const [userid, setUserid] = useState("");
   const [vendorName, setVendorName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
   const [foundationDate, setFoundationDate] = useState(new Date());
   const [deliveryRange, setDeliveryRange] = useState("");
-  const [shopName, setShopName] = useState("")
+  const [shopName, setShopName] = useState("");
   // const [vendorName, setVendorName] = useState('')
   const [password, setPassword] = useState("");
 
@@ -68,13 +69,14 @@ function AddVendorForm() {
   // form1
   const submit = (e) => {
     e.preventDefault();
-    if (!vendorName) {
-      toast("Shope name length atleast 5letters");
-    } else if (!phone) {
-      toast("at least 10 digit no");
-    } else if (!password) {
-      toast("length at least 5");
-    } else {
+    if (vendorName.length < 5) {
+      toast.error("Shop name must be atleast 5 characters.");
+    } else if (phone.length !== 10) {
+      toast.error("Phone number should have exactly 10 digits.");
+    } else if (password.length < 5) {
+      toast.error("Password must be of atleast 5 charcaters");
+    } else if (email==="") toast.error("Email can't be empty");
+    else {
       let object = {
         method: "POST",
         headers: {
@@ -85,6 +87,7 @@ function AddVendorForm() {
         body: JSON.stringify({
           name: vendorName,
           phone: phone,
+          email: email,
           password: password,
           role_id: 2,
         }),
@@ -129,6 +132,20 @@ function AddVendorForm() {
             item.end = moment(endTime._d).format("HH:mm:ss");
             return item;
           });
+
+          let body = {
+            user_id: userid,
+            shop_name: shopName,
+            shop_phone: phone,
+            shop_description: description,
+            shop_profile: result.image_url,
+            shop_license_number: licenseNumber,
+            //UPDATE FOUNDING DATE VALUE
+            shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+            shop_delivery_range: deliveryRange,
+            shop_schedules: shop_schedules,
+          };
+
           let obj = {
             method: "POST",
             headers: {
@@ -136,34 +153,28 @@ function AddVendorForm() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: JSON.stringify({
-              user_id: userid,
-              shop_name: shopName,
-              shop_phone: phone,
-              shop_description: description,
-              shop_profile: result.image_url,
-              shop_license_number: licenseNumber,
-              //UPDATE FOUNDING DATE VALUE
-              shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-              shop_delivery_range: deliveryRange,
-              shop_schedules: shop_schedules,
-            }),
+            body: JSON.stringify(body),
           };
 
-          console.log(obj.body, "shop object");
-          APICall(API.CREATE_SHOP, obj, (error, res) => {
+          let error = false;
+          Object.keys(body).forEach((key) => {
+            if (!error && body[key] === "") {
+              toast.error("One or more fields are empty.");
+              error = true;
+            }
+          });
+          if (!error) {
+            APICall(API.CREATE_SHOP, obj, (error, res) => {
               if (error) {
-                  console.log(error)
+                console.log(error);
+              } else if (result.status) {
+                toast.success("Successful creation of Vendor.");
+                window.location.href = "/vendor";
+              } else {
+                toast.error(result?.error);
               }
-              else if (result.status) {
-                  toast.success('Successful creation of Vendor.')
-                  window.location.href = '/vendor'
-              }
-              else {
-                  toast.error(result?.error)
-                  window.location.href = '/vendor'
-              }
-          })
+            });
+          }
         }
       });
     } else {
@@ -198,6 +209,16 @@ function AddVendorForm() {
                   id="phone"
                   placeholder="Type here..."
                   onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Type here..."
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div class="form-group">
@@ -329,7 +350,6 @@ function AddVendorForm() {
                         id="time-picker"
                         label="Time picker"
                         ampm={false}
-                        
                         value={startTime}
                         onChange={(e) => handleTimeChange(e, "start")}
                         KeyboardButtonProps={{
