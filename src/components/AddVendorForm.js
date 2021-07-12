@@ -46,7 +46,6 @@ function AddVendorForm() {
   const [foundationDate, setFoundationDate] = useState(new Date());
   const [deliveryRange, setDeliveryRange] = useState("");
   const [shopName, setShopName] = useState("");
-  // const [vendorName, setVendorName] = useState('')
   const [password, setPassword] = useState("");
 
   useEffect(() => {

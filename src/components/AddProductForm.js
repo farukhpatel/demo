@@ -13,17 +13,16 @@ function AddProductForm() {
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState("");
   const [baseUnit, setBaseUnit] = useState("");
-  const [unitType, setUnitType] = useState("gm")
+  const [unitType, setUnitType] = useState("gm");
   const [percentage, setPercentage] = useState(1);
   const [commission, setCommission] = useState(0);
-
 
   const submit = (e) => {
     e.preventDefault();
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (productImage) {
-        console.log(productImage,"prodcut")
+      console.log(productImage, "prodcut");
       let formdata = new FormData();
       formdata.append("image", productImage[0]);
       let object = {
@@ -37,6 +36,13 @@ function AddProductForm() {
         if (err) {
           console.log(err);
         } else if (result.status) {
+          let body = {
+            product_name: productName,
+            product_image: result.image_url,
+            commission: commission,
+            is_percentage_commission: percentage,
+            base_unit: `${baseUnit}${unitType}`,
+          };
           let obj = {
             method: "POST",
             headers: {
@@ -44,29 +50,29 @@ function AddProductForm() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: JSON.stringify({
-              product_name: productName,
-              product_image: result.image_url,
-              commission: commission,
-             is_percentage:percentage,
-             base_unit: `${baseUnit}${unitType}`
-            }),
+            body: JSON.stringify(),
           };
 
-          console.log(obj.body, "shop object");
-          APICall(API.CREATE_PRODUCT, obj, (error, res) => {
-              if (error) {  
-                  console.log(error)
+          let error = false;
+          Object.keys(body).forEach((key) => {
+            if (!error && body[key] === "") {
+              toast.error("One or more fields are empty.");
+              error = true;
+            }
+          });
+          if (!error) {
+            APICall(API.CREATE_PRODUCT, obj, (error, res) => {
+              if (error) {
+                console.log(error);
+              } else if (result.status) {
+                toast.success("Successful creation of shop");
+                window.location.href = "/productlist";
+              } else {
+                toast.error(result?.error);
+                // window.location.href = '/productlist'
               }
-              else if (result.status) {
-                  toast.success('Successful creation of shop')
-                  window.location.href = '/productlist'
-              }
-              else {
-                  toast.error(result?.error)
-                  // window.location.href = '/productlist'
-              }
-          })
+            });
+          }
         }
       });
     } else {
@@ -76,7 +82,7 @@ function AddProductForm() {
   return (
     <>
       <div className="main-outer-div">
-      <ToastContainer />
+        <ToastContainer />
         <div className="myorders-outer-div">
           <div className=" productlist-inner-div-form">
             <h1>Add Product</h1>
@@ -136,7 +142,7 @@ function AddProductForm() {
                 />
               </div>
               <div class="form-group">
-              <label for="baseUnit">Unit</label>
+                <label for="baseUnit">Unit</label>
                 <Select
                   value={unitType}
                   onChange={(event) => setUnitType(event.target.value)}
