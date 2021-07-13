@@ -83,7 +83,7 @@ function UnassignedOrders() {
         })
     }
 
-    function handleDeliveryBoyAssignment (deliveryBoyId){
+    function handleDeliveryBoyAssignment (deliveryBoyId, orderId){
         const tokenValue = localStorage.getItem("token");
         let object = {
             method: 'PATCH',
@@ -97,7 +97,7 @@ function UnassignedOrders() {
                 assigned_to: deliveryBoyId,
             })
         };
-        APICall(API.ASSIGN_DELIVERY_BOY, object, (error, result) => {
+        APICall(`${API.ASSIGN_DELIVERY_BOY}/${orderId}`, object, (error, result) => {
             if (error)
                 console.log(error)
 
@@ -180,7 +180,7 @@ function UnassignedOrders() {
                                                                     </MenuItem>
                                                                     {deliveryBoysList.map((deliveryBoy)=>{
                                                                         return (
-                                                                            <MenuItem value={deliveryBoy.id} onClick = {()=>handleDeliveryBoyAssignment(deliveryBoy.id)}>{deliveryBoy.name}</MenuItem>
+                                                                            <MenuItem value={deliveryBoy.id} onClick = {()=>handleDeliveryBoyAssignment(deliveryBoy.id, value?.id)}>{deliveryBoy.name}</MenuItem>
                                                                         )
                                                                     })}
                                                                 </Select>

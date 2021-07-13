@@ -7,7 +7,7 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-
+import Geocode from "react-geocode";
 import Grid from "@material-ui/core/Grid"; //clock
 import MomentUtils from "@date-io/moment"; //clock
 import moment from "moment"; //for clock time
@@ -47,10 +47,73 @@ function AddVendorForm() {
   const [deliveryRange, setDeliveryRange] = useState("");
   const [shopName, setShopName] = useState("");
   const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [localities, setLocalities] = useState([])
+  const [coord, setCoord] = useState({
+    lat: "",
+    lng: "",
+  });
+  const [addressableId, setAddressableID] = useState("abcd");
 
+  const [addressForm, setAddressForm] = useState({
+    addressable_id: "",
+    addressable_type: "Shop",
+    name: "",
+    address_type: "Shop",
+    address_line_1: "",
+    address_line_2: "",
+    address_line_3: "",
+    locality_id: "",
+    city_id: "",
+    pincode: "",
+    state: "Madhya Pradesh",
+    country: "India",
+    latitude: "",
+    longitude: "",
+  });
+
+  function getGeo(event) {
+    event.preventDefault();
+    // Get latitude & longitude from address.
+    console.log(address);
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng, "no");
+        setCoord({ lat: lat, lng: lng });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
   useEffect(() => {
     console.log(foundationDate);
   }, [foundationDate]);
+
+  useEffect(()=>{
+    if(addressableId==="abcd")
+    {
+      const tokenValue = localStorage.getItem("token");
+      let object = {
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${tokenValue}`,
+          },
+      };
+      APICall(API.GET_LOCALITIES, object,(err, result) => {
+        if (err) {
+          toast.error(err);
+        } else if (result.status) {
+          setLocalities(result.localities)
+        } else {
+          toast.error(result?.error);
+        }
+      });
+    }
+  },[addressableId])
 
   // date picker
   const handleDateChange = (e) => {
@@ -74,7 +137,7 @@ function AddVendorForm() {
       toast.error("Phone number should have exactly 10 digits.");
     } else if (password.length < 5) {
       toast.error("Password must be of atleast 5 charcaters");
-    } else if (email==="") toast.error("Email can't be empty");
+    } else if (email === "") toast.error("Email can't be empty");
     else {
       let object = {
         method: "POST",
@@ -186,206 +249,288 @@ function AddVendorForm() {
       <div className="main-outer-div">
         <ToastContainer />
         <div className="myorders-outer-div">
-          <div className="vendor-form-1">
-            <h1>Add Vendor</h1>
-            <form className="vendor-form">
-              <span className="customSpan"></span>
-              <div class="form-group">
-                <label for="vendorName">Vendor Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="vendorName"
-                  placeholder="Type here..."
-                  onChange={(e) => setVendorName(e.target.value)}
-                />
+          {addressableId === "" ? (
+            <>
+              <div className="vendor-form-1">
+                <h1>Add Vendor</h1>
+                <form className="vendor-form">
+                  <span className="customSpan"></span>
+                  <div class="form-group">
+                    <label for="vendorName">Vendor Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="vendorName"
+                      placeholder="Type here..."
+                      onChange={(e) => setVendorName(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="phone"
+                      placeholder="Type here..."
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="Type here..."
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="password">Address</label>
+                    <input
+                      type="address"
+                      class="form-control"
+                      id="address"
+                      value={address}
+                      placeholder="Type here..."
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                    <button onClick={(event) => getGeo(event)}>
+                      Set Coords
+                    </button>
+                    lat : {coord.lat} long: {coord.lng}
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="Type here..."
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary submitBtn"
+                    onClick={submit}
+                  >
+                    Submit
+                  </button>
+                </form>
               </div>
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="phone"
-                  placeholder="Type here..."
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+
+              <div className="vendor-form-2">
+                <h1>Add Vendor Details</h1>
+                <div className="vendor-form2-container">
+                  <form className="vendor-form">
+                    <span className="customSpan"></span>
+                    <div class="form-group">
+                      <label for="userid">User Id:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="userid"
+                        placeholder={userid}
+                        readOnly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="vendorName">Shop Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="vendorName"
+                        placeholder={"Enter Shop Name"}
+                        onChange={(e) => setShopName(e.target.value)}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shopPhone">Shop Phone</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="shopPhone"
+                        placeholder={phone}
+                        readOnly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shopdescription">Shop Description</label>
+                      <textarea
+                        class="form-control"
+                        id="shopdescription"
+                        rows="3"
+                        onChange={(e) => setDescription(e.target.value)}
+                      ></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="profile">Profile:</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="profile"
+                        name="profile"
+                        onChange={(e) => setFile(e.target.files)}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shoplicensenumber">Shop License Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="shoplicensenumber"
+                        onChange={(e) => setLicenseNumber(e.target.value)}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shopfoundationdate">
+                        Shop Foundation Date
+                      </label>
+                      {/* <input type="tel" class="form-control" id="shopfoundationdate" onChange={e => setFoundationDate(e.target.value)} /> */}
+                      <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardDatePicker
+                            margin="normal"
+                            id="date-picker-dialog"
+                            label="Date picker dialog"
+                            format="DD/MM/yyyy"
+                            value={foundationDate}
+                            onChange={(e) => handleDateChange(e)}
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </div>
+                    <div class="form-group">
+                      <label for="deliveryrange">Delivery Range</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="deliveryrange"
+                        placeholder=" eg:- 1km"
+                        onChange={(e) => setDeliveryRange(e.target.value)}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shopschedule">Shop Schedule</label>
+                      <MultiSelect
+                        options={options}
+                        value={selected}
+                        onChange={setSelected}
+                        labelledBy="Select"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="shopschedulestart">Shop Schedule Start</label>
+                      <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Time picker"
+                            ampm={false}
+                            value={startTime}
+                            onChange={(e) => handleTimeChange(e, "start")}
+                            KeyboardButtonProps={{
+                              "aria-label": "change time",
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </div>
+                    <div class="form-group">
+                      <label for="shopscheduleend">Shop Schedule End</label>
+                      <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Time picker"
+                            ampm={false}
+                            value={endTime}
+                            onChange={(e) => handleTimeChange(e, "end")}
+                            KeyboardButtonProps={{
+                              "aria-label": "change time",
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary submitBtn"
+                      onClick={finalSubmit}
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="password">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  placeholder="Type here..."
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Type here..."
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary submitBtn"
-                onClick={submit}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-          <div className="vendor-form-2">
-            <h1>Add Vendor Details</h1>
-            <div className="vendor-form2-container">
+            </>
+          ) : (
+            <div className="vendor-form-1">
+              <h1>Add Address</h1>
               <form className="vendor-form">
                 <span className="customSpan"></span>
                 <div class="form-group">
-                  <label for="userid">User Id:</label>
+                  <label for="vendorName">Address Line 1</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="userid"
-                    placeholder={userid}
-                    readOnly
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="vendorName">Shop Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
+                    name="address_line_1"
                     id="vendorName"
-                    placeholder={"Enter Shop Name"}
-                    onChange={(e) => setShopName(e.target.value)}
+                    placeholder="Type here..."
+                    onChange={(e) => setVendorName(e.target.value)}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="shopPhone">Shop Phone</label>
+                  <label for="phone">Address Line 2</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="shopPhone"
-                    placeholder={phone}
-                    readOnly
+                    name = "address_line_2"
+                    id="phone"
+                    placeholder="Type here..."
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
                 <div class="form-group">
-                  <label for="shopdescription">Shop Description</label>
-                  <textarea
-                    class="form-control"
-                    id="shopdescription"
-                    rows="3"
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="profile">Profile:</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="profile"
-                    name="profile"
-                    onChange={(e) => setFile(e.target.files)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="shoplicensenumber">Shop License Number</label>
+                  <label for="password">Address Line 3</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="shoplicensenumber"
-                    onChange={(e) => setLicenseNumber(e.target.value)}
+                    id="email"
+                    name="address_line_3"
+                    placeholder="Type here..."
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+
                 <div class="form-group">
-                  <label for="shopfoundationdate">Shop Foundation Date</label>
-                  {/* <input type="tel" class="form-control" id="shopfoundationdate" onChange={e => setFoundationDate(e.target.value)} /> */}
-                  <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid container justify="space-around">
-                      <KeyboardDatePicker
-                        margin="normal"
-                        id="date-picker-dialog"
-                        label="Date picker dialog"
-                        format="DD/MM/yyyy"
-                        value={foundationDate}
-                        onChange={(e) => handleDateChange(e)}
-                        KeyboardButtonProps={{
-                          "aria-label": "change date",
-                        }}
-                      />
-                    </Grid>
-                  </MuiPickersUtilsProvider>
-                </div>
-                <div class="form-group">
-                  <label for="deliveryrange">Delivery Range</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="deliveryrange"
-                    placeholder=" eg:- 1km"
-                    onChange={(e) => setDeliveryRange(e.target.value)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="shopschedule">Shop Schedule</label>
-                  <MultiSelect
-                    options={options}
-                    value={selected}
-                    onChange={setSelected}
-                    labelledBy="Select"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="shopschedulestart">Shop Schedule Start</label>
-                  <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid container justify="space-around">
-                      <KeyboardTimePicker
-                        margin="normal"
-                        id="time-picker"
-                        label="Time picker"
-                        ampm={false}
-                        value={startTime}
-                        onChange={(e) => handleTimeChange(e, "start")}
-                        KeyboardButtonProps={{
-                          "aria-label": "change time",
-                        }}
-                      />
-                    </Grid>
-                  </MuiPickersUtilsProvider>
-                </div>
-                <div class="form-group">
-                  <label for="shopscheduleend">Shop Schedule End</label>
-                  <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid container justify="space-around">
-                      <KeyboardTimePicker
-                        margin="normal"
-                        id="time-picker"
-                        label="Time picker"
-                        ampm={false}
-                        value={endTime}
-                        onChange={(e) => handleTimeChange(e, "end")}
-                        KeyboardButtonProps={{
-                          "aria-label": "change time",
-                        }}
-                      />
-                    </Grid>
-                  </MuiPickersUtilsProvider>
+                  <label for="locality">Locality</label>
+                  {localities.length >0 
+                  ?
+                  <select>
+                    {localities.map((locality)=>{
+                      return <option value={locality?.city_id} label={locality?.locality}/>
+                    })}
+                    
+                  </select>:""}
                 </div>
                 <button
                   type="submit"
                   class="btn btn-primary submitBtn"
-                  onClick={finalSubmit}
+                  onClick={submit}
                 >
                   Submit
                 </button>
               </form>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>

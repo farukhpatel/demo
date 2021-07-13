@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Geocode from "react-geocode";
 
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -28,6 +29,8 @@ import Banner from "./components/Banner";
 import Review from "./components/Review";
 import Coupon from "./components/Coupon";
 
+Geocode.setLanguage("en");
+Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
 function App() {
   const getWindowsSize = () => {
     const { innerWidth: width, innerHeight: height } = window;

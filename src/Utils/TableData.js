@@ -146,7 +146,7 @@ const DropDown = (props) => {
         assigned_to: deliveryBoyId,
       }),
     };
-    APICall(API.ASSIGN_DELIVERY_BOY, object, (error, result) => {
+    APICall(`${API.ASSIGN_DELIVERY_BOY}/${props?.id}`, object, (error, result) => {
       if (error) console.log(error);
       else if (result.status) {
         toast.success("Delivery Boy Asssigned uccessfully.");
@@ -253,7 +253,7 @@ const TableData = ({ orderType }) => {
                               value === "Assigned" ? (
                                 <>
                                 { `${value} to ${row?.assigned_to?.name}`}
-                              <DropDown orderId={value?.order_id} />
+                              <DropDown orderId={value?.order_id} id = {value?.id} />
                               </>
                             ) : column?.id === "order_status" &&
                               value === "Picked" ? (
