@@ -103,6 +103,7 @@ function UnassignedOrders() {
 
             else if (result.status) {
                 toast.success("Delivery Boy Asssigned uccessfully.")
+                window.location.reload()
             }
 
             else

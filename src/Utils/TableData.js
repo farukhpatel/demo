@@ -107,6 +107,8 @@ const columns = [
 ];
 
 const DropDown = (props) => {
+
+  console.log(props,"drop")
   const selectClasses = selectStyles();
 
   const [deliveryBoysList, setDeliveryBoysList] = useState([]);
@@ -150,6 +152,7 @@ const DropDown = (props) => {
       if (error) console.log(error);
       else if (result.status) {
         toast.success("Delivery Boy Asssigned uccessfully.");
+        window.location.reload()
       } else toast.error(result?.error);
     });
   }
@@ -253,7 +256,7 @@ const TableData = ({ orderType }) => {
                               value === "Assigned" ? (
                                 <>
                                 { `${value} to ${row?.assigned_to?.name}`}
-                              <DropDown orderId={value?.order_id} id = {value?.id} />
+                              <DropDown orderId={row?.order_id} id = {row?.id} />
                               </>
                             ) : column?.id === "order_status" &&
                               value === "Picked" ? (

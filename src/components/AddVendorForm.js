@@ -49,11 +49,12 @@ function AddVendorForm() {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [localities, setLocalities] = useState([])
+  const [cities, setCities] = useState([])
   const [coord, setCoord] = useState({
     lat: "",
     lng: "",
   });
-  const [addressableId, setAddressableID] = useState("abcd");
+  const [addressableId, setAddressableID] = useState("");
 
   const [addressForm, setAddressForm] = useState({
     addressable_id: "",
@@ -112,6 +113,16 @@ function AddVendorForm() {
           toast.error(result?.error);
         }
       });
+
+      // APICall(API.GET_LOCALITIES, object,(err, result) => {
+      //   if (err) {
+      //     toast.error(err);
+      //   } else if (result.status) {
+      //     setLocalities(result.localities)
+      //   } else {
+      //     toast.error(result?.error);
+      //   }
+      // });
     }
   },[addressableId])
 
@@ -285,7 +296,7 @@ function AddVendorForm() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
-
+{/* 
                   <div class="form-group">
                     <label for="password">Address</label>
                     <input
@@ -301,6 +312,7 @@ function AddVendorForm() {
                     </button>
                     lat : {coord.lat} long: {coord.lng}
                   </div>
+                 */}
                   <div class="form-group">
                     <label for="password">Password</label>
                     <input
@@ -472,16 +484,29 @@ function AddVendorForm() {
               </div>
             </>
           ) : (
-            <div className="vendor-form-1">
+            <div className="vendor-form-1 address-form">
               <h1>Add Address</h1>
               <form className="vendor-form">
                 <span className="customSpan"></span>
+                <div class="form-group">
+                  <label for="vendorName">Address Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    value={addressForm.name}
+                    id="vendorName"
+                    placeholder="Type here..."
+                    onChange={(e) => setVendorName(e.target.value)}
+                  />
+                </div>
                 <div class="form-group">
                   <label for="vendorName">Address Line 1</label>
                   <input
                     type="text"
                     class="form-control"
                     name="address_line_1"
+                    value={addressForm.address_line_1}
                     id="vendorName"
                     placeholder="Type here..."
                     onChange={(e) => setVendorName(e.target.value)}
@@ -493,6 +518,7 @@ function AddVendorForm() {
                     type="text"
                     class="form-control"
                     name = "address_line_2"
+                    value={addressForm.address_line_2}
                     id="phone"
                     placeholder="Type here..."
                     onChange={(e) => setPhone(e.target.value)}
@@ -505,6 +531,7 @@ function AddVendorForm() {
                     class="form-control"
                     id="email"
                     name="address_line_3"
+                    value={addressForm.address_line_3}
                     placeholder="Type here..."
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -519,8 +546,49 @@ function AddVendorForm() {
                       return <option value={locality?.city_id} label={locality?.locality}/>
                     })}
                     
-                  </select>:""}
+                  </select>:"No Localities Found."}
                 </div>
+
+                <div class="form-group">
+                  <label for="password">Pincode</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    maxLength="6"
+                    minLength="6"
+                    id="pincode"
+                    name="pincode"
+                    value={addressForm.pincode}
+                    placeholder="Enter pincode"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                
+                <div class="form-group">
+                  <label for="password">State</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="state"
+                    readOnly
+                    value={addressForm.state}
+                    placeholder="PINCODE"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Country</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="country"
+                    readOnly
+                    value={addressForm.country}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
                 <button
                   type="submit"
                   class="btn btn-primary submitBtn"
