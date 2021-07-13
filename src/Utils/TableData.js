@@ -26,6 +26,12 @@ const useStyles = makeStyles({
 // table js end
 const columns = [
   {
+    id: "index",
+    label: "S.No",
+    minWidth: 170,
+    align: "center",
+  },
+  {
     id: "order_id",
     label: "Order Id",
     minWidth: 170,
@@ -131,7 +137,7 @@ const TableData = ({ orderType }) => {
           </TableHead>
           <TableBody>
             {assigned.length !== 0
-              ? assigned.map((row) => {
+              ? assigned.map((row, rowIndex) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
@@ -151,7 +157,8 @@ const TableData = ({ orderType }) => {
                             `${JSON.stringify(value?.name)}`
                           ) : column?.id === "shop" && column?.label ==="Seller Name" ?(
                             (value?.shop_name)
-                          ):
+                          ) :(column?.id === "index")? (rowIndex+1)
+                          :
                           value}
                         </TableCell>
                       );
