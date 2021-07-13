@@ -27,7 +27,6 @@ import PaymentSettlement from "./components/PaymentSettlement";
 import Banner from "./components/Banner";
 import Review from "./components/Review";
 import Coupon from "./components/Coupon";
-import Video from "./components/video"
 
 function App() {
   const getWindowsSize = () => {
@@ -49,22 +48,21 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // return windowDimensions.width < 768 ? (
-  //   <div className="notSupported">
-  //     <div>
-  //       <i class="fas fa-bug fa-4x "></i>
-  //       <h1>Oops!!</h1>
-  //       <h3>Not Compatible With Mobile Phones</h3>
-  //       <p>For Best User Experience Open It Again In Desktop </p>
-  //     </div>
-  //   </div>
-  // ) : (
-   return( <>
+  return windowDimensions.width < 768 ? (
+    <div className="notSupported">
+      <div>
+        <i class="fas fa-bug fa-4x "></i>
+        <h1>Oops!!</h1>
+        <h3>Not Compatible With Mobile Phones</h3>
+        <p>For Best User Experience Open It Again In Desktop </p>
+      </div>
+    </div>
+  ) : (
+    <>
       <Switch>
         <Route exact path="/" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={LogIn} />
-        <Route exact path="/video" component={Video} />
         <div>
           <ToastContainer />
           <Navbar />
