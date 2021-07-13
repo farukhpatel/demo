@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
@@ -28,53 +29,53 @@ const columns = [
     id: "order_id",
     label: "Order Id",
     minWidth: 170,
-    align: "left",
+    align: "center",
   },
   {
     id: "user_id",
     label: "Customer Id",
     minWidth: 170,
-    align: "left",
+    align: "center",
   },
   {
     id: "shop",
     label: "Seller Name",
     minWidth: 200,
-    align: "left",
+    align: "center",
   },
   {
     id: "delivery_date",
     label: "Time Alloted",
     minWidth: 200,
-    align: "left",
+    align: "center",
     // format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: "slot",
     label: "Delivery Slot",
     minWidth: 200,
-    align: "left",
+    align: "center",
     // format: (value) => value.toFixed(2),
   },
   {
     id: "shop",
     label: "Locality",
     minWidth: 300,
-    align: "left",
+    align: "center",
     // format: (value) => value.toFixed(2),
   },
   {
     id: "order_status",
     label: "Order Status",
     minWidth: 200,
-    align: "left",
+    align: "center",
     // format: (value) => value.toFixed(2),
   },
   {
     id: "payment_status",
     label: "Payment Status",
     minWidth: 200,
-    align: "left",
+    align: "center",
     // format: (value) => value.toFixed(2),
   },
 ];
@@ -110,6 +111,13 @@ const TableData = ({ orderType }) => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
+            <TableCell
+                  // key={column.id}
+                  align={"center"}
+                  style={{ minWidth: 170 }}
+                >
+                  {"S.No"}
+                </TableCell>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -130,7 +138,8 @@ const TableData = ({ orderType }) => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column?.id === "user_id" ||
+                          {
+                            column?.id === "user_id" ||
                             column?.id === "order_id" ? (
                               <Link to={{pathname:"/orderdetails", state:{order:row}}}>
                               {" "}

@@ -50,7 +50,7 @@ function AddProductForm() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: JSON.stringify(),
+            body: JSON.stringify(body),
           };
 
           let error = false;
