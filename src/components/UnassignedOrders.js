@@ -140,7 +140,7 @@ function UnassignedOrders() {
 
                                 <table class="table table-striped " >
                                     <thead>
-                                        <tr align="center">
+                                        <tr>
                                             
                                             <th scope="col">S.No</th>
                                             <th scope="col">Order Id</th>
@@ -158,14 +158,14 @@ function UnassignedOrders() {
                                             unassigned.map((value, index) => {
                                                 return (
                                                     <tr>
-                                                        <td align="center">{index+1}</td>
-                                                        <td align="center"><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.order_id}</Link></td>
-                                                        <td align="center"><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.user_id}</Link></td>
-                                                        <td align="center">{value?.shop?.shop_name}</td>
-                                                        <td align="center">{value?.delivery_date}</td>
-                                                        <td align="center">{value?.slot}</td>
-                                                        <td align="center">{value?.address?.locality?.locality}</td>
-                                                        <td align="center">
+                                                        <td>{index+1}</td>
+                                                        <td><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.order_id}</Link></td>
+                                                        <td><Link to={{pathname:"/orderdetails", state:{order:value}}}>{value?.user_id}</Link></td>
+                                                        <td>{value?.shop?.shop_name}</td>
+                                                        <td>{value?.delivery_date}</td>
+                                                        <td>{value?.slot}</td>
+                                                        <td>{value?.address?.locality?.locality}</td>
+                                                        <td>
                                                             <FormControl variant="outlined" className={classes.formControl}>
                                                                 <InputLabel id="demo-simple-select-outlined-label">Assign</InputLabel>
                                                                 <Select
@@ -183,14 +183,11 @@ function UnassignedOrders() {
                                                                             <MenuItem value={deliveryBoy.id} onClick = {()=>handleDeliveryBoyAssignment(deliveryBoy.id)}>{deliveryBoy.name}</MenuItem>
                                                                         )
                                                                     })}
-                                                                    <MenuItem value={10}>Ramlal</MenuItem>
-                                                                    <MenuItem value={20}>Babu</MenuItem>
-                                                                    <MenuItem value={30}>Munshi</MenuItem>
                                                                 </Select>
                                                             </FormControl>
 
                                                         </td>
-                                                        <td align="center">{value?.payment_status}</td>
+                                                        <td>{value?.payment_status}</td>
 
                                                     </tr>
                                                 )
