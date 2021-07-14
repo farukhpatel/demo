@@ -1035,6 +1035,7 @@ a {
 }
 .details-content {
   margin-left: 3%;
+  width: 100%;
 }
 .details-content h2,
 .details-content h5 {
