@@ -13,6 +13,10 @@ function Home() {
     total_delivery_boys: "",
     total_orders: "",
     total_orders_delivered: "",
+    Accepted: "",
+    Assigned: "",
+    Delivered: "",
+    Picked: "",
   });
   useEffect(() => {
     let obj = {
@@ -29,8 +33,17 @@ function Home() {
         console.log(err);
       } else if (result.status) {
         console.log(result);
-        const data = {active_users:result.active_users, total_delivery_boys:result.total_delivery_boys, total_orders:result.total_orders, total_orders_delivered:result.total_orders_delivered}
-        setDashboardData(data)
+        const data = {
+          active_users: result.active_users,
+          total_delivery_boys: result.total_delivery_boys,
+          total_orders: result.total_orders,
+          total_orders_delivered: result.total_orders_delivered,
+          Accepted:result?.order_status_count?.Accepted,
+          Assigned:result?.order_status_count?.Assigned,
+          Delivered:result?.order_status_count?.Delivered,
+          Picked:result?.order_status_count?.Picked,
+        };
+        setDashboardData(data);
       }
     });
   }, []);
@@ -45,18 +58,16 @@ function Home() {
         <div className="home-outer-div" style={{ paddingTop: "3%" }}>
           <div className="home-top">
             <div className="home-top-left">
-              {/* <a href="/assigned"> */}
               <a href="/unassignedorders">
                 <div className="item-1">
-                  <h3>12</h3>
+                  <h3>{dashboardData.Accepted}</h3>
                   <h5>Unassigned Orders</h5>
                 </div>
               </a>
-              {/* <a href="/outfordelivery"> */}
 
               <a href="/assigned">
                 <div className="item-1">
-                  <h3>7</h3>
+                  <h3>{dashboardData.Assigned}</h3>
                   <h5>Assigned Orders</h5>{" "}
                 </div>
               </a>
@@ -66,14 +77,14 @@ function Home() {
               {/* <a href="/notpicked"> */}
               <a href="/outfordelivery">
                 <div className="item-1">
-                  <h3>5</h3>
+                  <h3>{dashboardData.Picked}</h3>
                   <h5>Picked</h5>{" "}
                 </div>
               </a>
               {/* <a href="/unassignedorders"> */}
               <a href="/deliveredorders">
                 <div className="item-1">
-                  <h3>8</h3>
+                  <h3>{dashboardData.Delivered}</h3>
                   <h5>Delivered</h5>
                 </div>
               </a>
