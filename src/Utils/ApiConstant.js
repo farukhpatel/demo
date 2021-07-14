@@ -22,10 +22,11 @@ const API = {
   IMAGE_UPLOAD: Config.BASE_URL + "api/image/upload",
   CREATE_USER: Config.BASE_URL + "api/user/create",
   CREATE_SHOP: Config.BASE_URL + "api/shop/create",
+  CREATE_ADDRESS: Config.BASE_URL + "api/address/create",
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
-  GET_CITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
+  GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
 };
 
 export default API;

@@ -19,8 +19,9 @@ import "./SuperUser.css";
 import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { set } from "date-fns";
 
 function AddVendorForm() {
   // multiselect
@@ -47,17 +48,12 @@ function AddVendorForm() {
   const [deliveryRange, setDeliveryRange] = useState("");
   const [shopName, setShopName] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [localities, setLocalities] = useState([])
-  const [cities, setCities] = useState([])
-  const [coord, setCoord] = useState({
-    lat: "",
-    lng: "",
-  });
+  const [localities, setLocalities] = useState([]);
+  const [cities, setCities] = useState([]);
   const [addressableId, setAddressableID] = useState("");
 
   const [addressForm, setAddressForm] = useState({
-    addressable_id: "",
+    addressable_id: addressableId,
     addressable_type: "Shop",
     name: "",
     address_type: "Shop",
@@ -65,7 +61,9 @@ function AddVendorForm() {
     address_line_2: "",
     address_line_3: "",
     locality_id: "",
+    locality: "",
     city_id: "",
+    city: "",
     pincode: "",
     state: "Madhya Pradesh",
     country: "India",
@@ -73,58 +71,155 @@ function AddVendorForm() {
     longitude: "",
   });
 
-  function getGeo(event) {
-    event.preventDefault();
+  function getGeo() {
+    // event.preventDefault();
     // Get latitude & longitude from address.
-    console.log(address);
+    const {
+      address_line_1,
+      address_line_2,
+      address_line_3,
+      locality,
+      city,
+      pincode,
+      state,
+      country,
+    } = addressForm;
+    const address = `${address_line_1}, ${address_line_2}, ${address_line_3}, ${locality}, ${city}, ${pincode}, ${state}, ${country}`;
+
     Geocode.fromAddress(address).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng, "no");
-        setCoord({ lat: lat, lng: lng });
+        if(lat==="" || lng ==="")
+        toast.error("Something is wrong with the address provided")
+        else
+        setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  useEffect(() => {
-    console.log(foundationDate);
-  }, [foundationDate]);
 
-  useEffect(()=>{
-    if(addressableId==="abcd")
-    {
+  function handleCitySelect(event) {
+    const { value } = event.target;
+
+    if (value === "") {
+      setAddressForm({
+        ...addressForm,
+        city_id: "",
+        city: "",
+        locality: "",
+        locality_id: "",
+      });
+      setLocalities([]);
+    } else if (value !== addressForm.city_id) {
+      let index = event.nativeEvent.target.selectedIndex;
+      let label = event.nativeEvent.target[index].label;
+      setAddressForm({
+        ...addressForm,
+        city_id: value,
+        city: label,
+        locality: "",
+        locality_id: "",
+      });
+
+      for (let i = 0; i < cities.length; i++) {
+        if (cities[i].id.toString() === value) {
+          setLocalities(cities[i].localities);
+          break;
+        }
+      }
+    }
+  }
+
+  function handleLocalitySelect(event) {
+    const { value } = event.target;
+    if (value === "") {
+      setAddressForm({ ...addressForm, locality: "", locality_id: "" });
+    } else {
+      let index = event.nativeEvent.target.selectedIndex;
+      let label = event.nativeEvent.target[index].label;
+      setAddressForm({ ...addressForm, locality: label, locality_id: value });
+    }
+  }
+
+  function handleAddressForm(event) {
+    let { name, value } = event.target;
+    if (name === "pincode" && value.length > 6) {
+      value = value.slice(0, 6);
+    }
+    setAddressForm({ ...addressForm, [name]: value });
+  }
+
+  function createAddress() {
+    let obj = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(addressForm),
+    };
+
+    APICall(API.CREATE_ADDRESS, obj, (error, res) => {
+      if (error) {
+        console.log(error);
+      } else if (res.status) {
+        toast.success("Address Successfully Added.");
+        window.location.href = "/vendor";
+      } else {
+        toast.error(res?.error);
+      }
+    });
+  }
+
+  function handleAddressFormSubmit(event) {
+    console.log("handleAddresss");
+    event.preventDefault();
+
+    let error = false;
+    let optionalKeys = [
+      "address_line_2",
+      "address_line_3",
+      "city_id",
+      "locality_id",
+      "latitude",
+      "longitude",
+    ];
+    Object.keys(addressForm).forEach((key) => {
+      if (!error && addressForm[key] === "" && !optionalKeys.includes(key)) {
+        toast.error(`${key} can't be empty.`);
+        error = true;
+      }
+    });
+    if (!error) {
+      getGeo();
+    }
+  }
+  useEffect(() => {
       const tokenValue = localStorage.getItem("token");
       let object = {
-          method: 'GET',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${tokenValue}`,
-          },
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenValue}`,
+        },
       };
-      APICall(API.GET_LOCALITIES, object,(err, result) => {
+      APICall(API.GET_CITIES, object, (err, result) => {
         if (err) {
           toast.error(err);
         } else if (result.status) {
-          setLocalities(result.localities)
+          setCities(result.cities);
+          if (cities.length > 0) setLocalities(cities[0]?.localities);
+          console.log(result);
         } else {
           toast.error(result?.error);
         }
       });
-
-      // APICall(API.GET_LOCALITIES, object,(err, result) => {
-      //   if (err) {
-      //     toast.error(err);
-      //   } else if (result.status) {
-      //     setLocalities(result.localities)
-      //   } else {
-      //     toast.error(result?.error);
-      //   }
-      // });
-    }
-  },[addressableId])
+  }, [addressableId]);
 
   // date picker
   const handleDateChange = (e) => {
@@ -181,6 +276,7 @@ function AddVendorForm() {
   };
 
   const finalSubmit = (e) => {
+    console.log("final submit??");
     e.preventDefault();
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
@@ -240,11 +336,13 @@ function AddVendorForm() {
             APICall(API.CREATE_SHOP, obj, (error, res) => {
               if (error) {
                 console.log(error);
-              } else if (result.status) {
-                toast.success("Successful creation of Vendor.");
-                window.location.href = "/vendor";
+              } else if (res.status) {
+                setAddressableID(res?.shop?.id)
+                setAddressForm({...addressForm, addressable_id:res?.shop?.id})
+                console.log(res?.shop?.id)
+                toast.success("Vendor Created. Add Address Details Now.");
               } else {
-                toast.error(result?.error);
+                toast.error(res?.error);
               }
             });
           }
@@ -255,10 +353,14 @@ function AddVendorForm() {
     }
   };
 
+  useEffect(()=>{
+    if(addressForm.latitude!=="" && addressForm.longitude!==""){
+      createAddress()
+    }
+  },[addressForm])
   return (
     <>
       <div className="main-outer-div">
-        <ToastContainer />
         <div className="myorders-outer-div">
           {addressableId === "" ? (
             <>
@@ -296,23 +398,7 @@ function AddVendorForm() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
-{/* 
-                  <div class="form-group">
-                    <label for="password">Address</label>
-                    <input
-                      type="address"
-                      class="form-control"
-                      id="address"
-                      value={address}
-                      placeholder="Type here..."
-                      onChange={(e) => setAddress(e.target.value)}
-                    />
-                    <button onClick={(event) => getGeo(event)}>
-                      Set Coords
-                    </button>
-                    lat : {coord.lat} long: {coord.lng}
-                  </div>
-                 */}
+
                   <div class="form-group">
                     <label for="password">Password</label>
                     <input
@@ -400,7 +486,7 @@ function AddVendorForm() {
                       <label for="shopfoundationdate">
                         Shop Foundation Date
                       </label>
-                      {/* <input type="tel" class="form-control" id="shopfoundationdate" onChange={e => setFoundationDate(e.target.value)} /> */}
+
                       <MuiPickersUtilsProvider utils={MomentUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
@@ -497,7 +583,7 @@ function AddVendorForm() {
                     value={addressForm.name}
                     id="vendorName"
                     placeholder="Type here..."
-                    onChange={(e) => setVendorName(e.target.value)}
+                    onChange={(e) => handleAddressForm(e)}
                   />
                 </div>
                 <div class="form-group">
@@ -509,7 +595,7 @@ function AddVendorForm() {
                     value={addressForm.address_line_1}
                     id="vendorName"
                     placeholder="Type here..."
-                    onChange={(e) => setVendorName(e.target.value)}
+                    onChange={(e) => handleAddressForm(e)}
                   />
                 </div>
                 <div class="form-group">
@@ -517,11 +603,11 @@ function AddVendorForm() {
                   <input
                     type="text"
                     class="form-control"
-                    name = "address_line_2"
+                    name="address_line_2"
                     value={addressForm.address_line_2}
                     id="phone"
                     placeholder="Type here..."
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => handleAddressForm(e)}
                   />
                 </div>
                 <div class="form-group">
@@ -533,20 +619,46 @@ function AddVendorForm() {
                     name="address_line_3"
                     value={addressForm.address_line_3}
                     placeholder="Type here..."
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleAddressForm(e)}
                   />
                 </div>
 
                 <div class="form-group">
                   <label for="locality">Locality</label>
-                  {localities.length >0 
-                  ?
-                  <select>
-                    {localities.map((locality)=>{
-                      return <option value={locality?.city_id} label={locality?.locality}/>
-                    })}
-                    
-                  </select>:"No Localities Found."}
+
+                  {localities.length > 0 ? (
+                    <select
+                      onChange={(event) => {
+                        handleLocalitySelect(event);
+                      }}
+                    >
+                      <option value="">Select Locality</option>
+                      {localities.map((locality) => {
+                        return (
+                          <option
+                            value={locality?.id}
+                            label={locality?.locality}
+                          />
+                        );
+                      })}
+                    </select>
+                  ) : (
+                    "No Localities Found."
+                  )}
+                </div>
+
+                <div class="form-group">
+                  <label for="locality">City</label>
+                  {cities.length > 0 ? (
+                    <select onChange={(event) => handleCitySelect(event)}>
+                      <option value="">Select a City</option>
+                      {cities.map((city) => {
+                        return <option value={city?.id} label={city?.city} />;
+                      })}
+                    </select>
+                  ) : (
+                    "No Cities Found."
+                  )}
                 </div>
 
                 <div class="form-group">
@@ -560,10 +672,10 @@ function AddVendorForm() {
                     name="pincode"
                     value={addressForm.pincode}
                     placeholder="Enter pincode"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleAddressForm(e)}
                   />
                 </div>
-                
+
                 <div class="form-group">
                   <label for="password">State</label>
                   <input
@@ -572,8 +684,6 @@ function AddVendorForm() {
                     name="state"
                     readOnly
                     value={addressForm.state}
-                    placeholder="PINCODE"
-                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -582,17 +692,16 @@ function AddVendorForm() {
                   <input
                     type="text"
                     class="form-control"
+                    value={addressForm.country}
                     name="country"
                     readOnly
-                    value={addressForm.country}
-                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
                 <button
                   type="submit"
                   class="btn btn-primary submitBtn"
-                  onClick={submit}
+                  onClick={(event) => handleAddressFormSubmit(event)}
                 >
                   Submit
                 </button>

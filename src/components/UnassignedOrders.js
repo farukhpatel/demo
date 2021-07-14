@@ -14,7 +14,7 @@ import moment from "moment";
 // import List from './List';
 
 import "./SuperUser.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
@@ -113,7 +113,6 @@ function UnassignedOrders() {
   return (
     <>
       <div className="main-outer-div">
-        <ToastContainer />
         <div className="myorders-outer-div">
           <div className="myorders-inner-div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

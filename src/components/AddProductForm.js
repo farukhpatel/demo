@@ -6,7 +6,7 @@ import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 import { Select } from "@material-ui/core";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddProductForm() {
@@ -82,7 +82,6 @@ function AddProductForm() {
   return (
     <>
       <div className="main-outer-div">
-        <ToastContainer />
         <div className="myorders-outer-div">
           <div className=" productlist-inner-div-form">
             <h1>Add Product</h1>
