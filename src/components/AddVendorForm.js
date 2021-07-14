@@ -21,7 +21,6 @@ import API from "../Utils/ApiConstant";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { set } from "date-fns";
 
 function AddVendorForm() {
   // multiselect
@@ -219,7 +218,7 @@ function AddVendorForm() {
           toast.error(result?.error);
         }
       });
-  }, [addressableId]);
+  }, [addressableId, cities]);
 
   // date picker
   const handleDateChange = (e) => {
@@ -357,6 +356,7 @@ function AddVendorForm() {
     if(addressForm.latitude!=="" && addressForm.longitude!==""){
       createAddress()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[addressForm])
   return (
     <>
