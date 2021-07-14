@@ -218,6 +218,7 @@ function AddVendorForm() {
           toast.error(result?.error);
         }
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressableId]);
 
   // date picker
