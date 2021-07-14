@@ -12,6 +12,7 @@ const API = {
   PICKED: Config.BASE_URL + "api/order/all?order_status=3",
   DELIVERED: Config.BASE_URL + "api/order/all?order_status=4",
   TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
+  GET_DASHBOARD_DATA: Config.BASE_URL + "api/admin/dashboard",
   // DASHBOARD API START END
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",

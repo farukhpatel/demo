@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SuperUser.css";
 
 import dairy from "../assets/dairy.jpg";
+
+//for Api
+import { APICall } from "../Utils/CommonFunctions";
+import API from "../Utils/ApiConstant";
+
 function Home() {
+  const [dashboardData, setDashboardData] = useState({
+    active_users: "",
+    total_delivery_boys: "",
+    total_orders: "",
+    total_orders_delivered: "",
+  });
+  useEffect(() => {
+    let obj = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    APICall(API.GET_DASHBOARD_DATA, obj, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else if (result.status) {
+        console.log(result);
+        const data = {active_users:result.active_users, total_delivery_boys:result.total_delivery_boys, total_orders:result.total_orders, total_orders_delivered:result.total_orders_delivered}
+        setDashboardData(data)
+      }
+    });
+  }, []);
   return (
     <>
       <div className="mainDashboardHeading">
@@ -22,7 +53,7 @@ function Home() {
                 </div>
               </a>
               {/* <a href="/outfordelivery"> */}
-              
+
               <a href="/assigned">
                 <div className="item-1">
                   <h3>7</h3>
@@ -63,7 +94,7 @@ function Home() {
                 <div>
                   <a href="/totalorderrecieved">
                     {" "}
-                    <h3>20</h3>
+                    <h3>{dashboardData.total_orders}</h3>
                   </a>
                 </div>
                 <a href="/totalorderrecieved">
@@ -81,7 +112,7 @@ function Home() {
                   ></i>
                 </div>
                 <div>
-                  <h3>0</h3>
+                  <h3>{dashboardData.total_orders_delivered}</h3>
                 </div>
                 <div className="total_orders_received">
                   <h5>Total Orders Deliverd</h5>
@@ -99,7 +130,7 @@ function Home() {
                 <div>
                   <a href="/totalorderrecieved">
                     {" "}
-                    <h3>50</h3>
+                    <h3>{dashboardData.active_users}</h3>
                   </a>
                 </div>
                 <a href="/totalorderrecieved">
@@ -118,7 +149,7 @@ function Home() {
                 <div>
                   <a href="/deliverymanage">
                     {" "}
-                    <h3>6</h3>
+                    <h3>{dashboardData.total_delivery_boys}</h3>
                   </a>
                 </div>
                 <a href="/deliverymanage">
