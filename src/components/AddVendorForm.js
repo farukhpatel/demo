@@ -218,7 +218,7 @@ function AddVendorForm() {
           toast.error(result?.error);
         }
       });
-  }, [addressableId, cities]);
+  }, [addressableId]);
 
   // date picker
   const handleDateChange = (e) => {
