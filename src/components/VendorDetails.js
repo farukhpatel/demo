@@ -6,16 +6,68 @@ import API from "../Utils/ApiConstant";
 import Popup from "reactjs-popup";
 import AddProductModal from "../Modal/AddProduct";
 
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "theme.palette.background.paper",
+  },
+}));
+
 function VendorDetails(props) {
   console.log(props);
   const vendorDetails = props?.location?.state?.vendor || {};
   const [products, setProducts] = useState({});
-  const [isSellingVisible, setIsSellingVisible] = useState(false);
-  // const orderProducts = props?.location?.state?.order?.order_products || [];
 
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   useEffect(() => {
-
-    setIsSellingVisible(false)
     let obj = {
       method: "GET",
       headers: {
@@ -110,100 +162,27 @@ function VendorDetails(props) {
                 </div>
               </div>
             </div>
-            <div className="navigation-area">
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link "
-                    id="customers-details"
-                    data-bs-toggle="tab"
-                    data-bs-target="#customersdetails"
-                    type="button"
-                    role="tab"
-                    aria-controls="customers-details"
-                    aria-selected="false"
-                    onClick={() => setIsSellingVisible(true)}
-                  >
-                    Selling Products
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link active"
-                    id="orders-details"
-                    data-bs-toggle="tab"
-                    data-bs-target="#ordersdetails"
-                    type="button"
-                    role="tab"
-                    aria-controls="orders-details"
-                    aria-selected="true"
-                    onClick={() => setIsSellingVisible(false)}
-                  >
-                    Non-Selling Products
-                  </button>
-                </li>
-              </ul>
-              <div class="tab-content" id="myTabContent">
-                <div
-                  class="tab-pane fade "
-                  id="customersdetails"
-                  role="tabpanel"
-                  aria-labelledby="customer-details"
+
+            <div className={classes.root}>
+              <AppBar position="static" backgroundColor="#3b1f47">
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="simple tabs example"
                 >
-                  {isSellingVisible ? (
-                    <div
+                  <Tab label="Non-Selling Products" {...a11yProps(0)} />
+                  <Tab label="Selling Products" {...a11yProps(1)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
+              <div
                       class="tab-pane fade show active"
                       id="ordersdetails"
                       role="tabpanel"
                       aria-labelledby="orders-details"
                     >
                       <table class="table table-striped">
-                        <thead>
-                          <tr align="center">
-                            <th scope="col">S.No</th>
-                            <th scope="col">Item Name</th>
-                            <th scope="col">Original Price</th>
-                            <th scope="col">Product Price</th>
-                            <th scope="col">Product Daily Stock</th>
-                            <th scope="col">Product Daily Stock Remaining</th>
-                            <th scope="col">Base Unit</th>
-                            <th scope="col">Commission</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {products?.selling_products?.length > 0 &&
-                            products?.selling_products?.map((value, index) => {
-                              return (
-                                <tr align="center">
-                                  <th scope="row">{index + 1}</th>
-                                  <td>{value?.product?.product_name}</td>
-                                  <td>₹{value?.original_price}</td>
-                                  <td>₹{value?.product_price}</td>
-                                  <td>{value?.product_daily_stock}</td>
-                                  <td>
-                                    {value?.product_daily_stock_remaining}
-                                  </td>
-                                  <td>{value?.product?.base_unit}</td>
-                                  <td>
-                                    {value?.product?.commission}
-                                    {value?.product
-                                      ?.is_percentage_commission === 1 && "%"}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                        </tbody>
-                      </table>
-                    </div>
-                  ) : (
-                    <div
-                      class="tab-pane fade show active"
-                      id="ordersdetails"
-                      role="tabpanel"
-                      aria-labelledby="orders-details"
-                    >
-                      <table class="table table-striped">
-                        <thead>
+                      <thead>
                           <tr align="center">
                             <th scope="col">S.No</th>
                             <th scope="col">Item Name</th>
@@ -252,9 +231,58 @@ function VendorDetails(props) {
                         </tbody>
                       </table>
                     </div>
-                  )}
-                </div>
-              </div>
+                            
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+              <div
+                      class="tab-pane fade show active"
+                      id="ordersdetails"
+                      role="tabpanel"
+                      aria-labelledby="orders-details"
+                    >
+                      <table class="table table-striped">
+                        <thead>
+                          <tr align="center">
+                            <th scope="col">S.No</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Original Price</th>
+                            <th scope="col">Product Price</th>
+                            <th scope="col">Product Daily Stock</th>
+                            <th scope="col">Product Daily Stock Remaining</th>
+                            <th scope="col">Base Unit</th>
+                            <th scope="col">Commission</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {products?.selling_products?.length > 0 &&
+                            products?.selling_products?.map((value, index) => {
+                              return (
+                                <tr align="center">
+                                  <th scope="row">{index + 1}</th>
+                                  <td>{value?.product?.product_name}</td>
+                                  <td>₹{value?.original_price}</td>
+                                  <td>₹{value?.product_price}</td>
+                                  <td>{value?.product_daily_stock}</td>
+                                  <td>
+                                    {value?.product_daily_stock_remaining}
+                                  </td>
+                                  <td>{value?.product?.base_unit}</td>
+                                  <td>
+                                    {value?.product?.commission}
+                                    {value?.product
+                                      ?.is_percentage_commission === 1 && "%"}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </div>
+                  
+                  </TabPanel>
+              <TabPanel value={value} index={2}>
+                Item Three
+              </TabPanel>
             </div>
           </div>
         </div>
