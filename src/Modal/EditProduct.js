@@ -9,47 +9,49 @@ import 'date-fns';
 import { toast } from 'react-toastify';
 
 
-function AddProduct(props) {
+function EditProduct(props) {
 
-    const [addProductData, setAddProductData] = useState({
+    const productDetails = props?.productDetails
+    console.log(props?.productId)
+    const [editProductData, setEditProductdata] = useState({
         shop_id:props?.shopId,
-        product_id:props?.productId,
-        product_price:"",
-        product_discount:0,
-        product_daily_stock:"",
+        product_id:productDetails?.product?.id,
+        product_price:productDetails?.product_price,
+        product_discount:productDetails?.product_discount,
+        product_daily_stock:productDetails?.product_daily_stock,
         product_approval:"Accepted"
     })
 
     function handleChange (event){
         const {name,value} = event.target
-        setAddProductData({
-            ...addProductData,
+        setEditProductdata({
+            ...editProductData,
             [name]:value
         })
     }
 
     function handleAddProduct(){
-        console.log(addProductData)
+        console.log(editProductData)
 
         let error = false
-        Object.keys(addProductData).forEach((key)=>{
-            if(!error && addProductData[key]===""){
+        Object.keys(editProductData).forEach((key)=>{
+            if(!error && editProductData[key]===""){
                 toast.error(`${key} can't be empty`)
                 error = true
             }
         })
         if(!error){
             let obj = {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                   Accept: "application/json",
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-                body: JSON.stringify(addProductData),
+                body: JSON.stringify(editProductData),
               };
           
-              APICall(API.ADD_SHOP_PRODUCT, obj, (error, res) => {
+              APICall(`${API.UPDATE_SHOP_PRODUCT}/${props?.productId}`, obj, (error, res) => {
                 if (error) {
                   console.log(error);
                 } else if (res.status) {
@@ -70,7 +72,7 @@ function AddProduct(props) {
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="disable" data-bs-toggle="tab" data-bs-target="#disable" type="button" role="tab" aria-controls="item-details" aria-selected="true">Add Product</button>
+                                <button class="nav-link active" id="disable" data-bs-toggle="tab" data-bs-target="#disable" type="button" role="tab" aria-controls="item-details" aria-selected="true">Edit Product</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -81,7 +83,7 @@ function AddProduct(props) {
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Price</h4></div>
                                             <div className="content">
-                                                <input type = "number" name = "product_price" value = {addProductData?.product_price} onChange={(event)=>handleChange(event)}/>
+                                                <input type = "number" name = "product_price" value = {editProductData?.product_price} onChange={(event)=>handleChange(event)}/>
                                             </div>
 
                                         </div>
@@ -89,13 +91,13 @@ function AddProduct(props) {
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Discount</h4></div>
                                             <div className="content">
-                                                <input type = "number" name = "product_discount" value ={addProductData?.product_discount} onChange={(event)=>handleChange(event)}/>
+                                                <input type = "number" name = "product_discount" value ={editProductData?.product_discount} onChange={(event)=>handleChange(event)}/>
                                             </div>
                                         </div>
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Daily Stock</h4></div>
                                             <div className="content">
-                                                <input type = "number" name = "product_daily_stock" value = {addProductData?.product_daily_stock} onChange={(event)=>handleChange(event)}/>
+                                                <input type = "number" name = "product_daily_stock" value = {editProductData?.product_daily_stock} onChange={(event)=>handleChange(event)}/>
                                             </div>
                                         </div>
                                         <div className="customer-details-content">
@@ -104,7 +106,7 @@ function AddProduct(props) {
                                                 <input type = "text" value="Accepted" readOnly />
                                             </div>
                                         </div>
-                                        <button className=" btn btn-primary DisableDeliveryBoyBtn" onClick={handleAddProduct}>Add</button>
+                                        <button className=" btn btn-primary DisableDeliveryBoyBtn" onClick={handleAddProduct}>Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -115,4 +117,4 @@ function AddProduct(props) {
         </>
     )
 }
-export default AddProduct;
+export default EditProduct;

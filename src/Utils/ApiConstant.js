@@ -26,6 +26,7 @@ const API = {
   CREATE_ADDRESS: Config.BASE_URL + "api/address/create",
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   ADD_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/create",
+  UPDATE_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/update",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
