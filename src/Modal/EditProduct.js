@@ -89,7 +89,7 @@ function EditProduct(props) {
                                         </div>
 
                                         <div className="customer-details-content">
-                                            <div className="content"><h4>Product Discount</h4></div>
+                                            <div className="content"><h4>Product Discount(%)</h4></div>
                                             <div className="content">
                                                 <input type = "number" name = "product_discount" value ={editProductData?.product_discount} onChange={(event)=>handleChange(event)}/>
                                             </div>

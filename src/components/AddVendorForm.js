@@ -515,7 +515,7 @@ function AddVendorForm() {
                       />
                     </div>
                     <div class="form-group">
-                      <label for="shopschedule">Shop Schedule</label>
+                      <label for="shopschedule">Shop Schedule (IN 24 HOURS FORMAT)</label>
                       <MultiSelect
                         options={options}
                         value={selected}
