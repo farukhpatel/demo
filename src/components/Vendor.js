@@ -57,7 +57,6 @@ function Vendor() {
                   <thead>
                     <tr align="center">
                       <th scope="col">S No.</th>
-                      <th scope="col">Order Id</th>
                       <th scope="col">Owner Name</th>
                       <th scope="col">Dairy Name</th>
                       <th scope="col">Dairy Address</th>
@@ -71,18 +70,6 @@ function Vendor() {
                         <tr align="center" key={index}>
                           <th scope="row">{index + 1}</th>
 
-                          <td>
-                            <Link
-                              to={{
-                                pathname: "/vendordetails",
-                                state: { vendor: value },
-                              }}
-                              style={{color:"#0dcaf0"}}
-                            >
-                              {" "}
-                              {value?.user_id}
-                            </Link>
-                          </td>
                           <td>
                             <Link
                               to={{
