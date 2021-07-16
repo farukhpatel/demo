@@ -14,6 +14,8 @@ function VendorDetails(props) {
   // const orderProducts = props?.location?.state?.order?.order_products || [];
 
   useEffect(() => {
+
+    setIsSellingVisible(false)
     let obj = {
       method: "GET",
       headers: {
@@ -215,7 +217,6 @@ function VendorDetails(props) {
                           {products?.nonselling_products?.length > 0 &&
                             products?.nonselling_products?.map(
                               (value, index) => {
-                                console.log(value);
                                 return (
                                   <tr align="center">
                                     <th scope="row">{index + 1}</th>
@@ -242,7 +243,7 @@ function VendorDetails(props) {
                                       position="right center"
                                       modal
                                     >
-                                      <AddProductModal />
+                                      <AddProductModal shopId = {vendorDetails?.id} productId={value?.id}/>
                                     </Popup>
                                   </tr>
                                 );
@@ -253,10 +254,6 @@ function VendorDetails(props) {
                     </div>
                   )}
                 </div>
-
-                {/* {!isSellingVisible && (
-                  
-                )} */}
               </div>
             </div>
           </div>

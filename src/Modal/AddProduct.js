@@ -1,18 +1,67 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { APICall } from '../Utils/CommonFunctions'
 import API from '../Utils/ApiConstant'
 
 import '../components/SuperUser.css'
 
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid'
-import MomentUtils from '@date-io/moment'
 // import moment from 'moment'   //for clock time
 import 'date-fns';
+import { toast } from 'react-toastify';
 
 
-function AddProduct() {
+function AddProduct(props) {
+
+    const [addProductData, setAddProductData] = useState({
+        shop_id:props?.shopId,
+        product_id:props?.productId,
+        product_price:"",
+        product_discount:0,
+        product_daily_stock:"",
+        product_approval:"Accepted"
+    })
+
+    function handleChange (event){
+        const {name,value} = event.target
+        setAddProductData({
+            ...addProductData,
+            [name]:value
+        })
+    }
+
+    function handleAddProduct(){
+        console.log(addProductData)
+
+        let error = false
+        Object.keys(addProductData).forEach((key)=>{
+            if(!error && addProductData[key]===""){
+                toast.error(`${key} can't be empty`)
+                error = true
+            }
+        })
+        if(!error){
+            let obj = {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify(addProductData),
+              };
+          
+              APICall(API.ADD_SHOP_PRODUCT, obj, (error, res) => {
+                if (error) {
+                  console.log(error);
+                } else if (res.status) {
+                  toast.success("Product Added Successdully.");
+                  window.location.href = "/vendordetails";
+                } else {
+                  toast.error(res?.error);
+                }
+              });
+        }
+
+    }
     return (
         <>
             <div className="main-outer-div Modal">
@@ -32,7 +81,7 @@ function AddProduct() {
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Price</h4></div>
                                             <div className="content">
-                                                <input type = "number"/>
+                                                <input type = "number" name = "product_price" value = {addProductData?.product_price} onChange={(event)=>handleChange(event)}/>
                                             </div>
 
                                         </div>
@@ -40,22 +89,22 @@ function AddProduct() {
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Discount</h4></div>
                                             <div className="content">
-                                                <input type = "number"/>
+                                                <input type = "number" name = "product_discount" value ={addProductData?.product_discount} onChange={(event)=>handleChange(event)}/>
                                             </div>
                                         </div>
                                         <div className="customer-details-content">
-                                            <div className="content"><h4>Product Daily Stcok</h4></div>
+                                            <div className="content"><h4>Product Daily Stock</h4></div>
                                             <div className="content">
-                                                <input type = "number"/>
+                                                <input type = "number" name = "product_daily_stock" value = {addProductData?.product_daily_stock} onChange={(event)=>handleChange(event)}/>
                                             </div>
                                         </div>
                                         <div className="customer-details-content">
                                             <div className="content"><h4>Product Approval</h4></div>
                                             <div className="content">
-                                                <input type = "text" value="Accepted" readOnly/>
+                                                <input type = "text" value="Accepted" readOnly />
                                             </div>
                                         </div>
-                                        <button className=" btn btn-primary DisableDeliveryBoyBtn">Add</button>
+                                        <button className=" btn btn-primary DisableDeliveryBoyBtn" onClick={handleAddProduct}>Add</button>
                                     </div>
                                 </div>
                             </div>
