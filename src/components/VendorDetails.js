@@ -163,8 +163,8 @@ function VendorDetails(props) {
               </div>
             </div>
 
-            <div className={classes.root}>
-              <AppBar position="static" backgroundColor="#3b1f47">
+            <div className={classes.root} >
+              <AppBar position="static" style={{backgroundColor:"#3b1f47"}}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
