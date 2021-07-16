@@ -170,6 +170,7 @@ function UnassignedOrders() {
                                 pathname: "/orderdetails",
                                 state: { order: value },
                               }}
+                              style={{color:"#0dcaf0"}}
                             >
                               {value?.order_id}
                             </Link>
@@ -180,6 +181,7 @@ function UnassignedOrders() {
                                 pathname: "/orderdetails",
                                 state: { order: value },
                               }}
+                              style={{color:"#0dcaf0"}}
                             >
                               {value?.user_id}
                             </Link>

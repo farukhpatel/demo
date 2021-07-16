@@ -245,6 +245,7 @@ const TableData = ({ orderType }) => {
                                   pathname: "/orderdetails",
                                   state: { order: row },
                                 }}
+                                style={{color:"#0dcaf0"}}
                               >
                                 {" "}
                                 {`${value}`}

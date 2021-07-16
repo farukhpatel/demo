@@ -1063,7 +1063,7 @@ a {
 .customer-details-content-outer-div-top .customer-details-content {
   display: flex;
   justify-content: space-between;
-  width: 95%;
+  /* width: 95%; */
 }
 .customer-details-content h4,
 .customer-details-content p {
@@ -1086,7 +1086,10 @@ a {
   background-color: #230132 !important;
 }
 .customer-details-content .content {
-  width: 50%;
+  /* width: 50%; */
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 /* CustomerDetails Css End */
 

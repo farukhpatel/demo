@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 //for Api
 import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
+import Popup from "reactjs-popup";
+import AddProductModal from "../Modal/AddProduct";
 
 function VendorDetails(props) {
   console.log(props);
@@ -22,13 +24,13 @@ function VendorDetails(props) {
     };
 
     APICall(
-      `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&requested_products=true`,
+      `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&non_selling_products=true`,
       obj,
       (err, result) => {
         if (err) {
           console.log(err);
         } else if (result.status) {
-          console.log(result?.products);
+          console.log(result?.products?.nonselling_products);
           setProducts(result?.products);
         }
       }
@@ -118,7 +120,7 @@ function VendorDetails(props) {
                     role="tab"
                     aria-controls="customers-details"
                     aria-selected="false"
-                    onClick={()=>setIsSellingVisible(true)}
+                    onClick={() => setIsSellingVisible(true)}
                   >
                     Selling Products
                   </button>
@@ -146,7 +148,6 @@ function VendorDetails(props) {
                   role="tabpanel"
                   aria-labelledby="customer-details"
                 >
-
                   {isSellingVisible ? (
                     <div
                       class="tab-pane fade show active"
@@ -154,84 +155,103 @@ function VendorDetails(props) {
                       role="tabpanel"
                       aria-labelledby="orders-details"
                     >
-                    <table class="table table-striped">
-                      <thead>
-                        <tr align="center">
-                          <th scope="col">S.No</th>
-                          <th scope="col">Item Name</th>
-                          <th scope="col">Original Price</th>
-                          <th scope="col">Product Price</th>
-                          <th scope="col">Product Daily Stock</th>
-                          <th scope="col">Product Daily Stock Remaining</th>
-                          <th scope="col">Base Unit</th>
-                          <th scope="col">Commission</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {products?.selling_products?.length > 0 &&
-                          products?.selling_products?.map((value, index) => {
-                            return (
-                              <tr align="center">
-                                <th scope="row">{index + 1}</th>
-                                <td>
-                                  {value?.product?.product_name}
-                                </td>
-                                <td>₹{value?.original_price}</td>
-                                <td>₹{value?.product_price}</td>
-                                <td>{value?.product_daily_stock}</td>
-                                <td>{value?.product_daily_stock_remaining}</td>
-                                <td>{value?.product?.base_unit}</td>
-                                <td>{value?.product?.commission}{value?.product?.is_percentage_commission===1 && "%"}</td>
-                              </tr>
-                            );
-                          })}
-                      </tbody>
-                    </table>
-                  
+                      <table class="table table-striped">
+                        <thead>
+                          <tr align="center">
+                            <th scope="col">S.No</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Original Price</th>
+                            <th scope="col">Product Price</th>
+                            <th scope="col">Product Daily Stock</th>
+                            <th scope="col">Product Daily Stock Remaining</th>
+                            <th scope="col">Base Unit</th>
+                            <th scope="col">Commission</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {products?.selling_products?.length > 0 &&
+                            products?.selling_products?.map((value, index) => {
+                              return (
+                                <tr align="center">
+                                  <th scope="row">{index + 1}</th>
+                                  <td>{value?.product?.product_name}</td>
+                                  <td>₹{value?.original_price}</td>
+                                  <td>₹{value?.product_price}</td>
+                                  <td>{value?.product_daily_stock}</td>
+                                  <td>
+                                    {value?.product_daily_stock_remaining}
+                                  </td>
+                                  <td>{value?.product?.base_unit}</td>
+                                  <td>
+                                    {value?.product?.commission}
+                                    {value?.product
+                                      ?.is_percentage_commission === 1 && "%"}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
                     </div>
-                  ):
-                  <div
-                    class="tab-pane fade show active"
-                    id="ordersdetails"
-                    role="tabpanel"
-                    aria-labelledby="orders-details"
-                  >
-                    <table class="table table-striped">
-                      <thead>
-                        <tr align="center">
-                          <th scope="col">S.No</th>
-                          <th scope="col">Item Name</th>
-                          <th scope="col">Original Price</th>
-                          <th scope="col">Product Price</th>
-                          <th scope="col">Product Daily Stock</th>
-                          <th scope="col">Product Daily Stock Remaining</th>
-                          <th scope="col">Base Unit</th>
-                          <th scope="col">Commission</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {products?.nonselling_products?.length > 0 &&
-                          products?.selling_products?.map((value, index) => {
-                            return (
-                              <tr align="center">
-                                <th scope="row">{index + 1}</th>
-                                <td>
-                                  {value?.product?.product_name}
-                                </td>
-                                <td>₹{value?.original_price}</td>
-                                <td>₹{value?.product_price}</td>
-                                <td>{value?.product_daily_stock}</td>
-                                <td>{value?.product_daily_stock_remaining}</td>
-                                <td>{value?.product?.base_unit}</td>
-                                <td>{value?.product?.commission}{value?.product?.is_percentage_commission===1 && "%"}</td>
-                              </tr>
-                            );
-                          })}
-                      </tbody>
-                    </table>
-                  
-                  </div>
-                }
+                  ) : (
+                    <div
+                      class="tab-pane fade show active"
+                      id="ordersdetails"
+                      role="tabpanel"
+                      aria-labelledby="orders-details"
+                    >
+                      <table class="table table-striped">
+                        <thead>
+                          <tr align="center">
+                            <th scope="col">S.No</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Product Image</th>
+                            <th scope="col">Base Unit</th>
+                            <th scope="col">Commission</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {products?.nonselling_products?.length > 0 &&
+                            products?.nonselling_products?.map(
+                              (value, index) => {
+                                console.log(value);
+                                return (
+                                  <tr align="center">
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{value?.product_name}</td>
+                                    <td>
+                                      <img
+                                        src={value?.product_image}
+                                        height="50"
+                                        alt="product_image"
+                                      />
+                                    </td>
+                                    <td>{value?.base_unit}</td>
+                                    <td>
+                                      {value?.commission}
+                                      {value?.is_percentage_commission === 1 &&
+                                        "%"}
+                                    </td>
+                                    <Popup
+                                      trigger={
+                                        <td style={{ cursor: "pointer" }}>
+                                          <button>Add Product</button>
+                                        </td>
+                                      }
+                                      position="right center"
+                                      modal
+                                    >
+                                      <AddProductModal />
+                                    </Popup>
+                                  </tr>
+                                );
+                              }
+                            )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
 
                 {/* {!isSellingVisible && (

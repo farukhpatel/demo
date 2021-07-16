@@ -77,6 +77,7 @@ function Vendor() {
                                 pathname: "/vendordetails",
                                 state: { vendor: value },
                               }}
+                              style={{color:"#0dcaf0"}}
                             >
                               {" "}
                               {value?.user_id}
@@ -88,6 +89,7 @@ function Vendor() {
                                 pathname: "/vendordetails",
                                 state: { vendor: value },
                               }}
+                              style={{color:"#0dcaf0"}}
                             >
                               <p style={{ fontWeight: "bold " }}>
                                 {value?.shop_owner?.name}
