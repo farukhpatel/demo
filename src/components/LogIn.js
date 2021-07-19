@@ -1,58 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import API from "../Utils/ApiConstant";
-import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
+import instance from "../Utils/axiosConstants"
+import cookie from "react-cookies";
+import "react-toastify/dist/ReactToastify.css";
 
 function LogIn(props) {
 
   // api
   const [phoneno, setPhoneno] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
-
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if(token)
+    if(cookie.load("Authorization"))
     props.history.push("/dashboard")
   }, [])
 
   const login = (e) => {
     e.preventDefault();
-    let object = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        phone: phoneno,
-        password: password,
-        device: "web",
-      }),
-    };
-
-    APICall(API.LOGIN, object, (error, result) => {
-      console.log(result);
-      if (error) console.log(error);
-      else if (result.status && result.code === 200) {
-        console.log(result?.accessToken);
-        localStorage.setItem("token", result?.accessToken.toString());
-        setRedirect(true);
-      } else alert("Something went wrong");
-    });
-  };
-
-  const shouldRedirect = () => {
-    if (redirect) {
-      return <Redirect to="/dashboard" />;
+    let body ={
+      phone: phoneno,
+      password: password,
+      device: "web",
     }
+
+    instance.post(API.LOGIN,body)
+    .then(function(response){
+      localStorage.setItem("token", response?.accessToken?.toString());
+      cookie.save("Authorization",response?.accessToken)
+      props.history.push("/dashboard")
+    })
+
   };
+
 
   return (
     <>
-      {shouldRedirect(redirect)}
       <div className="main-outer-div signup-login-outer-div ">
         <div className="myorders-outer-div ">
           <div className="signup-login-form-div">

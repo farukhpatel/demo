@@ -1,33 +1,12 @@
 import React, { useEffect, useState } from "react"
-
 import "./SuperUser.css";
-import { Checkbox, FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
-import { Link } from "react-router-dom";
 
 // API IMPORT
 import API from "../Utils/ApiConstant";
 import { APICall } from '../Utils/CommonFunctions';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
 function User() {
   // assgin select
-  const classes = useStyles()
-  const [coupon, setCoupon] = React.useState('');
-
-  const handleChange = (event) => {
-    setCoupon(event.target.value);
-  };
-  const arr = [1, 2, 3, 4, 5, 6, 7];
-
-
   // API
   const [user, setUser] = useState([]);
   useEffect(() => {
@@ -58,25 +37,6 @@ function User() {
   return (
     <>
       <div className="main-outer-div">
-        {/* <FormControl variant="outlined" className={classes.formControl} style={{
-          marginTop: "3%", marginLeft: "3%",
-        }}>
-          <InputLabel id="demo-simple-select-outlined-label">Coupon</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={coupon}
-            onChange={handleChange}
-            label="Coupon"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>30%off</MenuItem>
-            <MenuItem value={20}>10%off</MenuItem>
-            <MenuItem value={30}>5%off</MenuItem>
-          </Select>
-        </FormControl> */}
         <div className="myorders-outer-div">
           <div className="myorders-inner-div vendor-inner-div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

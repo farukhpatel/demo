@@ -1,11 +1,13 @@
 import React from 'react';
 import './SuperUser.css';
+import cookie from "react-cookies";
 
 function Home() {
 
     const signout = next => {
         if (typeof window !== 'undefined') {
             localStorage.removeItem('token');
+            cookie.remove("Authorization")
         }
     };
     

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+
 import Geocode from "react-geocode";
 
 import Navbar from "./components/Navbar";
@@ -28,7 +28,7 @@ import PaymentSettlement from "./components/PaymentSettlement";
 import Banner from "./components/Banner";
 import Review from "./components/Review";
 import Coupon from "./components/Coupon";
-import VendorDetails from "./components/VendorDetails"
+import VendorDetails from "./components/VendorDetails";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -68,7 +68,6 @@ function App() {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={LogIn} />
         <div>
-          <ToastContainer />
           <Navbar />
           <Route exact path="/dashboard" component={Home} />
           <Route exact path="/user" component={User} />

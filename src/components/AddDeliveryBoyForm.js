@@ -1,10 +1,8 @@
 // import { FilePicker } from 'react-file-picker'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './SuperUser.css'
 
 //for Api
-import { APICall } from '../Utils/CommonFunctions';
-import API from '../Utils/ApiConstant';
 
 function AddDeliveryBoyForm() {
     return (
