@@ -1,9 +1,6 @@
 import React from "react";
 import TableData from "../Utils/TableData";
 function NotPicked() {
-  const arr = [1, 2, 3, 4, 5, 6, 7];
-  const date = new Date();
-  const Time = date.toLocaleTimeString();
   return (
     <>
       <div className="main-outer-div">

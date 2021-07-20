@@ -1,13 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import "./SuperUser.css";
 
-import ione from '../assets/I1.png';
-import itwo from '../assets/I2.jpg';
-import ithree from '../assets/I3.jpg';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import { getDisplayDate } from '@material-ui/pickers/_helpers/text-field-helper';
 
 function Banner() {
 
@@ -23,26 +18,18 @@ function Banner() {
                 alert('Cannot upload more than 5 images')
             else {
                 let values = Object.values(e.target.files)
-                values.map(image => {
+                values.forEach(image => {
                     temp.push(URL.createObjectURL(image))
                 })
             }
         }
-        // else {
-        //     if (temp.length > 4)
-        //         alert('cannot upload more than 5')
-        //     else
-        //         temp.push(URL.createObjectURL(e.target.files[0]))
-        // }
         setImages(temp)
     }
 
     const getData = (item) => {
-        // console.log("item", item);
         setSingleImage(item);
 
     }
-    // console.log(singleImage)
     const removeData = (item) => {
 
         if (singleImage === item) {
@@ -58,7 +45,7 @@ function Banner() {
                     <div className="myorders-inner-div banner-div">
                         <div className="bannerTop">
                             {
-                                singleImage == '' ? null :
+                                singleImage === '' ? null :
                                     <div className="bannerTop-left" style={{ borderRadius: "5px" }} >
 
                                         <img src={singleImage} alt="" style={{ borderRadius: "5px" }} />
@@ -69,7 +56,6 @@ function Banner() {
                             <div className="bannerTop-right">
                                 <form className='banner-form'>
                                     <div className="banner-form-group">
-                                        {/* <label for="shopName">Shop Name</label> */}
                                         <input type="file" class="form-control" id="addBanner" placeholder="Upload Banner" multiple readOnly onChange={selectFile} />
                                     </div>
                                 </form>

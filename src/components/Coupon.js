@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import '../components/SuperUser.css'
-import DateTimePicker from 'react-datetime-picker';
-import couponPhoto from '../assets/coupon.jpg'
 //popup
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -23,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Coupon() {
     const classes = useStyles();
-    const [value, onChange] = useState(new Date());
 
     const [ar, setAr] = useState([
         {
@@ -36,7 +33,7 @@ function Coupon() {
         }
     ])
     const handleChange = (val) => {
-        const elementsIndex = ar.findIndex(element => element.id == val.id)
+        const elementsIndex = ar.findIndex(element => element.id === val.id)
         let newArray = [...ar]
         newArray[elementsIndex] = { ...newArray[elementsIndex], status: !newArray[elementsIndex].status }
         setAr(newArray)

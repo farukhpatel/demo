@@ -38,7 +38,6 @@ function AddVendorForm() {
 
   // form fields var
   const [file, setFile] = useState(null);
-  const [userid, setUserid] = useState("");
   const [vendorName, setVendorName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -203,18 +202,6 @@ function AddVendorForm() {
     else setEndTime(e);
   };
 
-  function createVendorApi (){
-    let body = {
-      name: vendorName,
-      phone: phone,
-      email: email,
-      password: password,
-      role_id: 2,
-    };
-    instance.post(API.CREATE_USER, body).then(function (response) {
-      setUserid(response.user.id);
-    });
-  }
   // form1
   const form1Submit = (e) => {
     e.preventDefault();
@@ -276,7 +263,6 @@ function AddVendorForm() {
             role_id: 2,
           };
           instance.post(API.CREATE_USER, body).then(function (response) {
-            setUserid(response.user.id);
             shopCreateBody = {...shopCreateBody,user_id: response.user.id,}
             instance.post(API.CREATE_SHOP, shopCreateBody).then(function (shopCreateResponse) {
               setAddressableID(shopCreateResponse?.shop?.id);

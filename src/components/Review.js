@@ -20,7 +20,7 @@ function Review() {
     ])
 
     const handleChange = (val) => {
-        const elementsIndex = arr.findIndex(element => element.id == val.id)
+        const elementsIndex = arr.findIndex(element => element.id === val.id)
         let newArray = [...arr]
         newArray[elementsIndex] = { ...newArray[elementsIndex], status: !newArray[elementsIndex].status }
         setArr(newArray)

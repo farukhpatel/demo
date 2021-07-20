@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
-// import List from './List';
+import React from "react";
 import "./SuperUser.css";
 import TableData from "../Utils/TableData";
 function TotalOrderRecieved() {
-  const arr = [1, 2, 3, 4, 5, 6, 7];
-  const date = new Date();
-  const Time = date.toLocaleTimeString();
 
   return (
     <>
@@ -42,38 +38,6 @@ function TotalOrderRecieved() {
                   </div>
                 </div>
                 <TableData orderType="TOTAL_ORDER_RECIEVED" />
-                {/* <table class="table table-striped " >
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Customer Name</th>
-                                            <th scope="col">Seller Name</th>
-                                            <th scope="col">Time Alloted</th>
-                                            <th scope="col">Delivery Slot</th>
-                                            <th scope="col">Locality</th>
-                                            <th scope="col">Order Status</th>
-                                            <th scope="col">Payment Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            arr.map((value, index) => {
-                                                return (
-                                                    <tr>
-                                                        <td><a href="/orderdetails">{index + 1}</a></td>
-                                                        <td><a href="/orderdetails"><p style={{ fontWeight: 'bold' }}>Anoop Soni</p></a></td>
-                                                        <td>Harish Dairy</td>
-                                                        <td>{Time}</td>
-                                                        <td>DeliverySlot</td>
-                                                        <td>Locality</td>
-                                                        <td>Out for Delivery</td>
-                                                        <td>Paid</td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table> */}
               </div>
             </div>
           </div>
