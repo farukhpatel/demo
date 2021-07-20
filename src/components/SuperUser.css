@@ -1086,7 +1086,7 @@ a {
   background-color: #230132 !important;
 }
 .customer-details-content .content {
-  /* width: 50%; */
+  width: 100%;
   align-items: center;
   justify-content: center;
   display: flex;

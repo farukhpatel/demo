@@ -111,29 +111,12 @@ const DropDown = (props) => {
   console.log(props,"drop")
   const selectClasses = selectStyles();
 
-  const [deliveryBoysList, setDeliveryBoysList] = useState([]);
+
   const [deliveryBoy, setDeliveryBoy] = useState({});
   const handleChange = (event, id) => {
     setDeliveryBoy({ ...deliveryBoy, [id]: event.target.value });
   };
-  function getDeliveryBoys() {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "Get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.DELIVERY_BOYS, object, (error, result) => {
-      if (error) console.log(error);
-      else if (result.status) {
-        setDeliveryBoysList(result.users);
-      } else toast.error(result?.error);
-    });
-  }
-
+  
   function handleDeliveryBoyAssignment(deliveryBoyId) {
     const tokenValue = localStorage.getItem("token");
     let object = {
@@ -158,7 +141,8 @@ const DropDown = (props) => {
   }
 
   useEffect(() => {
-    getDeliveryBoys();
+    // getDeliveryBoys();
+    console.log("table data")
   }, []);
   return (
     <FormControl variant="outlined" className={selectClasses.formControl}>
@@ -173,7 +157,7 @@ const DropDown = (props) => {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {deliveryBoysList.map((deliveryBoy) => {
+        {props?.deliveryBoysList.map((deliveryBoy) => {
           return (
             <MenuItem
               value={deliveryBoy.id}
@@ -193,6 +177,25 @@ const TableData = ({ orderType }) => {
 
   // API integration
   const [assigned, setAssigned] = useState([]);
+  const [deliveryBoysList, setDeliveryBoysList] = useState([]);
+
+  function getDeliveryBoys() {
+    const tokenValue = localStorage.getItem("token");
+    let object = {
+      method: "Get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenValue}`,
+      },
+    };
+    APICall(API.DELIVERY_BOYS, object, (error, result) => {
+      if (error) console.log(error);
+      else if (result.status) {
+        setDeliveryBoysList(result.users);
+      } else toast.error(result?.error);
+    });
+  }
 
   useEffect(() => {
     const tokenValue = localStorage.getItem("token");
@@ -210,6 +213,8 @@ const TableData = ({ orderType }) => {
         setAssigned(result.orders);
       } else alert("Something went wrong");
     });
+
+    getDeliveryBoys()
   }, []);
 
   return (
@@ -257,7 +262,7 @@ const TableData = ({ orderType }) => {
                               value === "Assigned" ? (
                                 <>
                                 { `${value} to ${row?.assigned_to?.name}`}
-                              <DropDown orderId={row?.order_id} id = {row?.id} />
+                              <DropDown orderId={row?.order_id} id = {row?.id} deliveryBoysList={deliveryBoysList} />
                               </>
                             ) : column?.id === "order_status" &&
                               value === "Picked" ? (
