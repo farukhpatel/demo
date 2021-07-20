@@ -3,33 +3,16 @@ import "./SuperUser.css";
 
 // API IMPORT
 import API from "../Utils/ApiConstant";
-import { APICall } from '../Utils/CommonFunctions';
+import instance from "../Utils/axiosConstants"
 
 function User() {
-  // assgin select
   // API
   const [user, setUser] = useState([]);
   useEffect(() => {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.USER, object, (error, result) => {
-      if (error)
-        console.log(error)
 
-      else if (result.status) {
-        console.log(result)
-        setUser(result.users)
-      }
-
-      else
-        alert("Something went wrong")
+    instance.get(API.USER)
+    .then(function(response){
+      setUser(response.users)
     })
   }, [])
 

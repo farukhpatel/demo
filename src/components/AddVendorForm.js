@@ -16,11 +16,12 @@ import "date-fns";
 import "./SuperUser.css";
 
 //for Api
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import instance from "../Utils/axiosConstants";
 
 function AddVendorForm() {
   // multiselect
@@ -71,7 +72,6 @@ function AddVendorForm() {
   });
 
   function getGeo() {
-    // event.preventDefault();
     // Get latitude & longitude from address.
     const {
       address_line_1,
@@ -89,10 +89,9 @@ function AddVendorForm() {
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng, "no");
-        if(lat==="" || lng ==="")
-        toast.error("Something is wrong with the address provided")
-        else
-        setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
+        if (lat === "" || lng === "")
+          toast.error("Something is wrong with the address provided");
+        else setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
       },
       (error) => {
         console.error(error);
@@ -152,25 +151,9 @@ function AddVendorForm() {
   }
 
   function createAddress() {
-    let obj = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(addressForm),
-    };
-
-    APICall(API.CREATE_ADDRESS, obj, (error, res) => {
-      if (error) {
-        console.log(error);
-      } else if (res.status) {
-        toast.success("Address Successfully Added.");
-        window.location.href = "/vendor";
-      } else {
-        toast.error(res?.error);
-      }
+    instance.post(API.CREATE_ADDRESS, addressForm).then(function (response) {
+      toast.success("Address Successfully Added.");
+      window.location.href = "/vendor";
     });
   }
 
@@ -197,34 +180,20 @@ function AddVendorForm() {
       getGeo();
     }
   }
+
   useEffect(() => {
-      const tokenValue = localStorage.getItem("token");
-      let object = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenValue}`,
-        },
-      };
-      APICall(API.GET_CITIES, object, (err, result) => {
-        if (err) {
-          toast.error(err);
-        } else if (result.status) {
-          setCities(result.cities);
-          if (cities.length > 0) setLocalities(cities[0]?.localities);
-          console.log(result);
-        } else {
-          toast.error(result?.error);
-        }
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    instance.get(API.GET_CITIES).then(function (response) {
+      setCities(response.cities);
+      if (cities.length > 0) setLocalities(cities[0]?.localities);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressableId]);
 
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
+
   // time picker
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
@@ -245,32 +214,17 @@ function AddVendorForm() {
       toast.error("Password must be of atleast 5 charcaters");
     } else if (email === "") toast.error("Email can't be empty");
     else {
-      let object = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          name: vendorName,
-          phone: phone,
-          email: email,
-          password: password,
-          role_id: 2,
-        }),
+      let body = {
+        name: vendorName,
+        phone: phone,
+        email: email,
+        password: password,
+        role_id: 2,
       };
-
-      APICall(API.CREATE_USER, object, (err, result) => {
-        if (err) {
-          toast.error(err);
-        } else if (result.status) {
-          setUserid(result.user.id);
-          document.querySelector(".vendor-form-1").classList.add("hide__form1");
-          document.querySelector(".vendor-form-2").classList.add("show-form2");
-        } else {
-          toast.error(result?.error);
-        }
+      instance.post(API.CREATE_USER, body).then(function (response) {
+        setUserid(response.user.id);
+        document.querySelector(".vendor-form-1").classList.add("hide__form1");
+        document.querySelector(".vendor-form-2").classList.add("show-form2");
       });
     }
   };
@@ -283,69 +237,45 @@ function AddVendorForm() {
     if (file) {
       let formdata = new FormData();
       formdata.append("image", file[0]);
-      let object = {
-        method: "POST",
-        headers: headers,
-        body: formdata,
-        redirect: "follow",
-      };
+      instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
+        let temp = selected;
+        let shop_schedules = temp.map((item) => {
+          item.key = item.label;
+          item.start = moment(startTime._d).format("HH:mm:ss");
+          item.end = moment(endTime._d).format("HH:mm:ss");
+          return item;
+        });
 
-      APICall(API.IMAGE_UPLOAD, object, (err, result) => {
-        if (err) {
-          console.log(err);
-        } else if (result.status) {
-          let temp = selected;
-          let shop_schedules = temp.map((item) => {
-            item.key = item.label;
-            item.start = moment(startTime._d).format("HH:mm:ss");
-            item.end = moment(endTime._d).format("HH:mm:ss");
-            return item;
-          });
+        let body = {
+          user_id: userid,
+          shop_name: shopName,
+          shop_phone: phone,
+          shop_description: description,
+          shop_profile: response.image_url,
+          shop_license_number: licenseNumber,
+          //UPDATE FOUNDING DATE VALUE
+          shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+          shop_delivery_range: deliveryRange,
+          shop_schedules: shop_schedules,
+        };
 
-          let body = {
-            user_id: userid,
-            shop_name: shopName,
-            shop_phone: phone,
-            shop_description: description,
-            shop_profile: result.image_url,
-            shop_license_number: licenseNumber,
-            //UPDATE FOUNDING DATE VALUE
-            shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-            shop_delivery_range: deliveryRange,
-            shop_schedules: shop_schedules,
-          };
-
-          let obj = {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(body),
-          };
-
-          let error = false;
-          Object.keys(body).forEach((key) => {
-            if (!error && body[key] === "") {
-              toast.error("One or more fields are empty.");
-              error = true;
-            }
-          });
-          if (!error) {
-            APICall(API.CREATE_SHOP, obj, (error, res) => {
-              if (error) {
-                console.log(error);
-              } else if (res.status) {
-                setAddressableID(res?.shop?.id)
-                setAddressForm({...addressForm, addressable_id:res?.shop?.id})
-                console.log(res?.shop?.id)
-                toast.success("Vendor Created. Add Address Details Now.");
-              } else {
-                toast.error(res?.error);
-              }
-            });
+        let error = false;
+        Object.keys(body).forEach((key) => {
+          if (!error && body[key] === "") {
+            toast.error("One or more fields are empty.");
+            error = true;
           }
+        });
+        if (!error) {
+          instance.post(API.CREATE_SHOP, body).then(function (response) {
+            setAddressableID(response?.shop?.id);
+            setAddressForm({
+              ...addressForm,
+              addressable_id: response?.shop?.id,
+            });
+            console.log(response?.shop?.id);
+            toast.success("Vendor Created. Add Address Details Now.");
+          });
         }
       });
     } else {
@@ -353,12 +283,12 @@ function AddVendorForm() {
     }
   };
 
-  useEffect(()=>{
-    if(addressForm.latitude!=="" && addressForm.longitude!==""){
-      createAddress()
+  useEffect(() => {
+    if (addressForm.latitude !== "" && addressForm.longitude !== "") {
+      createAddress();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[addressForm])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressForm]);
   return (
     <>
       <div className="main-outer-div">
@@ -496,6 +426,7 @@ function AddVendorForm() {
                             label="Date picker dialog"
                             format="DD/MM/yyyy"
                             value={foundationDate}
+                            maxDate={new Date()}
                             onChange={(e) => handleDateChange(e)}
                             KeyboardButtonProps={{
                               "aria-label": "change date",
@@ -515,7 +446,9 @@ function AddVendorForm() {
                       />
                     </div>
                     <div class="form-group">
-                      <label for="shopschedule">Shop Schedule (IN 24 HOURS FORMAT)</label>
+                      <label for="shopschedule">
+                        Shop Schedule (IN 24 HOURS FORMAT)
+                      </label>
                       <MultiSelect
                         options={options}
                         value={selected}

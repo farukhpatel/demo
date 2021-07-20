@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { APICall } from '../Utils/CommonFunctions'
 import API from '../Utils/ApiConstant'
 
 import '../components/SuperUser.css'
@@ -7,12 +6,12 @@ import '../components/SuperUser.css'
 // import moment from 'moment'   //for clock time
 import 'date-fns';
 import { toast } from 'react-toastify';
+import instance from '../Utils/axiosConstants';
 
 
 function EditProduct(props) {
 
     const productDetails = props?.productDetails
-    console.log(props?.productId)
     const [editProductData, setEditProductdata] = useState({
         shop_id:props?.shopId,
         product_id:productDetails?.product?.id,
@@ -41,26 +40,11 @@ function EditProduct(props) {
             }
         })
         if(!error){
-            let obj = {
-                method: "PATCH",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-                body: JSON.stringify(editProductData),
-              };
-          
-              APICall(`${API.UPDATE_SHOP_PRODUCT}/${props?.productId}`, obj, (error, res) => {
-                if (error) {
-                  console.log(error);
-                } else if (res.status) {
-                  toast.success("Product Added Successdully.");
-                  window.location.href = "/vendordetails";
-                } else {
-                  toast.error(res?.error);
-                }
-              });
+              instance.patch(`${API.UPDATE_SHOP_PRODUCT}/${props?.productId}`, editProductData)
+              .then(function(response){
+                toast.success("Product Added Successdully.");
+                window.location.href = "/vendordetails";
+              })
         }
 
     }

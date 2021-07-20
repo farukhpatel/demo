@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 import { Link } from "react-router-dom";
 import "./SuperUser.css";
+import instance from "../Utils/axiosConstants"
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -10,22 +10,10 @@ function Vendor() {
   const [vendors, setVendors] = useState([]);
 
   useEffect(() => {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.VENDOR_API, object, (error, result) => {
-      if (error) console.log(error);
-      else if (result.status) {
-        console.log(result);
-        setVendors(result.shop);
-      } else alert("Something went wrong");
-    });
+    instance.get(API.VENDOR_API)
+    .then(function(response){
+      setVendors(response.shop);
+    })
   }, []);
 
   return (

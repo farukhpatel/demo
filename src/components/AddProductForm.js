@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import "./SuperUser.css";
 //for Api
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 import { Select } from "@material-ui/core";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import instance from "../Utils/axiosConstants"
 
 function AddProductForm() {
   const [productName, setProductName] = useState("");
@@ -25,56 +26,33 @@ function AddProductForm() {
       console.log(productImage, "prodcut");
       let formdata = new FormData();
       formdata.append("image", productImage[0]);
-      let object = {
-        method: "POST",
-        headers: headers,
-        body: formdata,
-        redirect: "follow",
-      };
 
-      APICall(API.IMAGE_UPLOAD, object, (err, result) => {
-        if (err) {
-          console.log(err);
-        } else if (result.status) {
-          let body = {
-            product_name: productName,
-            product_image: result.image_url,
-            commission: commission,
-            is_percentage_commission: percentage,
-            base_unit: `${baseUnit}${unitType}`,
-          };
-          let obj = {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(body),
-          };
+      instance.post(API.IMAGE_UPLOAD,formdata)
+      .then(function(response){
+        let body = {
+          product_name: productName,
+          product_image: response.image_url,
+          commission: commission,
+          is_percentage_commission: percentage,
+          base_unit: `${baseUnit}${unitType}`,
+        };
 
-          let error = false;
-          Object.keys(body).forEach((key) => {
-            if (!error && body[key] === "") {
-              toast.error("One or more fields are empty.");
-              error = true;
-            }
-          });
-          if (!error) {
-            APICall(API.CREATE_PRODUCT, obj, (error, res) => {
-              if (error) {
-                console.log(error);
-              } else if (result.status) {
-                toast.success("Successful creation of shop");
-                window.location.href = "/productlist";
-              } else {
-                toast.error(result?.error);
-                // window.location.href = '/productlist'
-              }
-            });
+        let error = false;
+        Object.keys(body).forEach((key) => {
+          if (!error && body[key] === "") {
+            toast.error("One or more fields are empty.");
+            error = true;
           }
+        });
+        if (!error) {
+          instance.post(API.CREATE_PRODUCT,body)
+          .then(function(response){
+            toast.success("Successful creation of shop");
+            window.location.href = "/productlist";
+          })
         }
-      });
+      })
+      
     } else {
       toast.error("No file Picked.");
     }

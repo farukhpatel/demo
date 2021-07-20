@@ -4,8 +4,8 @@ import "./SuperUser.css";
 import dairy from "../assets/dairy.jpg";
 
 //for Api
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
 
 function Home() {
   const [dashboardData, setDashboardData] = useState({
@@ -19,32 +19,18 @@ function Home() {
     Picked: "",
   });
   useEffect(() => {
-    let obj = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    APICall(API.GET_DASHBOARD_DATA, obj, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else if (result.status) {
-        console.log(result);
-        const data = {
-          active_users: result.active_users,
-          total_delivery_boys: result.total_delivery_boys,
-          total_orders: result.total_orders,
-          total_orders_delivered: result.total_orders_delivered,
-          Accepted:result?.order_status_count?.Accepted,
-          Assigned:result?.order_status_count?.Assigned,
-          Delivered:result?.order_status_count?.Delivered,
-          Picked:result?.order_status_count?.Picked,
-        };
-        setDashboardData(data);
-      }
+    instance.get(API.GET_DASHBOARD_DATA).then(function (response) {
+      const data = {
+        active_users: response.active_users,
+        total_delivery_boys: response.total_delivery_boys,
+        total_orders: response.total_orders,
+        total_orders_delivered: response.total_orders_delivered,
+        Accepted: response?.order_status_count?.Accepted,
+        Assigned: response?.order_status_count?.Assigned,
+        Delivered: response?.order_status_count?.Delivered,
+        Picked: response?.order_status_count?.Picked,
+      };
+      setDashboardData(data);
     });
   }, []);
   return (

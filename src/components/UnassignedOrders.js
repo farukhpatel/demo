@@ -8,7 +8,6 @@ import {
   Select,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 import moment from "moment";
 // import List from './List';
@@ -17,7 +16,8 @@ import "./SuperUser.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-// import instance from "../Utils/axiosConstants"
+
+import instance from "../Utils/axiosConstants"
 
 // select
 const useStyles = makeStyles((theme) => ({
@@ -44,66 +44,32 @@ function UnassignedOrders() {
   const [unassigned, setUnassigned] = useState([]);
 
   function getUnassignedOrders() {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "Get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.UNASSIGNED_ORDERS, object, (error, result) => {
-      if (error) console.log(error);
-      else if (result.status) {
-        setUnassigned(result.orders);
-      } else toast.error(result.error);
-    });
+
+    instance.get(API.UNASSIGNED_ORDERS)
+    .then(function(response){
+      setUnassigned(response.orders);
+    })
   }
 
   function getDeliveryBoys() {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "Get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.DELIVERY_BOYS, object, (error, result) => {
-      if (error) console.log(error);
-      else if (result.status) {
-        setDeliveryBoysList(result.users);
-      } else toast.error(result?.error);
+    instance.get(API.DELIVERY_BOYS).then(function (response) {
+      setDeliveryBoysList(response.users);
     });
   }
 
   function handleDeliveryBoyAssignment(deliveryBoyId, orderId) {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-      body: JSON.stringify({
-        order_status: 2,
-        assigned_to: deliveryBoyId,
-      }),
-    };
-    APICall(
-      `${API.ASSIGN_DELIVERY_BOY}/${orderId}`,
-      object,
-      (error, result) => {
-        if (error) console.log(error);
-        else if (result.status) {
-          toast.success("Delivery Boy Asssigned successfully.");
-          window.location.reload();
-        } else toast.error(result?.error);
-      }
-    );
+
+    let body = {
+      order_status: 2,
+      assigned_to: deliveryBoyId,
+    }
+
+    instance
+      .patch(`${API.ASSIGN_DELIVERY_BOY}/$${orderId}`, body)
+      .then(function (response) {
+        toast.success("Delivery Boy Asssigned uccessfully.");
+        window.location.reload();
+      });
   }
 
   useEffect(() => {

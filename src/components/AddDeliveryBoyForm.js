@@ -1,4 +1,3 @@
-// import { FilePicker } from 'react-file-picker'
 import React from 'react'
 import './SuperUser.css'
 

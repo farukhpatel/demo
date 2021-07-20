@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import API from "../Utils/ApiConstant";
-import { APICall } from "../Utils/CommonFunctions";
 import "./SuperUser.css";
+import instance from "../Utils/axiosConstants"
 
 function SignUp() {
   // api
@@ -11,34 +11,16 @@ function SignUp() {
 
   const register = (e) => {
     e.preventDefault();
-    let object = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: userName,
-        phone: phoneNumber,
-        password: password,
-        device: "web",
-      }),
-    };
-    // fetch(API.SIGNUP, )
-    //     .then(res => console.log(res))
-    //     .catch(e => console.log('e', e))
-    //     .then(res => res.text())
-    //     .then(result => {
-    //         console.log(result)
-    //     })
-    APICall(API.SIGNUP, object, (error, result) => {
-      console.log(result);
-      if (error) console.log(error);
-      else if (result.status) {
-        console.log(result);
-        // setVendors(result.shop)
-      } else alert("Something went wrong");
-    });
+    let body = {
+      name: userName,
+      phone: phoneNumber,
+      password: password,
+      device: "web",
+    }
+    instance.post(API.SIGNUP, body)
+    .then(function(response){
+      
+    })
   };
 
   return (

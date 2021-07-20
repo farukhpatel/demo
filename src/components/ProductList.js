@@ -1,30 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
+
+import instance from "../Utils/axiosConstants"
 const ProductList = () => {
-  const arr = [1, 2, 3, 4, 5, 6, 7];
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-    const tokenValue = localStorage.getItem("token");
-    let object = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenValue}`,
-      },
-    };
-    APICall(API.PRODUCT_LIST, object, (error, result) => {
-      if (error) console.log(error);
-      else if (result.status) {
-        console.log(result);
-        setProductList(result.products);
-      } else {
-        alert("Something went wrong");
-        console.log(result);
-      }
-    });
+    instance.get(API.PRODUCT_LIST)
+    .then(function(response){
+      setProductList(response.products);
+    })
   }, []);
 
   return (

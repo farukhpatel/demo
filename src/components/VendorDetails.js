@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 //for Api
-import { APICall } from "../Utils/CommonFunctions";
 import API from "../Utils/ApiConstant";
 import Popup from "reactjs-popup";
 import AddProductModal from "../Modal/AddProduct";
@@ -14,6 +13,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+
+import instance from "../Utils/axiosConstants";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,27 +68,13 @@ function VendorDetails(props) {
     setValue(newValue);
   };
   useEffect(() => {
-    let obj = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    APICall(
-      `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&non_selling_products=true`,
-      obj,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else if (result.status) {
-          console.log(result?.products?.nonselling_products);
-          setProducts(result?.products);
-        }
-      }
-    );
+    instance
+      .get(
+        `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&non_selling_products=true`
+      )
+      .then(function (response) {
+        setProducts(response?.products);
+      });
   }, []);
   return (
     <>
@@ -269,18 +256,22 @@ function VendorDetails(props) {
                                 {value?.product?.is_percentage_commission ===
                                   1 && "%"}
                               </td>
-{console.log(value,"edit product")}
+                              {console.log(value, "edit product")}
                               <Popup
-                                      trigger={
-                                        <td style={{ cursor: "pointer" }}>
-                                          <button>Edit Product</button>
-                                        </td>
-                                      }
-                                      position="right center"
-                                      modal
-                                    >
-                                      <EditProductModal shopId = {vendorDetails?.id} productDetails={value} productId = {value?.id}/>
-                                    </Popup>
+                                trigger={
+                                  <td style={{ cursor: "pointer" }}>
+                                    <button>Edit Product</button>
+                                  </td>
+                                }
+                                position="right center"
+                                modal
+                              >
+                                <EditProductModal
+                                  shopId={vendorDetails?.id}
+                                  productDetails={value}
+                                  productId={value?.id}
+                                />
+                              </Popup>
                             </tr>
                           );
                         })}
