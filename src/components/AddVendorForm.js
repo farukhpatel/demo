@@ -203,8 +203,20 @@ function AddVendorForm() {
     else setEndTime(e);
   };
 
+  function createVendorApi (){
+    let body = {
+      name: vendorName,
+      phone: phone,
+      email: email,
+      password: password,
+      role_id: 2,
+    };
+    instance.post(API.CREATE_USER, body).then(function (response) {
+      setUserid(response.user.id);
+    });
+  }
   // form1
-  const submit = (e) => {
+  const form1Submit = (e) => {
     e.preventDefault();
     if (vendorName.length < 5) {
       toast.error("Shop name must be atleast 5 characters.");
@@ -214,23 +226,12 @@ function AddVendorForm() {
       toast.error("Password must be of atleast 5 charcaters");
     } else if (email === "") toast.error("Email can't be empty");
     else {
-      let body = {
-        name: vendorName,
-        phone: phone,
-        email: email,
-        password: password,
-        role_id: 2,
-      };
-      instance.post(API.CREATE_USER, body).then(function (response) {
-        setUserid(response.user.id);
-        document.querySelector(".vendor-form-1").classList.add("hide__form1");
-        document.querySelector(".vendor-form-2").classList.add("show-form2");
-      });
+      document.querySelector(".vendor-form-1").classList.add("hide__form1");
+      document.querySelector(".vendor-form-2").classList.add("show-form2");
     }
   };
 
-  const finalSubmit = (e) => {
-    console.log("final submit??");
+  const form2Submit = (e) => {
     e.preventDefault();
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
@@ -246,8 +247,8 @@ function AddVendorForm() {
           return item;
         });
 
-        let body = {
-          user_id: userid,
+        let shopCreateBody = {
+          // user_id: userid,
           shop_name: shopName,
           shop_phone: phone,
           shop_description: description,
@@ -260,22 +261,34 @@ function AddVendorForm() {
         };
 
         let error = false;
-        Object.keys(body).forEach((key) => {
-          if (!error && body[key] === "") {
+        Object.keys(shopCreateBody).forEach((key) => {
+          if (!error && shopCreateBody[key] === "") {
             toast.error("One or more fields are empty.");
             error = true;
           }
         });
         if (!error) {
-          instance.post(API.CREATE_SHOP, body).then(function (response) {
-            setAddressableID(response?.shop?.id);
-            setAddressForm({
-              ...addressForm,
-              addressable_id: response?.shop?.id,
+          let body = {
+            name: vendorName,
+            phone: phone,
+            email: email,
+            password: password,
+            role_id: 2,
+          };
+          instance.post(API.CREATE_USER, body).then(function (response) {
+            setUserid(response.user.id);
+            shopCreateBody = {...shopCreateBody,user_id: response.user.id,}
+            instance.post(API.CREATE_SHOP, shopCreateBody).then(function (shopCreateResponse) {
+              setAddressableID(shopCreateResponse?.shop?.id);
+              setAddressForm({
+                ...addressForm,
+                addressable_id: shopCreateResponse?.shop?.id,
+              });
+              console.log(shopCreateResponse?.shop?.id);
+              toast.success("Vendor Created. Add Address Details Now.");
             });
-            console.log(response?.shop?.id);
-            toast.success("Vendor Created. Add Address Details Now.");
           });
+          
         }
       });
     } else {
@@ -343,7 +356,7 @@ function AddVendorForm() {
                   <button
                     type="submit"
                     class="btn btn-primary submitBtn"
-                    onClick={submit}
+                    onClick={form1Submit}
                   >
                     Submit
                   </button>
@@ -355,16 +368,6 @@ function AddVendorForm() {
                 <div className="vendor-form2-container">
                   <form className="vendor-form">
                     <span className="customSpan"></span>
-                    <div class="form-group">
-                      <label for="userid">User Id:</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="userid"
-                        placeholder={userid}
-                        readOnly
-                      />
-                    </div>
                     <div class="form-group">
                       <label for="vendorName">Shop Name</label>
                       <input
@@ -495,7 +498,7 @@ function AddVendorForm() {
                     <button
                       type="submit"
                       class="btn btn-primary submitBtn"
-                      onClick={finalSubmit}
+                      onClick={form2Submit}
                     >
                       Submit
                     </button>
@@ -567,7 +570,7 @@ function AddVendorForm() {
                       }}
                     >
                       <option value="">Select Locality</option>
-                      {localities.map((locality) => {
+                      {addressForm?.city!=="" && localities.map((locality) => {
                         return (
                           <option
                             value={locality?.id}
