@@ -1198,6 +1198,7 @@ a {
 }
 .reviewDescription {
   display: flex;
+  flex:1;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -1225,8 +1226,16 @@ a {
   width: 40%;
   height: 50px;
   font-family: "Poppins";
-  background-color: #230132 !important;
+  background-color: #230132;
 }
+
+.reviewDescription-Btn > .disabled-btn{
+ filter: grayscale(100%);
+ pointer-events: none;
+ background-color: #787171;
+ /* background: unset; */
+}
+
 /* modal */
 .ReviewSure-text {
   width: fit-content;

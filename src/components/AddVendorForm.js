@@ -549,14 +549,14 @@ function AddVendorForm() {
                 <div class="form-group">
                   <label for="locality">Locality</label>
 
-                  {localities.length > 0 ? (
+                  {localities && localities.length > 0 ? (
                     <select
                       onChange={(event) => {
                         handleLocalitySelect(event);
                       }}
                     >
                       <option value="">Select Locality</option>
-                      {addressForm?.city!=="" && localities.map((locality) => {
+                      {addressForm && addressForm?.city!=="" && localities.map((locality) => {
                         return (
                           <option
                             value={locality?.id}
@@ -572,7 +572,7 @@ function AddVendorForm() {
 
                 <div class="form-group">
                   <label for="locality">City</label>
-                  {cities.length > 0 ? (
+                  {cities && cities.length > 0 ? (
                     <select onChange={(event) => handleCitySelect(event)}>
                       <option value="">Select a City</option>
                       {cities.map((city) => {

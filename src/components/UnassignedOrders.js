@@ -127,7 +127,7 @@ function UnassignedOrders() {
                     </tr>
                   </thead>
                   <tbody>
-                    {unassigned.map((value, index) => {
+                    {unassigned && unassigned.map((value, index) => {
                       return (
                         <tr>
                           <td>{index + 1}</td>
@@ -180,7 +180,7 @@ function UnassignedOrders() {
                                 <MenuItem value="">
                                   <em>None</em>
                                 </MenuItem>
-                                {deliveryBoysList.map((deliveryBoy) => {
+                                {deliveryBoysList && deliveryBoysList.map((deliveryBoy) => {
                                   return (
                                     <MenuItem
                                       value={deliveryBoy.id}

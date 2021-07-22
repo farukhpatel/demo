@@ -103,7 +103,6 @@ const columns = [
 ];
 
 const DropDown = (props) => {
-  console.log(props, "drop");
   const selectClasses = selectStyles();
 
   const [deliveryBoy, setDeliveryBoy] = useState({});
@@ -180,7 +179,7 @@ const TableData = ({ orderType }) => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns && columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -192,11 +191,11 @@ const TableData = ({ orderType }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {assigned.length > 0
+            {assigned && assigned.length > 0
               ? assigned.map((row, rowIndex) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
+                      {columns && columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>

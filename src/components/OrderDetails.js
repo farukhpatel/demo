@@ -137,7 +137,7 @@ function OrderDetails(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {orderProducts?.length > 0 &&
+                    {orderProducts && orderProducts?.length > 0 &&
                       orderProducts.map((value, index) => {
                         return (
                           <tr>
