@@ -432,6 +432,25 @@ tbody tr td a {
   border-radius: 1em;
   /* height: 90vh; */
 }
+
+.rmsc{
+  --rmsc-main: #4285f4;
+  --rmsc-hover: #f1f3f5;
+  --rmsc-selected: #e2e6ea;
+  --rmsc-border: #ccc;
+  --rmsc-gray: #aaa;
+  --rmsc-bg: #fff;
+  --rmsc-p: 10px; /* Spacing */
+  --rmsc-radius: 4px; /* Radius */
+  --rmsc-h: 10px; /* Height */
+
+}
+
+.select-item > input[type='checkbox']{
+  width: 34px !important;
+  height: 34px;
+  border: 4px solid #FFCB9A !important;
+}
 .btn-position {
   width: 100%;
   display: flex;
@@ -532,6 +551,7 @@ tbody td button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: scroll;
 }
 .vendor-form-1 form {
   width: 50%;
@@ -583,11 +603,10 @@ tbody td button:hover {
   margin: 2.4% 0;
   width: 100% !important;
 }
-.vendor-form-1 form div input,
-.vendor-form-2 form div input {
+.vendor-form-1 form div input{
   width: 100%;
   margin-top: 4px;
-  height: 45px;
+  height: 45px; 
   border: 1px solid #f2f2f2;
   font-family: "Poppins";
   padding-left: 12px;
@@ -725,7 +744,7 @@ tbody td button:hover {
   border-radius: 4px;
 }
 .productlist-inner-div-form form div input::placeholder {
-  font-size: 0.4rem !important;
+  font-size: 1rem !important;
 }
 .productlist-inner-div-form form .submitBtn {
   float: right;
@@ -841,7 +860,7 @@ tbody td button:hover {
   border-radius: 4px;
 }
 .deliveryboy-inner-div-form form div input::placeholder {
-  font-size: 0.4rem !important;
+  font-size: 1rem !important;
 }
 .deliveryboy-inner-div-form form .submitBtn {
   float: right;
@@ -988,7 +1007,7 @@ tbody td button:hover {
   border-radius: 4px;
 }
 .signup-login-form-div form div input::placeholder {
-  font-size: 0.4rem !important;
+  font-size: 1rem !important;
 }
 .signup-login-form-div form .signup-loginBtn {
   float: right;
