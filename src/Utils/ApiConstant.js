@@ -16,6 +16,8 @@ const API = {
   GET_SHOP_PRODUCTS: Config.BASE_URL + "api/shop/product/all",
   GET_REVIEWS: Config.BASE_URL + "api/review/all",
   UPDATE_REVIEW: Config.BASE_URL + "api/review/update",
+  GET_COUPONS: Config.BASE_URL + "api/coupon/all",
+  UPDATE_COUPON: Config.BASE_URL + "api/coupon/update",
   // DASHBOARD API START END
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",
