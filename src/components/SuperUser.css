@@ -460,8 +460,9 @@ tbody td button {
 }
 tbody td button:hover {
   background-color: #3b1f47;
-  color: #fff;
+  color: #fff !important;
 }
+
 .searchStyle {
   width: 30%;
   padding-left: 10px;
@@ -762,7 +763,15 @@ tbody td button:hover {
   padding-left: 12px;
   border-radius: 4px;
 }
-
+/*Update Vendor*/
+.vendor-update{
+  overflow-y: scroll !important ;
+  width:40%;
+  justify-content: center;
+}
+.update-form{
+  width: 100% !important;
+}
 /*productlist and Productadd Css end*/
 
 /* deliverymanage and delivery boy add Css start */

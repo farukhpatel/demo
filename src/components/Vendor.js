@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
-import { Link } from "react-router-dom";
+import { Link, Router, useHistory } from "react-router-dom";
 import "./SuperUser.css";
-import instance from "../Utils/axiosConstants"
+import instance from "../Utils/axiosConstants";
+import { Modal } from "@material-ui/core";
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
-
+  const routerHistroy =useHistory()
   const [vendors, setVendors] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const update = (key) => {
+    routerHistroy.push("/updatevendor")
+  };
+  const closeModal = () => setOpen(true);
 
   useEffect(() => {
-    instance.get(API.VENDOR_API)
-    .then(function(response){
+    instance.get(API.VENDOR_API).then(function (response) {
       setVendors(response.shop);
-    })
+    });
   }, []);
-
+  
   return (
     <>
       <div className="main-outer-div">
@@ -50,10 +56,12 @@ function Vendor() {
                       <th scope="col">Dairy Address</th>
                       <th scope="col">Status</th>
                       <th scope="col">Shop Founding Date</th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {vendors.map((value, index) => {
+                      
                       return (
                         <tr align="center" key={index}>
                           <th scope="row">{index + 1}</th>
@@ -64,7 +72,7 @@ function Vendor() {
                                 pathname: "/vendordetails",
                                 state: { vendor: value },
                               }}
-                              style={{color:"#0dcaf0"}}
+                              style={{ color: "#0dcaf0" }}
                             >
                               <p style={{ fontWeight: "bold " }}>
                                 {value?.shop_owner?.name}
@@ -79,6 +87,17 @@ function Vendor() {
                           <td>address</td>
                           <td>{value?.shop_approval}</td>
                           <td>{value?.shop_founding_date}</td>
+                          <td>
+                            <button
+                              className="btn btn-link-light "
+                              onClick={() => update(index)}
+                            >
+                              <i class="fas fa-user-edit"></i>
+                            </button>
+                            <button className="btn btn-link-light">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}
@@ -93,12 +112,12 @@ function Vendor() {
               >
                 <div className="btn-position">
                   <div className="searchStyle">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <i className="fa fa-search" aria-hidden="true"></i>
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
                   <button>New Sales Order</button>
                 </div>
-                <table class="table table-striped">
+                <table className="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">Order Id</th>
@@ -109,6 +128,7 @@ function Vendor() {
                       <th scope="col">Last Updated</th>
                     </tr>
                   </thead>
+
                   <tbody>
                     {arr.map((value, index) => {
                       return (
@@ -135,6 +155,15 @@ function Vendor() {
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={closeModal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div style={{transform:`translate(-50% -50%)`,backgroundColor:"white"}}>
+        </div>
+      </Modal>
     </>
   );
 }
