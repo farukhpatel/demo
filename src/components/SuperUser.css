@@ -676,6 +676,17 @@ tbody td button:hover {
 }
 /* VendorAdd css end */
 
+/*Update Vendor*/
+.vendor-update{
+  overflow-y: scroll !important ;
+  width:40%;
+  justify-content: center;
+}
+.update-form{
+  width: 100% !important;
+}
+/*update vendor css end*/
+
 /*productlist and Productadd Css start*/
 .productlist-inner-div {
   margin-top: 4%;
