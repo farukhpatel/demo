@@ -22,7 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
 
-function UpdateVendor() {
+function UpdateVendorForm(props) {
+    const prop =props.location.state
   // multiselect
   const options = [
     { label: "Monday", value: "monday" },
@@ -37,75 +38,61 @@ function UpdateVendor() {
 
   // form fields var
   const [file, setFile] = useState(null);
-  const [phone, setPhone] = useState("");
-  const [description, setDescription] = useState("");
-  const [licenseNumber, setLicenseNumber] = useState("");
-  const [foundationDate, setFoundationDate] = useState(new Date());
-  const [deliveryRange, setDeliveryRange] = useState("");
-  const [shopName, setShopName] = useState("");
+  const [phone, setPhone] = useState(prop.shop_phone);
+  const [description, setDescription] = useState(prop.shop_description);
+  const [licenseNumber, setLicenseNumber] = useState(prop.shop_license_number);
+  const [foundationDate, setFoundationDate] = useState(prop.shop_founding_date);
+  const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
+  const [shopName, setShopName] = useState(prop.shop_name);
 
 
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
-
-  // time picker
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
-
-  const handleTimeChange = (e, time) => {
-    if (time === "start") setStartTime(e);
-    else setEndTime(e);
-  };
+console.log(prop);
 
   // form1
   const form1Submit = (e) => {
     e.preventDefault();
+    let shopCreateBody = {
+         user_id: prop.user_id,
+          shop_name: shopName,
+          shop_phone: phone,
+          shop_description: description,
+        //   shop_profile: response.image_url,
+          shop_license_number: licenseNumber,
+          shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+          shop_delivery_range: deliveryRange,
+        };
+
+        // let error = false;
+        console.log(shopCreateBody);
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (file) {
       let formdata = new FormData();
       formdata.append("image", file[0]);
       instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
-        let temp = selected;
-        let shop_schedules = temp.map((item) => {
-          item.key = item.label;
-          item.start = moment(startTime._d).format("HH:mm:ss");
-          item.end = moment(endTime._d).format("HH:mm:ss");
-          return item;
-        });
 
-        let shopCreateBody = {
-        //   user_id: userid,
-          shop_name: shopName,
-          shop_phone: phone,
-          shop_description: description,
-          shop_profile: response.image_url,
-          shop_license_number: licenseNumber,
-          shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-          shop_delivery_range: deliveryRange,
-          shop_schedules: shop_schedules,
-        };
-
-        let error = false;
-        Object.keys(shopCreateBody).forEach((key) => {
-          if (!error && shopCreateBody[key] === "") {
-            toast.error("One or more fields are empty.");
-            error = true;
-          }
-        });
-        if (!error) {
-          console.log(shopCreateBody);
-        //   instance.post(API.CREATE_USER, body).then(function (response) {
-        //     shopCreateBody = {...shopCreateBody,user_id: response.user.id,}
-        //     instance.post(API.CREATE_SHOP, shopCreateBody).then(function (shopCreateResponse) {
-        //       console.log(shopCreateResponse?.shop?.id);
-        //       toast.success("Vendor Updated");
-        //     });
-        //   });
+        
+        // Object.keys(shopCreateBody).forEach((key) => {
+        //   if (!error && shopCreateBody[key] === "") {
+        //     toast.error("One or more fields are empty.");
+        //     error = true;
+        //   }
+        // });
+        // if (!error) {
           
-        }
+        // //   instance.post(API.CREATE_USER, body).then(function (response) {
+        // //     shopCreateBody = {...shopCreateBody,user_id: response.user.id,}
+        // //     instance.post(API.CREATE_SHOP, shopCreateBody).then(function (shopCreateResponse) {
+        // //       console.log(shopCreateResponse?.shop?.id);
+        // //       toast.success("Vendor Updated");
+        // //     });
+        // //   });
+          
+        // }
       });
     } else {
       toast.error("No file Picked.");
@@ -127,7 +114,7 @@ function UpdateVendor() {
                         type="text"
                         class="form-control"
                         id="vendorName"
-                        placeholder={"Enter Shop Name"}
+                        value={shopName}
                         onChange={(e) => setShopName(e.target.value)}
                       />
                     </div>
@@ -147,6 +134,7 @@ function UpdateVendor() {
                         class="form-control"
                         id="shopdescription"
                         rows="3"
+                        value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       ></textarea>
                     </div>
@@ -166,6 +154,7 @@ function UpdateVendor() {
                         type="text"
                         class="form-control"
                         id="shoplicensenumber"
+                        value={licenseNumber}
                         onChange={(e) => setLicenseNumber(e.target.value)}
                       />
                     </div>
@@ -197,56 +186,9 @@ function UpdateVendor() {
                         type="text"
                         class="form-control"
                         id="deliveryrange"
-                        placeholder=" eg:- 1km"
+                        value={deliveryRange}
                         onChange={(e) => setDeliveryRange(e.target.value)}
                       />
-                    </div>
-                    <div class="form-group">
-                      <label for="shopschedule">
-                        Shop Schedule (IN 24 HOURS FORMAT)
-                      </label>
-                      <MultiSelect
-                        options={options}
-                        value={selected}
-                        onChange={setSelected}
-                        labelledBy="Select"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="shopschedulestart">Shop Schedule Start</label>
-                      <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="Time picker"
-                            ampm={false}
-                            value={startTime}
-                            onChange={(e) => handleTimeChange(e, "start")}
-                            KeyboardButtonProps={{
-                              "aria-label": "change time",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    </div>
-                    <div class="form-group">
-                      <label for="shopscheduleend">Shop Schedule End</label>
-                      <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="Time picker"
-                            ampm={false}
-                            value={endTime}
-                            onChange={(e) => handleTimeChange(e, "end")}
-                            KeyboardButtonProps={{
-                              "aria-label": "change time",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
                     </div>
                   <button
                     type="submit"
@@ -265,4 +207,4 @@ function UpdateVendor() {
   );
 }
 
-export default UpdateVendor;
+export default UpdateVendorForm;

@@ -11,8 +11,8 @@ function Vendor() {
   const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const update = (key) => {
-    routerHistroy.push("/updatevendor")
+  const update = (prop) => {
+    routerHistroy.push("/updatevendor",prop)
   };
   const closeModal = () => setOpen(true);
 
@@ -90,7 +90,7 @@ function Vendor() {
                           <td>
                             <button
                               className="btn btn-link-light "
-                              onClick={() => update(index)}
+                              onClick={() => update(value)}
                             >
                               <i class="fas fa-user-edit"></i>
                             </button>
