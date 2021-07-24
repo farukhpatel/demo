@@ -20,10 +20,11 @@ function DeliveryCharge() {
   const form2Submit = (e) => {
     e.preventDefault();
     let data={
-      tax
+      tax:tax
     }
+
     console.log(data);
-    instance.post(API.SETTING_TAX, tax).then(function (response) {
+    instance.post(API.SETTING_TAX, data).then(function (response) {
       toast.success("Tax Successfully Added.");
       window.location.href = "/settings";
     });

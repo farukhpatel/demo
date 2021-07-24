@@ -16,7 +16,7 @@ const API = {
   SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/set-delivery-slots",
   SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/set-delivery-charge",
   SETTING_BANNER_IMG: Config.BASE_URL + "api/admin/set-banner",
-  SETTING_TAX: Config.BASE_URL + "api/admin/set-order-tax",
+  SETTING_TAX: Config.BASE_URL + "api/admin/set-tax",
   GET_SHOP_PRODUCTS: Config.BASE_URL + "api/shop/product/all",
   GET_REVIEWS: Config.BASE_URL + "api/review/all",
   UPDATE_REVIEW: Config.BASE_URL + "api/review/update",
