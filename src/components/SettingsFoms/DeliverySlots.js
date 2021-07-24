@@ -1,6 +1,6 @@
 // import { FilePicker } from 'react-file-picker'
 import React, { useState, useEffect } from "react";
-
+import moment from "moment";
 import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
@@ -24,21 +24,37 @@ function DeliverySlots() {
   // time picker
   const [startTime1, setStartTime1] = useState(new Date());
   const [endTime1, setEndTime1] = useState(new Date());
-
+  const [morningCutoff, setMorningCutoff] = useState(new Date());
   const [startTime2, setStartTime2] = useState(new Date());
   const [endTime2, setEndTime2] = useState(new Date());
+  const [eveningCutoff, setEveningCutoff] = useState(new Date());
 
-  const handleTimeChange1 = (e, time) => {
-    if (time === "start") setStartTime1(e);
-    else setEndTime1(e);
-  };
-  const handleTimeChange2 = (e, time) => {
-    if (time === "start") setStartTime2(e);
-    else setEndTime2(e);
-  };
+  // const handleTimeChange1 = (e, time) => {
+  //   if (time === "start") setStartTime1(e);
+  //   else setEndTime1(e);
+  // };
+  // const handleTimeChange2 = (e, time) => {
+  //   if (time === "start") setStartTime2(e);
+  //   else setEndTime2(e);
+  // };
 
   const form2Submit = (e) => {
     e.preventDefault();
+    let Delivery_slot={
+      morning_start_time:moment(startTime1).format("HH:mm:ss"),
+      morning_end_time:moment(endTime1).format("HH:mm:ss"),
+      morning_cutoff_time:moment(morningCutoff).format("HH:mm:ss"),
+      evening_start_time:moment(startTime2).format("HH:mm:ss"),
+      evening_end_time:moment(endTime2).format("HH:mm:ss"),
+      evening_cutoff_time:moment(eveningCutoff).format("HH:mm:ss"),
+    }
+    console.log(Delivery_slot);
+    //SETTING_DELIVERY_SLOTS POST
+    instance.post(API.SETTING_DELIVERY_SLOTS, Delivery_slot).then(function (response) {
+      toast.success("Delivery Slots Successfully Added.");
+      window.location.href = "/settings";
+    });
+    
   };
 
   return (
@@ -56,7 +72,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={startTime1}
-                    onChange={(e) => handleTimeChange1(e, "start")}
+                    onChange={(e) => setStartTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -75,7 +91,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={endTime1}
-                    onChange={(e) => handleTimeChange1(e, "end")}
+                    onChange={(e) => setEndTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -94,7 +110,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={endTime1}
-                    onChange={(e) => handleTimeChange1(e, "end")}
+                    onChange={(e) => setMorningCutoff(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -117,7 +133,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={startTime1}
-                    onChange={(e) => handleTimeChange1(e, "start")}
+                    onChange={(e) => setStartTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -136,7 +152,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={endTime1}
-                    onChange={(e) => handleTimeChange1(e, "end")}
+                    onChange={(e) => setEndTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -155,7 +171,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={endTime1}
-                    onChange={(e) => handleTimeChange1(e, "end")}
+                    onChange={(e) => setEveningCutoff(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}

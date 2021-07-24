@@ -16,10 +16,15 @@ import instance from "../../Utils/axiosConstants";
 
 function DeliveryCharge() {
   // time picker
+  const [images, setImages] = useState([]);
   const form2Submit = (e) => {
     e.preventDefault();
+    console.log(images[0]);
+    instance.post(API.SETTING_BANNER_IMG, images).then(function (response) {
+      toast.success("Image Successfully Added.");
+      window.location.href = "/settings";
+    });
   };
-  const [images, setImages] = useState([]);
 
   const selectFile = (e) => {
     let temp = [...images];
