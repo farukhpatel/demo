@@ -11,6 +11,7 @@ const ProductList = () => {
       setProductList(response.products);
     })
   }, []);
+  console.log(productList[0]);
 
   return (
     <>

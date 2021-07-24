@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
-import { Link, Router, useHistory } from "react-router-dom";
+
+import { Link, useHistory } from "react-router-dom";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants";
 import { Modal } from "@material-ui/core";
@@ -11,8 +12,9 @@ function Vendor() {
   const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const update = (key) => {
-    routerHistroy.push("/updatevendor")
+
+  const update = (prop) => {
+    routerHistroy.push("/updatevendor",prop)
   };
   const closeModal = () => setOpen(true);
 
@@ -90,7 +92,8 @@ function Vendor() {
                           <td>
                             <button
                               className="btn btn-link-light "
-                              onClick={() => update(index)}
+
+                              onClick={() => update(value)}
                             >
                               <i class="fas fa-user-edit"></i>
                             </button>

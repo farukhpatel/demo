@@ -23,6 +23,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
 
+const customValueRenderer = (selected, _options) => {
+  return selected.length
+    ? selected.map(({ label }) => "✔️ " + label)
+    : "😶 No Items Selected";
+};
+
 function AddVendorForm() {
   // multiselect
   const options = [
@@ -194,12 +200,19 @@ function AddVendorForm() {
   };
 
   // time picker
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [startTime1, setStartTime1] = useState(new Date());
+  const [endTime1, setEndTime1] = useState(new Date());
 
-  const handleTimeChange = (e, time) => {
-    if (time === "start") setStartTime(e);
-    else setEndTime(e);
+  const [startTime2, setStartTime2] = useState(new Date());
+  const [endTime2, setEndTime2] = useState(new Date());
+
+  const handleTimeChange1 = (e, time) => {
+    if (time === "start") setStartTime1(e);
+    else setEndTime1(e);
+  };
+  const handleTimeChange2 = (e, time) => {
+    if (time === "start") setStartTime2(e);
+    else setEndTime2(e);
   };
 
   // form1
@@ -227,13 +240,24 @@ function AddVendorForm() {
       formdata.append("image", file[0]);
       instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
         let temp = selected;
-        let shop_schedules = temp.map((item) => {
-          item.key = item.label;
-          item.start = moment(startTime._d).format("HH:mm:ss");
-          item.end = moment(endTime._d).format("HH:mm:ss");
-          return item;
+        let shop_schedule1 = temp.map((item) => {
+          return {  key: item.label,
+          start: moment(startTime1._d).format("HH:mm:ss"),
+          end: moment(endTime1._d).format("HH:mm:ss")
+        }
         });
 
+        let shop_schedule2 = []
+        let d1 = moment(startTime2._d).format("HH:mm");
+        let d2 = moment(endTime2._d).format("HH:mm");
+        if(d1!==d2){
+          shop_schedule2 = temp.map((item) => {
+            return {  key: item.label,
+              start: moment(startTime2._d).format("HH:mm:ss"),
+              end: moment(endTime2._d).format("HH:mm:ss")
+            }
+          });
+        }
         let shopCreateBody = {
           // user_id: userid,
           shop_name: shopName,
@@ -244,7 +268,7 @@ function AddVendorForm() {
           //UPDATE FOUNDING DATE VALUE
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
-          shop_schedules: shop_schedules,
+          shop_schedules: [...shop_schedule1,...shop_schedule2]
         };
 
         let error = false;
@@ -263,18 +287,19 @@ function AddVendorForm() {
             role_id: 2,
           };
           instance.post(API.CREATE_USER, body).then(function (response) {
-            shopCreateBody = {...shopCreateBody,user_id: response.user.id,}
-            instance.post(API.CREATE_SHOP, shopCreateBody).then(function (shopCreateResponse) {
-              setAddressableID(shopCreateResponse?.shop?.id);
-              setAddressForm({
-                ...addressForm,
-                addressable_id: shopCreateResponse?.shop?.id,
+            shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
+            instance
+              .post(API.CREATE_SHOP, shopCreateBody)
+              .then(function (shopCreateResponse) {
+                setAddressableID(shopCreateResponse?.shop?.id);
+                setAddressForm({
+                  ...addressForm,
+                  addressable_id: shopCreateResponse?.shop?.id,
+                });
+                console.log(shopCreateResponse?.shop?.id);
+                toast.success("Vendor Created. Add Address Details Now.");
               });
-              console.log(shopCreateResponse?.shop?.id);
-              toast.success("Vendor Created. Add Address Details Now.");
-            });
           });
-          
         }
       });
     } else {
@@ -443,44 +468,92 @@ function AddVendorForm() {
                         value={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        valueRenderer={customValueRenderer}
                       />
                     </div>
-                    <div class="form-group">
-                      <label for="shopschedulestart">Shop Schedule Start</label>
-                      <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="Time picker"
-                            ampm={false}
-                            value={startTime}
-                            onChange={(e) => handleTimeChange(e, "start")}
-                            KeyboardButtonProps={{
-                              "aria-label": "change time",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
+                    <div className="scheduels-container">
+                      <div class="form-group">
+                        <label for="shopschedulestart">
+                          Schedule 1 (Start)
+                        </label>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                          <Grid container justify="space-around">
+                            <KeyboardTimePicker
+                              margin="normal"
+                              id="time-picker"
+                              label="Time picker"
+                              ampm={false}
+                              value={startTime1}
+                              onChange={(e) => handleTimeChange1(e, "start")}
+                              KeyboardButtonProps={{
+                                "aria-label": "change time",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="shopscheduleend">Schedule 1 (End)</label>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                          <Grid container justify="space-around">
+                            <KeyboardTimePicker
+                              margin="normal"
+                              id="time-picker"
+                              label="Time picker"
+                              ampm={false}
+                              value={endTime1}
+                              onChange={(e) => handleTimeChange1(e, "end")}
+                              KeyboardButtonProps={{
+                                "aria-label": "change time",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="shopscheduleend">Shop Schedule End</label>
-                      <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="Time picker"
-                            ampm={false}
-                            value={endTime}
-                            onChange={(e) => handleTimeChange(e, "end")}
-                            KeyboardButtonProps={{
-                              "aria-label": "change time",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
+                    <div className="scheduels-container">
+                      <div class="form-group">
+                        <label for="shopschedulestart">
+                          Schedule 2 (Start)
+                        </label>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                          <Grid container justify="space-around">
+                            <KeyboardTimePicker
+                              margin="normal"
+                              id="time-picker"
+                              label="Time picker"
+                              ampm={false}
+                              value={startTime2}
+                              onChange={(e) => handleTimeChange2(e, "start")}
+                              KeyboardButtonProps={{
+                                "aria-label": "change time",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="shopscheduleend">Schedule 2 (End)</label>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                          <Grid container justify="space-around">
+                            <KeyboardTimePicker
+                              margin="normal"
+                              id="time-picker"
+                              label="Time picker"
+                              ampm={false}
+                              value={endTime2}
+                              onChange={(e) => handleTimeChange2(e, "end")}
+                              KeyboardButtonProps={{
+                                "aria-label": "change time",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
                     </div>
+
                     <button
                       type="submit"
                       class="btn btn-primary submitBtn"
@@ -556,14 +629,16 @@ function AddVendorForm() {
                       }}
                     >
                       <option value="">Select Locality</option>
-                      {addressForm && addressForm?.city!=="" && localities.map((locality) => {
-                        return (
-                          <option
-                            value={locality?.id}
-                            label={locality?.locality}
-                          />
-                        );
-                      })}
+                      {addressForm &&
+                        addressForm?.city !== "" &&
+                        localities.map((locality) => {
+                          return (
+                            <option
+                              value={locality?.id}
+                              label={locality?.locality}
+                            />
+                          );
+                        })}
                     </select>
                   ) : (
                     "No Localities Found."
