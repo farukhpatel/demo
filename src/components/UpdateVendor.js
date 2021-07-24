@@ -1,12 +1,11 @@
 // import { FilePicker } from 'react-file-picker'
 import React, { useState, useEffect } from "react";
+
 import {
   KeyboardTimePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-
-import { toast } from "react-toastify";
 import Grid from "@material-ui/core/Grid"; //clock
 import MomentUtils from "@date-io/moment"; //clock
 import moment from "moment"; //for clock time
@@ -16,8 +15,11 @@ import "./SuperUser.css";
 
 //for Api
 import API from "../Utils/ApiConstant";
+import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import instance from "../Utils/axiosConstants";
+import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
     const prop =props.location.state
@@ -33,12 +35,10 @@ function UpdateVendorForm(props) {
   const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
   const [shopName, setShopName] = useState(prop.shop_name);
   const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules);
-  console.log(shopSchedule);
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
-
   const handleTimeChange1 = (t, time,index) => {
     if (time === "start") setShopSchedule((e)=>{e[index].start=t.format("HH:mm:ss");return e})
     else setShopSchedule((e)=>{e[index].end=t.format("HH:mm:ss");return e})
@@ -71,7 +71,7 @@ function UpdateVendorForm(props) {
                 toast.success("Vendor Details Updated Now.");
                 
               });
-    
+
   };
   return (
     <>
@@ -83,7 +83,9 @@ function UpdateVendorForm(props) {
                 <div className="vendor-update">
                 <form className="vendor-form update-form">
                   <span className="customSpan"></span>
+
                   <div className="update-form-vendor">
+
                     <div class="form-group">
                       <label for="vendorName">Shop Name</label>
                       <input
@@ -100,6 +102,7 @@ function UpdateVendorForm(props) {
                         type="text"
                         class="form-control"
                         id="shopPhone"
+
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
@@ -132,14 +135,12 @@ function UpdateVendorForm(props) {
                             KeyboardButtonProps={{
                               "aria-label": "change date",
                             }}
-                            
                           />
                         </Grid>
                       </MuiPickersUtilsProvider>
                     </div>
                     </div>
                     <div className="update-form-vendor">
-                    
                     <div class="form-group">
                       <label for="deliveryrange">Delivery Range</label>
                       <input
@@ -150,7 +151,6 @@ function UpdateVendorForm(props) {
                         onChange={(e) => setDeliveryRange(e.target.value)}
                       />
                     </div>
-                    <div class="form-group">
                       <label for="profile">Profile:</label>
                       <input
                         type="file"
@@ -159,7 +159,6 @@ function UpdateVendorForm(props) {
                         name="profile"
                         onChange={(e) => setFile(e.target.files)}
                       />
-                    </div>
                     </div>
                     <div class="form-group">
                       <label for="shopdescription">Shop Description</label>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
+
 import { Link, useHistory } from "react-router-dom";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants";
@@ -10,6 +11,7 @@ function Vendor() {
   const routerHistroy =useHistory()
   const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
+
 
   const update = (prop) => {
     routerHistroy.push("/updatevendor",prop)
@@ -90,6 +92,7 @@ function Vendor() {
                           <td>
                             <button
                               className="btn btn-link-light "
+
                               onClick={() => update(value)}
                             >
                               <i class="fas fa-user-edit"></i>
