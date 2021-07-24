@@ -24,6 +24,7 @@ const API = {
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
   ASSIGN_DELIVERY_BOY: Config.BASE_URL + "api/order/update",
   VENDOR_API: Config.BASE_URL + "api/shop/all",
+  VENDOR_UPDATE: Config.BASE_URL + "api/shop/update",
   IMAGE_UPLOAD: Config.BASE_URL + "api/image/upload",
   CREATE_USER: Config.BASE_URL + "api/user/create",
   CREATE_SHOP: Config.BASE_URL + "api/shop/create",

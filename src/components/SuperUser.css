@@ -679,11 +679,21 @@ tbody td button:hover {
 /*Update Vendor*/
 .vendor-update{
   overflow-y: scroll !important ;
-  width:40%;
+  width:80%;
   justify-content: center;
 }
+.update-form-vendor{
+  display: flex;
+  margin: 1% 0 !important;
+}
 .update-form{
+  flex-direction: row;
   width: 100% !important;
+}
+.datePicker-vendor div{
+  border:0px !important;
+  display: flex;
+  justify-content: flex-end;
 }
 /*update vendor css end*/
 

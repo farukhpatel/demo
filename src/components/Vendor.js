@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
-import { Link, Router, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants";
 import { Modal } from "@material-ui/core";
