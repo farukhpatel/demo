@@ -25,6 +25,7 @@ import AddProductForm from "./components/AddProductForm";
 import DeliveryManage from "./components/DeliveryManage";
 import AddDeliveryBoyForm from "./components/AddDeliveryBoyForm";
 import PaymentSettlement from "./components/PaymentSettlement";
+import Settings from "./components/Settings";
 import Banner from "./components/Banner";
 import Review from "./components/Review";
 import Coupon from "./components/Coupon";
@@ -94,6 +95,7 @@ function App() {
           <Route exact path="/deliverymanage" component={DeliveryManage} />
           <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
           <Route exact path="/paymentsettle" component={PaymentSettlement} />
+          <Route exact path="/settings" component={Settings} />
           <Route exact path="/banner" component={Banner} />
           <Route exact path="/review" component={Review} />
           <Route exact path="/coupon" component={Coupon} />
