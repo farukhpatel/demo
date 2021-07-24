@@ -15,9 +15,22 @@ import "react-toastify/dist/ReactToastify.css";
 import instance from "../../Utils/axiosConstants";
 
 function DeliveryCharge() {
+
+  const [charge,setCharge]=useState(null);
+  const [cart_cut_off_value,setCart_cut_off_value]=useState(null);
+  
   // time picker
   const form2Submit = (e) => {
     e.preventDefault();
+    let data={
+      charge,
+      cart_cut_off_value
+    }
+    console.log(data);
+    instance.post(API.SETTING_DELIVERY_CHARGE, data).then(function (response) {
+      toast.success("Delivery Charge Successfully Added.");
+      window.location.href = "/settings";
+    });
   };
 
   return (
@@ -32,6 +45,7 @@ function DeliveryCharge() {
                 class="form-control"
                 id="vendorName"
                 placeholder="Type here..."
+                onChange={(e)=>setCharge(e.target.value)}
               />
             </div>
 
@@ -42,6 +56,7 @@ function DeliveryCharge() {
                 class="form-control"
                 id="vendorName"
                 placeholder="Type here..."
+                onChange={(e)=>setCart_cut_off_value(e.target.value)}
               />
             </div>
           </div>

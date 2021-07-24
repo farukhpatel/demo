@@ -31,6 +31,7 @@ import Review from "./components/Review";
 import Coupon from "./components/Coupon";
 import VendorDetails from "./components/VendorDetails";
 import UpdateVendorForm from "./components/UpdateVendor";
+import updateProduct from "./components/updateProduct";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -92,6 +93,7 @@ function App() {
           <Route exact path="/updatevendor" component={UpdateVendorForm} />
           <Route exact path="/vendordetails" component={VendorDetails} />
           <Route exact path="/addproduct" component={AddProductForm} />
+          <Route exact path="/updateProduct" component={updateProduct}/>
           <Route exact path="/deliverymanage" component={DeliveryManage} />
           <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
           <Route exact path="/paymentsettle" component={PaymentSettlement} />

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
-
 import instance from "../Utils/axiosConstants"
+import {useHistory} from 'react-router-dom';
+
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
-
+  
   useEffect(() => {
     instance.get(API.PRODUCT_LIST)
     .then(function(response){
@@ -12,7 +13,10 @@ const ProductList = () => {
     })
   }, []);
   console.log(productList[0]);
-
+  const routerHistroy =useHistory();
+  const update=(props)=>{
+    routerHistroy.push("updateProduct",props)
+  }
   return (
     <>
       <div className="main-outer-div">
@@ -60,6 +64,7 @@ const ProductList = () => {
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Image</th>
                       <th scope="col">Base Unit</th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,6 +93,17 @@ const ProductList = () => {
                             />
                           </td>
                           <td>{value?.base_unit}</td>
+                          <td>
+                            <button
+                              className="btn btn-link-light "
+                              onClick={() => update(value)}
+                            >
+                              <i class="fas fa-user-edit"></i>
+                            </button>
+                            <button className="btn btn-link-light">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}

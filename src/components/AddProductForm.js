@@ -17,9 +17,11 @@ function AddProductForm() {
   const [unitType, setUnitType] = useState("gm");
   const [percentage, setPercentage] = useState(1);
   const [commission, setCommission] = useState(0);
+  const [subscribable, setSubscribable] = useState(null);
 
   const submit = (e) => {
     e.preventDefault();
+    console.log(subscribable);
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (productImage) {
@@ -35,6 +37,7 @@ function AddProductForm() {
           commission: commission,
           is_percentage_commission: percentage,
           base_unit: `${baseUnit}${unitType}`,
+          is_subscribable_product:subscribable
         };
 
         let error = false;
@@ -129,6 +132,16 @@ function AddProductForm() {
                   <option value={"mg"}>mg</option>
                   <option value={"ltr"}>ltr</option>
                   <option value={"kg"}>kg</option>
+                </Select>
+              </div>
+              <div class="form-group">
+                <label for="baseUnit">Is Subscribable Product</label>
+                <Select
+                  value={subscribable}
+                  onChange={(event) => setSubscribable(event.target.value)}
+                >
+                  <option value={1}>Yes</option>
+                  <option value={0}>No</option>
                 </Select>
               </div>
               <button
