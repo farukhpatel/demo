@@ -7,7 +7,7 @@ import { Modal } from "@material-ui/core";
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
-  const routerHistroy =useHistory()
+  const routerHistroy =useHistory();
   const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
 
