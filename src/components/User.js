@@ -4,6 +4,7 @@ import "./SuperUser.css";
 // API IMPORT
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants"
+import { useHistory } from "react-router-dom";
 
 function User() {
   // API
@@ -15,6 +16,14 @@ function User() {
       setUser(response.users)
     })
   }, [])
+  const routerHistroy=useHistory();
+  const OrderDetails=(value)=>{
+    console.log("OrderDetails");
+    console.log(value);
+    routerHistroy.push('/orderdetails',value)
+  }
+  
+
 
 
   return (
@@ -66,12 +75,16 @@ function User() {
                         return (
                           <tr>
                             <th style={{}}><input type="checkbox" style={{ marginRight: "7%" }} />{index + 1}</th>
-                            <td onClick={() =>
-                              (window.location.href = "/orderdetails")
+                            <td onClick={() =>{
+                              // (window.location.href = "/orderdetails")
+                              OrderDetails(value)
+                            }
                             }
                               style={{ cursor: "pointer" }}>{value?.id}</td>
-                            <td onClick={() =>
-                              (window.location.href = "/orderdetails")
+                            <td onClick={() =>{
+                              // (window.location.href = "/orderdetails")
+                               OrderDetails(value);
+                            }
                             }
                               style={{ cursor: "pointer" }}>
                               <p >{value?.name}</p>

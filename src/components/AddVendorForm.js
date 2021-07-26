@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
-
+import Back from './BackButton/Back';
 const customValueRenderer = (selected, _options) => {
   return selected.length
     ? selected.map(({ label }) => "✔️ " + label)
@@ -319,7 +319,10 @@ function AddVendorForm() {
         <div className="myorders-outer-div">
           {addressableId === "" ? (
             <>
-              <div className="vendor-form-1">
+              <div className="vendor-form-1" style={{position:'relative'}}>
+                <div className="backButton">
+                <Back></Back>
+                </div>
                 <h1>Add Vendor</h1>
                 <form className="vendor-form">
                   <span className="customSpan"></span>

@@ -76,7 +76,7 @@ function UpdateVendorForm(props) {
         instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody)
               .then(function (shopCreateResponse) {
                 toast.success("Vendor Details Updated Now.");
-                
+                window.location.href="/vendor"
               });
 
   };

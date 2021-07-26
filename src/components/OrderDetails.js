@@ -1,8 +1,12 @@
 import React from "react";
 
-function OrderDetails(props) {
-  const orderDetails = props?.location?.state?.order || {};
-  const orderProducts = props?.location?.state?.order?.order_products || [];
+function OrderDetails(prop) {
+  const props =prop.location.state
+  console.log(props);
+  const orderDetails = props || {};
+  // const orderProducts = props?.location?.state?.order?.order_products || [];
+    const orderProducts = props || [];
+
   return (
     <>
       <div className="main-outer-div">
@@ -85,7 +89,7 @@ function OrderDetails(props) {
                         <h4>Name</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails?.user?.name}</p>
+                        <p>{orderDetails.name}</p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -93,7 +97,7 @@ function OrderDetails(props) {
                         <h4>Phone No.</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails?.user?.phone}</p>
+                        <p>{orderDetails.phone}</p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -101,7 +105,7 @@ function OrderDetails(props) {
                         <h4>Email</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails?.user?.email}</p>
+                        <p>{orderDetails.email}</p>
                       </div>
                     </div>
                     <div className="customer-details-content">

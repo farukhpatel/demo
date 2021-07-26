@@ -43,6 +43,7 @@ function Banner() {
             <div className="main-outer-div">
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div banner-div">
+                        <h1 style={{textAlign:'center'}}>Add Banner</h1>
                         <div className="bannerTop">
                             {
                                 singleImage === '' ? null :

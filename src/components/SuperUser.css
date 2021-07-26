@@ -1436,3 +1436,11 @@ a {
   white-space: nowrap;
   display: block;
 }
+
+
+/* Back button css */
+.backButton{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}

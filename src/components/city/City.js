@@ -18,7 +18,14 @@ function City() {
     }
    const deleteCity=(props)=>{
      console.log(props);
-   
+     let bool=window.confirm("Are you sure to delete");
+     if(bool){
+       console.log("deleled part work");
+     }
+     else{
+       console.log("Not deleted");
+       window.location.href="/city"
+     }
    }
     return (
         <>

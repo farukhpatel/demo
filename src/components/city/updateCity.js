@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import API from "../../Utils/ApiConstant"
 import instance from "../../Utils/axiosConstants"
+import Back from '../BackButton/Back'
 
 function UpdateCity(props){
     const prop =props.location.state
@@ -44,7 +45,10 @@ function UpdateCity(props){
           <>
             <div className="main-outer-div">
               <div className="myorders-outer-div">
-                <div className="vendor-form-1">
+                <div className="vendor-form-1" style={{position:'relative'}}>
+                  <div className="backButton">
+                    <Back></Back>
+                  </div>
                   <h1>Update City</h1>
                   <form className="vendor-form">
                     <span className="customSpan"></span>

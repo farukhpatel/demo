@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants"
-
+import Back from './BackButton/Back'
 function AddProductForm() {
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState("");
@@ -63,8 +63,12 @@ function AddProductForm() {
   return (
     <>
       <div className="main-outer-div">
-        <div className="myorders-outer-div">
-          <div className=" productlist-inner-div-form">
+        <div className="myorders-outer-div" >
+          <div className=" productlist-inner-div-form" style={{position:'relative'}}>
+          <div className="backButton">
+            <Back></Back>
+          </div>
+
             <h1>Add Product</h1>
             <form className="productadd-form">
               <span className="customSpan"></span>
