@@ -16,6 +16,14 @@ import instance from "../../Utils/axiosConstants";
 
 function DeliveryCharge() {
   const [tax,setTax]=useState(null);
+  useEffect(()=>{
+    console.log("component rendered");
+    instance.get(API.GET_SETTING_TAX)
+    .then(function(response){
+      console.log(response.tax[0].value.tax);
+      setTax(response.tax[0].value.tax);
+    })
+  },[]);
   // time picker
   const form2Submit = (e) => {
     e.preventDefault();
@@ -41,7 +49,8 @@ function DeliveryCharge() {
                 type="number"
                 class="form-control"
                 id="vendorName"
-                placeholder="Type here..."
+                placeholder={tax}
+                value={tax}
                 onChange={(e)=>setTax(e.target.value)}
               />
             </div>

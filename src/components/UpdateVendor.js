@@ -23,9 +23,11 @@ import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
     const prop =props.location.state
-
+    console.log("prop data");
+    console.log(prop);
 
   // form fields var
+  const [timePicker, setTimePicker] = useState(new Date);
   const [file, setFile] = useState(null);
   const [phone, setPhone] = useState(prop.shop_phone);
   const [description, setDescription] = useState(prop.shop_description);
@@ -36,12 +38,17 @@ function UpdateVendorForm(props) {
   const [shopName, setShopName] = useState(prop.shop_name);
   const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules);
   // date picker
+  console.log(shopSchedule);
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
   const handleTimeChange1 = (t, time,index) => {
-    if (time === "start") setShopSchedule((e)=>{e[index].start=t.format("HH:mm:ss");return e})
-    else setShopSchedule((e)=>{e[index].end=t.format("HH:mm:ss");return e})
+    if (time === "start") setShopSchedule((e)=>{
+      setTimePicker(t);
+      e[index].start=moment(t).format("HH:mm:ss");
+      return e
+    })
+    else setShopSchedule((e)=>{e[index].end=e[index].start=moment(t).format("HH:mm:ss");  console.log(e); return e})
   };
   // form1
   const form1Submit = async(e) => {
@@ -60,7 +67,7 @@ function UpdateVendorForm(props) {
           shop_name: shopName,
           shop_phone: phone,
           shop_description: description,
-         shop_profile: profileImage,
+           shop_profile: profileImage,
           shop_license_number: licenseNumber,
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
@@ -183,6 +190,7 @@ function UpdateVendorForm(props) {
                   </thead>
                   <tbody>
                    {shopSchedule.map((value, index) => {
+                     console.log(value);
                       return (
                         <tr>
                           <td>{value?.key}</td>
@@ -194,7 +202,7 @@ function UpdateVendorForm(props) {
                               id="time-picker"
                               ampm={true}
                               value={moment(value.start, "HH:mm:ss").format()}
-                              onChange={(t) =>handleTimeChange1(t,"start",index)}
+                              onChange={(t) =>{console.log(t); handleTimeChange1(t,"start",index)}}
                               KeyboardButtonProps={{
                                 "aria-label": "change time",
                               }}
@@ -208,7 +216,7 @@ function UpdateVendorForm(props) {
                               margin="normal"
                               id="time-picker"
                               ampm={true}
-                              value={moment(value.end, "HH:mm:ss").format("hh:mm A")}
+                              value={moment(value.end, "HH:mm:ss").format()}
                               onChange={(t) =>handleTimeChange1(t,"end",index)}
                               KeyboardButtonProps={{
                                 "aria-label": "change time",
@@ -238,8 +246,8 @@ function UpdateVendorForm(props) {
                               margin="normal"
                               id="time-picker"
                               ampm={true}
-                              value={moment(value.end, "HH:mm:ss").format("hh:mm A")}
-                              onChange={(t) =>handleTimeChange1(t,"end",index)}
+                              value={moment(value.end, "HH:mm:ss").format()}
+                              onChange={(t) =>{console.log(t); handleTimeChange1(t,"end",index)}}
                               KeyboardButtonProps={{
                                 "aria-label": "change time",
                               }}

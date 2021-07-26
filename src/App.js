@@ -32,6 +32,9 @@ import Coupon from "./components/Coupon";
 import VendorDetails from "./components/VendorDetails";
 import UpdateVendorForm from "./components/UpdateVendor";
 import updateProduct from "./components/updateProduct";
+import city from './components/city/City';
+import addCity from './components/city/addCity';
+import updateCity from './components/city/updateCity';
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -93,7 +96,7 @@ function App() {
           <Route exact path="/updatevendor" component={UpdateVendorForm} />
           <Route exact path="/vendordetails" component={VendorDetails} />
           <Route exact path="/addproduct" component={AddProductForm} />
-          <Route exact path="/updateProduct" component={updateProduct}/>
+          <Route exact path="/updateProduct/:id" component={updateProduct}/>
           <Route exact path="/deliverymanage" component={DeliveryManage} />
           <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
           <Route exact path="/paymentsettle" component={PaymentSettlement} />
@@ -101,6 +104,9 @@ function App() {
           <Route exact path="/banner" component={Banner} />
           <Route exact path="/review" component={Review} />
           <Route exact path="/coupon" component={Coupon} />
+          <Route exact path="/city" component={city} />
+          <Route exact path="/addcity" component={addCity} />
+          <Route exact path="/updateCity/:id" component={updateCity} />
         </div>
       </Switch>
     </>

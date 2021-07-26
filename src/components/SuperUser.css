@@ -680,7 +680,7 @@ tbody td button:hover {
 /*Update Vendor*/
 .vendor-update{
   overflow-y: scroll !important ;
-  width:80%;
+  width:80% !important;
   justify-content: center;
 }
 .update-form-vendor{

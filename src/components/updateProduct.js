@@ -8,8 +8,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants"
+import { useParams } from "react-router-dom";
 
 function UpdateProduct(props) {
+  let {id}=useParams();
   const prop =props.location.state
 //   console.log(prop);
   const [file, setFile] = useState(null);
@@ -54,7 +56,7 @@ function UpdateProduct(props) {
     console.log("object");
     console.log(updateProductData);
     console.log(headers)
-      instance.patch(API.UPDATE_PRODUCT,updateProductData)
+      instance.patch(`${API.UPDATE_PRODUCT}/${id}`,updateProductData)
       .then(res=>{
         toast.success("Successful edit of product");
         window.location.href = "/productlist";

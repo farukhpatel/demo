@@ -13,6 +13,9 @@ const API = {
   DELIVERED: Config.BASE_URL + "api/order/all?order_status=4",
   TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
   GET_DASHBOARD_DATA: Config.BASE_URL + "api/admin/dashboard",
+  GET_SETTING_TAX: Config.BASE_URL + "api/admin/get-tax",
+  GET_SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/get-delivery-charge",
+  GET_SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/get-delivery-slots",
   SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/set-delivery-slots",
   SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/set-delivery-charge",
   SETTING_BANNER_IMG: Config.BASE_URL + "api/admin/set-banner",
@@ -36,10 +39,12 @@ const API = {
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   ADD_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/create",
   UPDATE_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/update",
-  UPDATE_PRODUCT: Config.BASE_URL + "api/product/update/1",
+  UPDATE_PRODUCT: Config.BASE_URL + "api/product/update",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
+  CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
+  UPDATE_CITIES: Config.BASE_URL + "api/address/city/update"
 };
 
 export default API;

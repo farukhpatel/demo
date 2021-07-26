@@ -37,7 +37,19 @@ function DeliverySlots() {
   //   if (time === "start") setStartTime2(e);
   //   else setEndTime2(e);
   // };
+  useEffect(()=>{
+    
+    instance.get(API.GET_SETTING_DELIVERY_SLOTS)
+    .then(function(response){
+    setStartTime1(moment(response.slots[0].value.start, "HH:mm:ss").format());
+    setEndTime1(moment(response.slots[0].value.end, "HH:mm:ss").format());
+    setMorningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
+    setStartTime2(moment(response.slots[1].value.start, "HH:mm:ss").format());
+    setEndTime2(moment(response.slots[1].value.end, "HH:mm:ss").format());
+    setEveningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
 
+    })
+  },[]);
   const form2Submit = (e) => {
     e.preventDefault();
     let Delivery_slot={
@@ -109,7 +121,7 @@ function DeliverySlots() {
                     id="time-picker"
                     label="Time picker"
                     ampm={false}
-                    value={endTime1}
+                    value={morningCutoff}
                     onChange={(e) => setMorningCutoff(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
@@ -132,7 +144,7 @@ function DeliverySlots() {
                     id="time-picker"
                     label="Time picker"
                     ampm={false}
-                    value={startTime1}
+                    value={startTime2}
                     onChange={(e) => setStartTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
@@ -151,7 +163,7 @@ function DeliverySlots() {
                     id="time-picker"
                     label="Time picker"
                     ampm={false}
-                    value={endTime1}
+                    value={endTime2}
                     onChange={(e) => setEndTime1(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
@@ -170,7 +182,7 @@ function DeliverySlots() {
                     id="time-picker"
                     label="Time picker"
                     ampm={false}
-                    value={endTime1}
+                    value={eveningCutoff}
                     onChange={(e) => setEveningCutoff(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",

@@ -15,7 +15,7 @@ const ProductList = () => {
   console.log(productList[0]);
   const routerHistroy =useHistory();
   const update=(props)=>{
-    routerHistroy.push("updateProduct",props)
+    routerHistroy.push(`updateProduct/${props.id}`,props)
   }
   return (
     <>
