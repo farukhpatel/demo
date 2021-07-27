@@ -46,7 +46,11 @@ const API = {
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
   CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
-  UPDATE_CITIES: Config.BASE_URL + "api/address/city/update"
+  UPDATE_CITIES: Config.BASE_URL + "api/address/city/update",
+
+  //locality
+  GET_LOCALITY: Config.BASE_URL + "api/address/locality/all?is_active=1",
+  POST_LOCALITY: Config.BASE_URL + "api/address/locality/create",
 };
 
 export default API;

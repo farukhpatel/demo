@@ -36,6 +36,9 @@ import city from './components/city/City';
 import addCity from './components/city/addCity';
 import updateCity from './components/city/updateCity';
 import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
+import Locality from "./components/Locality/Locality";
+import { AddLocation } from "@material-ui/icons";
+import AddLocalities from "./components/Locality/AddLocalities";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -109,6 +112,8 @@ function App() {
           <Route exact path="/addcity" component={addCity} />
           <Route exact path="/updateCity/:id" component={updateCity} />
           <Route exact path="/updateDeliveryBoy/:id" component={UpdateDeliveryBoy} />
+          <Route exact path="/locality" component={Locality} />
+          <Route exact path="/addLocalities" component={AddLocalities} />
         </div>
       </Switch>
     </>
