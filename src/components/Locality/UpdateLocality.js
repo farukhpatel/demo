@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import API from '../../Utils/ApiConstant'
 import instance from '../../Utils/axiosConstants'
@@ -6,12 +7,16 @@ import Back from '../BackButton/Back'
 // import API from '../../Utils/ApiConstant'
 // import instance from '../../Utils/ApiConstant'
 
-function AddLocalities() {
+function UpadteLocality(props) {
+    const prop=props.location.state;
+    console.log(prop);
+    let {id} = useParams();
+    // const [selectCityValue, setSelectCityValue] = useState(prop.id);
     const [selectCity, setSelectCity] = useState([]);
-    const [localities, setLocalities] = useState("")
-    const [city_id, setCity_id] = useState(1)
-    const [cityCode, setCityCode] = useState("")
-    const [isCityActive, setIsCityActive] = useState(1)
+    const [localities, setLocalities] = useState(prop.locality)
+    const [city_id, setCity_id] = useState(prop.city_id)
+    const [cityCode, setCityCode] = useState(prop.code)
+    const [isCityActive, setIsCityActive] = useState(prop.is_active)
     useEffect(() => {
         instance.get(API.GET_CITIES).then(response => {
             setSelectCity(response.cities)
@@ -40,7 +45,7 @@ function AddLocalities() {
         console.log("Final data")
         console.log(addLocalitiesBody);
 
-        instance.post(API.POST_LOCALITY, addLocalitiesBody).then(function (response) {
+        instance.patch(`${API.PATCH_LOCALITY}/${id}`, addLocalitiesBody).then(function (response) {
           toast.success(response.message)
           window.location.href = "/locality";
         })
@@ -54,14 +59,14 @@ function AddLocalities() {
                         <div className="backButton">
                             <Back></Back>
                         </div>
-                        <h1>Add Localities</h1>
+                        <h1>Update Localities</h1>
                         <form className="vendor-form">
                             <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="cityName">City Name</label>
-                                <select name="city" id="isActiveCity" form="carform" onChange={(e)=>{ setCity_id(e.target.value)}}>
+                                <select name="city" id="cityName" form="carform" onChange={(e)=>{ setCity_id(e.target.value)}}>
                                 {selectCity.map((items, index) => {
-                                    return <option key={index} value={items.id}> {items.city} </option>
+                                    return <option key={index} value={items.id} selected={items.id === city_id ? 'selected': ''}> {items.city} </option>
                                 })}
                                 </select>
                             </div>
@@ -72,7 +77,9 @@ function AddLocalities() {
                                     class="form-control"
                                     id="localities"
                                     placeholder="Type here..."
+                                    value={localities}
                                     onChange={(e) => setLocalities(e.target.value)}
+
                                 />
                             </div>
                             <div class="form-group">
@@ -82,14 +89,15 @@ function AddLocalities() {
                                     className="form-control"
                                     id="cityCode"
                                     placeholder="Type here..."
+                                    value={cityCode}
                                     onChange={(e) => setCityCode(e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
-                                <label for="isActiveCity">Is Active City</label>
+                                <label for="isActiveCity">Is Active Localy</label>
                                 <select id="isActiveCity" onChange={(e) => handleIsCityActiveSelect(e)}>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" selected={isCityActive===1 ? 'selected' :''}>Yes</option>
+                                    <option value="0" selected={isCityActive===0 ? 'selected' :''}>No</option>
                                 </select>
                             </div>
                             <button
@@ -107,4 +115,4 @@ function AddLocalities() {
     );
 }
 
-export default AddLocalities;
+export default UpadteLocality;

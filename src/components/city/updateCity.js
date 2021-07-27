@@ -77,8 +77,8 @@ function UpdateCity(props){
                     <div className="form-group">
                       <label for="isActiveCity">Is Active City</label>
                       <select id="isActiveCity" onChange={(e) => handleIsCityActiveSelect(e)}>
-                        <option value={isCityActive}>Yes</option>
-                        <option value={isCityActive}>No</option>
+                        <option value={isCityActive} selected={isCityActive===1 ? 'selected' :''}>Yes</option>
+                        <option value={isCityActive} selected={isCityActive===0 ? 'selected' :''}>No</option>
                       </select>
                     </div>
                     <button
