@@ -58,7 +58,7 @@ const ProductList = () => {
                   {/* <button>New sales Order</button> */}
                 </div>
                 <table class="table table-striped">
-                  <thead>
+                  <thead style={{textAlign:'center'}}>
                     <tr>
                       <th scope="col">S.No</th>
                       <th scope="col">Product Name</th>
@@ -67,7 +67,7 @@ const ProductList = () => {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody style={{textAlign:'center'}}>
                     {/* {
                                             arr.map((value, index) => {
                                                 return (
@@ -80,7 +80,7 @@ const ProductList = () => {
                                                 )
                                             })
                                         } */}
-                    {productList.map((value, index) => {
+                    { productList.length > 0 ? productList.map((value, index) => {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>
@@ -106,7 +106,7 @@ const ProductList = () => {
                           </td>
                         </tr>
                       );
-                    })}
+                    }) :  <> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>}
                   </tbody>
                 </table>
               </div>

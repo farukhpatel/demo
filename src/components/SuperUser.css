@@ -27,6 +27,7 @@ body {
   background: #230132;
   transition: all 0.5s ease;
   z-index: 100;
+  overflow-y: auto;
 }
 .sidebar ul {
   margin-top: 0;

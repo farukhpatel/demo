@@ -1,9 +1,14 @@
-import React from "react";
+
+import { instanceOf } from "prop-types";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //popup
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import DisableModal from "../Modal/DisableModal";
+import API from "../Utils/ApiConstant";
+import instance from '../Utils/axiosConstants'
 
 // const PopupExample = () => (
 //     <Popup trigger={<button> Trigger</button>} position="right center">
@@ -12,7 +17,18 @@ import DisableModal from "../Modal/DisableModal";
 // );
 const DeliveryManage = () => {
     const arr = [1, 2, 3, 4, 5, 6, 7];
-
+    const [deliveryBoy, setDeliveryBoy] = useState([]);
+    useEffect(() => {
+        instance.get(API.DELIVERY_BOYS)
+            .then(function (response) {
+                console.log(response.users);
+                setDeliveryBoy(response.users);
+            })
+    }, []);
+    const routerHistroy=useHistory();
+    const update=(props)=>{
+        routerHistroy.push(`updateDeliveryBoy/${props.id}`,props)
+    }
 
     return (
         <>
@@ -55,7 +71,7 @@ const DeliveryManage = () => {
                                     </div>
                                 </div>
                                 <table class="table table-striped">
-                                    <thead>
+                                    <thead style={{ textAlign: 'center' }}>
                                         <tr>
                                             <th scope="col">S.No</th>
                                             <th scope="col">Name</th>
@@ -63,15 +79,16 @@ const DeliveryManage = () => {
                                             <th scope="col">Available</th>
                                             <th scope="col">Disable</th>
                                             <th scope="col">Block</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        {arr.map((value, index) => {
+                                    <tbody style={{ textAlign: 'center' }}>
+                                        {deliveryBoy.length > 0 ? deliveryBoy.map((value, index) => {
                                             return (
                                                 <tr>
                                                     <th scope="row">{index + 1}</th>
-                                                    <td>Anuj</td>
-                                                    <td>8877665577</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.phone}</td>
                                                     <td>Yes</td>
                                                     <Popup
                                                         trigger={
@@ -87,9 +104,20 @@ const DeliveryManage = () => {
                                                     <td>
                                                         <button>Block</button>
                                                     </td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-link-light "
+                                                            onClick={()=>{update(value)}}                         
+                                                        >
+                                                            <i class="fas fa-user-edit"></i>
+                                                        </button>
+                                                        <button className="btn btn-link-light">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             );
-                                        })}
+                                        }) : <> <tr> <td colSpan="6" > <h2> No record found </h2> </td> </tr>  </>}
                                     </tbody>
                                 </table>
                             </div>

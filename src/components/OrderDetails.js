@@ -1,12 +1,9 @@
 import React from "react";
 
-function OrderDetails(prop) {
-  const props =prop.location.state
-  console.log(props);
-  const orderDetails = props || {};
-  // const orderProducts = props?.location?.state?.order?.order_products || [];
-    const orderProducts = props || [];
-
+function OrderDetails(props) {
+  console.log(props.location.state);
+  const orderDetails = props?.location?.state?.order || {};
+  const orderProducts = props?.location?.state?.order?.order_products || [];
   return (
     <>
       <div className="main-outer-div">
@@ -16,9 +13,9 @@ function OrderDetails(prop) {
               <div className="details-div-left">
                 <i class="fas fa-store fa-3x" style={{ color: "#575353" }}></i>
                 <div className="details-content">
-                  <h2>Shop Name {orderDetails?.shop?.shop_name}</h2>
-                  <p>{`${orderDetails?.shop?.address?.address_line_1||""}, ${orderDetails?.shop?.address?.address_line_2 || ""}, ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
-                  <p>{`${orderDetails?.shop?.address?.locality?.locality||""}, ${orderDetails?.shop?.address?.city?.city||""}, ${orderDetails?.shop?.address?.state||""}`}</p>
+                  <h2>Shop Name {orderDetails?.shop?.shop_name  ? orderDetails?.shop?.shop_name : "Not found"}</h2>
+                  <p>{`${orderDetails?.shop?.address?.address_line_1||"Not found"} ${orderDetails?.shop?.address?.address_line_2 || ""} ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
+                  <p>{`${orderDetails?.shop?.address?.locality?.locality||"Not found"} ${orderDetails?.shop?.address?.city?.city||""} ${orderDetails?.shop?.address?.state||""}`}</p>
                   <h5>
                     Delivery Boy:
                     <span
@@ -28,7 +25,7 @@ function OrderDetails(prop) {
                         color: "#7c7c7c",
                       }}
                     >
-                      {orderDetails?.assigned_to?.name}
+                      {orderDetails?.assigned_to?.name ? orderDetails?.assigned_to?.name:"Not found" }
                     </span>
                   </h5>
                   <h5>
@@ -89,7 +86,7 @@ function OrderDetails(prop) {
                         <h4>Name</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails.name}</p>
+                        <p>{props.location.state.name ? props.location.state.name : "Not found" }</p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -97,7 +94,7 @@ function OrderDetails(prop) {
                         <h4>Phone No.</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails.phone}</p>
+                        <p>{props.location.state.phone ? props.location.state.phone : "Not found" }</p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -105,7 +102,7 @@ function OrderDetails(prop) {
                         <h4>Email</h4>
                       </div>
                       <div className="content">
-                        <p>{orderDetails.email}</p>
+                        <p>{props.location.state.email ? props.location.state.email : "Not found" }</p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -113,7 +110,7 @@ function OrderDetails(prop) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                      <p>{`${orderDetails?.address?.address_line_1||""}, ${orderDetails?.address?.address_line_2 || ""}, ${orderDetails?.address?.address_line_3 || ""}`}</p>
+                      <p>{`${orderDetails?.address?.address_line_1||"Not found"} ${orderDetails?.address?.address_line_2 || ""} ${orderDetails?.address?.address_line_3 || ""}`}</p>
                       </div>
                     </div>
                   </div>
@@ -140,8 +137,8 @@ function OrderDetails(prop) {
                       <th scope="col">Total Price</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {orderProducts && orderProducts?.length > 0 &&
+                  <tbody style={{textAlign:"center"}}>
+                    {orderProducts && orderProducts?.length > 0 ?
                       orderProducts.map((value, index) => {
                         return (
                           <tr>
@@ -154,7 +151,7 @@ function OrderDetails(prop) {
                             <td>₹{value?.product_net_amount}</td>
                           </tr>
                         );
-                      })}
+                      }) :<> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>  }
                   </tbody>
                 </table>
               </div>

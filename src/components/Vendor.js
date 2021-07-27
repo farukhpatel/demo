@@ -61,8 +61,8 @@ function Vendor() {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {vendors.map((value, index) => {
+                  <tbody style={{textAlign:'center'}}>
+                    { vendors.length >0 ? vendors.map((value, index) => {
                       
                       return (
                         <tr align="center" key={index}>
@@ -103,7 +103,7 @@ function Vendor() {
                           </td>
                         </tr>
                       );
-                    })}
+                    })  :   <> <tr> <td colSpan="7" > <h2> No record found </h2> </td> </tr>  </> }
                   </tbody>
                 </table>
               </div>

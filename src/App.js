@@ -35,6 +35,7 @@ import updateProduct from "./components/updateProduct";
 import city from './components/city/City';
 import addCity from './components/city/addCity';
 import updateCity from './components/city/updateCity';
+import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -107,6 +108,7 @@ function App() {
           <Route exact path="/city" component={city} />
           <Route exact path="/addcity" component={addCity} />
           <Route exact path="/updateCity/:id" component={updateCity} />
+          <Route exact path="/updateDeliveryBoy/:id" component={UpdateDeliveryBoy} />
         </div>
       </Switch>
     </>
