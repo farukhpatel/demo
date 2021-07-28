@@ -478,6 +478,17 @@ tbody td button {
   border-radius: 15px;
   transition: 0.3s ease-in-out;
 }
+
+.settleButton{
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #230132;
+  padding: 0.2rem 0.5rem;
+  border-radius: 15px;
+  transition: 0.3s ease-in-out;
+}
+
 tbody td button:hover {
   background-color: #3b1f47;
   color: #fff !important;
@@ -957,6 +968,11 @@ tbody td button:hover {
 .payment-form button {
   margin-bottom: 0;
 }
+.model_settle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .Modal {
   margin-left: 0;
 }
@@ -972,7 +988,20 @@ tbody td button:hover {
   background-color: #230132 !important;
 }
 .SettlePayBtn {
+  
   width: 100%;
+}
+.main-root-settlement{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-root-second{
+    display: flex;
+    width: 26%;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Payment Settlement Css End */

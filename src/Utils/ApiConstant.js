@@ -53,6 +53,10 @@ const API = {
   POST_LOCALITY: Config.BASE_URL + "api/address/locality/create",
   PATCH_LOCALITY: Config.BASE_URL + "api/address/locality/update",
 
+  //payment api/order/sales?
+  GET_ORDER_SALES: Config.BASE_URL + "api/order/sales?",
+  GET_ALL_SHOP: Config.BASE_URL + "api/shop/all",
+
 };
 
 export default API;

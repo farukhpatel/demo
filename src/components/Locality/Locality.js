@@ -14,7 +14,7 @@ function Locality() {
     const routerHistroy =useHistory();
     const update=(props)=>{
       console.log(props);
-      routerHistroy.push(`updateLocality/${props.city_id}`,props)
+      routerHistroy.push(`updateLocality/${props.id}`,props)
     }
    const deleteCity=(props)=>{
      console.log(props);
@@ -24,7 +24,7 @@ function Locality() {
      }
      else{
        console.log("Not deleted");
-       window.location.href="/city"
+       window.location.href="/locality"
      }
    }
     return (

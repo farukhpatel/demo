@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import API from '../Utils/ApiConstant'
 import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core';
 
@@ -15,6 +15,10 @@ import 'reactjs-popup/dist/index.css';
 // modal
 import ItemModal from '../Modal/ItemModalPayment'
 import SettleModal from '../Modal/SettleModal'
+import moment from 'moment';
+import { useEffect } from 'react';
+import API from '../Utils/ApiConstant';
+import instance from '../Utils/axiosConstants';
 
 // date pickers
 const useStyles = makeStyles((theme) => ({
@@ -27,18 +31,54 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 function PaymentSettlement() {
-    const arr = [1, 2, 3, 4, 5, 6, 7]
-
-    //for vendor name input
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [unpaid2, setUnpaid2] = useState([]);
+    const [paid, setPaid] = useState([]);
+    const [unpaid, setUnpaid] = useState([]);
+    const [vendor, setVendor] = useState([]);
+    const [id, setId] = useState(0);
+    const [from, setFrom] = useState(new Date);
+    const [to, setTo] = useState(new Date());
+    const Submits = (e) => {
+        e.preventDefault();
+        // console.log(id);
+        let start_date = moment(from).format('YYYY-MM-DD');
+        let end_date = moment(to).format('YYYY-MM-DD');
+        let get_transaction = 1;
+        // GET_ORDER_SALES
+        console.log(`${API.GET_ORDER_SALES}/shop_id=${id}&start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`)
+        let url = `${API.GET_ORDER_SALES}/start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
+        instance.get(url).then((res) => {
+            setPaid(res.transactions.paid);
+            setUnpaid(res.transactions.unpaid[0].orders);
+            setUnpaid2(res.transactions.unpaid[0])
+        })
+    }
+    useEffect(() => {
+        const date = new Date()
+        setFrom(moment(date).add(-1, 'days').format());
+        setTo(moment(date).format());
+        let start_date = moment(from).format('YYYY-MM-DD');
+        let end_date = moment(to).format('YYYY-MM-DD');
+        let get_transaction = 1;
+        // GET_ORDER_SALES
+        let url = `${API.GET_ORDER_SALES}/start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
+        instance.get(url).then((res) => {
+            setPaid(res.transactions.paid);
+            setUnpaid(res.transactions.unpaid[0].orders);
+            console.log(res.transactions)
+            setUnpaid2(res.transactions.unpaid[0])
+        })
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+        //for vendor
+        instance.get(API.GET_ALL_SHOP).then((res) => {
+            setVendor(res.shop);
+        })
+    }, []);
     return (
         <>
             <div className="main-outer-div">
+                <div className="main-root-settlement">
                 <div className="payment-settlement-inputs">
                     {/* <a href="/adddeliveryboy"><button>Add Delivery Boy</button></a> */}
                     <form className="payment-form">
@@ -53,7 +93,8 @@ function PaymentSettlement() {
                                         id="date-picker-dialog"
                                         // label="Date picker dialog"
                                         format="DD/MM/yyyy"
-                                        // value={foundationDate}
+                                        onChange={(e) => { console.log(e._d); setFrom(e._d) }}
+                                        value={from}
                                         // onChange={e => handleDateChange(e)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
@@ -73,6 +114,8 @@ function PaymentSettlement() {
                                         id="date-picker-dialog"
                                         // label="Date picker dialog"
                                         format="DD/MM/yyyy"
+                                        onChange={(e) => { console.log(e._d); setTo(e._d) }}
+                                        value={to}
                                         // value={foundationDate}
                                         // onChange={e => handleDateChange(e)}
                                         KeyboardButtonProps={{
@@ -86,24 +129,36 @@ function PaymentSettlement() {
                             <label for="vendorName">Vendor Name</label>
                             <FormControl className={classes.formControl}>
                                 <Select
-                                    value={age}
-                                    onChange={handleChange}
+                                    value={id}
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
+                                    onChange={(e) => { setId(e.target.value) }}
                                 >
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value={10}>Sawan Collection</MenuItem>
-                                    <MenuItem value={20}>Ganpati Mall</MenuItem>
-                                    <MenuItem value={30}>Gupta Store</MenuItem>
+                                    {vendor.map((items, index) => {
+                                        return <MenuItem key={index} value={items.id}> {items.shop_name} </MenuItem>
+                                    })}
+
                                 </Select>
                                 {/* <FormHelperText>Without label</FormHelperText> */}
                             </FormControl>
                         </div>
-                        <button type="submit" class="btn btn-primary DateSelectSubmitBtn  " >Submit</button>
+                        {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
+
+                        <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button>
                     </form>
+                </div>
+                <div className="main-root-second">
+                    
+                    <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn">All Settle</button></td>} position="right center" modal>
+                        <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id}/>
+                    </Popup>
+                  
+                   
+                </div>
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div paymentsettle-inner-div">
@@ -118,84 +173,70 @@ function PaymentSettlement() {
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active " id="remainingpayments" role="tabpanel" aria-labelledby="remaining-payments">
-                                <div className="btn-position">
-                                    <div className="searchStyle">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                        <input placeholder="Search..." className="SearchInput" />
-                                    </div>
-                                </div>
+
                                 <table class="table table-striped">
-                                    <thead>
+                                    <thead style={{ textAlign: 'center' }}>
                                         <tr>
                                             <th scope="col">S.No</th>
                                             <th scope="col">Order Id</th>
-                                            <th scope="col">Item</th>
                                             <th scope="col">Total Price</th>
+                                            <th scope="col">Discount</th>
                                             <th scope="col">Commision</th>
+                                            <th scope="col">Tax</th>
                                             <th scope="col">Payable</th>
-                                            <th scope="col">Settle</th>
+
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style={{ textAlign: 'center' }}>
                                         {
-                                            arr.map((value, index) => {
+                                            unpaid.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
-                                                        <td>#345</td>
+                                                        <td>{order.order_id}</td>
+                                                        <td>{order.order_total_amount}</td>
+                                                        <td>{order.order_discount}</td>
+                                                        <td>{order.order_commission}</td>
+                                                        <td>{order.order_tax}</td>
+                                                        <td>{order.payable_amount}</td>
 
-                                                        <Popup trigger={<td style={{ cursor: "pointer" }}>Milk</td>} position="right center" modal>
-                                                            <ItemModal />
-                                                        </Popup>
-                                                        <td>₹80</td>
-                                                        <td>₹5</td>
-                                                        <td>₹75</td>
-                                                        <Popup trigger={<td style={{ cursor: "pointer" }}><button>Settle</button></td>} position="right center" modal>
-                                                            <SettleModal />
-                                                        </Popup>
 
                                                     </tr>
                                                 )
-                                            })
+                                            }) : <> <tr> <td colSpan="8"> <h2> No record found </h2> </td> </tr>  </>
                                         }
                                     </tbody>
                                 </table>
                             </div>
                             <div class="tab-pane fade  " id="paidpayments" role="tabpanel" aria-labelledby="paid-payments">
-                                <div className="btn-position">
-                                    <div className="searchStyle">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                        <input placeholder="Search..." className="SearchInput" />
-                                    </div>
-                                </div>
+
                                 <table class="table table-striped">
-                                    <thead>
+                                    <thead >
                                         <tr>
                                             <th scope="col">S.No</th>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Item</th>
-                                            <th scope="col">Total Price</th>
-                                            <th scope="col">Commision</th>
-                                            <th scope="col">Settle</th>
+                                            <th scope="col">Transaction Id</th>
+                                            <th scope="col">Transaction amount</th>
+                                            <th scope="col">Commission</th>
+                                            <th scope="col">Tax</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
-                                            arr.map((value, index) => {
+                                            paid.length > 0 ? paid.map((value, index) => {
                                                 return (
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
-                                                        <td>#345</td>
-
-                                                        <Popup trigger={<td style={{ cursor: "pointer" }}>Milk</td>} position="right center" modal>
-                                                            <ItemModal />
-                                                        </Popup>
-                                                        <td>₹80</td>
-                                                        <td>₹5</td>
+                                                        <td>{value.transaction_id}</td>
+                                                        <td>{value.transaction_amount}</td>
+                                                        <td>{value.transaction_commission}</td>
+                                                        <td>{value.transaction_tax}</td>
+                                                        <td>{moment(value.transaction_date).format('YYYY-MM-DD')}</td>
                                                         <td style={{ color: "green" }}>Paid</td>
                                                     </tr>
                                                 )
-                                            })
+                                            }) : <> <tr> <td colSpan="7"> <h2> No record found </h2> </td> </tr>  </>
                                         }
                                     </tbody>
                                 </table>
