@@ -48,12 +48,12 @@ function PaymentSettlement() {
         let get_transaction = 1;
         // GET_ORDER_SALES
         // console.log(`${API.GET_ORDER_SALES}/shop_id=${id}&start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`)
-        let url = `${API.GET_ORDER_SALES}/start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
+        let url = `${API.GET_ORDER_SALES}start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}` + (id > 0 ? '&shop_id=' + id : '');
         instance.get(url).then((res) => {
             toast.success(res.message);
             setPaid(res.transactions.paid);
-            setUnpaid(res.transactions.unpaid[0].orders);
-            setUnpaid2(res.transactions.unpaid[0])
+            setUnpaid(res.transactions?.unpaid[0]?.orders);
+            setUnpaid2(res.transactions?.unpaid[0])
         })
     }
     useEffect(() => {
@@ -64,12 +64,12 @@ function PaymentSettlement() {
         let end_date = moment(to).format('YYYY-MM-DD');
         let get_transaction = 1;
         // GET_ORDER_SALES
-        let url = `${API.GET_ORDER_SALES}/start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
+        let url = `${API.GET_ORDER_SALES}start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
         instance.get(url).then((res) => {
             setPaid(res.transactions.paid);
-            setUnpaid(res.transactions.unpaid[0].orders);
+            setUnpaid(res.transactions?.unpaid[0]?.orders);
             console.log(res.transactions)
-            setUnpaid2(res.transactions.unpaid[0])
+            setUnpaid2(res.transactions?.unpaid[0])
         })
 
         //for vendor
@@ -138,7 +138,7 @@ function PaymentSettlement() {
                                     onChange={(e) => { setId(e.target.value) }}
                                 >
                                     <MenuItem value="">
-                                        <em>None</em>
+                                        <em>All</em>
                                     </MenuItem>
                                     {vendor.map((items, index) => {
                                         return <MenuItem key={index} value={items.id}> {items.shop_name} </MenuItem>
@@ -154,12 +154,14 @@ function PaymentSettlement() {
                     </form>
                 </div>
                 <div className="main-root-second">
-                    
-                    <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={()=>setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
+                
+                { unpaid?.length > 0 ?
+                   <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={()=>setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
                         {modalOpen && <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen}/>}
                     </Popup>
+                    : ''
                   
-                   
+                }  
                 </div>
                 </div>
                 <div className="myorders-outer-div">
@@ -191,7 +193,7 @@ function PaymentSettlement() {
                                     </thead>
                                     <tbody style={{ textAlign: 'center' }}>
                                         {
-                                            unpaid.length > 0 ? unpaid.map((order, index) => {
+                                            unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
@@ -226,7 +228,7 @@ function PaymentSettlement() {
                                     </thead>
                                     <tbody>
                                         {
-                                            paid.length > 0 ? paid.map((value, index) => {
+                                            paid?.length > 0 ? paid.map((value, index) => {
                                                 return (
                                                     <tr>
                                                         <th scope="row">{index + 1}</th>
