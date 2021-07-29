@@ -973,6 +973,21 @@ tbody td button:hover {
   justify-content: center;
   align-items: center;
 }
+.model_settle_details{
+    text-align: center;
+}
+.modelTableDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+.modelTable{
+  text-align: left !important;
+}
+.modelTable td ,th{
+  width: max-content;
+}
 .Modal {
   margin-left: 0;
 }

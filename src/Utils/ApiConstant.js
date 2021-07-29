@@ -56,6 +56,7 @@ const API = {
   //payment api/order/sales?
   GET_ORDER_SALES: Config.BASE_URL + "api/order/sales?",
   GET_ALL_SHOP: Config.BASE_URL + "api/shop/all",
+  PATCH_ORDER_SETTLE: Config.BASE_URL + "api/order/settle",
 
 };
 

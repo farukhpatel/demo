@@ -19,6 +19,7 @@ import moment from 'moment';
 import { useEffect } from 'react';
 import API from '../Utils/ApiConstant';
 import instance from '../Utils/axiosConstants';
+import { toast } from 'react-toastify';
 
 // date pickers
 const useStyles = makeStyles((theme) => ({
@@ -39,16 +40,17 @@ function PaymentSettlement() {
     const [id, setId] = useState(0);
     const [from, setFrom] = useState(new Date);
     const [to, setTo] = useState(new Date());
+    const [modalOpen,setModalOpen]=useState(false);
     const Submits = (e) => {
         e.preventDefault();
-        // console.log(id);
         let start_date = moment(from).format('YYYY-MM-DD');
         let end_date = moment(to).format('YYYY-MM-DD');
         let get_transaction = 1;
         // GET_ORDER_SALES
-        console.log(`${API.GET_ORDER_SALES}/shop_id=${id}&start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`)
+        // console.log(`${API.GET_ORDER_SALES}/shop_id=${id}&start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`)
         let url = `${API.GET_ORDER_SALES}/start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`;
         instance.get(url).then((res) => {
+            toast.success(res.message);
             setPaid(res.transactions.paid);
             setUnpaid(res.transactions.unpaid[0].orders);
             setUnpaid2(res.transactions.unpaid[0])
@@ -153,8 +155,8 @@ function PaymentSettlement() {
                 </div>
                 <div className="main-root-second">
                     
-                    <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn">All Settle</button></td>} position="right center" modal>
-                        <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id}/>
+                    <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={()=>setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
+                        {modalOpen && <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen}/>}
                     </Popup>
                   
                    
