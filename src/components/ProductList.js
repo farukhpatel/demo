@@ -3,6 +3,7 @@ import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants"
 import {useHistory} from 'react-router-dom';
 import Popup from "reactjs-popup";
+import { toast } from "react-toastify";
 
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
@@ -18,8 +19,12 @@ const ProductList = () => {
   const update=(props)=>{
     routerHistroy.push(`updateProduct/${props.id}`,props)
   }
-  const handleDelete=()=>{
-    console.log("handle delte work")
+  const handleDelete=(id)=>{
+    instance.delete(`${API.DELETE_PRODUCT}/${id}`)
+    .then(function(response){
+       toast.success(response.message);
+       window.location.href="/city"
+    })
   }
   return (
     <>
@@ -129,7 +134,7 @@ const ProductList = () => {
                               <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                  handleDelete();
+                                  handleDelete(value.id);
                                   close();
                                 }}
                               >

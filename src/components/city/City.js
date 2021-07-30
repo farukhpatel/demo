@@ -2,6 +2,7 @@ import { Link } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Popup from 'reactjs-popup';
 import API from '../../Utils/ApiConstant';
 import instance from '../../Utils/axiosConstants';
 
@@ -16,17 +17,14 @@ function City() {
       console.log(props);
       routerHistroy.push(`updateCity/${props.id}`,props)
     }
-   const deleteCity=(props)=>{
-     console.log(props);
-     let bool=window.confirm("Are you sure to delete");
-     if(bool){
-       console.log("deleled part work");
-     }
-     else{
-       console.log("Not deleted");
-       window.location.href="/city"
-     }
-   }
+    const handleDelete=(id)=>{
+      instance.delete(`${API.DELETE_CITIES}/${id}`)
+      .then(function(response){
+         toast.success(response.message);
+         window.location.href="/productList"
+  
+      })
+    }
     return (
         <>
           <div className="main-outer-div">
@@ -92,11 +90,47 @@ function City() {
                             >
                               <i class="fas fa-user-edit"></i>
                             </button>
-                            <button className="btn btn-link-light"
-                                     onClick={()=>{deleteCity(city.id)}}
-                            >
-                              <i class="fas fa-trash-alt"></i>
-                            </button>
+                          
+                             <Popup
+                          className="my-popup"
+                          trigger={
+                             <button className="btn btn-link-light" >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                           {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
+                              >
+                                Are you Sure you want to Delete this review?
+                              </h6>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  handleDelete(city.id);
+                                  close();
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
                           </td>
                                 </tr>
                             )

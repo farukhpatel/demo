@@ -2,6 +2,7 @@
 import { instanceOf } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 //popup
 import Popup from "reactjs-popup";
@@ -29,7 +30,15 @@ const DeliveryManage = () => {
     const update=(props)=>{
         routerHistroy.push(`updateDeliveryBoy/${props.id}`,props)
     }
-
+    const handleDelete=(id)=>{
+        console.log(id)
+        instance.delete(`${API.DELIVERY_BOYS_DELETE}/${id}`)
+        .then(function(response){
+           toast.success(response.message);
+           window.location.href="/deliverymanage"
+    
+        })
+      }
     return (
         <>
             {/* <PopupExample /> */}
@@ -111,9 +120,49 @@ const DeliveryManage = () => {
                                                         >
                                                             <i class="fas fa-edit"></i>
                                                         </button>
-                                                        <button className="btn btn-link-light">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
+                                                      
+                                                        <Popup
+                          className="my-popup"
+                          trigger={
+                            <button className="btn btn-link-light">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                           {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
+                              >
+                                Are you Sure you want to Delete this review?
+                              </h6>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  handleDelete(value.id);
+                                  close();
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
+                
+
                                                     </td>
                                                 </tr>
                                             );

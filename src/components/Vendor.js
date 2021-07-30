@@ -6,6 +6,7 @@ import "./SuperUser.css";
 import instance from "../Utils/axiosConstants";
 import { Modal } from "@material-ui/core";
 import Popup from "reactjs-popup";
+import { toast } from "react-toastify";
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -17,8 +18,12 @@ function Vendor() {
   const update = (prop) => {
     routerHistroy.push("/updatevendor",prop)
   };
-  const handleDelete=()=>{
-    console.log("Handle delete work");
+  const handleDelete=(id)=>{
+    instance.delete(`${API.VENDOR_DELETE}/${id}`)
+    .then(function(response){
+       toast.success(response.message); 
+       window.location.href="/vendor"
+    })
   }
   const closeModal = () => setOpen(true);
 
@@ -125,7 +130,7 @@ function Vendor() {
                               <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                  handleDelete();
+                                  handleDelete(value.id);
                                   close();
                                 }}
                               >
