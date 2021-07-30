@@ -13,82 +13,47 @@ import { useParams } from "react-router-dom";
 function UpdateProduct(props) {
   let {id}=useParams();
   const prop =props.location.state
-//   console.log(prop);
   const [file, setFile] = useState(null);
   const [productName, setProductName] = useState(prop.product_name);
   const [productImage, setProductImage] = useState(prop.product_image);
   const [baseUnit, setBaseUnit] = useState(prop.base_unit.match(/\d+/g)[0]);
   const [unitType, setUnitType] = useState(prop.base_unit.match(/[a-zA-Z]+/g)[0]);
- console.log(prop.base_unit.match(/[a-zA-Z]+/g));
   const submit = async(e) => {
     e.preventDefault();
-    console.log("edit product");
-    console.log(productImage);
-    // console.log(productImage);
-    console.log(localStorage.getItem("token"));
     let headers = new Headers();
+    let updateProductData;
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (file) {
-        console.log("is called")
-
-        // console.log(file, "imgForm");
-        // console.log(file);
         let formdata = new FormData();
         formdata.append("image", file[0]);
         await instance.post(API.IMAGE_UPLOAD,formdata)
-        .then(function(response){
-            setProductImage( response.image_url)})
-            
-        // console.log(file[0].name);
-        // setProductImage(file[0].name);
+        .then((response)=>{           
+            updateProductData={
+              id:prop.id,
+              product_name:productName,
+              product_image:response.image_url,
+              base_unit:`${baseUnit}${unitType}`,
+              commission:prop.commission,
+              is_percentage_commission:prop.is_percentage_commission,
+              is_subscribable_product:prop.is_subscribable_product,
+          }
+          })
     }
-    
-    let updateProductData={
-        id:prop.id,
-        product_name:productName,
-        product_image:productImage,
-        base_unit:`${baseUnit}${unitType}`,
-        commission:prop.commission,
-        is_percentage_commission:prop.is_percentage_commission,
-        is_subscribable_product:prop.is_subscribable_product,
-
-    }
-    console.log("object");
-    console.log(updateProductData);
-    console.log(headers)
-      instance.patch(`${API.UPDATE_PRODUCT}/${id}`,updateProductData)
+    let updateProductData2={
+      id:prop.id,
+      product_name:productName,
+      product_image:productImage,
+      base_unit:`${baseUnit}${unitType}`,
+      commission:prop.commission,
+      is_percentage_commission:prop.is_percentage_commission,
+      is_subscribable_product:prop.is_subscribable_product,
+  }
+    instance.patch(`${API.UPDATE_PRODUCT}/${id}`,updateProductData ? updateProductData : updateProductData2)
       .then(res=>{
-        toast.success("Successful edit of product");
+        toast.success(res.message);
         window.location.href = "/productlist";
       })
-    //   .then(function(response){
-    //     let body = {
-    //       product_name: productName,
-    //       product_image: response.image_url,
-    //       commission: commission,
-    //       is_percentage_commission: percentage,
-    //       base_unit: `${baseUnit}${unitType}`,
-    //     };
 
-    //     let error = false;
-    //     Object.keys(body).forEach((key) => {
-    //       if (!error && body[key] === "") {
-    //         toast.error("One or more fields are empty.");
-    //         error = true;
-    //       }
-    //     });
-    //     if (!error) {
-    //       instance.post(API.CREATE_PRODUCT,body)
-    //       .then(function(response){
-    //         toast.success("Successful creation of shop");
-    //         window.location.href = "/productlist";
-    //       })
-    //     }
-    //   })
-      
-    // } else {
-    //   toast.error("No file Picked.");
-    // }
   };
   return (
     <>

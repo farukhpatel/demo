@@ -47,9 +47,8 @@ function PaymentSettlement() {
         let end_date = moment(to).format('YYYY-MM-DD');
         let get_transaction = 1;
         // GET_ORDER_SALES
-        // console.log(`${API.GET_ORDER_SALES}/shop_id=${id}&start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}`)
         let url = `${API.GET_ORDER_SALES}start_date=${start_date}&end_date=${end_date}&get_transaction=${get_transaction}` + (id > 0 ? '&shop_id=' + id : '');
-        console.log(url)
+        // console.log(url)
         instance.get(url).then((res) => {
             toast.success(res.message);
             setPaid(res.transactions.paid);
@@ -58,7 +57,6 @@ function PaymentSettlement() {
         })
     }
     useEffect(() => {
-        console.log("First useEffect called");
         const date = new Date()
         setFrom(moment(date).add(-1, 'days').format());
         setTo(moment(date).format());

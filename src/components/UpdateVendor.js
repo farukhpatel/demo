@@ -23,10 +23,8 @@ import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
     const prop =props.location.state
-    console.log("prop data");
-    console.log(prop);
-
   // form fields var
+  console.log(prop.shop_schedules)
   const [timePicker, setTimePicker] = useState(new Date);
   const [file, setFile] = useState(null);
   const [phone, setPhone] = useState(prop.shop_phone);
@@ -36,9 +34,8 @@ function UpdateVendorForm(props) {
   const [foundationDate, setFoundationDate] = useState(prop.shop_founding_date);
   const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
   const [shopName, setShopName] = useState(prop.shop_name);
-  const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules);
+  const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules.filter((value)=>value.key!=="Holiday"));
   // date picker
-  console.log(shopSchedule);
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
@@ -56,24 +53,36 @@ function UpdateVendorForm(props) {
    
     let headers = new Headers();
   headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+  let shopUpdateBody;
   if (file) {
     let formdata = new FormData();
     formdata.append("image", file[0]);
     await instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
-    setProfileImage(response.image_url)
+    // setProfileImage(response.image_url)
+    shopUpdateBody = {
+      shop_name: shopName,
+      shop_phone: phone,
+      shop_description: description,
+      shop_profile: response.image_url,
+      shop_license_number: licenseNumber,
+      shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+      shop_delivery_range: deliveryRange,
+      shop_schedules:shopSchedule
+    }
     });
   } 
-    let shopUpdateBody = {
+    let shopUpdateBody2 = {
           shop_name: shopName,
           shop_phone: phone,
           shop_description: description,
-           shop_profile: profileImage,
+          shop_profile: profileImage,
           shop_license_number: licenseNumber,
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
           shop_schedules:shopSchedule
         };
-        instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody)
+       console.log(shopUpdateBody)
+        instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody ? shopUpdateBody : shopUpdateBody2)
               .then(function (shopCreateResponse) {
                 toast.success("Vendor Details Updated Now.");
                 window.location.href="/vendor"
