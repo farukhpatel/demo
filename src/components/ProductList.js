@@ -80,7 +80,7 @@ const ProductList = () => {
                                                 )
                                             })
                                         } */}
-                    { productList.length > 0 ? productList.map((value, index) => {
+                    { productList?.length > 0 ? productList.map((value, index) => {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>

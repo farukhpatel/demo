@@ -68,7 +68,6 @@ function PaymentSettlement() {
         instance.get(url).then((res) => {
             setPaid(res.transactions.paid);
             setUnpaid(res.transactions?.unpaid[0]?.orders);
-            console.log(res.transactions)
             setUnpaid2(res.transactions?.unpaid[0])
         })
 
@@ -95,7 +94,7 @@ function PaymentSettlement() {
                                         id="date-picker-dialog"
                                         // label="Date picker dialog"
                                         format="DD/MM/yyyy"
-                                        onChange={(e) => { console.log(e._d); setFrom(e._d) }}
+                                        onChange={(e) => { setFrom(e._d) }}
                                         value={from}
                                         // onChange={e => handleDateChange(e)}
                                         KeyboardButtonProps={{
@@ -116,7 +115,7 @@ function PaymentSettlement() {
                                         id="date-picker-dialog"
                                         // label="Date picker dialog"
                                         format="DD/MM/yyyy"
-                                        onChange={(e) => { console.log(e._d); setTo(e._d) }}
+                                        onChange={(e) => { setTo(e._d) }}
                                         value={to}
                                         // value={foundationDate}
                                         // onChange={e => handleDateChange(e)}
@@ -169,7 +168,7 @@ function PaymentSettlement() {
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button>
+                                <button class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button> 
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link " id="paid-payments" data-bs-toggle="tab" data-bs-target="#paidpayments" type="button" role="tab" aria-controls="paid-payments" aria-selected="false">Paid Payments</button>
@@ -215,7 +214,7 @@ function PaymentSettlement() {
                             <div class="tab-pane fade  " id="paidpayments" role="tabpanel" aria-labelledby="paid-payments">
 
                                 <table class="table table-striped">
-                                    <thead >
+                                    <thead style={{ textAlign: 'center' }}>
                                         <tr>
                                             <th scope="col">S.No</th>
                                             <th scope="col">Transaction Id</th>
@@ -226,7 +225,7 @@ function PaymentSettlement() {
                                             <th scope="col">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style={{ textAlign: 'center' }}>
                                         {
                                             paid?.length > 0 ? paid.map((value, index) => {
                                                 return (
