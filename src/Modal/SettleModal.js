@@ -26,6 +26,7 @@ function SettleModal(props) {
     let settleData = {
       start_date,
       end_date,
+      ...( props.id > 0 ? { shop_id: props.id } : {})
     };
     console.log("settle data");
     console.log(settleData);

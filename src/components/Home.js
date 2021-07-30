@@ -13,8 +13,9 @@ import instance from "../Utils/axiosConstants";
 import moment from "moment";
 
 function Home() {
+  const date = new Date();
   const [from, setFrom] = useState(new Date);
-  const [to, setTo] = useState(new Date());
+  const [to, setTo] = useState(moment(date).add(+1,'days').format());
   const [dashboardData, setDashboardData] = useState({
     active_users: "",
     total_delivery_boys: "",
@@ -25,15 +26,11 @@ function Home() {
     Delivered: "",
     Picked: "",
   });
-  useEffect(()=>{
-    const date = new Date()
-    setFrom(moment(date).format());
-    setTo(moment(date).add(+1,'days').format());
-  },[]);
   useEffect(() => {
     // {{Base URL}}/api/admin/dashboard?start_date=2019-05-05&end_date=2021-01-01
     let start_date = moment(from).format('YYYY-MM-DD');
     let end_date = moment(to).format('YYYY-MM-DD');
+    console.log(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`)
     instance.get(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`).then(function (response) {
       const data = {
         active_users: response.active_users,
