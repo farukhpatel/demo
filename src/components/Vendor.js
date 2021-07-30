@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants";
 import { Modal } from "@material-ui/core";
+import Popup from "reactjs-popup";
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -16,6 +17,9 @@ function Vendor() {
   const update = (prop) => {
     routerHistroy.push("/updatevendor",prop)
   };
+  const handleDelete=()=>{
+    console.log("Handle delete work");
+  }
   const closeModal = () => setOpen(true);
 
   useEffect(() => {
@@ -97,9 +101,47 @@ function Vendor() {
                             >
                               <i class="fas fa-user-edit"></i>
                             </button>
+                            
+                             <Popup
+                          className="my-popup"
+                          trigger={
                             <button className="btn btn-link-light">
                               <i class="fas fa-trash-alt"></i>
                             </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                           {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
+                              >
+                                Are you Sure you want to Delete this review?
+                              </h6>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  handleDelete();
+                                  close();
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
                           </td>
                         </tr>
                       );

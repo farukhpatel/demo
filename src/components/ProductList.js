@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants"
 import {useHistory} from 'react-router-dom';
+import Popup from "reactjs-popup";
 
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
@@ -16,6 +17,9 @@ const ProductList = () => {
   const routerHistroy =useHistory();
   const update=(props)=>{
     routerHistroy.push(`updateProduct/${props.id}`,props)
+  }
+  const handleDelete=()=>{
+    console.log("handle delte work")
   }
   return (
     <>
@@ -98,11 +102,51 @@ const ProductList = () => {
                               className="btn btn-link-light "
                               onClick={() => update(value)}
                             >
-                              <i class="fas fa-user-edit"></i>
+                              <i class="fas fa-edit"></i>
                             </button>
+                            
+                            <Popup
+                          className="my-popup"
+                          trigger={
                             <button className="btn btn-link-light">
-                              <i class="fas fa-trash-alt"></i>
+                              <i class="fas fa-trash-alt">
+                              </i>
                             </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                           {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
+                              >
+                                Are you Sure you want to Delete this?
+                              </h6>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  handleDelete();
+                                  close();
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
+                            
                           </td>
                         </tr>
                       );

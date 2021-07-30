@@ -236,7 +236,7 @@ function VendorDetails(props) {
                         <th scope="col">Product Daily Stock Remaining</th>
                         <th scope="col">Base Unit</th>
                         <th scope="col">Commission</th>
-                        <th></th>
+                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -256,16 +256,22 @@ function VendorDetails(props) {
                                 {value?.product?.is_percentage_commission ===
                                   1 && "%"}
                               </td>
-                              {console.log(value, "edit product")}
+                              
                               <Popup
                                 trigger={
+                                  <tr>
                                   <td style={{ cursor: "pointer" }}>
                                     <button>Edit Product</button>
                                   </td>
+                                  <td style={{ cursor: "pointer" }}>
+                                    <button>Delete Product</button>
+                                  </td>
+                                  </tr>
                                 }
                                 position="right center"
                                 modal
                               >
+                                
                                 <EditProductModal
                                   shopId={vendorDetails?.id}
                                   productDetails={value}

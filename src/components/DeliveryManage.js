@@ -109,7 +109,7 @@ const DeliveryManage = () => {
                                                             className="btn btn-link-light "
                                                             onClick={()=>{update(value)}}                         
                                                         >
-                                                            <i class="fas fa-user-edit"></i>
+                                                            <i class="fas fa-edit"></i>
                                                         </button>
                                                         <button className="btn btn-link-light">
                                                             <i class="fas fa-trash-alt"></i>
