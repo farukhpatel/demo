@@ -77,7 +77,7 @@ function Coupon() {
       coupon_code,
       start_date:start_date===null ? start_date : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
       end_date: end_date===null ? end_date : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
-      coupon_type: 3,
+      coupon_type: 1,
       coupon_value: discount ? Number(discount) : null,
       ...( id > 0 ? { shop_id: id } : {}),
       is_active:isCouponActive,
@@ -326,8 +326,8 @@ function Coupon() {
                               className="btn btn-primary"
                               style={{ cursor: "pointer" }}
                             >
-                              
-                              {coupon?.is_active===0 ? "Active" : "Deactive"}
+                              {/* {console.log(coupon.is_active)} */}
+                              {coupon?.is_active===1 ? "Deactive" : "Active"}
                             </button>
                           }
                           position="right center"
@@ -342,7 +342,7 @@ function Coupon() {
                                 }}
                               >
                                 Are you Sure you want to{" "}
-                                {coupon?.is_Active ? "Deactivate" : "Activate"}{" "}
+                                {coupon?.is_active===0 ? "Activate" : "Deactivate"}{" "}
                                 this coupon?
                               </h6>
                               <button

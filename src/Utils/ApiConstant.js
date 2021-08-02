@@ -24,7 +24,7 @@ const API = {
   GET_REVIEWS: Config.BASE_URL + "api/review/all",
   DELETE_REVIEWS: Config.BASE_URL + "api/review/delete",
   UPDATE_REVIEW: Config.BASE_URL + "api/review/update",
-  GET_COUPONS: Config.BASE_URL + "api/coupon/all",
+  GET_COUPONS: Config.BASE_URL + "api/coupon/all?coupon_types=1",
   POST_COUPONS_CREATE: Config.BASE_URL + "api/coupon/create",
   DELETE_COUPONS: Config.BASE_URL + "api/coupon/delete",
   UPDATE_COUPON: Config.BASE_URL + "api/coupon/update",
