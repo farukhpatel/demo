@@ -36,7 +36,6 @@ const DeliveryManage = () => {
         .then(function(response){
            toast.success(response.message);
            window.location.href="/deliverymanage"
-    
         })
       }
     return (
