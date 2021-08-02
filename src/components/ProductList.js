@@ -23,7 +23,7 @@ const ProductList = () => {
     instance.delete(`${API.DELETE_PRODUCT}/${id}`)
     .then(function(response){
        toast.success(response.message);
-       window.location.href="/city"
+       window.location.href="/productlist"
     })
   }
   return (
