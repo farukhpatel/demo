@@ -64,6 +64,11 @@ const API = {
   GET_ALL_SHOP: Config.BASE_URL + "api/shop/all",
   PATCH_ORDER_SETTLE: Config.BASE_URL + "api/order/settle",
 
+  //notification
+  GET_ALL_NOTIFICATIONS: Config.BASE_URL + "api/user/notifications/all",
+
+
+
 };
 
 export default API;

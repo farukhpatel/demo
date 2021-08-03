@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500");
-@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 * {
   padding: 0;
   margin: 0;
@@ -14,7 +14,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 /* Navebar Css Start */
 .sidebar {
@@ -42,7 +42,7 @@ body {
 }
 .headerText h1 {
   color: white;
-  font-family: "Kaushan Script", cursive;
+  font-family: 'Kaushan Script', cursive;
 }
 
 .sidebar ul a {
@@ -56,10 +56,10 @@ body {
   box-sizing: border-box;
   /* border-bottom: 1px solid #fff; */
   transition: 0.4s;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
-.sidebar > ul > li{
+.sidebar > ul > li {
   padding-bottom: 5px;
 }
 ul {
@@ -87,12 +87,12 @@ ul li:hover a {
   margin-left: 3%;
 }
 .innerDashboardHeading h1 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   color: #3b1f47;
 }
 .innerDashboardHeading h1::after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 100px;
   height: 2px;
@@ -168,14 +168,14 @@ ul li:hover a {
 }
 .home-top-left .item-1 h5,
 .home-top-right .item-1 h5 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   font-size: 16px;
   color: #7c7c7c;
 }
 .home-top-left .item-1 h3,
 .home-top-right .item-1 h3 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 400;
   font-size: 2.8rem;
   color: #85c1e9;
@@ -229,20 +229,20 @@ ul li:hover a {
   top: 1em;
 }
 .home-middle-left-top h5 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-left-top h2 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 400;
   color: #474249;
   font-size: 18px;
   color: #d3d2d4;
 }
 .home-middle-left-top h3 {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -276,13 +276,13 @@ ul li:hover a {
 }
 
 .home-middle-left-bottom h5 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-left-bottom h3 {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -315,20 +315,20 @@ ul li:hover a {
   position: relative;
 }
 .home-middle-right-top h5 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-right-top h2 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 400;
   color: #474249;
   font-size: 18px;
   color: #d3d2d4;
 }
 .home-middle-right-top h3 {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -361,13 +361,13 @@ ul li:hover a {
   position: relative;
 }
 .home-middle-right-bottom h5 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-right-bottom h3 {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -377,7 +377,7 @@ ul li:hover a {
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard_time{
+.dashboard_time {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -388,7 +388,7 @@ thead tr {
   width: 100%;
 }
 thead tr th {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   /* font-weight: bold; */
   font-weight: 400;
   color: rgb(255, 255, 255);
@@ -400,7 +400,7 @@ thead tr th {
   padding: 16px !important;
 }
 tbody tr td {
-  font-family: "Poppins" !important;
+  font-family: 'Poppins' !important;
   font-size: 0.875rem !important;
   letter-spacing: 0.01071em !important;
   padding: 16px !important;
@@ -440,7 +440,7 @@ tbody tr td a {
   /* height: 90vh; */
 }
 
-.rmsc{
+.rmsc {
   --rmsc-main: #4285f4;
   --rmsc-hover: #f1f3f5;
   --rmsc-selected: #e2e6ea;
@@ -450,13 +450,12 @@ tbody tr td a {
   --rmsc-p: 10px; /* Spacing */
   --rmsc-radius: 4px; /* Radius */
   --rmsc-h: 10px; /* Height */
-
 }
 
-.select-item > input[type='checkbox']{
+.select-item > input[type='checkbox'] {
   width: 34px !important;
   height: 34px;
-  border: 4px solid #FFCB9A !important;
+  border: 4px solid #ffcb9a !important;
 }
 .btn-position {
   width: 100%;
@@ -471,7 +470,7 @@ tbody tr td a {
   border-radius: 999px;
   background-color: #230132;
   color: white;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   outline: none !important;
   border: none;
 }
@@ -485,7 +484,7 @@ tbody td button {
   transition: 0.3s ease-in-out;
 }
 
-.settleButton{
+.settleButton {
   outline: none;
   border: none;
   background-color: transparent;
@@ -519,15 +518,15 @@ tbody td button:hover {
   background-color: transparent;
   margin-left: 10px;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-size: 18px;
 }
 .myorders-inner-div .nav .nav-item .nav-link {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #7c7c7c;
 }
 .myorders-inner-div .nav .nav-item .nav-link.active {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #000 !important;
 }
 .myorders-inner-div ul {
@@ -548,7 +547,7 @@ tbody td button:hover {
 .add-vendor button {
   width: 15%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
   margin-top: 3%;
   margin-left: 3%;
@@ -566,7 +565,7 @@ tbody td button:hover {
   align-items: center;
   flex-direction: column;
 }
-.vendor-form2-container{
+.vendor-form2-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -589,7 +588,7 @@ tbody td button:hover {
   /* overflow: hidden; */
 }
 
-.address-form form{
+.address-form form {
   width: unset;
 }
 .vendor-form-1 form .customSpan,
@@ -605,13 +604,13 @@ tbody td button:hover {
 }
 .vendor-form-1 h1,
 .vendor-form-2 h1 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   margin-bottom: 2%;
   font-weight: bold;
 }
 .vendor-form-1 h1::after,
 .vendor-form-2 h1::after {
-  content: "";
+  content: '';
   width: 100px;
   height: 2px;
   display: block;
@@ -622,12 +621,12 @@ tbody td button:hover {
   margin: 2.4% 0;
   width: 100% !important;
 }
-.vendor-form-1 form div input{
+.vendor-form-1 form div input {
   width: 100%;
   margin-top: 4px;
-  height: 45px; 
+  height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -640,7 +639,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .vendor-form-1 input:focus,
@@ -650,7 +649,7 @@ tbody td button:hover {
 }
 .vendor-form-1 form div label,
 .vendor-form-2 form div label {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #999;
   font-weight: 400 !important;
 }
@@ -668,14 +667,14 @@ tbody td button:hover {
 }
 .vendor-form .form-group {
   width: 40%;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding: 1%;
 }
 
 .vendor-form .form-group {
   display: flex;
   align-items: center;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   justify-content: space-between;
   padding: 1%;
 }
@@ -689,28 +688,28 @@ tbody td button:hover {
   padding-right: 1rem;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
-  border-radius: 4px;  
+  border-radius: 4px;
 }
 /* VendorAdd css end */
 
 /*Update Vendor*/
-.vendor-update{
+.vendor-update {
   overflow-y: scroll !important ;
-  width:80% !important;
+  width: 80% !important;
   justify-content: center;
 }
-.update-form-vendor{
+.update-form-vendor {
   display: flex;
   margin: 1% 0 !important;
 }
-.update-form{
+.update-form {
   flex-direction: row;
   width: 100% !important;
 }
-.datePicker-vendor div{
-  border:0px !important;
+.datePicker-vendor div {
+  border: 0px !important;
   display: flex;
   justify-content: flex-end;
 }
@@ -727,7 +726,7 @@ tbody td button:hover {
   margin-bottom: -1%;
   width: 15%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .productlist-inner-div-form {
@@ -759,12 +758,12 @@ tbody td button:hover {
   border-radius: 999px;
 }
 .productlist-inner-div-form h1 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   margin-bottom: 2%;
   font-weight: bold;
 }
 .productlist-inner-div-form h1::after {
-  content: "";
+  content: '';
   width: 100px;
   height: 2px;
   display: block;
@@ -779,7 +778,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -790,7 +789,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .productlist-inner-div-form input:focus {
@@ -798,12 +797,12 @@ tbody td button:hover {
   border: none;
 }
 .productlist-inner-div-form form div label {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #999;
   font-weight: 400 !important;
 }
 .productadd-form .form-group {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding: 1%;
   display: flex;
   align-items: center;
@@ -817,17 +816,17 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
 /*Update Vendor*/
-.vendor-update{
+.vendor-update {
   overflow-y: scroll !important ;
-  width:40%;
+  width: 40%;
   justify-content: center;
 }
-.update-form{
+.update-form {
   width: 100% !important;
 }
 /*productlist and Productadd Css end*/
@@ -843,7 +842,7 @@ tbody td button:hover {
   margin-bottom: -1%;
   width: 20%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .deliveryboy-inner-div-form {
@@ -883,12 +882,12 @@ tbody td button:hover {
   border-radius: 999px;
 }
 .deliveryboy-inner-div-form h1 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   margin-bottom: 2%;
   font-weight: bold;
 }
 .deliveryboy-inner-div-form h1::after {
-  content: "";
+  content: '';
   width: 100px;
   height: 2px;
   display: block;
@@ -903,7 +902,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -914,7 +913,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .deliveryboy-inner-div-form input:focus {
@@ -922,13 +921,13 @@ tbody td button:hover {
   border: none;
 }
 .deliveryboy-inner-div-form form div label {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #999;
   font-weight: 400 !important;
 }
 .addDeliveryboy-form .form-group {
   width: 40%;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding: 1%;
 }
 .addDeliveryboy-form .form-group label {
@@ -937,7 +936,7 @@ tbody td button:hover {
 .DisableDeliveryBoyBtn {
   width: 100%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 /* deliverymanage and delivery boy add Css End */
@@ -953,7 +952,7 @@ tbody td button:hover {
   margin-left: 3%;
   margin-bottom: -1%;
   padding: 1%;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   border-radius: 999px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
   width: 70%;
@@ -965,7 +964,7 @@ tbody td button:hover {
 }
 .payment-form .form-group {
   width: 25%;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding: 1%;
 }
 .payment-form .form-group label {
@@ -974,24 +973,24 @@ tbody td button:hover {
 .payment-form button {
   margin-bottom: 0;
 }
-.model_settle{
+.model_settle {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.model_settle_details{
-    text-align: center;
+.model_settle_details {
+  text-align: center;
 }
-.modelTableDiv{
+.modelTableDiv {
   display: flex;
   justify-content: center;
   align-items: center;
- 
 }
-.modelTable{
+.modelTable {
   text-align: left !important;
 }
-.modelTable td ,th{
+.modelTable td,
+th {
   width: max-content;
 }
 .Modal {
@@ -1005,24 +1004,23 @@ tbody td button:hover {
   /* float: right; */
   width: 15%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .SettlePayBtn {
-  
   width: 100%;
 }
-.main-root-settlement{
+.main-root-settlement {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.main-root-second{
-    display: flex;
-    width: 26%;
-    justify-content: center;
-    align-items: center;
+.main-root-second {
+  display: flex;
+  width: 26%;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Payment Settlement Css End */
@@ -1048,7 +1046,7 @@ tbody td button:hover {
   overflow: hidden;
 }
 
-.signup-login-form-div > .heading-login{
+.signup-login-form-div > .heading-login {
   margin: 5%;
 }
 
@@ -1063,12 +1061,12 @@ tbody td button:hover {
   border-radius: 999px;
 }
 .signup-login-form-div h1 {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   margin-bottom: 2%;
   font-weight: bold;
 }
 .signup-login-form-div h1::after {
-  content: "";
+  content: '';
   width: 100px;
   height: 2px;
   display: block;
@@ -1083,7 +1081,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1094,7 +1092,7 @@ tbody td button:hover {
   float: right;
   width: 35%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 /* signup-login-form css end */
@@ -1119,7 +1117,7 @@ a {
   width: 100%;
   padding: 2%;
   display: flex;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .assign-btn {
@@ -1127,7 +1125,7 @@ a {
   padding: 1%;
   background-color: #77d86a;
   color: white;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   border-radius: 999px;
   outline: none;
   width: fit-content;
@@ -1182,7 +1180,7 @@ a {
   margin-right: 7%;
   width: 15%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
 }
 .customer-details-content .content {
@@ -1262,7 +1260,7 @@ a {
   background-color: #3b1f47;
   color: white;
   font-weight: 500;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 .banner-images > .banner-btns > button:hover {
   background-color: #26132e;
@@ -1298,7 +1296,7 @@ a {
 }
 .reviewDescription {
   display: flex;
-  flex:1;
+  flex: 1;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -1307,11 +1305,11 @@ a {
 }
 .reviewDescription-text > h3,
 .reviewDescription-text > p {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #3a4a55;
 }
 .reviewDescription-text > p {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 10px;
 }
 .reviewDescription-Btn {
@@ -1325,15 +1323,15 @@ a {
 .reviewDescription-Btn button {
   width: 40%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132;
 }
 
-.reviewDescription-Btn > .disabled-btn{
- filter: grayscale(100%);
- pointer-events: none;
- background-color: #787171;
- /* background: unset; */
+.reviewDescription-Btn > .disabled-btn {
+  filter: grayscale(100%);
+  pointer-events: none;
+  background-color: #787171;
+  /* background: unset; */
 }
 
 /* modal */
@@ -1345,12 +1343,12 @@ a {
 }
 .ReviewSure-text h6 {
   font-weight: normal;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 .ReviewSure-text button {
   width: 25%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
   margin-left: 10px;
   text-align: center;
@@ -1409,14 +1407,14 @@ a {
   width: 100% !important;
 }
 .coupon-form form .form-group label {
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 .coupon-form form .customSelect {
   width: 100%;
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1425,7 +1423,7 @@ a {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1443,7 +1441,7 @@ a {
 .coupounBtn {
   width: 25%;
   height: 50px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
   color: #fff;
   /* text-transform: uppercase; */
@@ -1474,7 +1472,7 @@ a {
 .coupon-details-btn button {
   width: 25%;
   height: 45px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   background-color: #230132 !important;
   margin-left: 10px;
   text-align: center;
@@ -1488,10 +1486,50 @@ a {
   display: block;
 }
 
-
 /* Back button css */
-.backButton{
+.backButton {
   position: absolute;
   top: 0%;
   left: 0%;
 }
+
+/* Notification */
+.notificationDiv {
+  display: flex;
+  /* background-color: #3cfc45; */
+  width: 80%;
+  height: fit-content;
+  /* height: 200px; */
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #dec1eb;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.notificationDescription-text {
+  text-align: left !important;
+}
+.notificationDescription-text > h5 {
+  font-size: medium;
+}
+.notificationDescription-text > h4 {
+  font-family: 'Poppins';
+  color: #3a4a55;
+  font-size: medium;
+}
+.notificationDescription-text > h6,
+h4,
+h3 .notificationDescription-text > p {
+  font-family: 'Poppins';
+  color: #3a4a55;
+  font-size: small;
+}
+.notificationDescription-text > p {
+  font-family: 'Poppins';
+  padding-left: 10px;
+}
+/* notification css end */

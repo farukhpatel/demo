@@ -12,18 +12,18 @@ function User() {
   useEffect(() => {
 
     instance.get(API.USER)
-    .then(function(response){
-      console.log(response);
-      setUser(response.users)
-    })
+      .then(function (response) {
+        console.log(response);
+        setUser(response.users)
+      })
   }, [])
-  const routerHistroy=useHistory();
-  const OrderDetails=(value)=>{
+  const routerHistroy = useHistory();
+  const OrderDetails = (value) => {
     console.log("OrderDetails");
     console.log(value);
-    routerHistroy.push('/orderdetails',value)
+    routerHistroy.push('/orderdetails', value)
   }
-  
+
 
 
 
@@ -62,7 +62,7 @@ function User() {
                   </div>
                 </div>
                 <table class="table table-striped">
-                  <thead style={{textAlign:'center'}}>
+                  <thead style={{ textAlign: 'center' }}>
                     <tr>
                       <th scope="col">S.No</th>
                       <th scope="col">Order Id</th>
@@ -70,21 +70,21 @@ function User() {
                       <th scope="col">Phone No.</th>
                     </tr>
                   </thead>
-                  <tbody style={{textAlign:'center'}}>
+                  <tbody style={{ textAlign: 'center' }}>
                     {
-                     user.length > 0 ? user.map((value, index) => {
+                      user.length > 0 ? user.map((value, index) => {
                         return (
                           <tr>
                             <th style={{}}><input type="checkbox" style={{ marginRight: "7%" }} />{index + 1}</th>
-                            <td onClick={() =>{
+                            <td onClick={() => {
                               // (window.location.href = "/orderdetails")
                               OrderDetails(value)
                             }
                             }
                               style={{ cursor: "pointer" }}>{value?.id}</td>
-                            <td onClick={() =>{
+                            <td onClick={() => {
                               // (window.location.href = "/orderdetails")
-                               OrderDetails(value);
+                              OrderDetails(value);
                             }
                             }
                               style={{ cursor: "pointer" }}>
@@ -93,7 +93,7 @@ function User() {
                             <td>{value?.phone}</td>
                           </tr>
                         );
-                      }) : <> <tr> <td colSpan="4" > <h2> No record found </h2> </td> </tr>  </> }
+                      }) : <> <tr> <td colSpan="4" > <h2> No record found </h2> </td> </tr>  </>}
                   </tbody>
                 </table>
               </div>
