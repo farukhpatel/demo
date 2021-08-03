@@ -26,18 +26,30 @@ const DeliveryManage = () => {
                 setDeliveryBoy(response.users);
             })
     }, []);
-    const routerHistroy=useHistory();
-    const update=(props)=>{
-        routerHistroy.push(`updateDeliveryBoy/${props.id}`,props)
+    const routerHistroy = useHistory();
+    const update = (props) => {
+        routerHistroy.push(`updateDeliveryBoy/${props.id}`, props)
     }
-    const handleDelete=(id)=>{
+    const Disable = (value) => {
+        console.log("disable work");
+        let body = {
+            is_active: value?.delivery_boy?.is_active === 1 ? 0 : 1
+        }
+        console.log(body)
+        instance.patch(`${API.DELIVERY_BOYS_ENABLE}/${value.id}`, body).then((res) => {
+            toast.success(res.message);
+            window.location.href = "/deliverymanage"
+        })
+
+    }
+    const handleDelete = (id) => {
         console.log(id)
         instance.delete(`${API.DELIVERY_BOYS_DELETE}/${id}`)
-        .then(function(response){
-           toast.success(response.message);
-           window.location.href="/deliverymanage"
-        })
-      }
+            .then(function (response) {
+                toast.success(response.message);
+                window.location.href = "/deliverymanage"
+            })
+    }
     return (
         <>
             {/* <PopupExample /> */}
@@ -84,9 +96,9 @@ const DeliveryManage = () => {
                                             <th scope="col">S.No</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
-                                            <th scope="col">Available</th>
+
                                             <th scope="col">Disable</th>
-                                            <th scope="col">Block</th>
+
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -97,70 +109,62 @@ const DeliveryManage = () => {
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{value.name}</td>
                                                     <td>{value.phone}</td>
-                                                    <td>Yes</td>
-                                                    <Popup
-                                                        trigger={
-                                                            <td style={{ cursor: "pointer" }}>
-                                                                <button>Disable</button>
-                                                            </td>
-                                                        }
-                                                        position="right center"
-                                                        modal
-                                                    >
-                                                        <DisableModal />
-                                                    </Popup>
-                                                    <td>
-                                                        <button>Block</button>
+
+
+                                                    <td style={{ cursor: "pointer" }}>
+                                                        <button onClick={() => Disable(value)}> {value?.delivery_boy?.is_active === 1 ? 'Disable' : 'Enable'}</button>
                                                     </td>
+
+
                                                     <td>
                                                         <button
                                                             className="btn btn-link-light "
-                                                            onClick={()=>{update(value)}}                         
+                                                            onClick={() => { update(value) }}
                                                         >
                                                             <i class="fas fa-edit"></i>
                                                         </button>
-                                                      
+
                                                         <Popup
-                          className="my-popup"
-                          trigger={
-                            <button className="btn btn-link-light">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                          }
-                          position="right center"
-                          modal
-                        >
-                           {(close) => (
-                            <div className="ReviewSure-text">
-                              <h6
-                                style={{
-                                  marginBottom: "1rem",
-                                  marginTop: "2rem",
-                                }}
-                              >
-                                Are you Sure you want to Delete this review?
+                                                            className="my-popup"
+                                                            trigger={
+                                                                <button className="btn btn-link-light">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            }
+                                                            position="right center"
+                                                            modal
+                                                        >
+                                                            {(close) => (
+                                                                <div className="ReviewSure-text">
+                                                                    <h6
+                                                                        style={{
+                                                                            marginBottom: "1rem",
+                                                                            marginTop: "2rem",
+                                                                        }}
+                                                                    >
+                                                                        Are you Sure you want to Delete this review?
                               </h6>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                  handleDelete(value.id);
-                                  close();
-                                }}
-                              >
-                                Yes
+                                                                    <button
+                                                                        className="btn btn-primary"
+                                                                        onClick={() => {
+                                                                            handleDelete(value.id);
+                                                                            close();
+                                                                        }}
+                                                                    >
+                                                                        Yes
                               </button>
-                              <button
-                                className="btn btn-primary"
-                                  onClick={() => {
-                                    close();
-                                  }}
-                              >
-                                No
+                                                                    <button
+                                                                        className="btn btn-primary"
+                                                                        onClick={() => {
+                                                                            close();
+                                                                        }}
+                                                                    >
+                                                                        No
                               </button>
-                            </div>
-                          )}
-                        </Popup>
-                
+                                                                </div>
+                                                            )}
+                                                        </Popup>
+
 
                                                     </td>
                                                 </tr>

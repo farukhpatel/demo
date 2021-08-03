@@ -35,6 +35,7 @@ const API = {
   DELIVERY_BOYS_ADD: Config.BASE_URL + "api/user/create",
   DELIVERY_BOYS_UPDATE: Config.BASE_URL + "api/user/update",
   DELIVERY_BOYS_DELETE: Config.BASE_URL + "api/user/delete",
+  DELIVERY_BOYS_ENABLE: Config.BASE_URL + "api/user/delivery-boy/update",
   ASSIGN_DELIVERY_BOY: Config.BASE_URL + "api/order/update",
   VENDOR_API: Config.BASE_URL + "api/shop/all",
   VENDOR_UPDATE: Config.BASE_URL + "api/shop/update",
