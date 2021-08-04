@@ -84,7 +84,12 @@ function Locality() {
 
                             <Popup
                               className="my-popup"
-
+                              trigger={
+                                <button className="btn btn-link-light">
+                                  <i class="fas fa-trash-alt">
+                                  </i>
+                                </button>
+                              }
                               position="right center"
                               modal
                             >

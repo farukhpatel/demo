@@ -88,26 +88,20 @@ const DeliveryManage = () => {
                                             <th scope="col">S.No</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
-
                                             <th scope="col">Disable</th>
-
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody style={{ textAlign: 'center' }}>
                                         {deliveryBoy.length > 0 ? deliveryBoy.map((value, index) => {
                                             return (
-                                                <tr>
+                                                <tr key={index}>
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{value.name}</td>
                                                     <td>{value.phone}</td>
-
-
                                                     <td style={{ cursor: "pointer" }}>
                                                         <button onClick={() => Disable(value)}> {value?.delivery_boy?.is_active === 1 ? 'Disable' : 'Enable'}</button>
                                                     </td>
-
-
                                                     <td>
                                                         <button
                                                             className="btn btn-link-light "
@@ -135,7 +129,7 @@ const DeliveryManage = () => {
                                                                         }}
                                                                     >
                                                                         Are you Sure you want to Delete this review?
-                              </h6>
+                                                                     </h6>
                                                                     <button
                                                                         className="btn btn-primary"
                                                                         onClick={() => {
@@ -144,7 +138,7 @@ const DeliveryManage = () => {
                                                                         }}
                                                                     >
                                                                         Yes
-                              </button>
+                                                                    </button>
                                                                     <button
                                                                         className="btn btn-primary"
                                                                         onClick={() => {
@@ -152,7 +146,7 @@ const DeliveryManage = () => {
                                                                         }}
                                                                     >
                                                                         No
-                              </button>
+                                                                </button>
                                                                 </div>
                                                             )}
                                                         </Popup>
