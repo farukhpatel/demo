@@ -306,14 +306,14 @@ function Coupon() {
                         )}
                         <h6>{`CODE: ${coupon?.coupon_code}`}</h6>
                         <h6>{`Description: ${coupon?.coupon_description}`}</h6>
-                        <h6>{`Coupon Value: ${coupon?.coupon_value}`}</h6>
+                        <h6>{`Coupon Value: ${coupon?.coupon_value}%`}</h6>
                         {coupon?.maximum_spend && (
                           <h6>{`Maximum Spend: ${coupon?.maximum_spend}`}</h6>
                         )}
                         {coupon?.minimum_spend && (
                           <h6>{`Minimum Spend: ${coupon?.minimum_spend}`}</h6>
                         )}
-                        <h6>Discounted Price:-</h6>
+
                       </div>
                       <div className="coupon-details-btn">
                         <Popup

@@ -42,6 +42,8 @@ function PaymentSettlement() {
     const [to, setTo] = useState(new Date());
     const [modalOpen, setModalOpen] = useState(false);
     const [checked, setChecked] = useState([]);
+    // let checked;
+    const unaccepted_settle = [];
     const Submits = (e) => {
         e.preventDefault();
         let start_date = moment(from).format('YYYY-MM-DD');
@@ -70,13 +72,13 @@ function PaymentSettlement() {
         instance.get(url).then((res) => {
             setPaid(res.transactions.paid);
             setUnpaid(res.transactions?.unpaid[0]?.orders);
-            console.log(res.transactions?.unpaid[0]?.orders)
+            setUnpaid2(res.transactions?.unpaid[0])
             let l = res.transactions?.unpaid[0]?.orders.length;
             console.log(l)
-            const a = new Array(l).fill(true)
-            console.log(a)
+            let a = new Array(l).fill(true)
+            // console.log(checked);
+
             setChecked(a);
-            setUnpaid2(res.transactions?.unpaid[0])
         })
 
         //for vendor
@@ -84,6 +86,13 @@ function PaymentSettlement() {
             setVendor(res.shop);
         })
     }, []);
+    const CheckboxHandle = async (index) => {
+        // console.log(index);
+        let tempArray = checked;
+        // console.log(tempArray)
+        tempArray[index] === false ? tempArray[index] = true : tempArray[index] = false;
+        await setChecked(tempArray);
+    }
     return (
         <>
             <div className="main-outer-div">
@@ -203,15 +212,13 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" checked={true} onChange={(e) => { console.log(e) }} style={{ marginRight: "7%" }} />{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onChange={(e) => { CheckboxHandle(index); console.log(e); console.log(checked); }} style={{ marginRight: "7%" }} checked={checked[index]} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.order_discount}</td>
                                                         <td>{order.order_commission}</td>
                                                         <td>{order.order_tax}</td>
                                                         <td>{order.payable_amount}</td>
-
-
                                                     </tr>
                                                 )
                                             }) : <> <tr> <td colSpan="8"> <h2> No record found </h2> </td> </tr>  </>
@@ -229,6 +236,7 @@ function PaymentSettlement() {
                                             <th scope="col">Transaction amount</th>
                                             <th scope="col">Commission</th>
                                             <th scope="col">Tax</th>
+                                            <th scope="col">Paid Amount</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Status</th>
                                         </tr>
@@ -243,6 +251,7 @@ function PaymentSettlement() {
                                                         <td>{value.transaction_amount}</td>
                                                         <td>{value.transaction_commission}</td>
                                                         <td>{value.transaction_tax}</td>
+                                                        <td>{value.transaction_payable_amount}</td>
                                                         <td>{moment(value.transaction_date).format('YYYY-MM-DD')}</td>
                                                         <td style={{ color: "green" }}>Paid</td>
                                                     </tr>
