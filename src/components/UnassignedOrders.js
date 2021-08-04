@@ -46,13 +46,13 @@ function UnassignedOrders() {
   function getUnassignedOrders() {
 
     instance.get(API.UNASSIGNED_ORDERS)
-    .then(function(response){
-      setUnassigned(response.orders);
-    })
+      .then(function (response) {
+        setUnassigned(response.orders);
+      })
   }
 
   function getDeliveryBoys() {
-    instance.get(API.DELIVERY_BOYS).then(function (response) {
+    instance.get(`${API.DELIVERY_BOYS}&is_active=1`).then(function (response) {
       setDeliveryBoysList(response.users);
     });
   }
@@ -65,9 +65,9 @@ function UnassignedOrders() {
     }
 
     instance
-      .patch(`${API.ASSIGN_DELIVERY_BOY}/$${orderId}`, body)
+      .patch(`${API.ASSIGN_DELIVERY_BOY}/${orderId}`, body)
       .then(function (response) {
-        toast.success("Delivery Boy Asssigned uccessfully.");
+        toast.success(response.message);
         window.location.reload();
       });
   }
@@ -137,7 +137,7 @@ function UnassignedOrders() {
                                 pathname: "/orderdetails",
                                 state: { order: value },
                               }}
-                              style={{color:"#0dcaf0"}}
+                              style={{ color: "#0dcaf0" }}
                             >
                               {value?.order_id}
                             </Link>
@@ -148,7 +148,7 @@ function UnassignedOrders() {
                                 pathname: "/orderdetails",
                                 state: { order: value },
                               }}
-                              style={{color:"#0dcaf0"}}
+                              style={{ color: "#0dcaf0" }}
                             >
                               {value?.user_id}
                             </Link>

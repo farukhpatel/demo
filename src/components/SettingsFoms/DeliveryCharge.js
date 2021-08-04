@@ -19,8 +19,10 @@ function DeliveryCharge() {
   const [charge, setCharge] = useState(null);
   const [cart_cut_off_value, setCart_cut_off_value] = useState(null);
   useEffect(() => {
+
     instance.get(API.GET_SETTING_DELIVERY_CHARGE)
       .then(function (response) {
+        // console.log(response.delivery_charge[0].value);
         setCharge(response.delivery_charge[0].value.charge)
         setCart_cut_off_value(response.delivery_charge[0].value.cart_cut_off_value);
       })
@@ -32,6 +34,8 @@ function DeliveryCharge() {
       charge,
       cart_cut_off_value
     }
+
+    console.log(data);
     instance.post(API.SETTING_DELIVERY_CHARGE, data).then(function (response) {
       toast.success("Delivery Charge Successfully Added.");
       window.location.href = "/settings";

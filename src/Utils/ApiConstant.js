@@ -7,10 +7,10 @@ const API = {
   // SIGNUP LOGIN API END
 
   // DASHBOARD API START
-  UNASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=1",
-  ASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=2",
-  PICKED: Config.BASE_URL + "api/order/all?order_status=3",
-  DELIVERED: Config.BASE_URL + "api/order/all?order_status=4",
+  UNASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=1&is_active_subscription=1",
+  ASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=2&is_active_subscription=1",
+  PICKED: Config.BASE_URL + "api/order/all?order_status=3&is_active_subscription=1",
+  DELIVERED: Config.BASE_URL + "api/order/all?order_status=4&is_active_subscription=1",
   TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
   GET_DASHBOARD_DATA: Config.BASE_URL + "api/admin/dashboard?",
   GET_SETTING_TAX: Config.BASE_URL + "api/admin/get-tax",
@@ -67,9 +67,6 @@ const API = {
 
   //notification
   GET_ALL_NOTIFICATIONS: Config.BASE_URL + "api/user/notifications/all",
-
-
-
 };
 
 export default API;

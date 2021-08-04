@@ -11,9 +11,10 @@ import { useParams } from 'react-router-dom';
 function UpdateDeliveryBoy(props) {
     let { id } = useParams();
     const prop = props.location.state;
+    // console.log(prop)
     const [name, setName] = useState(prop.name);
     const [phone, setPhone] = useState(prop.phone);
-    const [aadhaar, setAadhaar] = useState(prop?.aadhaar_number);
+    const [aadhaar, setAadhaar] = useState(prop?.delivery_boy?.aadhaar_number);
     const [email, setEmail] = useState(prop.email);
     const [password, setPassword] = useState(prop?.password ? prop?.password : "");
     const formSubmit = async (e) => {
@@ -22,11 +23,12 @@ function UpdateDeliveryBoy(props) {
             name: name,
             phone: phone,
             email: email,
-            aadhaar_number: aadhaar,
+            aadhaar_number: Number(aadhaar),
             password: password,
             role_id: 4
         }
         //DELIVERY_BOYS_UPDATE
+        console.log(formData)
         await instance.patch(`${API.DELIVERY_BOYS_UPDATE}/${id}`, formData).then((res) => {
             toast.success(res.message);
             window.location.href = "/deliverymanage";
@@ -64,7 +66,7 @@ function UpdateDeliveryBoy(props) {
 
                             <div class="form-group">
                                 <label for="deliveryboyAadhaar">Aadhaar No</label>
-                                <input type="test" required class="form-control" id="deliveryboyAadhaar" placeholder="Aadhaar" onChange={(e) => setAadhaar(e.target.value)} value={aadhaar} />
+                                <input type="text" required class="form-control" id="deliveryboyAadhaar" placeholder="Aadhaar" onChange={(e) => setAadhaar(e.target.value)} value={aadhaar} />
                             </div>
                             <div class="form-group">
                                 <label for="deliveryboyPhone">New Password</label>

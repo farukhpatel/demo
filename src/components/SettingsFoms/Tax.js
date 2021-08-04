@@ -15,23 +15,19 @@ import "react-toastify/dist/ReactToastify.css";
 import instance from "../../Utils/axiosConstants";
 
 function DeliveryCharge() {
-  const [tax,setTax]=useState(null);
-  useEffect(()=>{
-    console.log("component rendered");
+  const [tax, setTax] = useState(null);
+  useEffect(() => {
     instance.get(API.GET_SETTING_TAX)
-    .then(function(response){
-      console.log(response.tax[0].value.tax);
-      setTax(response.tax[0].value.tax);
-    })
-  },[]);
+      .then(function (response) {
+        setTax(response.tax[0].value.tax);
+      })
+  }, []);
   // time picker
   const form2Submit = (e) => {
     e.preventDefault();
-    let data={
-      tax:tax
+    let data = {
+      tax: tax
     }
-
-    console.log(data);
     instance.post(API.SETTING_TAX, data).then(function (response) {
       toast.success("Tax Successfully Added.");
       window.location.href = "/settings";
@@ -51,7 +47,7 @@ function DeliveryCharge() {
                 id="vendorName"
                 placeholder={tax}
                 value={tax}
-                onChange={(e)=>setTax(e.target.value)}
+                onChange={(e) => setTax(e.target.value)}
               />
             </div>
           </div>

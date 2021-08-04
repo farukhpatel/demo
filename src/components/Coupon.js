@@ -50,23 +50,23 @@ function Coupon() {
   const [discount, setDiscount] = useState(null);
   const [id, setId] = useState(0);
   const [isCouponActive, setIsCouponActive] = useState(1)
-  const [minimum_spend,setMinimum_spend]=useState(null);
-  const [maximum_spend,setMaximum_spend]=useState(null);
-  const [usage_limit_per_coupon,setUsage_limit_per_coupon]=useState(null)
-  const [usage_limit_per_user,setUsage_limit_per_user]=useState(null);
-  const [coupon_code,setCoupon_code]=useState(null);
-  
-  const routerHistory=useHistory()
+  const [minimum_spend, setMinimum_spend] = useState(null);
+  const [maximum_spend, setMaximum_spend] = useState(null);
+  const [usage_limit_per_coupon, setUsage_limit_per_coupon] = useState(null)
+  const [usage_limit_per_user, setUsage_limit_per_user] = useState(null);
+  const [coupon_code, setCoupon_code] = useState(null);
+
+  const routerHistory = useHistory()
   const handleChangeCoupon = (coupon) => {
     let body = {
       is_active: coupon?.is_active === 0 ? 1 : 0,
     };
 
     instance
-    .patch(`${API.UPDATE_COUPON}/${coupon.id}`, body)
-    .then(function (res) {
-      toast.success(res.message);
-      window.location.reload();
+      .patch(`${API.UPDATE_COUPON}/${coupon.id}`, body)
+      .then(function (res) {
+        toast.success(res.message);
+        window.location.reload();
       });
   };
   const Submit = (e) => {
@@ -75,38 +75,37 @@ function Coupon() {
       coupon_name,
       coupon_description,
       coupon_code,
-      start_date:start_date===null ? start_date : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
-      end_date: end_date===null ? end_date : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
+      start_date: start_date === null ? start_date : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
+      end_date: end_date === null ? end_date : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
       coupon_type: 1,
       coupon_value: discount ? Number(discount) : null,
-      ...( id > 0 ? { shop_id: id } : {}),
-      is_active:isCouponActive,
-      minimum_spend:minimum_spend? Number(minimum_spend) : null,
-      maximum_spend:maximum_spend? Number(maximum_spend) : null,
-      usage_limit_per_coupon : usage_limit_per_coupon ? Number(usage_limit_per_coupon) : null,
-      usage_limit_per_user : usage_limit_per_user ? Number(usage_limit_per_user) : null
+      ...(id > 0 ? { shop_id: id } : {}),
+      is_active: isCouponActive,
+      minimum_spend: minimum_spend ? Number(minimum_spend) : null,
+      maximum_spend: maximum_spend ? Number(maximum_spend) : null,
+      usage_limit_per_coupon: usage_limit_per_coupon ? Number(usage_limit_per_coupon) : null,
+      usage_limit_per_user: usage_limit_per_user ? Number(usage_limit_per_user) : null
     };
     console.log(couponData);
-    instance.post(API.POST_COUPONS_CREATE,couponData).then((res)=>{
+    instance.post(API.POST_COUPONS_CREATE, couponData).then((res) => {
       toast.success(res.message)
-      window.location.href='/coupon'
+      window.location.href = '/coupon'
     })
-  
-    console.log("add coupon");
+
   };
   const handleDelete = (val) => {
     let newArray = [...ar];
     const filteredArr = newArray.filter((item) => item.id !== val.id);
     setAr(filteredArr);
   };
-  const CouponDelete=(coupon)=>{
-    instance.delete(`${API.DELETE_COUPONS}/${coupon.id}`).then((res)=>{
+  const CouponDelete = (coupon) => {
+    instance.delete(`${API.DELETE_COUPONS}/${coupon.id}`).then((res) => {
       toast.success(res.message)
-      window.location.href='/coupon';
+      window.location.href = '/coupon';
     })
 
   }
-  
+
   function getCoupons() {
     instance.get(API.GET_COUPONS).then(function (response) {
       setCoupons(response?.coupons);
@@ -117,7 +116,7 @@ function Coupon() {
     instance.get(API.GET_ALL_SHOP).then((res) => {
       setVendor(res.shop);
     });
-    
+
   }, []);
 
   return (
@@ -204,11 +203,11 @@ function Coupon() {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    />
+                  />
                 </div>
-                  <div style={{display:'flex'}}>
-                <div class="form-group">
-                  <label>Vendor Name</label>
+                <div style={{ display: 'flex' }}>
+                  <div class="form-group">
+                    <label>Vendor Name</label>
 
                     <select
                       value={id}
@@ -230,14 +229,14 @@ function Coupon() {
                         );
                       })}
                     </select>
-                </div>
-                <div className="form-group">
-                <label for="isActiveCity">Is Active Coupon</label>
-                <select id="isActiveCity" onChange={(e) => setIsCouponActive(e.target.value)}>
-                  <option value={1}>Yes</option>
-                  <option value={0}>No</option>
-                </select>
-                </div>
+                  </div>
+                  <div className="form-group">
+                    <label for="isActiveCity">Is Active Coupon</label>
+                    <select id="isActiveCity" onChange={(e) => setIsCouponActive(e.target.value)}>
+                      <option value={1}>Yes</option>
+                      <option value={0}>No</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="title">Minimum spend</label>
@@ -278,7 +277,7 @@ function Coupon() {
                     placeholder="Type here..."
                     onChange={(e) => setUsage_limit_per_user(e.target.value)}
                   />
-                </div> 
+                </div>
                 <div
                   class="form-group "
                   style={{ paddingBottom: "10px", marginBottom: "12px" }}
@@ -327,7 +326,7 @@ function Coupon() {
                               style={{ cursor: "pointer" }}
                             >
                               {/* {console.log(coupon.is_active)} */}
-                              {coupon?.is_active===1 ? "Deactive" : "Active"}
+                              {coupon?.is_active === 1 ? "Deactive" : "Active"}
                             </button>
                           }
                           position="right center"
@@ -342,7 +341,7 @@ function Coupon() {
                                 }}
                               >
                                 Are you Sure you want to{" "}
-                                {coupon?.is_active===0 ? "Activate" : "Deactivate"}{" "}
+                                {coupon?.is_active === 0 ? "Activate" : "Deactivate"}{" "}
                                 this coupon?
                               </h6>
                               <button

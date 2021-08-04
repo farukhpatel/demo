@@ -40,7 +40,8 @@ function PaymentSettlement() {
     const [id, setId] = useState(0);
     const [from, setFrom] = useState(new Date);
     const [to, setTo] = useState(new Date());
-    const [modalOpen,setModalOpen]=useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [checked, setChecked] = useState([]);
     const Submits = (e) => {
         e.preventDefault();
         let start_date = moment(from).format('YYYY-MM-DD');
@@ -60,7 +61,7 @@ function PaymentSettlement() {
         const date = new Date()
         setFrom(moment(date).add(-1, 'days').format());
         setTo(moment(date).format());
-        let start_date = moment(from).add(-1,'days').format('YYYY-MM-DD');
+        let start_date = moment(from).add(-1, 'days').format('YYYY-MM-DD');
         let end_date = moment(to).format('YYYY-MM-DD');
         let get_transaction = 1;
         // GET_ORDER_SALES
@@ -69,6 +70,12 @@ function PaymentSettlement() {
         instance.get(url).then((res) => {
             setPaid(res.transactions.paid);
             setUnpaid(res.transactions?.unpaid[0]?.orders);
+            console.log(res.transactions?.unpaid[0]?.orders)
+            let l = res.transactions?.unpaid[0]?.orders.length;
+            console.log(l)
+            const a = new Array(l).fill(true)
+            console.log(a)
+            setChecked(a);
             setUnpaid2(res.transactions?.unpaid[0])
         })
 
@@ -81,95 +88,95 @@ function PaymentSettlement() {
         <>
             <div className="main-outer-div">
                 <div className="main-root-settlement">
-                <div className="payment-settlement-inputs">
-                    {/* <a href="/adddeliveryboy"><button>Add Delivery Boy</button></a> */}
-                    <form className="payment-form">
-                        <div class="form-group">
-                            <label for="from">From</label>
-                            <MuiPickersUtilsProvider
-                                utils={MomentUtils}
-                            >
-                                <Grid container justify='space-around'>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        // label="Date picker dialog"
-                                        format="DD/MM/yyyy"
-                                        onChange={(e) => { setFrom(e._d) }}
-                                        value={from}
-                                        // onChange={e => handleDateChange(e)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </Grid>
-                            </MuiPickersUtilsProvider>
-                        </div>
-                        <div class="form-group">
-                            <label for="to">To</label>
-                            <MuiPickersUtilsProvider
-                                utils={MomentUtils}
-                            >
-                                <Grid container justify='space-around'>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        // label="Date picker dialog"
-                                        format="DD/MM/yyyy"
-                                        onChange={(e) => { setTo(e._d) }}
-                                        value={to}
-                                        // value={foundationDate}
-                                        // onChange={e => handleDateChange(e)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </Grid>
-                            </MuiPickersUtilsProvider>
-                        </div>
-                        <div class="form-group">
-                            <label for="vendorName">Vendor Name</label>
-                            <FormControl className={classes.formControl}>
-                                <Select
-                                    value={id}
-                                    displayEmpty
-                                    className={classes.selectEmpty}
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    onChange={(e) => { setId(e.target.value) }}
+                    <div className="payment-settlement-inputs">
+                        {/* <a href="/adddeliveryboy"><button>Add Delivery Boy</button></a> */}
+                        <form className="payment-form">
+                            <div class="form-group">
+                                <label for="from">From</label>
+                                <MuiPickersUtilsProvider
+                                    utils={MomentUtils}
                                 >
-                                    <MenuItem value="">
-                                        <em>All</em>
-                                    </MenuItem>
-                                    {vendor.map((items, index) => {
-                                        return <MenuItem key={index} value={items.id}> {items.shop_name} </MenuItem>
-                                    })}
+                                    <Grid container justify='space-around'>
+                                        <KeyboardDatePicker
+                                            margin="normal"
+                                            id="date-picker-dialog"
+                                            // label="Date picker dialog"
+                                            format="DD/MM/yyyy"
+                                            onChange={(e) => { setFrom(e._d) }}
+                                            value={from}
+                                            // onChange={e => handleDateChange(e)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </Grid>
+                                </MuiPickersUtilsProvider>
+                            </div>
+                            <div class="form-group">
+                                <label for="to">To</label>
+                                <MuiPickersUtilsProvider
+                                    utils={MomentUtils}
+                                >
+                                    <Grid container justify='space-around'>
+                                        <KeyboardDatePicker
+                                            margin="normal"
+                                            id="date-picker-dialog"
+                                            // label="Date picker dialog"
+                                            format="DD/MM/yyyy"
+                                            onChange={(e) => { setTo(e._d) }}
+                                            value={to}
+                                            // value={foundationDate}
+                                            // onChange={e => handleDateChange(e)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </Grid>
+                                </MuiPickersUtilsProvider>
+                            </div>
+                            <div class="form-group">
+                                <label for="vendorName">Vendor Name</label>
+                                <FormControl className={classes.formControl}>
+                                    <Select
+                                        value={id}
+                                        displayEmpty
+                                        className={classes.selectEmpty}
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        onChange={(e) => { setId(e.target.value) }}
+                                    >
+                                        <MenuItem value="">
+                                            <em>All</em>
+                                        </MenuItem>
+                                        {vendor.map((items, index) => {
+                                            return <MenuItem key={index} value={items.id}> {items.shop_name} </MenuItem>
+                                        })}
 
-                                </Select>
-                                {/* <FormHelperText>Without label</FormHelperText> */}
-                            </FormControl>
-                        </div>
-                        {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
+                                    </Select>
+                                    {/* <FormHelperText>Without label</FormHelperText> */}
+                                </FormControl>
+                            </div>
+                            {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
 
-                        <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button>
-                    </form>
-                </div>
-                <div className="main-root-second">
-                
-                { unpaid?.length > 0 ?
-                   <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={()=>setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
-                        {modalOpen && <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen}/>}
-                    </Popup>
-                    : ''
-                  
-                }  
-                </div>
+                            <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button>
+                        </form>
+                    </div>
+                    <div className="main-root-second">
+
+                        {unpaid?.length > 0 ?
+                            <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
+                                {modalOpen && <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen} />}
+                            </Popup>
+                            : ''
+
+                        }
+                    </div>
                 </div>
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div paymentsettle-inner-div">
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button> 
+                                <button class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link " id="paid-payments" data-bs-toggle="tab" data-bs-target="#paidpayments" type="button" role="tab" aria-controls="paid-payments" aria-selected="false">Paid Payments</button>
@@ -196,7 +203,7 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row">{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" checked={true} onChange={(e) => { console.log(e) }} style={{ marginRight: "7%" }} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.order_discount}</td>

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import "./SuperUser.css";
 
 
@@ -8,11 +8,8 @@ function Banner() {
 
     const [images, setImages] = useState([]);
     const [singleImage, setSingleImage] = useState('');
-
-
     const selectFile = (e) => {
         let temp = [...images]
-        console.log(temp.length)
         if (e.target.files.length > 0) {
             if (e.target.files.length > 5)
                 alert('Cannot upload more than 5 images')
@@ -43,7 +40,7 @@ function Banner() {
             <div className="main-outer-div">
                 <div className="myorders-outer-div">
                     <div className="myorders-inner-div banner-div">
-                        <h1 style={{textAlign:'center'}}>Add Banner</h1>
+                        <h1 style={{ textAlign: 'center' }}>Add Banner</h1>
                         <div className="bannerTop">
                             {
                                 singleImage === '' ? null :
