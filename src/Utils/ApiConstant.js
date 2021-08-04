@@ -59,7 +59,7 @@ const API = {
   GET_LOCALITY: Config.BASE_URL + "api/address/locality/all?is_active=1",
   POST_LOCALITY: Config.BASE_URL + "api/address/locality/create",
   PATCH_LOCALITY: Config.BASE_URL + "api/address/locality/update",
-
+  DELETE_LOCALITY: Config.BASE_URL + "api/address/locality/delete",
   //payment api/order/sales?
   GET_ORDER_SALES: Config.BASE_URL + "api/order/sales?",
   GET_ALL_SHOP: Config.BASE_URL + "api/shop/all",

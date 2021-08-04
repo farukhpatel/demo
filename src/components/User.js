@@ -10,22 +10,15 @@ function User() {
   // API
   const [user, setUser] = useState([]);
   useEffect(() => {
-
     instance.get(API.USER)
       .then(function (response) {
-        console.log(response);
         setUser(response.users)
       })
   }, [])
   const routerHistroy = useHistory();
   const OrderDetails = (value) => {
-    console.log("OrderDetails");
-    console.log(value);
     routerHistroy.push('/orderdetails', value)
   }
-
-
-
 
   return (
     <>

@@ -18,24 +18,17 @@ function DeliveryCharge() {
   // time picker
   const [images, setImages] = useState([]);
   const [imagesURL, setImagesURL] = useState("");
-  const form2Submit = async(e) => {
+  const form2Submit = async (e) => {
     e.preventDefault();
-   
-    console.log(images[0]);
     let formdata = new FormData();
     formdata.append("image", images[0]);
-    await instance.post(API.IMAGE_UPLOAD,formdata).then(
-      (res)=>{
-        console.log("img api res");
-        console.log(res.image_url);
+    await instance.post(API.IMAGE_UPLOAD, formdata).then(
+      (res) => {
         setImagesURL(res.image_url);
       }
     )
-    //finis api url
-    //start with upload url
-    console.log(imagesURL);
-    let imgObj={
-      "banner":imagesURL
+    let imgObj = {
+      "banner": imagesURL
     }
     instance.post(API.SETTING_BANNER_IMG, imgObj).then(function (response) {
       toast.success("Image Upload Successfully");
@@ -44,6 +37,7 @@ function DeliveryCharge() {
   }
 
   const selectFile = (e) => {
+    setImages(e.target.files);
     // let temp = [...images];
     // console.log(temp.length);
     // if (e.target.files.length > 0) {
@@ -55,8 +49,7 @@ function DeliveryCharge() {
     //     });
     //   }
     // }
-    console.log(e.target.files)
-    setImages(e.target.files);
+
   };
   return (
     <div>

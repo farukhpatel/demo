@@ -41,16 +41,10 @@ import { AddLocation } from "@material-ui/icons";
 import AddLocalities from "./components/Locality/AddLocalities";
 import UpdateLocality from './components/Locality/UpdateLocality';
 import Notification from './components/Notification';
-import firebase from './firebase';
-// import { getMessaging, onMessage } from "firebase/messaging";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
 function App() {
-  useEffect(() => {
-    // const messaging = getMessaging();
-  }, []);
-
   const getWindowsSize = () => {
     const { innerWidth: width, innerHeight: height } = window;
     return {

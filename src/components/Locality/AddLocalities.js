@@ -32,17 +32,14 @@ function AddLocalities() {
         let headers = new Headers()
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`)
         let addLocalitiesBody = {
-            city_id:city_id,
+            city_id: city_id,
             locality: localities,
             code: cityCode.toUpperCase(),
             is_active: isCityActive
         }
-        console.log("Final data")
-        console.log(addLocalitiesBody);
-
         instance.post(API.POST_LOCALITY, addLocalitiesBody).then(function (response) {
-          toast.success(response.message)
-          window.location.href = "/locality";
+            toast.success(response.message)
+            window.location.href = "/locality";
         })
     }
 
@@ -59,10 +56,10 @@ function AddLocalities() {
                             <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="cityName">City Name</label>
-                                <select name="city" id="isActiveCity" form="carform" onChange={(e)=>{ setCity_id(e.target.value)}}>
-                                {selectCity.map((items, index) => {
-                                    return <option key={index} value={items.id}> {items.city} </option>
-                                })}
+                                <select name="city" id="isActiveCity" form="carform" onChange={(e) => { setCity_id(e.target.value) }}>
+                                    {selectCity.map((items, index) => {
+                                        return <option key={index} value={items.id}> {items.city} </option>
+                                    })}
                                 </select>
                             </div>
                             <div class="form-group">

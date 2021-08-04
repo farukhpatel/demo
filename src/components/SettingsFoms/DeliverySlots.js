@@ -37,36 +37,34 @@ function DeliverySlots() {
   //   if (time === "start") setStartTime2(e);
   //   else setEndTime2(e);
   // };
-  useEffect(()=>{
-    
+  useEffect(() => {
     instance.get(API.GET_SETTING_DELIVERY_SLOTS)
-    .then(function(response){
-    setStartTime1(moment(response.slots[0].value.start, "HH:mm:ss").format());
-    setEndTime1(moment(response.slots[0].value.end, "HH:mm:ss").format());
-    setMorningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
-    setStartTime2(moment(response.slots[1].value.start, "HH:mm:ss").format());
-    setEndTime2(moment(response.slots[1].value.end, "HH:mm:ss").format());
-    setEveningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
+      .then(function (response) {
+        setStartTime1(moment(response.slots[0].value.start, "HH:mm:ss").format());
+        setEndTime1(moment(response.slots[0].value.end, "HH:mm:ss").format());
+        setMorningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
+        setStartTime2(moment(response.slots[1].value.start, "HH:mm:ss").format());
+        setEndTime2(moment(response.slots[1].value.end, "HH:mm:ss").format());
+        setEveningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
 
-    })
-  },[]);
+      })
+  }, []);
   const form2Submit = (e) => {
     e.preventDefault();
-    let Delivery_slot={
-      morning_start_time:moment(startTime1).format("HH:mm:ss"),
-      morning_end_time:moment(endTime1).format("HH:mm:ss"),
-      morning_cutoff_time:moment(morningCutoff).format("HH:mm:ss"),
-      evening_start_time:moment(startTime2).format("HH:mm:ss"),
-      evening_end_time:moment(endTime2).format("HH:mm:ss"),
-      evening_cutoff_time:moment(eveningCutoff).format("HH:mm:ss"),
+    let Delivery_slot = {
+      morning_start_time: moment(startTime1).format("HH:mm:ss"),
+      morning_end_time: moment(endTime1).format("HH:mm:ss"),
+      morning_cutoff_time: moment(morningCutoff).format("HH:mm:ss"),
+      evening_start_time: moment(startTime2).format("HH:mm:ss"),
+      evening_end_time: moment(endTime2).format("HH:mm:ss"),
+      evening_cutoff_time: moment(eveningCutoff).format("HH:mm:ss"),
     }
-    console.log(Delivery_slot);
     //SETTING_DELIVERY_SLOTS POST
     instance.post(API.SETTING_DELIVERY_SLOTS, Delivery_slot).then(function (response) {
       toast.success("Delivery Slots Successfully Added.");
       window.location.href = "/settings";
     });
-    
+
   };
 
   return (

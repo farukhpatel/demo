@@ -22,9 +22,8 @@ import instance from "../Utils/axiosConstants";
 import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
-    const prop =props.location.state
+  const prop = props.location.state
   // form fields var
-  console.log(prop.shop_schedules)
   const [timePicker, setTimePicker] = useState(new Date);
   const [file, setFile] = useState(null);
   const [phone, setPhone] = useState(prop.shop_phone);
@@ -34,69 +33,68 @@ function UpdateVendorForm(props) {
   const [foundationDate, setFoundationDate] = useState(prop.shop_founding_date);
   const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
   const [shopName, setShopName] = useState(prop.shop_name);
-  const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules.filter((value)=>value.key!=="Holiday"));
+  const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules.filter((value) => value.key !== "Holiday"));
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
-  const handleTimeChange1 = (t, time,index) => {
-    if (time === "start") setShopSchedule((e)=>{
+  const handleTimeChange1 = (t, time, index) => {
+    if (time === "start") setShopSchedule((e) => {
       setTimePicker(t);
-      e[index].start=moment(t).format("HH:mm:ss");
+      e[index].start = moment(t).format("HH:mm:ss");
       return e
     })
-    else setShopSchedule((e)=>{e[index].end=e[index].start=moment(t).format("HH:mm:ss");  console.log(e); return e})
+    else setShopSchedule((e) => { e[index].end = e[index].start = moment(t).format("HH:mm:ss"); console.log(e); return e })
   };
   // form1
-  const form1Submit = async(e) => {
+  const form1Submit = async (e) => {
     e.preventDefault();
-   
+
     let headers = new Headers();
-  headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-  let shopUpdateBody;
-  if (file) {
-    let formdata = new FormData();
-    formdata.append("image", file[0]);
-    await instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
-    // setProfileImage(response.image_url)
-    shopUpdateBody = {
-      shop_name: shopName,
-      shop_phone: phone,
-      shop_description: description,
-      shop_profile: response.image_url,
-      shop_license_number: licenseNumber,
-      shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-      shop_delivery_range: deliveryRange,
-      shop_schedules:shopSchedule
-    }
-    });
-  } 
-    let shopUpdateBody2 = {
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+    let shopUpdateBody;
+    if (file) {
+      let formdata = new FormData();
+      formdata.append("image", file[0]);
+      await instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
+        // setProfileImage(response.image_url)
+        shopUpdateBody = {
           shop_name: shopName,
           shop_phone: phone,
           shop_description: description,
-          shop_profile: profileImage,
+          shop_profile: response.image_url,
           shop_license_number: licenseNumber,
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
-          shop_schedules:shopSchedule
-        };
-       console.log(shopUpdateBody)
-        instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody ? shopUpdateBody : shopUpdateBody2)
-              .then(function (shopCreateResponse) {
-                toast.success("Vendor Details Updated Now.");
-                window.location.href="/vendor"
-              });
+          shop_schedules: shopSchedule
+        }
+      });
+    }
+    let shopUpdateBody2 = {
+      shop_name: shopName,
+      shop_phone: phone,
+      shop_description: description,
+      shop_profile: profileImage,
+      shop_license_number: licenseNumber,
+      shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+      shop_delivery_range: deliveryRange,
+      shop_schedules: shopSchedule
+    };
+    instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody ? shopUpdateBody : shopUpdateBody2)
+      .then(function (shopCreateResponse) {
+        toast.success(shopCreateResponse.message);
+        window.location.href = "/vendor"
+      });
 
   };
   return (
     <>
       <div className="main-outer-div">
         <div className="myorders-outer-div">
-            <>
-              <div className="vendor-form-1 ">
-                <h1>Edit Vendor</h1>
-                <div className="vendor-update">
+          <>
+            <div className="vendor-form-1 ">
+              <h1>Edit Vendor</h1>
+              <div className="vendor-update">
                 <form className="vendor-form update-form">
                   <span className="customSpan"></span>
 
@@ -123,8 +121,8 @@ function UpdateVendorForm(props) {
                         onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
-                    </div>
-                    <div className="update-form-vendor">
+                  </div>
+                  <div className="update-form-vendor">
                     <div class="form-group ">
                       <label for="shoplicensenumber">Shop License Number</label>
                       <input
@@ -155,8 +153,8 @@ function UpdateVendorForm(props) {
                         </Grid>
                       </MuiPickersUtilsProvider>
                     </div>
-                    </div>
-                    <div className="update-form-vendor">
+                  </div>
+                  <div className="update-form-vendor">
                     <div class="form-group">
                       <label for="deliveryrange">Delivery Range</label>
                       <input
@@ -167,109 +165,109 @@ function UpdateVendorForm(props) {
                         onChange={(e) => setDeliveryRange(e.target.value)}
                       />
                     </div>
-                      <label for="profile">Profile:</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="profile"
-                        name="profile"
-                        onChange={(e) => setFile(e.target.files)}
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="shopdescription">Shop Description</label>
-                      <textarea
-                        class="form-control"
-                        id="shopdescription"
-                        rows="3"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      ></textarea>
-                    </div>
-                    <div>
+                    <label for="profile">Profile:</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="profile"
+                      name="profile"
+                      onChange={(e) => setFile(e.target.files)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="shopdescription">Shop Description</label>
+                    <textarea
+                      class="form-control"
+                      id="shopdescription"
+                      rows="3"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div>
                     <table class="table table-striped ">
-                  <thead>
-                    <tr>
-                      <th scope="col">Day</th>
-                      <th scope="col">Morning Schedule Start</th>
-                      <th scope="col">Morning Schedule End</th>
-                      <th scope="col">Evening Schedule Start</th>
-                      <th scope="col">Evening Schedule End</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                   {shopSchedule.map((value, index) => {
-                     console.log(value);
-                      return (
+                      <thead>
                         <tr>
-                          <td>{value?.key}</td>
-                          <td className="datePicker-vendor">
-                        <MuiPickersUtilsProvider utils={MomentUtils} >
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              ampm={true}
-                              value={moment(value.start, "HH:mm:ss").format()}
-                              onChange={(t) =>{console.log(t); handleTimeChange1(t,"start",index)}}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                          </td>
-                          <td><MuiPickersUtilsProvider utils={MomentUtils} >
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              ampm={true}
-                              value={moment(value.end, "HH:mm:ss").format()}
-                              onChange={(t) =>handleTimeChange1(t,"end",index)}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider></td>
-                          <td className="datePicker-vendor">
-                        <MuiPickersUtilsProvider utils={MomentUtils} >
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              ampm={true}
-                              value={moment(value.start, "HH:mm:ss").format()}
-                              onChange={(t) =>handleTimeChange1(t,"start",index)}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                          </td>
-                          <td><MuiPickersUtilsProvider utils={MomentUtils} >
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              ampm={true}
-                              value={moment(value.end, "HH:mm:ss").format()}
-                              onChange={(t) =>{console.log(t); handleTimeChange1(t,"end",index)}}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider></td>
-                        
+                          <th scope="col">Day</th>
+                          <th scope="col">Morning Schedule Start</th>
+                          <th scope="col">Morning Schedule End</th>
+                          <th scope="col">Evening Schedule Start</th>
+                          <th scope="col">Evening Schedule End</th>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                    </div>
+                      </thead>
+                      <tbody>
+                        {shopSchedule.map((value, index) => {
+                          console.log(value);
+                          return (
+                            <tr>
+                              <td>{value?.key}</td>
+                              <td className="datePicker-vendor">
+                                <MuiPickersUtilsProvider utils={MomentUtils} >
+                                  <Grid container justify="space-around">
+                                    <KeyboardTimePicker
+                                      margin="normal"
+                                      id="time-picker"
+                                      ampm={true}
+                                      value={moment(value.start, "HH:mm:ss").format()}
+                                      onChange={(t) => { console.log(t); handleTimeChange1(t, "start", index) }}
+                                      KeyboardButtonProps={{
+                                        "aria-label": "change time",
+                                      }}
+                                    />
+                                  </Grid>
+                                </MuiPickersUtilsProvider>
+                              </td>
+                              <td><MuiPickersUtilsProvider utils={MomentUtils} >
+                                <Grid container justify="space-around">
+                                  <KeyboardTimePicker
+                                    margin="normal"
+                                    id="time-picker"
+                                    ampm={true}
+                                    value={moment(value.end, "HH:mm:ss").format()}
+                                    onChange={(t) => handleTimeChange1(t, "end", index)}
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
+                                </Grid>
+                              </MuiPickersUtilsProvider></td>
+                              <td className="datePicker-vendor">
+                                <MuiPickersUtilsProvider utils={MomentUtils} >
+                                  <Grid container justify="space-around">
+                                    <KeyboardTimePicker
+                                      margin="normal"
+                                      id="time-picker"
+                                      ampm={true}
+                                      value={moment(value.start, "HH:mm:ss").format()}
+                                      onChange={(t) => handleTimeChange1(t, "start", index)}
+                                      KeyboardButtonProps={{
+                                        "aria-label": "change time",
+                                      }}
+                                    />
+                                  </Grid>
+                                </MuiPickersUtilsProvider>
+                              </td>
+                              <td><MuiPickersUtilsProvider utils={MomentUtils} >
+                                <Grid container justify="space-around">
+                                  <KeyboardTimePicker
+                                    margin="normal"
+                                    id="time-picker"
+                                    ampm={true}
+                                    value={moment(value.end, "HH:mm:ss").format()}
+                                    onChange={(t) => { console.log(t); handleTimeChange1(t, "end", index) }}
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
+                                </Grid>
+                              </MuiPickersUtilsProvider></td>
+
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                   <button
                     type="submit"
                     class="btn btn-primary submitBtn"
@@ -278,9 +276,9 @@ function UpdateVendorForm(props) {
                     Submit
                   </button>
                 </form>
-                </div>
               </div>
-            </>
+            </div>
+          </>
         </div>
       </div>
     </>

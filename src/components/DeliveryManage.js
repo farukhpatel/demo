@@ -11,18 +11,13 @@ import DisableModal from "../Modal/DisableModal";
 import API from "../Utils/ApiConstant";
 import instance from '../Utils/axiosConstants'
 
-// const PopupExample = () => (
-//     <Popup trigger={<button> Trigger</button>} position="right center">
-//         <div>Popup content here !!</div>
-//     </Popup>
-// );
+
 const DeliveryManage = () => {
     const arr = [1, 2, 3, 4, 5, 6, 7];
     const [deliveryBoy, setDeliveryBoy] = useState([]);
     useEffect(() => {
         instance.get(API.DELIVERY_BOYS)
             .then(function (response) {
-                console.log(response.users);
                 setDeliveryBoy(response.users);
             })
     }, []);
@@ -31,11 +26,9 @@ const DeliveryManage = () => {
         routerHistroy.push(`updateDeliveryBoy/${props.id}`, props)
     }
     const Disable = (value) => {
-        console.log("disable work");
         let body = {
             is_active: value?.delivery_boy?.is_active === 1 ? 0 : 1
         }
-        console.log(body)
         instance.patch(`${API.DELIVERY_BOYS_ENABLE}/${value.id}`, body).then((res) => {
             toast.success(res.message);
             window.location.href = "/deliverymanage"
@@ -43,7 +36,6 @@ const DeliveryManage = () => {
 
     }
     const handleDelete = (id) => {
-        console.log(id)
         instance.delete(`${API.DELIVERY_BOYS_DELETE}/${id}`)
             .then(function (response) {
                 toast.success(response.message);

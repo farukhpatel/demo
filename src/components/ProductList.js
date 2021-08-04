@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants"
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Popup from "reactjs-popup";
 import { toast } from "react-toastify";
 
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
-  
+
   useEffect(() => {
     instance.get(API.PRODUCT_LIST)
-    .then(function(response){
-      setProductList(response.products);
-    })
+      .then(function (response) {
+        setProductList(response.products);
+      })
   }, []);
-  console.log(productList[0]);
-  const routerHistroy =useHistory();
-  const update=(props)=>{
-    routerHistroy.push(`updateProduct/${props.id}`,props)
+
+  const routerHistroy = useHistory();
+  const update = (props) => {
+    routerHistroy.push(`updateProduct/${props.id}`, props)
   }
-  const handleDelete=(id)=>{
+  const handleDelete = (id) => {
     instance.delete(`${API.DELETE_PRODUCT}/${id}`)
-    .then(function(response){
-       toast.success(response.message);
-       window.location.href="/productlist"
-    })
+      .then(function (response) {
+        toast.success(response.message);
+        window.location.href = "/productlist"
+      })
   }
   return (
     <>
@@ -67,7 +67,7 @@ const ProductList = () => {
                   {/* <button>New sales Order</button> */}
                 </div>
                 <table class="table table-striped">
-                  <thead style={{textAlign:'center'}}>
+                  <thead style={{ textAlign: 'center' }}>
                     <tr>
                       <th scope="col">S.No</th>
                       <th scope="col">Product Name</th>
@@ -76,7 +76,7 @@ const ProductList = () => {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody style={{textAlign:'center'}}>
+                  <tbody style={{ textAlign: 'center' }}>
                     {/* {
                                             arr.map((value, index) => {
                                                 return (
@@ -89,7 +89,7 @@ const ProductList = () => {
                                                 )
                                             })
                                         } */}
-                    { productList?.length > 0 ? productList.map((value, index) => {
+                    {productList?.length > 0 ? productList.map((value, index) => {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>
@@ -109,53 +109,53 @@ const ProductList = () => {
                             >
                               <i class="fas fa-edit"></i>
                             </button>
-                            
+
                             <Popup
-                          className="my-popup"
-                          trigger={
-                            <button className="btn btn-link-light">
-                              <i class="fas fa-trash-alt">
-                              </i>
-                            </button>
-                          }
-                          position="right center"
-                          modal
-                        >
-                           {(close) => (
-                            <div className="ReviewSure-text">
-                              <h6
-                                style={{
-                                  marginBottom: "1rem",
-                                  marginTop: "2rem",
-                                }}
-                              >
-                                Are you Sure you want to Delete this?
+                              className="my-popup"
+                              trigger={
+                                <button className="btn btn-link-light">
+                                  <i class="fas fa-trash-alt">
+                                  </i>
+                                </button>
+                              }
+                              position="right center"
+                              modal
+                            >
+                              {(close) => (
+                                <div className="ReviewSure-text">
+                                  <h6
+                                    style={{
+                                      marginBottom: "1rem",
+                                      marginTop: "2rem",
+                                    }}
+                                  >
+                                    Are you Sure you want to Delete this?
                               </h6>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                  handleDelete(value.id);
-                                  close();
-                                }}
-                              >
-                                Yes
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                      handleDelete(value.id);
+                                      close();
+                                    }}
+                                  >
+                                    Yes
                               </button>
-                              <button
-                                className="btn btn-primary"
-                                  onClick={() => {
-                                    close();
-                                  }}
-                              >
-                                No
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                      close();
+                                    }}
+                                  >
+                                    No
                               </button>
-                            </div>
-                          )}
-                        </Popup>
-                            
+                                </div>
+                              )}
+                            </Popup>
+
                           </td>
                         </tr>
                       );
-                    }) :  <> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>}
+                    }) : <> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>}
                   </tbody>
                 </table>
               </div>

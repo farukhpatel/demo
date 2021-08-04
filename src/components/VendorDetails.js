@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function VendorDetails(props) {
-  console.log(props);
+
   const vendorDetails = props?.location?.state?.vendor || {};
   const [products, setProducts] = useState({});
 
@@ -256,22 +256,22 @@ function VendorDetails(props) {
                                 {value?.product?.is_percentage_commission ===
                                   1 && "%"}
                               </td>
-                              
+
                               <Popup
                                 trigger={
                                   <tr>
-                                  <td style={{ cursor: "pointer" }}>
-                                    <button>Edit Product</button>
-                                  </td>
-                                  <td style={{ cursor: "pointer" }}>
-                                    <button>Delete Product</button>
-                                  </td>
+                                    <td style={{ cursor: "pointer" }}>
+                                      <button>Edit Product</button>
+                                    </td>
+                                    <td style={{ cursor: "pointer" }}>
+                                      <button>Delete Product</button>
+                                    </td>
                                   </tr>
                                 }
                                 position="right center"
                                 modal
                               >
-                                
+
                                 <EditProductModal
                                   shopId={vendorDetails?.id}
                                   productDetails={value}

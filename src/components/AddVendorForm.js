@@ -93,7 +93,6 @@ function AddVendorForm() {
     Geocode.fromAddress(address).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng, "no");
         if (lat === "" || lng === "")
           toast.error("Something is wrong with the address provided");
         else setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
@@ -241,18 +240,20 @@ function AddVendorForm() {
       instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
         let temp = selected;
         let shop_schedule1 = temp.map((item) => {
-          return {  key: item.label,
-          start: moment(startTime1._d).format("HH:mm:ss"),
-          end: moment(endTime1._d).format("HH:mm:ss")
-        }
+          return {
+            key: item.label,
+            start: moment(startTime1._d).format("HH:mm:ss"),
+            end: moment(endTime1._d).format("HH:mm:ss")
+          }
         });
 
         let shop_schedule2 = []
         let d1 = moment(startTime2._d).format("HH:mm");
         let d2 = moment(endTime2._d).format("HH:mm");
-        if(d1!==d2){
+        if (d1 !== d2) {
           shop_schedule2 = temp.map((item) => {
-            return {  key: item.label,
+            return {
+              key: item.label,
               start: moment(startTime2._d).format("HH:mm:ss"),
               end: moment(endTime2._d).format("HH:mm:ss")
             }
@@ -268,7 +269,7 @@ function AddVendorForm() {
           //UPDATE FOUNDING DATE VALUE
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
-          shop_schedules: [...shop_schedule1,...shop_schedule2]
+          shop_schedules: [...shop_schedule1, ...shop_schedule2]
         };
 
         let error = false;
@@ -319,9 +320,9 @@ function AddVendorForm() {
         <div className="myorders-outer-div">
           {addressableId === "" ? (
             <>
-              <div className="vendor-form-1" style={{position:'relative'}}>
+              <div className="vendor-form-1" style={{ position: 'relative' }}>
                 <div className="backButton">
-                <Back></Back>
+                  <Back></Back>
                 </div>
                 <h1>Add Vendor</h1>
                 <form className="vendor-form">
@@ -569,146 +570,146 @@ function AddVendorForm() {
               </div>
             </>
           ) : (
-            <div className="vendor-form-1 address-form">
-              <h1>Add Address</h1>
-              <form className="vendor-form">
-                <span className="customSpan"></span>
-                <div class="form-group">
-                  <label for="vendorName">Address Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    value={addressForm.name}
-                    id="vendorName"
-                    placeholder="Type here..."
-                    onChange={(e) => handleAddressForm(e)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="vendorName">Address Line 1</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="address_line_1"
-                    value={addressForm.address_line_1}
-                    id="vendorName"
-                    placeholder="Type here..."
-                    onChange={(e) => handleAddressForm(e)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="phone">Address Line 2</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="address_line_2"
-                    value={addressForm.address_line_2}
-                    id="phone"
-                    placeholder="Type here..."
-                    onChange={(e) => handleAddressForm(e)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="password">Address Line 3</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="address_line_3"
-                    value={addressForm.address_line_3}
-                    placeholder="Type here..."
-                    onChange={(e) => handleAddressForm(e)}
-                  />
-                </div>
+              <div className="vendor-form-1 address-form">
+                <h1>Add Address</h1>
+                <form className="vendor-form">
+                  <span className="customSpan"></span>
+                  <div class="form-group">
+                    <label for="vendorName">Address Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="name"
+                      value={addressForm.name}
+                      id="vendorName"
+                      placeholder="Type here..."
+                      onChange={(e) => handleAddressForm(e)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="vendorName">Address Line 1</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="address_line_1"
+                      value={addressForm.address_line_1}
+                      id="vendorName"
+                      placeholder="Type here..."
+                      onChange={(e) => handleAddressForm(e)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Address Line 2</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="address_line_2"
+                      value={addressForm.address_line_2}
+                      id="phone"
+                      placeholder="Type here..."
+                      onChange={(e) => handleAddressForm(e)}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Address Line 3</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="address_line_3"
+                      value={addressForm.address_line_3}
+                      placeholder="Type here..."
+                      onChange={(e) => handleAddressForm(e)}
+                    />
+                  </div>
 
-                <div class="form-group">
-                  <label for="locality">Locality</label>
+                  <div class="form-group">
+                    <label for="locality">Locality</label>
 
-                  {localities && localities.length > 0 ? (
-                    <select
-                      onChange={(event) => {
-                        handleLocalitySelect(event);
-                      }}
-                    >
-                      <option value="">Select Locality</option>
-                      {addressForm &&
-                        addressForm?.city !== "" &&
-                        localities.map((locality) => {
-                          return (
-                            <option
-                              value={locality?.id}
-                              label={locality?.locality}
-                            />
-                          );
+                    {localities && localities.length > 0 ? (
+                      <select
+                        onChange={(event) => {
+                          handleLocalitySelect(event);
+                        }}
+                      >
+                        <option value="">Select Locality</option>
+                        {addressForm &&
+                          addressForm?.city !== "" &&
+                          localities.map((locality) => {
+                            return (
+                              <option
+                                value={locality?.id}
+                                label={locality?.locality}
+                              />
+                            );
+                          })}
+                      </select>
+                    ) : (
+                        "No Localities Found."
+                      )}
+                  </div>
+
+                  <div class="form-group">
+                    <label for="locality">City</label>
+                    {cities && cities.length > 0 ? (
+                      <select onChange={(event) => handleCitySelect(event)}>
+                        <option value="">Select a City</option>
+                        {cities.map((city) => {
+                          return <option value={city?.id} label={city?.city} />;
                         })}
-                    </select>
-                  ) : (
-                    "No Localities Found."
-                  )}
-                </div>
+                      </select>
+                    ) : (
+                        "No Cities Found."
+                      )}
+                  </div>
 
-                <div class="form-group">
-                  <label for="locality">City</label>
-                  {cities && cities.length > 0 ? (
-                    <select onChange={(event) => handleCitySelect(event)}>
-                      <option value="">Select a City</option>
-                      {cities.map((city) => {
-                        return <option value={city?.id} label={city?.city} />;
-                      })}
-                    </select>
-                  ) : (
-                    "No Cities Found."
-                  )}
-                </div>
+                  <div class="form-group">
+                    <label for="password">Pincode</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      maxLength="6"
+                      minLength="6"
+                      id="pincode"
+                      name="pincode"
+                      value={addressForm.pincode}
+                      placeholder="Enter pincode"
+                      onChange={(e) => handleAddressForm(e)}
+                    />
+                  </div>
 
-                <div class="form-group">
-                  <label for="password">Pincode</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    maxLength="6"
-                    minLength="6"
-                    id="pincode"
-                    name="pincode"
-                    value={addressForm.pincode}
-                    placeholder="Enter pincode"
-                    onChange={(e) => handleAddressForm(e)}
-                  />
-                </div>
+                  <div class="form-group">
+                    <label for="password">State</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="state"
+                      readOnly
+                      value={addressForm.state}
+                    />
+                  </div>
 
-                <div class="form-group">
-                  <label for="password">State</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="state"
-                    readOnly
-                    value={addressForm.state}
-                  />
-                </div>
+                  <div class="form-group">
+                    <label for="password">Country</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value={addressForm.country}
+                      name="country"
+                      readOnly
+                    />
+                  </div>
 
-                <div class="form-group">
-                  <label for="password">Country</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    value={addressForm.country}
-                    name="country"
-                    readOnly
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  class="btn btn-primary submitBtn"
-                  onClick={(event) => handleAddressFormSubmit(event)}
-                >
-                  Submit
+                  <button
+                    type="submit"
+                    class="btn btn-primary submitBtn"
+                    onClick={(event) => handleAddressFormSubmit(event)}
+                  >
+                    Submit
                 </button>
-              </form>
-            </div>
-          )}
+                </form>
+              </div>
+            )}
         </div>
       </div>
     </>
