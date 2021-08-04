@@ -5,7 +5,7 @@ import dairy from "../assets/dairy.jpg";
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'           //clock
-import MomentUtils from '@date-io/moment'  
+import MomentUtils from '@date-io/moment'
 
 //for Api
 import API from "../Utils/ApiConstant";
@@ -15,7 +15,7 @@ import moment from "moment";
 function Home() {
   const date = new Date();
   const [from, setFrom] = useState(new Date);
-  const [to, setTo] = useState(moment(date).add(+1,'days').format());
+  const [to, setTo] = useState(moment(date).add(+1, 'days').format());
   const [dashboardData, setDashboardData] = useState({
     active_users: "",
     total_delivery_boys: "",
@@ -37,6 +37,8 @@ function Home() {
         total_delivery_boys: response.total_delivery_boys,
         total_orders: response.total_orders,
         total_orders_delivered: response.total_orders_delivered,
+        total_vendors: response.total_vendors,
+        total_subscription_orders: response.total_subscription_orders,
         Accepted: response?.order_status_count?.Accepted,
         Assigned: response?.order_status_count?.Assigned,
         Delivered: response?.order_status_count?.Delivered,
@@ -44,8 +46,8 @@ function Home() {
       };
       setDashboardData(data);
     });
-  }, [from,to]);
-  
+  }, [from, to]);
+
   return (
     <>
       <div className="mainDashboardHeading">
@@ -54,59 +56,59 @@ function Home() {
         </div>
       </div>
       <div className="main-outer-div">
-           {/* This is for from-to time */}
-           <div className="dashboard_time">
+        {/* This is for from-to time */}
+        <div className="dashboard_time">
 
-           <div className="payment-settlement-inputs">
-                    <form className="payment-form">
-                        <div class="form-group">
-                            <label for="from">From</label>
-                            <MuiPickersUtilsProvider
-                                utils={MomentUtils}
-                            >
-                                <Grid container justify='space-around'>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        format="DD/MM/yyyy"
-                                        onChange={(e) => { setFrom(e._d) }}
-                                        value={from}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </Grid>
-                            </MuiPickersUtilsProvider>
-                        </div>
-                        <div class="form-group">
-                            <label for="to">To</label>
-                            <MuiPickersUtilsProvider
-                                utils={MomentUtils}
-                            >
-                                <Grid container justify='space-around'>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        format="DD/MM/yyyy"
-                                        onChange={(e) => {  setTo(e._d) }}
-                                        value={to}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </Grid>
-                            </MuiPickersUtilsProvider>
-                        </div>
-                       
-                        {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
+          <div className="payment-settlement-inputs">
+            <form className="payment-form">
+              <div class="form-group">
+                <label for="from">From</label>
+                <MuiPickersUtilsProvider
+                  utils={MomentUtils}
+                >
+                  <Grid container justify='space-around'>
+                    <KeyboardDatePicker
+                      margin="normal"
+                      id="date-picker-dialog"
+                      format="DD/MM/yyyy"
+                      onChange={(e) => { setFrom(e._d) }}
+                      value={from}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </div>
+              <div class="form-group">
+                <label for="to">To</label>
+                <MuiPickersUtilsProvider
+                  utils={MomentUtils}
+                >
+                  <Grid container justify='space-around'>
+                    <KeyboardDatePicker
+                      margin="normal"
+                      id="date-picker-dialog"
+                      format="DD/MM/yyyy"
+                      onChange={(e) => { setTo(e._d) }}
+                      value={to}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </div>
 
-                        {/* <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button> */}
-                    </form>
-                </div>
-               
-                
-           </div>
-           {/* {End of time } */}
+              {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
+
+              {/* <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button> */}
+            </form>
+          </div>
+
+
+        </div>
+        {/* {End of time } */}
         <div className="home-outer-div" style={{ paddingTop: "3%" }}>
           <div className="home-top">
             <div className="home-top-left">
@@ -170,6 +172,26 @@ function Home() {
               <div className="home-middle-left-bottom">
                 <div className="icon-position">
                   <i
+                    class="fas fa-atom fa-2x "
+                    style={{ color: "#D7DBDD" }}
+                  ></i>
+                </div>
+                <div>
+                  <a href="/totalorderrecieved">
+                    {" "}
+                    <h3>{dashboardData.total_subscription_orders}</h3>
+                  </a>
+                </div>
+                <a href="/totalorderrecieved">
+                  <div className="total_orders_received">
+                    <h5>Total Subscription Received</h5>
+                  </div>
+                </a>
+              </div>
+
+              <div className="home-middle-left-bottom">
+                <div className="icon-position">
+                  <i
                     class="fas fa-chart-pie fa-2x "
                     style={{ color: " #D7DBDD" }}
                   ></i>
@@ -178,7 +200,7 @@ function Home() {
                   <h3>{dashboardData.total_orders_delivered}</h3>
                 </div>
                 <div className="total_orders_received">
-                  <h5>Total Orders Deliverd</h5>
+                  <h5>Total Orders Delivered</h5>
                 </div>
               </div>
             </div>
@@ -202,6 +224,27 @@ function Home() {
                   </div>
                 </a>
               </div>
+
+              <div className="home-middle-left-bottom">
+                <div className="icon-position">
+                  <i
+                    class="fas fa-store fa-2x"
+                    style={{ color: "#D7DBDD" }}
+                  ></i>
+                </div>
+                <div>
+                  <a href="/totalorderrecieved">
+                    {" "}
+                    <h3>{dashboardData.total_vendors}</h3>
+                  </a>
+                </div>
+                <a href="/totalorderrecieved">
+                  <div className="total_orders_received">
+                    <h5>Total Vendors</h5>
+                  </div>
+                </a>
+              </div>
+
               <div className="home-middle-right-bottom">
                 <div className="icon-position">
                   <i

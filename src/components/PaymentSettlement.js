@@ -86,12 +86,15 @@ function PaymentSettlement() {
             setVendor(res.shop);
         })
     }, []);
-    const CheckboxHandle = async (index) => {
+    const CheckboxHandle = async (order, index) => {
         // console.log(index);
+        console.log(checked[index])
         let tempArray = checked;
         // console.log(tempArray)
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
         await setChecked(tempArray);
+        // console.log(order.order_id);
+        // unaccepted_settle.push(...unaccepted_settle, order.order_id);
     }
     return (
         <>
@@ -212,7 +215,7 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" onChange={(e) => { CheckboxHandle(index); console.log(e); console.log(checked); }} style={{ marginRight: "7%" }} defaultChecked={checked[index]} />{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onClick={(e) => { console.log(checked); CheckboxHandle(order, index); }} defaultChecked={checked[index]} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.order_discount}</td>
