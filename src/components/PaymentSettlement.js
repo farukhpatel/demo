@@ -87,12 +87,19 @@ function PaymentSettlement() {
         })
     }, []);
     const CheckboxHandle = async (order, index) => {
+        if (checked[index]) {
+            unaccepted_settle.push(order.order_id);
+        } else {
+            unaccepted_settle.pop(unaccepted_settle[index]);
+        }
         // console.log(index);
         console.log(checked[index])
         let tempArray = checked;
         // console.log(tempArray)
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
+
         await setChecked(tempArray);
+        console.log(unaccepted_settle)
         // console.log(order.order_id);
         // unaccepted_settle.push(...unaccepted_settle, order.order_id);
     }
