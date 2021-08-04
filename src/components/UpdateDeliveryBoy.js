@@ -35,8 +35,6 @@ function UpdateDeliveryBoy(props) {
         })
 
     }
-
-
     return (
         <>
             <div className="main-outer-div">
@@ -57,13 +55,10 @@ function UpdateDeliveryBoy(props) {
                                 <label for="deliveryboyPhone">Phone No</label>
                                 <input type="text" required class="form-control" id="deliveryboyPhone" placeholder="Phone" onChange={(e) => setPhone(e.target.value)} value={phone} />
                             </div>
-
-
                             <div class="form-group">
                                 <label for="deliveryboyPhone">Email</label>
                                 <input type="text" class="form-control" id="deliveryboyEmail" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
                             </div>
-
                             <div class="form-group">
                                 <label for="deliveryboyAadhaar">Aadhaar No</label>
                                 <input type="text" required class="form-control" id="deliveryboyAadhaar" placeholder="Aadhaar" onChange={(e) => setAadhaar(e.target.value)} value={aadhaar} />
@@ -72,8 +67,6 @@ function UpdateDeliveryBoy(props) {
                                 <label for="deliveryboyPhone">New Password</label>
                                 <input type="password" class="form-control" id="deliveryboyPassword" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                             </div>
-
-
                             <button type="submit" class="btn btn-primary submitBtn" onClick={(e) => formSubmit(e)}>Submit</button>
                         </form>
                     </div>

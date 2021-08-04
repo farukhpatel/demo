@@ -90,7 +90,7 @@ function PaymentSettlement() {
         // console.log(index);
         let tempArray = checked;
         // console.log(tempArray)
-        tempArray[index] === false ? tempArray[index] = true : tempArray[index] = false;
+        tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
         await setChecked(tempArray);
     }
     return (
@@ -212,7 +212,7 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" onChange={(e) => { CheckboxHandle(index); console.log(e); console.log(checked); }} style={{ marginRight: "7%" }} checked={checked[index]} />{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onChange={(e) => { CheckboxHandle(index); console.log(e); console.log(checked); }} style={{ marginRight: "7%" }} defaultChecked={checked[index]} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.order_discount}</td>

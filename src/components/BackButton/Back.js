@@ -3,13 +3,12 @@ import { useHistory } from "react-router-dom";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import './Back.css'
 
-function Back(){
-    
+function Back() {
     let history = useHistory();
-    return(
+    return (
         <div>
             <button className="buttonBack" onClick={() => history.goBack()}>
-            <ArrowBackIosOutlinedIcon></ArrowBackIosOutlinedIcon>
+                <ArrowBackIosOutlinedIcon></ArrowBackIosOutlinedIcon>
             </button>
         </div>
     );
