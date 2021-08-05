@@ -8,9 +8,8 @@ import Back from '../BackButton/Back'
 // import instance from '../../Utils/ApiConstant'
 
 function UpadteLocality(props) {
-    const prop=props.location.state;
-    console.log(prop);
-    let {id} = useParams();
+    const prop = props.location.state;
+    let { id } = useParams();
     // const [selectCityValue, setSelectCityValue] = useState(prop.id);
     const [selectCity, setSelectCity] = useState([]);
     const [localities, setLocalities] = useState(prop.locality)
@@ -37,17 +36,14 @@ function UpadteLocality(props) {
         let headers = new Headers()
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`)
         let addLocalitiesBody = {
-            city_id:city_id,
+            city_id: city_id,
             locality: localities,
             code: cityCode.toUpperCase(),
             is_active: isCityActive
         }
-        console.log("Final data")
-        console.log(addLocalitiesBody);
-
         instance.patch(`${API.PATCH_LOCALITY}/${id}`, addLocalitiesBody).then(function (response) {
-          toast.success(response.message)
-          window.location.href = "/locality";
+            toast.success(response.message)
+            window.location.href = "/locality";
         })
     }
 
@@ -64,10 +60,10 @@ function UpadteLocality(props) {
                             <span className="customSpan"></span>
                             <div class="form-group">
                                 <label for="cityName">City Name</label>
-                                <select name="city" id="cityName" form="carform" onChange={(e)=>{ setCity_id(e.target.value)}}>
-                                {selectCity.map((items, index) => {
-                                    return <option key={index} value={items.id} selected={items.id === city_id ? 'selected': ''}> {items.city} </option>
-                                })}
+                                <select name="city" id="cityName" form="carform" onChange={(e) => { setCity_id(e.target.value) }}>
+                                    {selectCity.map((items, index) => {
+                                        return <option key={index} value={items.id} selected={items.id === city_id ? 'selected' : ''}> {items.city} </option>
+                                    })}
                                 </select>
                             </div>
                             <div class="form-group">
@@ -96,8 +92,8 @@ function UpadteLocality(props) {
                             <div className="form-group">
                                 <label for="isActiveCity">Is Active Localy</label>
                                 <select id="isActiveCity" onChange={(e) => handleIsCityActiveSelect(e)}>
-                                    <option value="1" selected={isCityActive===1 ? 'selected' :''}>Yes</option>
-                                    <option value="0" selected={isCityActive===0 ? 'selected' :''}>No</option>
+                                    <option value="1" selected={isCityActive === 1 ? 'selected' : ''}>Yes</option>
+                                    <option value="0" selected={isCityActive === 0 ? 'selected' : ''}>No</option>
                                 </select>
                             </div>
                             <button

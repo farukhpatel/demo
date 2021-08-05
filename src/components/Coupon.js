@@ -114,6 +114,7 @@ function Coupon() {
   useEffect(() => {
     getCoupons();
     instance.get(API.GET_ALL_SHOP).then((res) => {
+      console.log(res)
       setVendor(res.shop);
     });
 

@@ -9,8 +9,7 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([])
   useEffect(() => {
     instance.get(API.GET_ALL_NOTIFICATIONS).then((res) => {
-      toast.success(res.message)
-      console.log(res)
+      toast.success(res.message);
       setNotifications(res.notifications)
     })
   }, [])
@@ -32,8 +31,8 @@ const Notification = () => {
                         style={{ fontSize: '0.8rem' }}
                       ></i>
                     ) : (
-                      ''
-                    )}
+                        ''
+                      )}
                     Notification
                   </h5>
                   <h6>{notification.data}</h6>
@@ -46,8 +45,8 @@ const Notification = () => {
             )
           })
         ) : (
-          <h1 style={{ textAlign: 'center' }}>Notification not found</h1>
-        )}
+            <h1 style={{ textAlign: 'center' }}>Notification not found</h1>
+          )}
       </div>
     </>
   )

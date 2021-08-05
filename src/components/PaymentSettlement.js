@@ -42,6 +42,7 @@ function PaymentSettlement() {
     const [to, setTo] = useState(new Date());
     const [modalOpen, setModalOpen] = useState(false);
     const [checked, setChecked] = useState([]);
+    const [paymentSettlementFilter, setPaymentSettlementFilter] = useState([]);
     // let checked;
     let unaccepted_settle = [];
     const Submits = (e) => {
@@ -84,7 +85,6 @@ function PaymentSettlement() {
                 setChecked(a);
             }
         })
-
         //for vendor
         instance.get(API.GET_ALL_SHOP).then((res) => {
             setVendor(res.shop);
@@ -182,8 +182,8 @@ function PaymentSettlement() {
                     <div className="main-root-second">
 
                         {unpaid?.length > 0 ?
-                            <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => setModalOpen(true)}>All Settle</button></td>} position="right center" modal={modalOpen}>
-                                {modalOpen && <SettleModal unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen} />}
+                            <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => { setPaymentSettlementFilter(unaccepted_settle); setModalOpen(true); }}>All Settle</button></td>} position="right center" modal={modalOpen}>
+                                {modalOpen && <SettleModal paymentSettlementFilter={paymentSettlementFilter} unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen} />}
                             </Popup>
                             : ''
 
@@ -210,6 +210,7 @@ function PaymentSettlement() {
                                             <th scope="col">S.No</th>
                                             <th scope="col">Order Id</th>
                                             <th scope="col">Total Price</th>
+                                            <th scope="col">No. of days</th>
                                             <th scope="col">Discount</th>
                                             <th scope="col">Commision</th>
                                             <th scope="col">Tax</th>
@@ -225,13 +226,14 @@ function PaymentSettlement() {
                                                         <th scope="row"><input type="checkbox" onClick={(e) => { CheckboxHandle(order, index); }} defaultChecked={checked[index]} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
+                                                        <td>{order.number_of_days}</td>
                                                         <td>{order.order_discount}</td>
                                                         <td>{order.order_commission}</td>
                                                         <td>{order.order_tax}</td>
                                                         <td>{order.payable_amount}</td>
                                                     </tr>
                                                 )
-                                            }) : <> <tr> <td colSpan="8"> <h2> No record found </h2> </td> </tr>  </>
+                                            }) : <> <tr> <td colSpan="9"> <h2> No record found </h2> </td> </tr>  </>
                                         }
                                     </tbody>
                                 </table>
