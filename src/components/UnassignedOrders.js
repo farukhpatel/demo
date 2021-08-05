@@ -117,7 +117,7 @@ function UnassignedOrders() {
                     <tr>
                       <th scope="col">S.No</th>
                       <th scope="col">Order Id</th>
-                      <th scope="col">Customer Id</th>
+                      <th scope="col">Customer Name</th>
                       <th scope="col">Seller Name</th>
                       <th scope="col">Order Placed Time</th>
                       <th scope="col">Delivery Slot</th>
@@ -142,17 +142,7 @@ function UnassignedOrders() {
                               {value?.order_id}
                             </Link>
                           </td>
-                          <td>
-                            <Link
-                              to={{
-                                pathname: "/orderdetails",
-                                state: { order: value },
-                              }}
-                              style={{ color: "#0dcaf0" }}
-                            >
-                              {value?.user_id}
-                            </Link>
-                          </td>
+                          <td>{value?.user?.name}</td>
                           <td>{value?.shop?.shop_name}</td>
                           <td>{moment(value).format("D MMMM YYYY, h:mm a")}</td>
                           <td>{`${moment(

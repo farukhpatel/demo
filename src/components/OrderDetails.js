@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react'
 
 function OrderDetails(props) {
-  console.log(props.location.state);
-  const orderDetails = props?.location?.state?.order || {};
-  const orderProducts = props?.location?.state?.order?.order_products || [];
+  const orderDetails = props?.location?.state?.order || {}
+  const orderProducts = props?.location?.state?.order?.order_products || []
   return (
     <>
       <div className="main-outer-div">
@@ -11,21 +10,37 @@ function OrderDetails(props) {
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
               <div className="details-div-left">
-                <i class="fas fa-store fa-3x" style={{ color: "#575353" }}></i>
+                <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
-                  <h2>Shop Name {orderDetails?.shop?.shop_name  ? orderDetails?.shop?.shop_name : "Not found"}</h2>
-                  <p>{`${orderDetails?.shop?.address?.address_line_1||"Not found"} ${orderDetails?.shop?.address?.address_line_2 || ""} ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
-                  <p>{`${orderDetails?.shop?.address?.locality?.locality||"Not found"} ${orderDetails?.shop?.address?.city?.city||""} ${orderDetails?.shop?.address?.state||""}`}</p>
+                  <h2>
+                    Shop Name{' '}
+                    {orderDetails?.shop?.shop_name
+                      ? orderDetails?.shop?.shop_name
+                      : 'Not found'}
+                  </h2>
+                  <p>{`${
+                    orderDetails?.shop?.address?.address_line_1 || 'Not found'
+                  } ${orderDetails?.shop?.address?.address_line_2 || ''} ${
+                    orderDetails?.shop?.address?.address_line_3 || ''
+                  }`}</p>
+                  <p>{`${
+                    orderDetails?.shop?.address?.locality?.locality ||
+                    'Not found'
+                  } ${orderDetails?.shop?.address?.city?.city || ''} ${
+                    orderDetails?.shop?.address?.state || ''
+                  }`}</p>
                   <h5>
                     Delivery Boy:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
-                      {orderDetails?.assigned_to?.name ? orderDetails?.assigned_to?.name:"Not found" }
+                      {orderDetails?.assigned_to?.name
+                        ? orderDetails?.assigned_to?.name
+                        : 'Not found'}
                     </span>
                   </h5>
                   <h5>
@@ -79,6 +94,7 @@ function OrderDetails(props) {
                                         <input placeholder="Search..." className="SearchInput" />
                                     </div>
                                 </div> */}
+
                 <div className="customer-details-content-outer-div">
                   <div className="customer-details-content-outer-div-top">
                     <div className="customer-details-content">
@@ -86,7 +102,11 @@ function OrderDetails(props) {
                         <h4>Name</h4>
                       </div>
                       <div className="content">
-                        <p>{props.location.state.name ? props.location.state.name : "Not found" }</p>
+                        <p>
+                          {props.location.state.order.user.name
+                            ? props.location.state.order.user.name
+                            : 'Not found'}
+                        </p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -94,7 +114,11 @@ function OrderDetails(props) {
                         <h4>Phone No.</h4>
                       </div>
                       <div className="content">
-                        <p>{props.location.state.phone ? props.location.state.phone : "Not found" }</p>
+                        <p>
+                          {props.location.state.order.user.phone
+                            ? props.location.state.order.user.phone
+                            : 'Not found'}
+                        </p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -102,7 +126,11 @@ function OrderDetails(props) {
                         <h4>Email</h4>
                       </div>
                       <div className="content">
-                        <p>{props.location.state.email ? props.location.state.email : "Not found" }</p>
+                        <p>
+                          {props.location.state.order.user.email
+                            ? props.location.state.order.user.email
+                            : 'Not found'}
+                        </p>
                       </div>
                     </div>
                     <div className="customer-details-content">
@@ -110,10 +138,15 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                      <p>{`${orderDetails?.address?.address_line_1||"Not found"} ${orderDetails?.address?.address_line_2 || ""} ${orderDetails?.address?.address_line_3 || ""}`}</p>
+                        <p>{`${
+                          orderDetails?.address?.address_line_1 || 'Not found'
+                        } ${orderDetails?.address?.address_line_2 || ''} ${
+                          orderDetails?.address?.address_line_3 || ''
+                        }`}</p>
                       </div>
                     </div>
                   </div>
+
                   <div className="customer-details-content-outer-div-bottom">
                     <button className="btn btn-primary">Blocked</button>
                     <button className="btn btn-primary">Reject</button>
@@ -127,7 +160,10 @@ function OrderDetails(props) {
                 role="tabpanel"
                 aria-labelledby="orders-details"
               >
-                <table class="table table-striped">
+                <table
+                  class="table table-striped"
+                  style={{ textAlign: 'center' }}
+                >
                   <thead>
                     <tr>
                       <th scope="col">S.No</th>
@@ -137,8 +173,8 @@ function OrderDetails(props) {
                       <th scope="col">Total Price</th>
                     </tr>
                   </thead>
-                  <tbody style={{textAlign:"center"}}>
-                    {orderProducts && orderProducts?.length > 0 ?
+                  <tbody style={{ textAlign: 'center' }}>
+                    {orderProducts && orderProducts?.length > 0 ? (
                       orderProducts.map((value, index) => {
                         return (
                           <tr>
@@ -150,8 +186,20 @@ function OrderDetails(props) {
                             <td>{value?.product_quantity}</td>
                             <td>₹{value?.product_net_amount}</td>
                           </tr>
-                        );
-                      }) :<> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>  }
+                        )
+                      })
+                    ) : (
+                      <>
+                        {' '}
+                        <tr>
+                          {' '}
+                          <td colSpan="5">
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>{' '}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -160,6 +208,6 @@ function OrderDetails(props) {
         </div>
       </div>
     </>
-  );
+  )
 }
-export default OrderDetails;
+export default OrderDetails

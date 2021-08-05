@@ -43,6 +43,7 @@ function PaymentSettlement() {
     const [modalOpen, setModalOpen] = useState(false);
     const [checked, setChecked] = useState([]);
     const [paymentSettlementFilter, setPaymentSettlementFilter] = useState([]);
+    const [toggleIndex, setToggleIndex] = useState(0);
     // let checked;
     let unaccepted_settle = [];
     const Submits = (e) => {
@@ -101,14 +102,13 @@ function PaymentSettlement() {
         let tempArray = checked;
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
         await setChecked(tempArray);
-        console.log(unaccepted_settle)
+        // console.log(unaccepted_settle)
     }
     return (
         <>
             <div className="main-outer-div">
                 <div className="main-root-settlement">
                     <div className="payment-settlement-inputs">
-                        {/* <a href="/adddeliveryboy"><button>Add Delivery Boy</button></a> */}
                         <form className="payment-form">
                             <div class="form-group">
                                 <label for="from">From</label>
@@ -181,7 +181,7 @@ function PaymentSettlement() {
                     </div>
                     <div className="main-root-second">
 
-                        {unpaid?.length > 0 ?
+                        {toggleIndex === 0 && unpaid?.length > 0 ?
                             <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => { setPaymentSettlementFilter(unaccepted_settle); setModalOpen(true); }}>All Settle</button></td>} position="right center" modal={modalOpen}>
                                 {modalOpen && <SettleModal paymentSettlementFilter={paymentSettlementFilter} unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen} />}
                             </Popup>
@@ -195,10 +195,10 @@ function PaymentSettlement() {
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button>
+                                <button onClick={() => setToggleIndex(0)} class="nav-link active" id="remaining-payments" data-bs-toggle="tab" data-bs-target="#remainingpayments" type="button" role="tab" aria-controls="remaining-payments" aria-selected="true">Remaining Payments</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link " id="paid-payments" data-bs-toggle="tab" data-bs-target="#paidpayments" type="button" role="tab" aria-controls="paid-payments" aria-selected="false">Paid Payments</button>
+                                <button onClick={() => setToggleIndex(1)} class="nav-link " id="paid-payments" data-bs-toggle="tab" data-bs-target="#paidpayments" type="button" role="tab" aria-controls="paid-payments" aria-selected="false">Paid Payments</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -223,7 +223,7 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" onClick={(e) => { CheckboxHandle(order, index); }} defaultChecked={checked[index]} />{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onClick={(e) => { CheckboxHandle(order, index); }} defaultChecked={checked[index]} /> {index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.number_of_days}</td>

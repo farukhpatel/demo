@@ -30,7 +30,7 @@ function Home() {
     // {{Base URL}}/api/admin/dashboard?start_date=2019-05-05&end_date=2021-01-01
     let start_date = moment(from).format('YYYY-MM-DD');
     let end_date = moment(to).format('YYYY-MM-DD');
-    console.log(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`)
+    // console.log(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`)
     instance.get(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`).then(function (response) {
       const data = {
         active_users: response.active_users,

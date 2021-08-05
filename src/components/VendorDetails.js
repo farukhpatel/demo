@@ -1,23 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 //for Api
-import API from "../Utils/ApiConstant";
-import Popup from "reactjs-popup";
-import AddProductModal from "../Modal/AddProduct";
-import EditProductModal from "../Modal/EditProduct";
+import API from '../Utils/ApiConstant'
+import Popup from 'reactjs-popup'
+import AddProductModal from '../Modal/AddProduct'
+import EditProductModal from '../Modal/EditProduct'
 
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 
-import instance from "../Utils/axiosConstants";
+import instance from '../Utils/axiosConstants'
+import { toast } from 'react-toastify'
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...other } = props
 
   return (
     <div
@@ -33,49 +34,67 @@ function TabPanel(props) {
         </Box>
       )}
     </div>
-  );
+  )
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
-};
+}
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+    'aria-controls': `simple-tabpanel-${index}`,
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "theme.palette.background.paper",
+    backgroundColor: 'theme.palette.background.paper',
   },
-}));
+}))
 
 function VendorDetails(props) {
-
-  const vendorDetails = props?.location?.state?.vendor || {};
-  const [products, setProducts] = useState({});
-
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const vendorDetails = props?.location?.state?.vendor || {}
+  const [products, setProducts] = useState({})
+  const [totalVendorOrder, setTotalVendorOrder] = useState([])
+  const classes = useStyles()
+  const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
+  const shopActive = (vendorDetails) => {
+    let body = {
+      is_shop_active: !vendorDetails.is_shop_active,
+    }
+    console.log(body)
+    instance
+      .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
+      .then(function (res) {
+        toast.success(res.message)
+        window.location.reload()
+      })
+  }
   useEffect(() => {
     instance
       .get(
-        `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&non_selling_products=true`
+        `${API.GET_SHOP_PRODUCTS}?shop_id=${vendorDetails?.id}&selling_products=true&non_selling_products=true`,
       )
       .then(function (response) {
-        setProducts(response?.products);
-      });
-  }, []);
+        setProducts(response?.products)
+      })
+
+    instance
+      .get(`${API.VENDOR_TOTAL_ORDER}?shop_id=${vendorDetails?.id}`)
+      .then(function (response) {
+        console.log(response)
+        setTotalVendorOrder(response?.orders)
+      })
+  }, [])
   return (
     <>
       <div className="main-outer-div">
@@ -83,7 +102,7 @@ function VendorDetails(props) {
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
               <div className="details-div-left">
-                <i class="fas fa-store fa-3x" style={{ color: "#575353" }}></i>
+                <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
                   <h2>{vendorDetails?.shop_name}</h2>
                   <p>{vendorDetails?.shop_description}</p>
@@ -91,9 +110,9 @@ function VendorDetails(props) {
                     Founding Date:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
                       {vendorDetails?.shop_founding_date}
@@ -104,9 +123,9 @@ function VendorDetails(props) {
                     Owner:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
                       {vendorDetails?.shop_owner?.name}
@@ -117,9 +136,9 @@ function VendorDetails(props) {
                     Phone:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
                       {vendorDetails?.shop_phone}
@@ -130,27 +149,48 @@ function VendorDetails(props) {
                     Licence No:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
                       {vendorDetails?.shop_license_number}
                     </span>
                   </h5>
-
+                  <h5>
+                    Shop range:
+                    <span
+                      style={{
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
+                      }}
+                    >
+                      {vendorDetails?.shop_delivery_range}
+                    </span>
+                  </h5>
                   <h5>
                     Shop Status:
-                    <button className="assign-btn">
-                      {vendorDetails?.is_shop_active ? "Active" : " InActive"}
+                    <button
+                      className="assign-btn"
+                      onClick={() => shopActive(vendorDetails)}
+                    >
+                      {vendorDetails?.is_shop_active ? 'Active' : ' InActive'}
                     </button>
                   </h5>
                 </div>
               </div>
+              <div>
+                <img
+                  src={vendorDetails?.shop_profile}
+                  alt="image not found"
+                  style={{ width: '30rem', height: '20rem' }}
+                />
+              </div>
             </div>
 
             <div className={classes.root}>
-              <AppBar position="static" style={{ backgroundColor: "#3b1f47" }}>
+              <AppBar position="static" style={{ backgroundColor: '#3b1f47' }}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
@@ -158,6 +198,7 @@ function VendorDetails(props) {
                 >
                   <Tab label="Non-Selling Products" {...a11yProps(0)} />
                   <Tab label="Selling Products" {...a11yProps(1)} />
+                  <Tab label="Total Order" {...a11yProps(1)} />
                 </Tabs>
               </AppBar>
               <TabPanel value={value} index={0}>
@@ -195,11 +236,11 @@ function VendorDetails(props) {
                               <td>{value?.base_unit}</td>
                               <td>
                                 {value?.commission}
-                                {value?.is_percentage_commission === 1 && "%"}
+                                {value?.is_percentage_commission === 1 && '%'}
                               </td>
                               <Popup
                                 trigger={
-                                  <td style={{ cursor: "pointer" }}>
+                                  <td style={{ cursor: 'pointer' }}>
                                     <button>Add Product</button>
                                   </td>
                                 }
@@ -212,12 +253,13 @@ function VendorDetails(props) {
                                 />
                               </Popup>
                             </tr>
-                          );
+                          )
                         })}
                     </tbody>
                   </table>
                 </div>
               </TabPanel>
+
               <TabPanel value={value} index={1}>
                 <div
                   class="tab-pane fade show active"
@@ -254,16 +296,16 @@ function VendorDetails(props) {
                               <td>
                                 {value?.product?.commission}
                                 {value?.product?.is_percentage_commission ===
-                                  1 && "%"}
+                                  1 && '%'}
                               </td>
 
                               <Popup
                                 trigger={
                                   <tr>
-                                    <td style={{ cursor: "pointer" }}>
+                                    <td style={{ cursor: 'pointer' }}>
                                       <button>Edit Product</button>
                                     </td>
-                                    <td style={{ cursor: "pointer" }}>
+                                    <td style={{ cursor: 'pointer' }}>
                                       <button>Delete Product</button>
                                     </td>
                                   </tr>
@@ -271,7 +313,6 @@ function VendorDetails(props) {
                                 position="right center"
                                 modal
                               >
-
                                 <EditProductModal
                                   shopId={vendorDetails?.id}
                                   productDetails={value}
@@ -279,8 +320,56 @@ function VendorDetails(props) {
                                 />
                               </Popup>
                             </tr>
-                          );
+                          )
                         })}
+                    </tbody>
+                  </table>
+                </div>
+              </TabPanel>
+
+              <TabPanel value={value} index={2}>
+                <div
+                  class="tab-pane fade show active"
+                  id="ordersdetails"
+                  role="tabpanel"
+                  aria-labelledby="orders-details"
+                >
+                  <table class="table table-striped">
+                    <thead>
+                      <tr align="center">
+                        <th scope="col">S.No</th>
+                        <th scope="col">Order id</th>
+                        <th scope="col">User id</th>
+                        <th scope="col">Order net amount</th>
+                        <th scope="col">Delivery charge</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Delivery date</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ textAlign: 'center' }}>
+                      {totalVendorOrder?.length > 0 ? (
+                        totalVendorOrder.map((value, index) => {
+                          return (
+                            <tr align="center" key={index}>
+                              <th scope="row">{index + 1}</th>
+                              <td>{value?.order_id}</td>
+                              <td>{value?.user_id}</td>
+                              <td>{value?.order_net_amount}</td>
+                              <td>{value?.delivery_charge}</td>
+                              <td>{value?.payment_status}</td>
+                              <td>{value?.delivery_date}</td>
+                            </tr>
+                          )
+                        })
+                      ) : (
+                        <tr>
+                          {' '}
+                          <td colSpan="7">
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -290,6 +379,6 @@ function VendorDetails(props) {
         </div>
       </div>
     </>
-  );
+  )
 }
-export default VendorDetails;
+export default VendorDetails
