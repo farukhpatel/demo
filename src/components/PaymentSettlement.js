@@ -43,7 +43,7 @@ function PaymentSettlement() {
     const [modalOpen, setModalOpen] = useState(false);
     const [checked, setChecked] = useState([]);
     // let checked;
-    const unaccepted_settle = [];
+    let unaccepted_settle = [];
     const Submits = (e) => {
         e.preventDefault();
         let start_date = moment(from).format('YYYY-MM-DD');
@@ -57,6 +57,11 @@ function PaymentSettlement() {
             setPaid(res.transactions.paid);
             setUnpaid(res.transactions?.unpaid[0]?.orders);
             setUnpaid2(res.transactions?.unpaid[0])
+            let l = res.transactions?.unpaid[0]?.orders.length;
+            if (l > 0) {
+                let a = new Array(l).fill(true);
+                setChecked(a);
+            }
         })
     }
     useEffect(() => {
@@ -74,11 +79,10 @@ function PaymentSettlement() {
             setUnpaid(res.transactions?.unpaid[0]?.orders);
             setUnpaid2(res.transactions?.unpaid[0])
             let l = res.transactions?.unpaid[0]?.orders.length;
-            console.log(l)
-            let a = new Array(l).fill(true)
-            // console.log(checked);
-
-            setChecked(a);
+            if (l > 0) {
+                let a = new Array(l).fill(true);
+                setChecked(a);
+            }
         })
 
         //for vendor
@@ -90,18 +94,14 @@ function PaymentSettlement() {
         if (checked[index]) {
             unaccepted_settle.push(order.order_id);
         } else {
-            unaccepted_settle.pop(unaccepted_settle[index]);
+            unaccepted_settle = unaccepted_settle.filter((value, i) => {
+                return value !== order.order_id
+            })
         }
-        // console.log(index);
-        console.log(checked[index])
         let tempArray = checked;
-        // console.log(tempArray)
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
-
         await setChecked(tempArray);
         console.log(unaccepted_settle)
-        // console.log(order.order_id);
-        // unaccepted_settle.push(...unaccepted_settle, order.order_id);
     }
     return (
         <>
@@ -222,7 +222,7 @@ function PaymentSettlement() {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" onClick={(e) => { console.log(checked); CheckboxHandle(order, index); }} defaultChecked={checked[index]} />{index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onClick={(e) => { CheckboxHandle(order, index); }} defaultChecked={checked[index]} />{index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.order_discount}</td>
