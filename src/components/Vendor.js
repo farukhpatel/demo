@@ -10,21 +10,37 @@ import { toast } from "react-toastify";
 
 function Vendor() {
   const arr = [1, 2, 3, 4, 5, 6, 7];
-  const routerHistroy =useHistory();
+  const routerHistroy = useHistory();
   const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const [search, setSearch] = useState("");
 
   const update = (prop) => {
-    routerHistroy.push("/updatevendor",prop)
+    routerHistroy.push("/updatevendor", prop)
   };
-  const handleDelete=(id)=>{
+  const handleDelete = (id) => {
     instance.delete(`${API.VENDOR_DELETE}/${id}`)
-    .then(function(response){
-       toast.success(response.message); 
-       window.location.href="/vendor"
-    })
+      .then(function (response) {
+        toast.success(response.message);
+        window.location.href = "/vendor"
+      })
   }
+  const searchVendor = (e) => {
+    e.preventDefault();
+    instance.get(`${API.VENDOR_API}?search=${search}`)
+      .then(function (response) {
+        if (response.shop?.length > 0) {
+          toast.success(response.message);
+          setVendors(response.shop);
+          setSearch("");
+        }
+        else {
+          toast.error("Vendor not found")
+        }
+
+      })
+  }
+
   const closeModal = () => setOpen(true);
 
   useEffect(() => {
@@ -32,7 +48,7 @@ function Vendor() {
       setVendors(response.shop);
     });
   }, []);
-  
+
   return (
     <>
       <div className="main-outer-div">
@@ -55,7 +71,22 @@ function Vendor() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        searchVendor(e)
+                      }}
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
                 <table class="table table-striped">
@@ -70,9 +101,9 @@ function Vendor() {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody style={{textAlign:'center'}}>
-                    { vendors.length >0 ? vendors.map((value, index) => {
-                      
+                  <tbody style={{ textAlign: 'center' }}>
+                    {vendors.length > 0 ? vendors.map((value, index) => {
+
                       return (
                         <tr align="center" key={index}>
                           <th scope="row">{index + 1}</th>
@@ -106,51 +137,51 @@ function Vendor() {
                             >
                               <i class="fas fa-user-edit"></i>
                             </button>
-                            
-                             <Popup
-                          className="my-popup"
-                          trigger={
-                            <button className="btn btn-link-light">
-                              <i class="fas fa-trash-alt"></i>
-                            </button>
-                          }
-                          position="right center"
-                          modal
-                        >
-                           {(close) => (
-                            <div className="ReviewSure-text">
-                              <h6
-                                style={{
-                                  marginBottom: "1rem",
-                                  marginTop: "2rem",
-                                }}
-                              >
-                                Are you Sure you want to Delete this review?
+
+                            <Popup
+                              className="my-popup"
+                              trigger={
+                                <button className="btn btn-link-light">
+                                  <i class="fas fa-trash-alt"></i>
+                                </button>
+                              }
+                              position="right center"
+                              modal
+                            >
+                              {(close) => (
+                                <div className="ReviewSure-text">
+                                  <h6
+                                    style={{
+                                      marginBottom: "1rem",
+                                      marginTop: "2rem",
+                                    }}
+                                  >
+                                    Are you Sure you want to Delete this review?
                               </h6>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                  handleDelete(value.id);
-                                  close();
-                                }}
-                              >
-                                Yes
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                      handleDelete(value.id);
+                                      close();
+                                    }}
+                                  >
+                                    Yes
                               </button>
-                              <button
-                                className="btn btn-primary"
-                                  onClick={() => {
-                                    close();
-                                  }}
-                              >
-                                No
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                      close();
+                                    }}
+                                  >
+                                    No
                               </button>
-                            </div>
-                          )}
-                        </Popup>
+                                </div>
+                              )}
+                            </Popup>
                           </td>
                         </tr>
                       );
-                    })  :   <> <tr> <td colSpan="7" > <h2> No record found </h2> </td> </tr>  </> }
+                    }) : <> <tr> <td colSpan="7" > <h2> No record found </h2> </td> </tr>  </>}
                   </tbody>
                 </table>
               </div>
@@ -211,7 +242,7 @@ function Vendor() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div style={{transform:`translate(-50% -50%)`,backgroundColor:"white"}}>
+        <div style={{ transform: `translate(-50% -50%)`, backgroundColor: "white" }}>
         </div>
       </Modal>
     </>

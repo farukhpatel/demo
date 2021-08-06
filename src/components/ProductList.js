@@ -1,31 +1,45 @@
-import React, { useState, useEffect } from "react";
-import API from "../Utils/ApiConstant";
-import instance from "../Utils/axiosConstants"
-import { useHistory } from 'react-router-dom';
-import Popup from "reactjs-popup";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react'
+import API from '../Utils/ApiConstant'
+import instance from '../Utils/axiosConstants'
+import { useHistory } from 'react-router-dom'
+import Popup from 'reactjs-popup'
+import { toast } from 'react-toastify'
 
 const ProductList = () => {
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState([])
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
-    instance.get(API.PRODUCT_LIST)
-      .then(function (response) {
-        setProductList(response.products);
-      })
-  }, []);
+    instance.get(API.PRODUCT_LIST).then(function (response) {
+      setProductList(response.products)
+    })
+  }, [])
 
-  const routerHistroy = useHistory();
+  const routerHistroy = useHistory()
   const update = (props) => {
     routerHistroy.push(`updateProduct/${props.id}`, props)
   }
   const handleDelete = (id) => {
-    instance.delete(`${API.DELETE_PRODUCT}/${id}`)
+    instance.delete(`${API.DELETE_PRODUCT}/${id}`).then(function (response) {
+      toast.success(response.message)
+      window.location.href = '/productlist'
+    })
+  }
+  const SearchProduct = (e) => {
+    e.preventDefault()
+    instance
+      .get(`${API.PRODUCT_LIST}?product_name=${search}`)
       .then(function (response) {
-        toast.success(response.message);
-        window.location.href = "/productlist"
+        if (response.products.length > 0) {
+          toast.success(response.message)
+          setProductList(response.products)
+          setSearch('')
+        } else {
+          toast.error('Product not found')
+        }
       })
   }
+
   return (
     <>
       <div className="main-outer-div">
@@ -62,9 +76,23 @@ const ProductList = () => {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        SearchProduct(e)
+                      }}
+                    >
+                      Search
+                    </button>
                   </div>
-                  {/* <button>New sales Order</button> */}
                 </div>
                 <table class="table table-striped">
                   <thead style={{ textAlign: 'center' }}>
@@ -89,73 +117,84 @@ const ProductList = () => {
                                                 )
                                             })
                                         } */}
-                    {productList?.length > 0 ? productList.map((value, index) => {
-                      return (
+                    {productList?.length > 0 ? (
+                      productList.map((value, index) => {
+                        return (
+                          <tr>
+                            <th scope="row">{index + 1}</th>
+                            <td>{value?.product_name}</td>
+                            <td>
+                              <img
+                                src={value?.product_image}
+                                alt="Milk"
+                                style={{ height: '120px', width: '120px' }}
+                              />
+                            </td>
+                            <td>{value?.base_unit}</td>
+                            <td>
+                              <button
+                                className="btn btn-link-light "
+                                onClick={() => update(value)}
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+
+                              <Popup
+                                className="my-popup"
+                                trigger={
+                                  <button className="btn btn-link-light">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </button>
+                                }
+                                position="right center"
+                                modal
+                              >
+                                {(close) => (
+                                  <div className="ReviewSure-text">
+                                    <h6
+                                      style={{
+                                        marginBottom: '1rem',
+                                        marginTop: '2rem',
+                                      }}
+                                    >
+                                      Are you Sure you want to Delete this?
+                                    </h6>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() => {
+                                        handleDelete(value.id)
+                                        close()
+                                      }}
+                                    >
+                                      Yes
+                                    </button>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() => {
+                                        close()
+                                      }}
+                                    >
+                                      No
+                                    </button>
+                                  </div>
+                                )}
+                              </Popup>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    ) : (
+                      <>
+                        {' '}
                         <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{value?.product_name}</td>
-                          <td>
-                            <img
-                              src={value?.product_image}
-                              alt="Milk"
-                              style={{ height: "120px", width: "120px" }}
-                            />
-                          </td>
-                          <td>{value?.base_unit}</td>
-                          <td>
-                            <button
-                              className="btn btn-link-light "
-                              onClick={() => update(value)}
-                            >
-                              <i class="fas fa-edit"></i>
-                            </button>
-
-                            <Popup
-                              className="my-popup"
-                              trigger={
-                                <button className="btn btn-link-light">
-                                  <i class="fas fa-trash-alt">
-                                  </i>
-                                </button>
-                              }
-                              position="right center"
-                              modal
-                            >
-                              {(close) => (
-                                <div className="ReviewSure-text">
-                                  <h6
-                                    style={{
-                                      marginBottom: "1rem",
-                                      marginTop: "2rem",
-                                    }}
-                                  >
-                                    Are you Sure you want to Delete this?
-                              </h6>
-                                  <button
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                      handleDelete(value.id);
-                                      close();
-                                    }}
-                                  >
-                                    Yes
-                              </button>
-                                  <button
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                      close();
-                                    }}
-                                  >
-                                    No
-                              </button>
-                                </div>
-                              )}
-                            </Popup>
-
-                          </td>
-                        </tr>
-                      );
-                    }) : <> <tr> <td colSpan="5" > <h2> No record found </h2> </td> </tr>  </>}
+                          {' '}
+                          <td colSpan="5">
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>{' '}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -164,7 +203,7 @@ const ProductList = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProductList;
+export default ProductList

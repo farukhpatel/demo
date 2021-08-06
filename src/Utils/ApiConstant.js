@@ -39,6 +39,7 @@ const API = {
   DELIVERY_BOYS_ENABLE: Config.BASE_URL + "api/user/delivery-boy/update",
   ASSIGN_DELIVERY_BOY: Config.BASE_URL + "api/order/update",
   VENDOR_API: Config.BASE_URL + "api/shop/all",
+  VENDOR_SEARCH: Config.BASE_URL + "api/shop/active",
   VENDOR_UPDATE: Config.BASE_URL + "api/shop/update",
   VENDOR_DELETE: Config.BASE_URL + "api/shop/delete",
   IMAGE_UPLOAD: Config.BASE_URL + "api/image/upload",
@@ -53,11 +54,13 @@ const API = {
   DELETE_PRODUCT: Config.BASE_URL + "api/product/delete",
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
+  GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",
   CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
   UPDATE_CITIES: Config.BASE_URL + "api/address/city/update",
   DELETE_CITIES: Config.BASE_URL + "api/address/city/delete",
   //locality
   GET_LOCALITY: Config.BASE_URL + "api/address/locality/all?is_active=1",
+  GET_LOCALITY_SEARCH: Config.BASE_URL + "api/address/locality/all",
   POST_LOCALITY: Config.BASE_URL + "api/address/locality/create",
   PATCH_LOCALITY: Config.BASE_URL + "api/address/locality/update",
   DELETE_LOCALITY: Config.BASE_URL + "api/address/locality/delete",
@@ -68,6 +71,9 @@ const API = {
 
   //notification
   GET_ALL_NOTIFICATIONS: Config.BASE_URL + "api/user/notifications/all",
+
+  //Report download
+  DOWNLOAD_SALES_REPORT: Config.BASE_URL + "api/order/sales-report",
 };
 
 export default API;

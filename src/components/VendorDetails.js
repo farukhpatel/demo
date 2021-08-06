@@ -71,7 +71,7 @@ function VendorDetails(props) {
     let body = {
       is_shop_active: !vendorDetails.is_shop_active,
     }
-    console.log(body)
+
     instance
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
@@ -362,14 +362,14 @@ function VendorDetails(props) {
                           )
                         })
                       ) : (
-                        <tr>
-                          {' '}
-                          <td colSpan="7">
+                          <tr>
                             {' '}
-                            <h2> No record found </h2>{' '}
-                          </td>{' '}
-                        </tr>
-                      )}
+                            <td colSpan="7">
+                              {' '}
+                              <h2> No record found </h2>{' '}
+                            </td>{' '}
+                          </tr>
+                        )}
                     </tbody>
                   </table>
                 </div>

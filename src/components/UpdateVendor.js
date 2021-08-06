@@ -22,7 +22,8 @@ import instance from "../Utils/axiosConstants";
 import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
-  const prop = props.location.state
+  const prop = props.location.state;
+  console.log(prop.shop_schedules)
   // form fields var
   const [timePicker, setTimePicker] = useState(new Date);
   const [file, setFile] = useState(null);
@@ -39,6 +40,9 @@ function UpdateVendorForm(props) {
     setFoundationDate(e);
   };
   const handleTimeChange1 = (t, time, index) => {
+    console.log(t)
+    console.log(time)
+    console.log(index)
     if (time === "start") setShopSchedule((e) => {
       setTimePicker(t);
       e[index].start = moment(t).format("HH:mm:ss");

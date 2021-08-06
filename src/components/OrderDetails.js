@@ -18,17 +18,13 @@ function OrderDetails(props) {
                       ? orderDetails?.shop?.shop_name
                       : 'Not found'}
                   </h2>
-                  <p>{`${
-                    orderDetails?.shop?.address?.address_line_1 || 'Not found'
-                  } ${orderDetails?.shop?.address?.address_line_2 || ''} ${
-                    orderDetails?.shop?.address?.address_line_3 || ''
-                  }`}</p>
-                  <p>{`${
-                    orderDetails?.shop?.address?.locality?.locality ||
+                  <p>{`${orderDetails?.shop?.address?.address_line_1 || 'Not found'
+                    } ${orderDetails?.shop?.address?.address_line_2 || ''} ${orderDetails?.shop?.address?.address_line_3 || ''
+                    }`}</p>
+                  <p>{`${orderDetails?.shop?.address?.locality?.locality ||
                     'Not found'
-                  } ${orderDetails?.shop?.address?.city?.city || ''} ${
-                    orderDetails?.shop?.address?.state || ''
-                  }`}</p>
+                    } ${orderDetails?.shop?.address?.city?.city || ''} ${orderDetails?.shop?.address?.state || ''
+                    }`}</p>
                   <h5>
                     Delivery Boy:
                     <span
@@ -103,8 +99,8 @@ function OrderDetails(props) {
                       </div>
                       <div className="content">
                         <p>
-                          {props.location.state.order.user.name
-                            ? props.location.state.order.user.name
+                          {props.location.state.order?.user?.name
+                            ? props.location.state.order?.user?.name
                             : 'Not found'}
                         </p>
                       </div>
@@ -115,8 +111,8 @@ function OrderDetails(props) {
                       </div>
                       <div className="content">
                         <p>
-                          {props.location.state.order.user.phone
-                            ? props.location.state.order.user.phone
+                          {props.location.state.order?.user?.phone
+                            ? props.location.state.order?.user?.phone
                             : 'Not found'}
                         </p>
                       </div>
@@ -127,8 +123,8 @@ function OrderDetails(props) {
                       </div>
                       <div className="content">
                         <p>
-                          {props.location.state.order.user.email
-                            ? props.location.state.order.user.email
+                          {props.location.state.order?.user?.email
+                            ? props.location.state.order?.user?.email
                             : 'Not found'}
                         </p>
                       </div>
@@ -138,11 +134,9 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                        <p>{`${
-                          orderDetails?.address?.address_line_1 || 'Not found'
-                        } ${orderDetails?.address?.address_line_2 || ''} ${
-                          orderDetails?.address?.address_line_3 || ''
-                        }`}</p>
+                        <p>{`${orderDetails?.address?.address_line_1 || 'Not found'
+                          } ${orderDetails?.address?.address_line_2 || ''} ${orderDetails?.address?.address_line_3 || ''
+                          }`}</p>
                       </div>
                     </div>
                   </div>
@@ -189,17 +183,17 @@ function OrderDetails(props) {
                         )
                       })
                     ) : (
-                      <>
-                        {' '}
-                        <tr>
+                        <>
                           {' '}
-                          <td colSpan="5">
+                          <tr>
                             {' '}
-                            <h2> No record found </h2>{' '}
-                          </td>{' '}
-                        </tr>{' '}
-                      </>
-                    )}
+                            <td colSpan="5">
+                              {' '}
+                              <h2> No record found </h2>{' '}
+                            </td>{' '}
+                          </tr>{' '}
+                        </>
+                      )}
                   </tbody>
                 </table>
               </div>

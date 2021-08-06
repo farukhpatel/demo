@@ -465,15 +465,17 @@ tbody tr td a {
   padding: 1rem;
 }
 .btn-position button {
-  width: 20%;
+  width: 27%;
   height: 40px;
-  border-radius: 999px;
-  background-color: #230132;
+  border-radius: 95px;
+  background-color: hsl(282, 96%, 10%);
   color: white;
   font-family: 'Poppins';
   outline: none !important;
   border: none;
+  margin-left: -22px;
 }
+
 tbody td button {
   outline: none;
   border: none;

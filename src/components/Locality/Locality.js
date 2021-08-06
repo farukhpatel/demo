@@ -8,7 +8,7 @@ import instance from '../../Utils/axiosConstants';
 
 function Locality() {
   const [local, setLocal] = useState([])
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     instance.get(API.GET_LOCALITY).then(response => setLocal(response.localities))
   }, [])
@@ -21,6 +21,24 @@ function Locality() {
       toast.success(res.message);
       window.location.reload();
     })
+  }
+  const searchLocality = (e) => {
+    e.preventDefault();
+    console.log(search)
+    instance.get(`${API.GET_LOCALITY_SEARCH}?locality_name=${search}`)
+      .then(function (response) {
+        console.log(response)
+        if (response.localities?.length > 0) {
+          console.log(response)
+          toast.success(response.message);
+          setLocal(response.localities);
+          setSearch("");
+        }
+        else {
+          toast.error("Locality not found")
+        }
+
+      })
   }
   return (
     <>
@@ -44,7 +62,22 @@ function Locality() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        searchLocality(e)
+                      }}
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
                 <table class="table table-striped">
