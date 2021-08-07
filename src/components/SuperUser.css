@@ -747,7 +747,8 @@ tbody td button:hover {
   padding: 2rem;
   position: relative;
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-y: scroll;
 }
 .productlist-inner-div-form form .customSpan {
   position: absolute;
@@ -863,7 +864,7 @@ tbody td button:hover {
   padding: 2rem;
   position: relative;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 .deliveryboy-inner-div-form form {
   width: 50%;

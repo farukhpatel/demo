@@ -24,8 +24,12 @@ instance.interceptors.request.use(function (request) {
 });
 
 instance.interceptors.response.use(
+
   function (response) {
-    if (response.status === 200 && response.data.status) {
+    // console.log(response, "inter")
+    if (response.status === 200 && response?.config?.url?.includes("sales-report"))
+      return response.data
+    else if (response.status === 200 && response.data.status) {
       if (
         response?.data?.code === 200 &&
         response?.config?.url?.includes("login")

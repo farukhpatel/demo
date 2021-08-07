@@ -10,39 +10,51 @@ import MomentUtils from '@date-io/moment'
 import moment from 'moment'
 import API from '../Utils/ApiConstant'
 import instance from '../Utils/axiosConstants'
+import axios from 'axios'
 
 function SalesReport() {
   let date = new Date()
   date = date.toLocaleDateString()
   const [from, setFrom] = useState(new Date())
-  const [to, setTo] = useState(moment(date).subtract(1, 'day').format())
+  const [to, setTo] = useState(new Date())
   const arr = [1, 2, 3, 4, 5, 6, 7]
+  useEffect(() => {
+    let date = new Date()
+    let start_date = moment(date).add(-1, 'days').format()
+    setFrom(start_date)
+  }, [])
   const downloadSalesReport = (e) => {
     e.preventDefault()
     let start_date = moment(from).format('YYYY-MM-DD')
     let end_date = moment(to).format('YYYY-MM-DD')
-    console.log(start_date)
+    console.log('work2')
     instance
       .get(
         `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}&shop_id=1`,
-        {
-          responseType: 'blob',
-        },
       )
       .then((response) => {
-        console.log('in res')
-        let blob = new Blob([response.data], {
+        console.log(response)
+        const blob = new Blob([response], {
           type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-        const url = window.URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'file.xlsx') //or any other extension
-        document.body.appendChild(link)
-        link.click()
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, 'some.xlsx')
+        } else {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'salesReport.xlsx')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
+
   return (
     <>
       <div className="main-outer-div">
