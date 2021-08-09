@@ -1,53 +1,52 @@
-import React, { useState, useEffect } from "react";
-import API from "../Utils/ApiConstant";
+import React, { useState, useEffect } from 'react'
+import API from '../Utils/ApiConstant'
 
-import { Link, useHistory } from "react-router-dom";
-import "./SuperUser.css";
-import instance from "../Utils/axiosConstants";
-import { Modal } from "@material-ui/core";
-import Popup from "reactjs-popup";
-import { toast } from "react-toastify";
+import { Link, useHistory } from 'react-router-dom'
+import './SuperUser.css'
+import instance from '../Utils/axiosConstants'
+import { Modal } from '@material-ui/core'
+import Popup from 'reactjs-popup'
+import { toast } from 'react-toastify'
 
 function Vendor() {
-  const arr = [1, 2, 3, 4, 5, 6, 7];
-  const routerHistroy = useHistory();
-  const [vendors, setVendors] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const arr = [1, 2, 3, 4, 5, 6, 7]
+  const routerHistroy = useHistory()
+  const [vendors, setVendors] = useState([])
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
 
   const update = (prop) => {
-    routerHistroy.push("/updatevendor", prop)
-  };
+    routerHistroy.push('/updatevendor', prop)
+  }
   const handleDelete = (id) => {
-    instance.delete(`${API.VENDOR_DELETE}/${id}`)
-      .then(function (response) {
-        toast.success(response.message);
-        window.location.href = "/vendor"
-      })
+    instance.delete(`${API.VENDOR_DELETE}/${id}`).then(function (response) {
+      toast.success(response.message)
+      window.location.href = '/vendor'
+    })
   }
   const searchVendor = (e) => {
-    e.preventDefault();
-    instance.get(`${API.VENDOR_API}?search=${search}`)
+    e.preventDefault()
+    instance
+      .get(`${API.VENDOR_API}?search=${search}`)
       .then(function (response) {
         if (response.shop?.length > 0) {
-          toast.success(response.message);
-          setVendors(response.shop);
-          setSearch("");
+          toast.success(response.message)
+          setVendors(response.shop)
+          setSearch('')
+        } else {
+          toast.error('Vendor not found')
         }
-        else {
-          toast.error("Vendor not found")
-        }
-
       })
   }
 
-  const closeModal = () => setOpen(true);
+  const closeModal = () => setOpen(true)
 
   useEffect(() => {
     instance.get(API.VENDOR_API).then(function (response) {
-      setVendors(response.shop);
-    });
-  }, []);
+      console.log(response)
+      setVendors(response.shop)
+    })
+  }, [])
 
   return (
     <>
@@ -102,86 +101,117 @@ function Vendor() {
                     </tr>
                   </thead>
                   <tbody style={{ textAlign: 'center' }}>
-                    {vendors.length > 0 ? vendors.map((value, index) => {
+                    {vendors.length > 0 ? (
+                      vendors.map((value, index) => {
+                        return (
+                          <tr align="center" key={index}>
+                            <th scope="row">{index + 1}</th>
 
-                      return (
-                        <tr align="center" key={index}>
-                          <th scope="row">{index + 1}</th>
-
-                          <td>
-                            <Link
-                              to={{
-                                pathname: "/vendordetails",
-                                state: { vendor: value },
-                              }}
-                              style={{ color: "#0dcaf0" }}
-                            >
-                              <p style={{ fontWeight: "bold " }}>
-                                {value?.shop_owner?.name}
+                            <td>
+                              <Link
+                                to={{
+                                  pathname: '/vendordetails',
+                                  state: { vendor: value },
+                                }}
+                                style={{ color: '#0dcaf0' }}
+                              >
+                                <p style={{ fontWeight: 'bold ' }}>
+                                  {value?.shop_owner?.name}
+                                </p>
+                              </Link>
+                            </td>
+                            <td>
+                              <p style={{ fontWeight: 'bold ' }}>
+                                {value?.shop_name}
                               </p>
-                            </Link>
-                          </td>
-                          <td>
-                            <p style={{ fontWeight: "bold " }}>
-                              {value?.shop_name}
-                            </p>
-                          </td>
-                          <td>address</td>
-                          <td>{value?.shop_approval}</td>
-                          <td>{value?.shop_founding_date}</td>
-                          <td>
-                            <button
-                              className="btn btn-link-light "
+                            </td>
 
-                              onClick={() => update(value)}
-                            >
-                              <i class="fas fa-user-edit"></i>
-                            </button>
+                            <td>
+                              {`${
+                                value?.address?.address_line_1
+                                  ? `${value?.address?.address_line_1},`
+                                  : 'not found'
+                              }`}
+                              {`${
+                                value?.address?.address_line_2
+                                  ? `${value?.address?.address_line_2},`
+                                  : ''
+                              }`}
+                              {`${
+                                value?.address?.address_line_3
+                                  ? `${value?.address?.address_line_3},`
+                                  : ''
+                              }`}
+                              {value?.locality?.locality}
+                            </td>
 
-                            <Popup
-                              className="my-popup"
-                              trigger={
-                                <button className="btn btn-link-light">
-                                  <i class="fas fa-trash-alt"></i>
-                                </button>
-                              }
-                              position="right center"
-                              modal
-                            >
-                              {(close) => (
-                                <div className="ReviewSure-text">
-                                  <h6
-                                    style={{
-                                      marginBottom: "1rem",
-                                      marginTop: "2rem",
-                                    }}
-                                  >
-                                    Are you Sure you want to Delete this review?
-                              </h6>
-                                  <button
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                      handleDelete(value.id);
-                                      close();
-                                    }}
-                                  >
-                                    Yes
+                            <td>{value?.shop_approval}</td>
+                            <td>{value?.shop_founding_date}</td>
+                            <td>
+                              <button
+                                className="btn btn-link-light "
+                                onClick={() => update(value)}
+                              >
+                                <i class="fas fa-user-edit"></i>
                               </button>
-                                  <button
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                      close();
-                                    }}
-                                  >
-                                    No
-                              </button>
-                                </div>
-                              )}
-                            </Popup>
-                          </td>
-                        </tr>
-                      );
-                    }) : <> <tr> <td colSpan="7" > <h2> No record found </h2> </td> </tr>  </>}
+
+                              <Popup
+                                className="my-popup"
+                                trigger={
+                                  <button className="btn btn-link-light">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </button>
+                                }
+                                position="right center"
+                                modal
+                              >
+                                {(close) => (
+                                  <div className="ReviewSure-text">
+                                    <h6
+                                      style={{
+                                        marginBottom: '1rem',
+                                        marginTop: '2rem',
+                                      }}
+                                    >
+                                      Are you Sure you want to Delete this
+                                      review?
+                                    </h6>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() => {
+                                        handleDelete(value.id)
+                                        close()
+                                      }}
+                                    >
+                                      Yes
+                                    </button>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() => {
+                                        close()
+                                      }}
+                                    >
+                                      No
+                                    </button>
+                                  </div>
+                                )}
+                              </Popup>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    ) : (
+                      <>
+                        {' '}
+                        <tr>
+                          {' '}
+                          <td colSpan="7">
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>{' '}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -217,17 +247,17 @@ function Vendor() {
                           <th scope="row">{index + 1}</th>
                           <td>Shubham Kumar</td>
                           <td>
-                            <p style={{ fontWeight: "bold" }}>
+                            <p style={{ fontWeight: 'bold' }}>
                               Panchamrat Dairy
                             </p>
                           </td>
                           <td>302BF 27 Sica School Road</td>
-                          <td style={{ color: "red" }}>Offline</td>
+                          <td style={{ color: 'red' }}>Offline</td>
                           <td>
                             <button>Disabled</button>
                           </td>
                         </tr>
-                      );
+                      )
                     })}
                   </tbody>
                 </table>
@@ -242,11 +272,15 @@ function Vendor() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div style={{ transform: `translate(-50% -50%)`, backgroundColor: "white" }}>
-        </div>
+        <div
+          style={{
+            transform: `translate(-50% -50%)`,
+            backgroundColor: 'white',
+          }}
+        ></div>
       </Modal>
     </>
-  );
+  )
 }
 
-export default Vendor;
+export default Vendor

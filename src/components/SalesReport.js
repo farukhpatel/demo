@@ -30,7 +30,9 @@ function SalesReport() {
     console.log('work2')
     instance
       .get(
-        `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}&shop_id=1`,
+        `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}&shop_id=1`, {
+        responseType: 'blob'
+      }
       )
       .then((response) => {
         console.log(response)
@@ -39,12 +41,48 @@ function SalesReport() {
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
         if (window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveBlob(blob, 'some.xlsx')
+          window.navigator.msSaveBlob(blob, 'order-sales.xlsx')
         } else {
           const url = window.URL.createObjectURL(blob)
           const link = document.createElement('a')
           link.href = url
-          link.setAttribute('download', 'salesReport.xlsx')
+          link.setAttribute('download', 'order-sales.xlsx')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  //settlement report download
+  const downloadSettlementReport = (e) => {
+    e.preventDefault()
+    let start_date = moment(from).format('YYYY-MM-DD')
+    let end_date = moment(to).format('YYYY-MM-DD')
+    console.log('settlement report')
+    instance
+      .get(
+        `${API.DOWNLOAD_SETTLEMENT_REPORT}?start_date=${start_date}&end_date=${end_date}&shop_id=1`, {
+        responseType: 'blob'
+      }
+      )
+      .then((response) => {
+        console.log(response)
+        const blob = new Blob([response], {
+          type:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        })
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, 'order-settlements.xlsx')
+        } else {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'order-settlements.xlsx')
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link)
@@ -250,7 +288,7 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => {}}
+                      onClick={(e) => { downloadSettlementReport(e) }}
                       className="assign-btn"
                     >
                       Download Settlement Report
@@ -259,7 +297,7 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => {}}
+                      onClick={(e) => { }}
                       className="assign-btn"
                     >
                       Download User Report{' '}
@@ -268,7 +306,7 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => {}}
+                      onClick={(e) => { }}
                       className="assign-btn"
                     >
                       Download Vendor Report

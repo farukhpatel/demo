@@ -41,6 +41,7 @@ import { AddLocation } from "@material-ui/icons";
 import AddLocalities from "./components/Locality/AddLocalities";
 import UpdateLocality from './components/Locality/UpdateLocality';
 import Notification from './components/Notification';
+import UpdateShopAddress from "./components/UpdateShopAddress";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
@@ -119,6 +120,7 @@ function App() {
             <Route exact path="/addLocalities" component={AddLocalities} />
             <Route exact path="/updateLocality/:id" component={UpdateLocality} />
             <Route exact path="/notification" component={Notification} />
+            <Route exact path="/updateShopAddress/:id" component={UpdateShopAddress} />
           </div>
         </Switch>
       </>

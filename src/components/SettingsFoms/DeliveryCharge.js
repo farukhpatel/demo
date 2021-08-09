@@ -22,23 +22,24 @@ function DeliveryCharge() {
 
     instance.get(API.GET_SETTING_DELIVERY_CHARGE)
       .then(function (response) {
-        // console.log(response.delivery_charge[0].value);
-        setCharge(response.delivery_charge[0].value.charge)
-        setCart_cut_off_value(response.delivery_charge[0].value.cart_cut_off_value);
+        console.log("res")
+        console.log(response);
+        setCharge(Number(response.delivery_charge[0].value.charge))
+        setCart_cut_off_value(Number(response.delivery_charge[0].value.cart_cut_off_value));
       })
   }, []);
   // time picker
   const form2Submit = (e) => {
     e.preventDefault();
     let data = {
-      charge,
-      cart_cut_off_value
+      charge: Number(charge),
+      cart_cut_off_value: Number(cart_cut_off_value)
     }
 
     console.log(data);
     instance.post(API.SETTING_DELIVERY_CHARGE, data).then(function (response) {
       toast.success("Delivery Charge Successfully Added.");
-      window.location.href = "/settings";
+      // window.location.href = "/settings";
     });
   };
 

@@ -592,6 +592,7 @@ tbody td button:hover {
 
 .address-form form {
   width: unset;
+  overflow-y: scroll;
 }
 .vendor-form-1 form .customSpan,
 .vendor-form-2 form .customSpan {
@@ -739,6 +740,7 @@ tbody td button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow-y: scroll;
   /* background-color: #3cfc45; */
 }
 .productlist-inner-div-form form {
@@ -748,7 +750,7 @@ tbody td button:hover {
   position: relative;
   border-radius: 8px;
   /* overflow: hidden; */
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 .productlist-inner-div-form form .customSpan {
   position: absolute;

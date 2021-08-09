@@ -29,6 +29,8 @@ instance.interceptors.response.use(
     // console.log(response, "inter")
     if (response.status === 200 && response?.config?.url?.includes("sales-report"))
       return response.data
+    else if (response.status === 200 && response?.config?.url?.includes("settlement-report"))
+      return response.data
     else if (response.status === 200 && response.data.status) {
       if (
         response?.data?.code === 200 &&

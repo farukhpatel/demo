@@ -46,6 +46,7 @@ const API = {
   CREATE_USER: Config.BASE_URL + "api/user/create",
   CREATE_SHOP: Config.BASE_URL + "api/shop/create",
   CREATE_ADDRESS: Config.BASE_URL + "api/address/create",
+  UPDATE_SHOP_ADDRESS: Config.BASE_URL + "api/address/update",
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   ADD_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/create",
   UPDATE_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/update",
@@ -53,6 +54,7 @@ const API = {
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
   DELETE_PRODUCT: Config.BASE_URL + "api/product/delete",
   GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
+  GET_LOCALITIES_BY_CITY_ID: Config.BASE_URL + "api/address/locality/all?is_active=1",
   GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
   GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",
   CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
@@ -74,6 +76,7 @@ const API = {
 
   //Report download
   DOWNLOAD_SALES_REPORT: Config.BASE_URL + "api/order/sales-report",
+  DOWNLOAD_SETTLEMENT_REPORT: Config.BASE_URL + "api/order/settlement-report",
 };
 
 export default API;

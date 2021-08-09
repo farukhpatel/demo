@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box'
 
 import instance from '../Utils/axiosConstants'
 import { toast } from 'react-toastify'
+import { useHistory } from 'react-router-dom'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -58,12 +59,33 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function VendorDetails(props) {
+  // console.log(props?.location?.state?.vendor?.address)
+  let address = props?.location?.state?.vendor?.address || {}
   const vendorDetails = props?.location?.state?.vendor || {}
   const [products, setProducts] = useState({})
   const [totalVendorOrder, setTotalVendorOrder] = useState([])
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
-
+  const [addressForm, setAddressForm] = useState({
+    addressable_id: address?.addressable_id,
+    // addressable_type: address?.addressable_type,
+    addressable_type: "Shop",
+    name: address?.name,
+    address_type: address?.address_type,
+    address_line_1: address?.address_line_1,
+    address_line_2: address?.address_line_2,
+    address_line_3: address?.address_line_3,
+    locality_id: address?.locality_id,
+    locality: address?.locality?.locality,
+    city_id: address.city_id,
+    pincode: address.pincode,
+    state: address?.state,
+    country: address?.country,
+    latitude: address?.latitude,
+    longitude: address?.longitude,
+  })
+  // console.log(addressForm)
+  console.log(vendorDetails?.is_shop_active)
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
@@ -71,7 +93,8 @@ function VendorDetails(props) {
     let body = {
       is_shop_active: !vendorDetails.is_shop_active,
     }
-
+    console.log(vendorDetails.id)
+    console.log(body)
     instance
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
@@ -95,6 +118,12 @@ function VendorDetails(props) {
         setTotalVendorOrder(response?.orders)
       })
   }, [])
+  const routerHistroy = useHistory()
+  const editShopAddress = (e) => {
+    // e.preventDefault()
+    routerHistroy.push(`updateShopAddress/${vendorDetails?.id}`, addressForm)
+    // console.log(addressForm)
+  }
   return (
     <>
       <div className="main-outer-div">
@@ -170,12 +199,39 @@ function VendorDetails(props) {
                     </span>
                   </h5>
                   <h5>
+                    Shop address:
+                    <span
+                      style={{
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
+                      }}
+                    >
+                      {addressForm?.address_line_1},{' '}
+                      {addressForm?.address_line_2},{' '}
+                      {addressForm?.address_line_3} ,{addressForm?.locality}
+                    </span>
+                  </h5>
+                  <h5>
+                    <span>
+                      Edit address:
+                      <button
+                        className="btn btn-link-light "
+                        onClick={(e) => {
+                          editShopAddress(e)
+                        }}
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </span>
+                  </h5>
+                  <h5>
                     Shop Status:
                     <button
                       className="assign-btn"
                       onClick={() => shopActive(vendorDetails)}
                     >
-                      {vendorDetails?.is_shop_active ? 'Active' : ' InActive'}
+                      {vendorDetails?.is_shop_active ? 'InActive' : ' Active'}
                     </button>
                   </h5>
                 </div>

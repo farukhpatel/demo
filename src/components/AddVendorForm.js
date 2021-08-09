@@ -23,6 +23,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
 import Back from './BackButton/Back';
+import { ArrowRightAltRounded } from "@material-ui/icons";
+import Files from 'react-files'
 const customValueRenderer = (selected, _options) => {
   return selected.length
     ? selected.map(({ label }) => "✔️ " + label)
@@ -44,6 +46,7 @@ function AddVendorForm() {
 
   // form fields var
   const [file, setFile] = useState(null);
+  const [multipleFile, setMultipleFile] = useState([]);
   const [vendorName, setVendorName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -56,7 +59,6 @@ function AddVendorForm() {
   const [localities, setLocalities] = useState([]);
   const [cities, setCities] = useState([]);
   const [addressableId, setAddressableID] = useState("");
-
   const [addressForm, setAddressForm] = useState({
     addressable_id: addressableId,
     addressable_type: "Shop",
@@ -184,7 +186,13 @@ function AddVendorForm() {
       getGeo();
     }
   }
-
+  const chooseMultipleImg = (e) => {
+    e.preventDefault();
+    // let imgArr = multipleFile;
+    // imgArr.push(e.target.files);
+    // setMultipleFile(imgArr);
+    setMultipleFile([...multipleFile, e.target.files])
+  }
   useEffect(() => {
     instance.get(API.GET_CITIES).then(function (response) {
       setCities(response.cities);
@@ -196,6 +204,7 @@ function AddVendorForm() {
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
+
   };
 
   // time picker
@@ -223,7 +232,7 @@ function AddVendorForm() {
       toast.error("Phone number should have exactly 10 digits.");
     } else if (password.length < 5) {
       toast.error("Password must be of atleast 5 charcaters");
-    } else if (email === "") toast.error("Email can't be empty");
+    }
     else {
       document.querySelector(".vendor-form-1").classList.add("hide__form1");
       document.querySelector(".vendor-form-2").classList.add("show-form2");
@@ -234,75 +243,84 @@ function AddVendorForm() {
     e.preventDefault();
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    if (file) {
+    console.log(multipleFile);
+    if (multipleFile) {
+
       let formdata = new FormData();
-      formdata.append("image", file[0]);
-      instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
-        let temp = selected;
-        let shop_schedule1 = temp.map((item) => {
-          return {
-            key: item.label,
-            start: moment(startTime1._d).format("HH:mm:ss"),
-            end: moment(endTime1._d).format("HH:mm:ss")
-          }
-        });
+      // formdata.append("image", file[0]);
+      for (const key of Object.keys(multipleFile)) {
+        console.log(key)
+        formdata.append('imgCollection', multipleFile[key])
+      }
+      console.log(formdata)
+      // instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
+      //   let temp = selected;
+      //   let shop_schedule1 = temp.map((item) => {
+      //     return {
+      //       key: item.label,
+      //       start: moment(startTime1._d).format("HH:mm:ss"),
+      //       end: moment(endTime1._d).format("HH:mm:ss")
+      //     }
+      //   });
 
-        let shop_schedule2 = []
-        let d1 = moment(startTime2._d).format("HH:mm");
-        let d2 = moment(endTime2._d).format("HH:mm");
-        if (d1 !== d2) {
-          shop_schedule2 = temp.map((item) => {
-            return {
-              key: item.label,
-              start: moment(startTime2._d).format("HH:mm:ss"),
-              end: moment(endTime2._d).format("HH:mm:ss")
-            }
-          });
-        }
-        let shopCreateBody = {
-          // user_id: userid,
-          shop_name: shopName,
-          shop_phone: phone,
-          shop_description: description,
-          shop_profile: response.image_url,
-          shop_license_number: licenseNumber,
-          //UPDATE FOUNDING DATE VALUE
-          shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-          shop_delivery_range: deliveryRange,
-          shop_schedules: [...shop_schedule1, ...shop_schedule2]
-        };
+      //   let shop_schedule2 = []
+      //   let d1 = moment(startTime2._d).format("HH:mm");
+      //   let d2 = moment(endTime2._d).format("HH:mm");
+      //   if (d1 !== d2) {
+      //     shop_schedule2 = temp.map((item) => {
+      //       return {
+      //         key: item.label,
+      //         start: moment(startTime2._d).format("HH:mm:ss"),
+      //         end: moment(endTime2._d).format("HH:mm:ss")
+      //       }
+      //     });
+      //   }
+      //   let shopCreateBody = {
+      //     // user_id: userid,
+      //     shop_name: shopName,
+      //     shop_phone: phone,
+      //     shop_description: description,
+      //     shop_profile: response.image_url,
+      //     shop_license_number: licenseNumber,
+      //     //UPDATE FOUNDING DATE VALUE
+      //     shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+      //     shop_delivery_range: deliveryRange,
+      //     shop_schedules: [...shop_schedule1, ...shop_schedule2]
+      //   };
 
-        let error = false;
-        Object.keys(shopCreateBody).forEach((key) => {
-          if (!error && shopCreateBody[key] === "") {
-            toast.error("One or more fields are empty.");
-            error = true;
-          }
-        });
-        if (!error) {
-          let body = {
-            name: vendorName,
-            phone: phone,
-            email: email,
-            password: password,
-            role_id: 2,
-          };
-          instance.post(API.CREATE_USER, body).then(function (response) {
-            shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
-            instance
-              .post(API.CREATE_SHOP, shopCreateBody)
-              .then(function (shopCreateResponse) {
-                setAddressableID(shopCreateResponse?.shop?.id);
-                setAddressForm({
-                  ...addressForm,
-                  addressable_id: shopCreateResponse?.shop?.id,
-                });
-                console.log(shopCreateResponse?.shop?.id);
-                toast.success("Vendor Created. Add Address Details Now.");
-              });
-          });
-        }
-      });
+      //   let error = false;
+      //   Object.keys(shopCreateBody).forEach((key) => {
+      //     if (!error && shopCreateBody[key] === "") {
+      //       toast.error("One or more fields are empty.");
+      //       error = true;
+      //     }
+      //   });
+      //   if (!error) {
+      //     let body = {
+      //       name: vendorName,
+      //       phone: phone,
+      //       ...(email ? { email: email } : {}),
+      //       password: password,
+      //       role_id: 2,
+      //     };
+      //     console.log(body)
+      //     instance.post(API.CREATE_USER, body).then(function (response) {
+      //       shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
+      //       console.log(shopCreateBody);
+      //       // instance
+      //       //   .post(API.CREATE_SHOP, shopCreateBody)
+      //       //   .then(function (shopCreateResponse) {
+      //       //     setAddressableID(shopCreateResponse?.shop?.id);
+      //       //     setAddressForm({
+      //       //       ...addressForm,
+      //       //       addressable_id: shopCreateResponse?.shop?.id,
+      //       //     });
+      //       //     console.log(shopCreateResponse?.shop?.id);
+      //       //     toast.success("Vendor Created. Add Address Details Now.");
+      //       //   });
+      //     });
+      //   }
+      // });
     } else {
       toast.error("No file Picked.");
     }
@@ -348,7 +366,7 @@ function AddVendorForm() {
                     />
                   </div>
                   <div class="form-group">
-                    <label for="password">Email</label>
+                    <label for="email">Email</label>
                     <input
                       type="email"
                       class="form-control"
@@ -412,16 +430,20 @@ function AddVendorForm() {
                         onChange={(e) => setDescription(e.target.value)}
                       ></textarea>
                     </div>
-                    <div class="form-group">
+
+                    {multipleFile?.length <= 2 ? <div class="form-group">
                       <label for="profile">Profile:</label>
                       <input
                         type="file"
                         class="form-control"
                         id="profile"
                         name="profile"
-                        onChange={(e) => setFile(e.target.files)}
+                        // onChange={(e) => setFile(e.target.files)}
+                        onChange={(e) => { chooseMultipleImg(e) }}
+                        multiple
                       />
-                    </div>
+                    </div> : 'maximum limit exceed'}
+
                     <div class="form-group">
                       <label for="shoplicensenumber">Shop License Number</label>
                       <input
@@ -561,7 +583,7 @@ function AddVendorForm() {
                     <button
                       type="submit"
                       class="btn btn-primary submitBtn"
-                      onClick={form2Submit}
+                      onClick={(e) => { form2Submit(e); }}
                     >
                       Submit
                     </button>
