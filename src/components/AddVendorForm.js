@@ -45,8 +45,10 @@ function AddVendorForm() {
   const [selected, setSelected] = useState([]);
 
   // form fields var
+  const [bannerURL, setBannerURL] = useState([]);
+  const [profileURL, setProfileURL] = useState([]);
   const [file, setFile] = useState(null);
-  const [multipleFile, setMultipleFile] = useState([]);
+  const [mFile, setMFile] = useState(null);
   const [vendorName, setVendorName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -76,6 +78,18 @@ function AddVendorForm() {
     country: "India",
     latitude: "",
     longitude: "",
+  });
+
+  const [shopBody, setShopBody] = useState({
+    shop_banner: [],
+    shop_delivery_range: "",
+    shop_description: "",
+    shop_founding_date: '',
+    shop_license_number: "",
+    shop_name: '',
+    shop_phone: '',
+    shop_profile: [],
+    shop_schedules: [],
   });
 
   function getGeo() {
@@ -186,13 +200,7 @@ function AddVendorForm() {
       getGeo();
     }
   }
-  const chooseMultipleImg = (e) => {
-    e.preventDefault();
-    // let imgArr = multipleFile;
-    // imgArr.push(e.target.files);
-    // setMultipleFile(imgArr);
-    setMultipleFile([...multipleFile, e.target.files])
-  }
+
   useEffect(() => {
     instance.get(API.GET_CITIES).then(function (response) {
       setCities(response.cities);
@@ -238,89 +246,143 @@ function AddVendorForm() {
       document.querySelector(".vendor-form-2").classList.add("show-form2");
     }
   };
+  // useEffect(() => {
+  //   console.log("profileu", profileURL)
+  // }, [profileURL]);
 
-  const form2Submit = (e) => {
+  const form2Submit = async (e) => {
     e.preventDefault();
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    console.log(multipleFile);
-    if (multipleFile) {
+    // if (file) {
+    //   let formdata = new FormData();
+    //   console.log(file[0])
+    //   formdata.append("image", file[0]);
+    //   console.log(formdata)
+    //   // console.log("shop profile")
+    //   let imgurl;
+    //   instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+    //     console.log("shop profile res")
+    //     console.log(res)
+    //     let temp = profileURL;
+    //     temp[0] = res.image_url;
+    //     setShopBody({ shop_profile:temp});
+    //     setProfileURL(temp);
+    //   });
 
+    // }
+    // else {
+    //   alert("Please picked profile image");
+    //   return;
+    // }
+    if (mFile && file) {
       let formdata = new FormData();
-      // formdata.append("image", file[0]);
-      for (const key of Object.keys(multipleFile)) {
-        console.log(key)
-        formdata.append('imgCollection', multipleFile[key])
-      }
+      console.log(file[0])
+      formdata.append("image", file[0]);
       console.log(formdata)
-      // instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
-      //   let temp = selected;
-      //   let shop_schedule1 = temp.map((item) => {
-      //     return {
-      //       key: item.label,
-      //       start: moment(startTime1._d).format("HH:mm:ss"),
-      //       end: moment(endTime1._d).format("HH:mm:ss")
-      //     }
-      //   });
+      // console.log("shop profile")
+      let imgurl;
+      await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+        console.log("shop profile res")
+        console.log(res)
+        let temp = profileURL;
+        temp[0] = res.image_url;
+        setShopBody({ shop_profile: temp });
+        setProfileURL(res.image_url);
+      });
 
-      //   let shop_schedule2 = []
-      //   let d1 = moment(startTime2._d).format("HH:mm");
-      //   let d2 = moment(endTime2._d).format("HH:mm");
-      //   if (d1 !== d2) {
-      //     shop_schedule2 = temp.map((item) => {
-      //       return {
-      //         key: item.label,
-      //         start: moment(startTime2._d).format("HH:mm:ss"),
-      //         end: moment(endTime2._d).format("HH:mm:ss")
-      //       }
-      //     });
-      //   }
-      //   let shopCreateBody = {
-      //     // user_id: userid,
-      //     shop_name: shopName,
-      //     shop_phone: phone,
-      //     shop_description: description,
-      //     shop_profile: response.image_url,
-      //     shop_license_number: licenseNumber,
-      //     //UPDATE FOUNDING DATE VALUE
-      //     shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
-      //     shop_delivery_range: deliveryRange,
-      //     shop_schedules: [...shop_schedule1, ...shop_schedule2]
-      //   };
+      console.log(mFile.length);
+      if (mFile.length > 3) {
+        alert("You can choose only 3 images at a time");
+        setMFile(null);
+        return;
+      }
+      else {
+        for (let i = 0; i < mFile.length; i++) {
+          let formdata = new FormData();
+          formdata.append('image', mFile[i]);
+          instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+            let tempBannerURL = bannerURL;
+            tempBannerURL[i] = res.image_url;
+            // setBannerURL(...bannerURL, tempBannerURL);
+            setBannerURL([...bannerURL, res.image_url]);
+          });
+        }
+      }
 
-      //   let error = false;
-      //   Object.keys(shopCreateBody).forEach((key) => {
-      //     if (!error && shopCreateBody[key] === "") {
-      //       toast.error("One or more fields are empty.");
-      //       error = true;
-      //     }
-      //   });
-      //   if (!error) {
-      //     let body = {
-      //       name: vendorName,
-      //       phone: phone,
-      //       ...(email ? { email: email } : {}),
-      //       password: password,
-      //       role_id: 2,
-      //     };
-      //     console.log(body)
-      //     instance.post(API.CREATE_USER, body).then(function (response) {
-      //       shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
-      //       console.log(shopCreateBody);
-      //       // instance
-      //       //   .post(API.CREATE_SHOP, shopCreateBody)
-      //       //   .then(function (shopCreateResponse) {
-      //       //     setAddressableID(shopCreateResponse?.shop?.id);
-      //       //     setAddressForm({
-      //       //       ...addressForm,
-      //       //       addressable_id: shopCreateResponse?.shop?.id,
-      //       //     });
-      //       //     console.log(shopCreateResponse?.shop?.id);
-      //       //     toast.success("Vendor Created. Add Address Details Now.");
-      //       //   });
-      //     });
-      //   }
-      // });
+
+      let temp = selected;
+      let shop_schedule1 = temp.map((item) => {
+        return {
+          key: item.label,
+          start: moment(startTime1._d).format("HH:mm:ss"),
+          end: moment(endTime1._d).format("HH:mm:ss")
+        }
+      });
+
+      let shop_schedule2 = []
+      let d1 = moment(startTime2._d).format("HH:mm");
+      let d2 = moment(endTime2._d).format("HH:mm");
+      if (d1 !== d2) {
+        shop_schedule2 = temp.map((item) => {
+          return {
+            key: item.label,
+            start: moment(startTime2._d).format("HH:mm:ss"),
+            end: moment(endTime2._d).format("HH:mm:ss")
+          }
+        });
+      }
+      // console.log(bannerURL)
+      console.log(profileURL)
+      console.log(profileURL.length)
+      let shopCreateBody = {
+        // user_id: userid,
+        shop_name: shopName,
+        shop_phone: phone,
+        shop_description: description,
+        shop_banner: bannerURL,
+        shop_profile: profileURL,
+        shop_license_number: licenseNumber,
+        //UPDATE FOUNDING DATE VALUE
+        shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
+        shop_delivery_range: deliveryRange,
+        shop_schedules: [...shop_schedule1, ...shop_schedule2]
+      };
+
+      console.log('final', shopCreateBody)
+      let error = false;
+      Object.keys(shopCreateBody).forEach((key) => {
+        if (!error && shopCreateBody[key] === "") {
+          toast.error("One or more fields are empty.");
+          error = true;
+        }
+      });
+      if (!error) {
+        let body = {
+          name: vendorName,
+          phone: phone,
+          ...(email ? { email: email } : {}),
+          password: password,
+          role_id: 2,
+        };
+        console.log(body)
+        instance.post(API.CREATE_USER, body).then(function (response) {
+          shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
+          console.log(shopCreateBody);
+          instance
+            .post(API.CREATE_SHOP, shopCreateBody)
+            .then(function (shopCreateResponse) {
+              setAddressableID(shopCreateResponse?.shop?.id);
+              setAddressForm({
+                ...addressForm,
+                addressable_id: shopCreateResponse?.shop?.id,
+              });
+              console.log(shopCreateResponse?.shop?.id);
+              toast.success("Vendor Created. Add Address Details Now.");
+            });
+        });
+      }
+
     } else {
       toast.error("No file Picked.");
     }
@@ -430,20 +492,27 @@ function AddVendorForm() {
                         onChange={(e) => setDescription(e.target.value)}
                       ></textarea>
                     </div>
-
-                    {multipleFile?.length <= 2 ? <div class="form-group">
+                    <div class="form-group">
                       <label for="profile">Profile:</label>
                       <input
                         type="file"
                         class="form-control"
                         id="profile"
                         name="profile"
-                        // onChange={(e) => setFile(e.target.files)}
-                        onChange={(e) => { chooseMultipleImg(e) }}
+                        onChange={(e) => setFile(e.target.files)}
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="banner">banner:</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="banner"
+                        name="banner"
+                        onChange={(e) => setMFile(e.target.files)}
                         multiple
                       />
-                    </div> : 'maximum limit exceed'}
-
+                    </div>
                     <div class="form-group">
                       <label for="shoplicensenumber">Shop License Number</label>
                       <input
@@ -645,6 +714,21 @@ function AddVendorForm() {
                     />
                   </div>
 
+
+                  <div class="form-group">
+                    <label for="locality">City</label>
+                    {cities && cities.length > 0 ? (
+                      <select onChange={(event) => handleCitySelect(event)}>
+                        <option value="">Select a City</option>
+                        {cities.map((city) => {
+                          return <option value={city?.id} label={city?.city} />;
+                        })}
+                      </select>
+                    ) : (
+                        "No Cities Found."
+                      )}
+                  </div>
+
                   <div class="form-group">
                     <label for="locality">Locality</label>
 
@@ -671,19 +755,6 @@ function AddVendorForm() {
                       )}
                   </div>
 
-                  <div class="form-group">
-                    <label for="locality">City</label>
-                    {cities && cities.length > 0 ? (
-                      <select onChange={(event) => handleCitySelect(event)}>
-                        <option value="">Select a City</option>
-                        {cities.map((city) => {
-                          return <option value={city?.id} label={city?.city} />;
-                        })}
-                      </select>
-                    ) : (
-                        "No Cities Found."
-                      )}
-                  </div>
 
                   <div class="form-group">
                     <label for="password">Pincode</label>

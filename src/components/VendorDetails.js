@@ -99,7 +99,7 @@ function VendorDetails(props) {
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
         toast.success(res.message)
-        window.location.reload()
+        window.location.reload();
       })
   }
   useEffect(() => {
