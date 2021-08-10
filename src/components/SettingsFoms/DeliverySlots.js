@@ -37,6 +37,7 @@ function DeliverySlots() {
   //   if (time === "start") setStartTime2(e);
   //   else setEndTime2(e);
   // };
+
   useEffect(() => {
     instance.get(API.GET_SETTING_DELIVERY_SLOTS)
       .then(function (response) {
@@ -143,7 +144,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={startTime2}
-                    onChange={(e) => setStartTime1(e)}
+                    onChange={(e) => { console.log(e); setStartTime2(e) }}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -162,7 +163,7 @@ function DeliverySlots() {
                     label="Time picker"
                     ampm={false}
                     value={endTime2}
-                    onChange={(e) => setEndTime1(e)}
+                    onChange={(e) => setEndTime2(e)}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}

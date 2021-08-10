@@ -1,56 +1,81 @@
 // import { FilePicker } from 'react-file-picker'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
-import "date-fns";
+import 'date-fns'
 
-import "../SuperUser.css";
-import "./deliverySlot.css";
+import '../SuperUser.css'
+import './deliverySlot.css'
 
 //for Api
-import API from "../../Utils/ApiConstant";
+import API from '../../Utils/ApiConstant'
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import instance from "../../Utils/axiosConstants";
+import instance from '../../Utils/axiosConstants'
 
 function DeliveryCharge() {
   // time picker
-  const [images, setImages] = useState([]);
-  const [imagesURL, setImagesURL] = useState("");
+  const [images, setImages] = useState([])
+  const [imagesURL, setImagesURL] = useState('')
+  const [preview, setPreview] = useState([])
+  const [file, setFile] = useState([])
+  const [bannerURL, setBannerURL] = useState([])
+
   const form2Submit = async (e) => {
-    e.preventDefault();
-    let formdata = new FormData();
-    formdata.append("image", images[0]);
-    await instance.post(API.IMAGE_UPLOAD, formdata).then(
-      (res) => {
-        setImagesURL(res.image_url);
+    e.preventDefault()
+    console.log(preview)
+    console.log(file.length)
+    if (file.length > 0) {
+      for (let i = 0; i < file.length; i++) {
+        let formdata = new FormData()
+        formdata.append('image', file[i])
+        instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+          let tempBannerURL = bannerURL
+          tempBannerURL[i] = res.image_url
+          setBannerURL([...bannerURL, res.image_url])
+        })
       }
-    )
+    } else {
+      alert('please choose file for banner')
+      return
+    }
+    console.log(bannerURL)
     let imgObj = {
-      "banner": imagesURL
+      banner: bannerURL,
     }
     instance.post(API.SETTING_BANNER_IMG, imgObj).then(function (response) {
-      toast.success("Image Upload Successfully");
-      window.location.href = "/settings";
-    });
+      toast.success('Image Upload Successfully')
+      window.location.href = '/settings'
+    })
+
+    // let formdata = new FormData();
+    // formdata.append("image", images[0]);
+    // await instance.post(API.IMAGE_UPLOAD, formdata).then(
+    //   (res) => {
+    //     setImagesURL(res.image_url);
+    //   }
+    // )
   }
 
-  const selectFile = (e) => {
-    setImages(e.target.files);
-    // let temp = [...images];
-    // console.log(temp.length);
-    // if (e.target.files.length > 0) {
-    //   if (e.target.files.length > 5) alert("Cannot upload more than 5 images");
-    //   else {
-    //     let values = Object.values(e.target.files);
-    //     values.forEach((image) => {
-    //       temp.push(URL.createObjectURL(image));
-    //     });
-    //   }
-    // }
+  const multipleBanner = (e) => {
+    console.log(e.target.files.length)
+    let file = []
+    let tempArray = []
+    for (let i = 0; i < e.target.files.length; i++) {
+      tempArray.push(URL.createObjectURL(e.target.files[i]))
+      file.push(e.target.files[i])
+    }
+    setPreview(tempArray)
+    setFile(file)
+  }
+  const deletePreview = (value, index) => {
+    let tempArray = [].concat(preview.slice(0, index), preview.slice(index + 1))
+    let file = [].concat(file.slice(0, index), file.slice(index + 1))
+    setPreview(tempArray)
+    setFile(file)
+  }
 
-  };
   return (
     <div>
       <div className="deliverySlot-container">
@@ -63,20 +88,49 @@ function DeliveryCharge() {
               placeholder="Upload Banner"
               multiple
               readOnly
-              onChange={selectFile}
+              onChange={(e) => {
+                multipleBanner(e)
+                // setPreview(URL.createObjectURL(e.target.files[0]));
+              }}
             />
           </div>
         </form>
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary submitBtn"
-        onClick={form2Submit}
-      >
-        Submit
-      </button>
+      {console.log('work')}
+      {preview.length > 0
+        ? preview.map((value, index) => {
+            return (
+              <>
+                <img
+                  style={{ marginTop: '20px', width: '50%', height: '5~0%' }}
+                  src={value}
+                  alt="not found image"
+                />
+
+                <button
+                  style={{ marginLeft: '20px' }}
+                  className="btn btn-primary submitBtn"
+                  onClick={() => {
+                    deletePreview(value, index)
+                  }}
+                >
+                  delete
+                </button>
+              </>
+            )
+          })
+        : ''}
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary submitBtn"
+          onClick={form2Submit}
+        >
+          Submit
+        </button>
+      </div>
     </div>
-  );
+  )
 }
 
-export default DeliveryCharge;
+export default DeliveryCharge
