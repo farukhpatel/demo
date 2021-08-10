@@ -351,12 +351,12 @@ function AddVendorForm() {
 
       console.log('final', shopCreateBody)
       let error = false;
-      Object.keys(shopCreateBody).forEach((key) => {
-        if (!error && shopCreateBody[key] === "") {
-          toast.error("One or more fields are empty.");
-          error = true;
-        }
-      });
+      // Object.keys(shopCreateBody).forEach((key) => {
+      //   if (!error && shopCreateBody[key] === "") {
+      //     toast.error("One or more fields are empty.");
+      //     error = true;
+      //   }
+      // });
       if (!error) {
         let body = {
           name: vendorName,
