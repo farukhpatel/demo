@@ -119,7 +119,7 @@ const DropDown = (props) => {
     instance
       .patch(`${API.ASSIGN_DELIVERY_BOY}/${props?.id}`, body)
       .then(function (response) {
-        toast.success("Delivery Boy Asssigned uccessfully.");
+        toast.success("Delivery Boy Asssigned successfully.");
         window.location.reload();
       });
   }
@@ -152,7 +152,7 @@ const DropDown = (props) => {
   );
 };
 
-const TableData = ({ orderType }) => {
+const TableData = ({ orderType, searchKey }) => {
   const classes = useStyles();
 
   // API integration
@@ -166,12 +166,18 @@ const TableData = ({ orderType }) => {
   }
 
   useEffect(() => {
-    instance.get(API[orderType]).then(function (response) {
-      setAssigned(response.orders);
-    });
+    console.log(searchKey)
+    if (searchKey.length > 0) {
+      setAssigned(searchKey);
+    }
+    else {
+      instance.get(`${API[orderType]}`).then(function (response) {
+        setAssigned(response.orders);
+      });
+    }
 
     getDeliveryBoys();
-  }, []);
+  }, [searchKey]);
 
   return (
     <Paper className={classes.root}>
@@ -193,13 +199,13 @@ const TableData = ({ orderType }) => {
           <TableBody>
             {assigned && assigned.length > 0
               ? assigned.map((row, rowIndex) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns && columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column?.id === "user_id" ||
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns && columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column?.id === "user_id" ||
                             column?.id === "order_id" ? (
                               <Link
                                 to={{
@@ -213,44 +219,44 @@ const TableData = ({ orderType }) => {
                               </Link>
                             ) : column?.id === "shop" &&
                               column?.label === "Locality" ? (
-                              `${value?.address?.locality?.locality}`
-                            ) : column?.id === "order_status" &&
-                              value === "Assigned" ? (
-                              <>
-                                {`${value} to ${row?.assigned_to?.name}`}
-                                <DropDown
-                                  orderId={row?.order_id}
-                                  id={row?.id}
-                                  deliveryBoysList={deliveryBoysList}
-                                />
-                              </>
-                            ) : column?.id === "order_status" &&
-                              value === "Picked" ? (
-                              `${value} by ${row?.assigned_to?.name}`
-                            ) : column?.id === "order_status" &&
-                              value === "Delivered" ? (
-                              `${value} by ${row?.assigned_to?.name}`
-                            ) : column?.id === "shop" &&
-                              column?.label === "Seller Name" ? (
-                              value?.shop_name
-                            ) : column?.id === "index" ? (
-                              rowIndex + 1
-                            ) : column?.id === "created_at" ? (
-                              moment(value).format("D MMMM YYYY, h:mm a")
-                            ) : column.id === "slot" ? (
-                              `${moment(
-                                row?.delivery_date,
-                                "DD-MM-YYYY"
-                              ).format("D MMMM")} ${row?.slot}`
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })
+                                `${value?.address?.locality?.locality}`
+                              ) : column?.id === "order_status" &&
+                                value === "Assigned" ? (
+                                  <>
+                                    {`${value} to ${row?.assigned_to?.name}`}
+                                    <DropDown
+                                      orderId={row?.order_id}
+                                      id={row?.id}
+                                      deliveryBoysList={deliveryBoysList}
+                                    />
+                                  </>
+                                ) : column?.id === "order_status" &&
+                                  value === "Picked" ? (
+                                    `${value} by ${row?.assigned_to?.name}`
+                                  ) : column?.id === "order_status" &&
+                                    value === "Delivered" ? (
+                                      `${value} by ${row?.assigned_to?.name}`
+                                    ) : column?.id === "shop" &&
+                                      column?.label === "Seller Name" ? (
+                                        value?.shop_name
+                                      ) : column?.id === "index" ? (
+                                        rowIndex + 1
+                                      ) : column?.id === "created_at" ? (
+                                        moment(value).format("D MMMM YYYY, h:mm a")
+                                      ) : column.id === "slot" ? (
+                                        `${moment(
+                                          row?.delivery_date,
+                                          "DD-MM-YYYY"
+                                        ).format("D MMMM")} ${row?.slot}`
+                                      ) : (
+                                              value
+                                            )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
               : "No Data"}
           </TableBody>
         </Table>

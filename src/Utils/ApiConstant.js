@@ -20,6 +20,7 @@ const API = {
   SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/set-delivery-slots",
   SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/set-delivery-charge",
   SETTING_BANNER_IMG: Config.BASE_URL + "api/admin/set-banner",
+  GET_BANNER_IMG: Config.BASE_URL + "api/admin/get-banner",
   SETTING_TAX: Config.BASE_URL + "api/admin/set-tax",
   GET_SHOP_PRODUCTS: Config.BASE_URL + "api/shop/product/all",
   GET_REVIEWS: Config.BASE_URL + "api/review/all",
@@ -33,6 +34,7 @@ const API = {
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
+  SEARCH_DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4&is_active=1",
   DELIVERY_BOYS_ADD: Config.BASE_URL + "api/user/create",
   DELIVERY_BOYS_UPDATE: Config.BASE_URL + "api/user/update",
   DELIVERY_BOYS_DELETE: Config.BASE_URL + "api/user/delete",

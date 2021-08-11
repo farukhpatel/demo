@@ -1,8 +1,11 @@
 import React from 'react'
 
 function OrderDetails(props) {
+  console.log(props?.location?.state)
   const orderDetails = props?.location?.state?.order || {}
   const orderProducts = props?.location?.state?.order?.order_products || []
+  console.log(orderDetails)
+  console.log(orderProducts);
   return (
     <>
       <div className="main-outer-div">
@@ -41,7 +44,7 @@ function OrderDetails(props) {
                   </h5>
                   <h5>
                     Delivery Status:
-                    <button className="assign-btn">Status</button>
+                    <button className="assign-btn">{orderDetails?.delivered_at === null ? 'Pending' : 'Deliverd'}</button>
                   </h5>
                 </div>
               </div>
@@ -101,7 +104,7 @@ function OrderDetails(props) {
                         <p>
                           {props.location.state.order?.user?.name
                             ? props.location.state.order?.user?.name
-                            : 'Not found'}
+                            : ''}
                         </p>
                       </div>
                     </div>
@@ -113,7 +116,7 @@ function OrderDetails(props) {
                         <p>
                           {props.location.state.order?.user?.phone
                             ? props.location.state.order?.user?.phone
-                            : 'Not found'}
+                            : ''}
                         </p>
                       </div>
                     </div>
@@ -125,7 +128,7 @@ function OrderDetails(props) {
                         <p>
                           {props.location.state.order?.user?.email
                             ? props.location.state.order?.user?.email
-                            : 'Not found'}
+                            : ''}
                         </p>
                       </div>
                     </div>
@@ -134,17 +137,17 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                        <p>{`${orderDetails?.address?.address_line_1 || 'Not found'
+                        <p>{`${orderDetails?.address?.address_line_1 || ''
                           } ${orderDetails?.address?.address_line_2 || ''} ${orderDetails?.address?.address_line_3 || ''
                           }`}</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="customer-details-content-outer-div-bottom">
+                  {/* <div className="customer-details-content-outer-div-bottom">
                     <button className="btn btn-primary">Blocked</button>
                     <button className="btn btn-primary">Reject</button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -164,6 +167,7 @@ function OrderDetails(props) {
                       <th scope="col">Item Name</th>
                       <th scope="col">Item Price</th>
                       <th scope="col">Quantity</th>
+                      <th scope="col">Base unit</th>
                       <th scope="col">Total Price</th>
                     </tr>
                   </thead>
@@ -178,6 +182,7 @@ function OrderDetails(props) {
                             </td>
                             <td>₹{value?.product_total_amount}</td>
                             <td>{value?.product_quantity}</td>
+                            <td>{value?.shop_product?.product?.base_unit}</td>
                             <td>₹{value?.product_net_amount}</td>
                           </tr>
                         )

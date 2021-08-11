@@ -64,11 +64,11 @@ function Home() {
               <i class="far fa-money-bill-alt"></i>Payment Settlement
             </a>
           </li>
-          <li>
+          {/* <li>
             <a href="/banner">
               <i class="far fa-clone"></i>Banner
             </a>
-          </li>
+          </li> */}
           <li>
             <a href="/coupon">
               <i class="fas fa-tags"></i>Coupon

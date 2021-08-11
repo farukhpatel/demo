@@ -79,7 +79,7 @@ const ProductList = () => {
 
                     <input
                       type="text"
-                      placeholder="Search..."
+                      placeholder="Product Name"
                       className="SearchInput"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
@@ -184,17 +184,17 @@ const ProductList = () => {
                         )
                       })
                     ) : (
-                      <>
-                        {' '}
-                        <tr>
+                        <>
                           {' '}
-                          <td colSpan="5">
+                          <tr>
                             {' '}
-                            <h2> No record found </h2>{' '}
-                          </td>{' '}
-                        </tr>{' '}
-                      </>
-                    )}
+                            <td colSpan="5">
+                              {' '}
+                              <h2> No record found </h2>{' '}
+                            </td>{' '}
+                          </tr>{' '}
+                        </>
+                      )}
                   </tbody>
                 </table>
               </div>
