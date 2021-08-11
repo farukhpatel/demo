@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import instance from '../../Utils/axiosConstants'
+import { BorderAll } from '@material-ui/icons'
 
 function DeliveryCharge() {
   // time picker
@@ -24,8 +25,9 @@ function DeliveryCharge() {
 
   const form2Submit = async (e) => {
     e.preventDefault()
-    console.log(preview)
-    console.log(file.length)
+    console.log(file)
+    // console.log(preview)
+    // console.log(file.length)
     if (file.length > 0) {
       for (let i = 0; i < file.length; i++) {
         let formdata = new FormData()
@@ -49,13 +51,11 @@ function DeliveryCharge() {
       window.location.href = '/settings'
     })
 
-    // let formdata = new FormData();
-    // formdata.append("image", images[0]);
-    // await instance.post(API.IMAGE_UPLOAD, formdata).then(
-    //   (res) => {
-    //     setImagesURL(res.image_url);
-    //   }
-    // )
+    let formdata = new FormData()
+    formdata.append('image', images[0])
+    await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+      setImagesURL(res.image_url)
+    })
   }
 
   const multipleBanner = (e) => {
@@ -71,9 +71,9 @@ function DeliveryCharge() {
   }
   const deletePreview = (value, index) => {
     let tempArray = [].concat(preview.slice(0, index), preview.slice(index + 1))
-    let file = [].concat(file.slice(0, index), file.slice(index + 1))
+    let tempFile = [].concat(file.slice(0, index), file.slice(index + 1))
     setPreview(tempArray)
-    setFile(file)
+    setFile(tempFile)
   }
 
   return (
@@ -97,31 +97,46 @@ function DeliveryCharge() {
         </form>
       </div>
       {console.log('work')}
-      {preview.length > 0
-        ? preview.map((value, index) => {
-            return (
-              <>
-                <img
-                  style={{ marginTop: '20px', width: '50%', height: '5~0%' }}
-                  src={value}
-                  alt="not found image"
-                />
-
-                <button
-                  style={{ marginLeft: '20px' }}
-                  className="btn btn-primary submitBtn"
-                  onClick={() => {
-                    deletePreview(value, index)
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        {preview.length > 0
+          ? preview.map((value, index) => {
+              return (
+                <div
+                  style={{
+                    // width: '200px',
+                    height: '100%',
+                    border: 'solid 2px',
+                    display: 'flex',
+                    flexDirection: 'column',
                   }}
                 >
-                  delete
-                </button>
-              </>
-            )
-          })
-        : ''}
+                  <img
+                    style={{
+                      // marginTop: '20px',
+                      width: '200px',
+                      height: '200px',
+                    }}
+                    src={value}
+                    alt="not found image"
+                  />
+
+                  <button
+                    className="btn btn-primary submitBtn"
+                    style={{ margin: '20px' }}
+                    onClick={() => {
+                      deletePreview(value, index)
+                    }}
+                  >
+                    delete
+                  </button>
+                </div>
+              )
+            })
+          : ''}
+      </div>
       <div>
         <button
+          style={{ marginTop: '20px' }}
           type="submit"
           class="btn btn-primary submitBtn"
           onClick={form2Submit}
@@ -129,6 +144,28 @@ function DeliveryCharge() {
           Submit
         </button>
       </div>
+
+      <h1 style={{ textAlign: 'center' }}>Banner Image</h1>
+      <img
+        style={{ margin: '20px 20px 20px 20px', width: '20%', height: '25%' }}
+        src="http://13.127.181.126/bandify/public/storage/1627366095_Screenshot%202021-07-27%20113745.png"
+        alt="not found image"
+      />
+      <img
+        style={{ margin: '20px 20px 20px 20px', width: '20%', height: '25%' }}
+        src="http://13.127.181.126/bandify/public/storage/1627366095_Screenshot%202021-07-27%20113745.png"
+        alt="not found image"
+      />
+      <img
+        style={{ margin: '20px 20px 20px 20px', width: '20%', height: '25%' }}
+        src="http://13.127.181.126/bandify/public/storage/1627366095_Screenshot%202021-07-27%20113745.png"
+        alt="not found image"
+      />
+      <img
+        style={{ margin: '20px 20px 20px 20px', width: '20%', height: '25%' }}
+        src="http://13.127.181.126/bandify/public/storage/1627366095_Screenshot%202021-07-27%20113745.png"
+        alt="not found image"
+      />
     </div>
   )
 }
