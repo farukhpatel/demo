@@ -1136,6 +1136,18 @@ a {
   width: fit-content;
   border: none;
 }
+.assign-btn-red {
+  margin-left: 2%;
+  padding: 1%;
+  background-color: #c72712;
+  color: white;
+  font-family: 'Poppins';
+  border-radius: 999px;
+  outline: none;
+  width: fit-content;
+  border: none;
+}
+
 .details-content {
   margin-left: 3%;
   width: 100%;
