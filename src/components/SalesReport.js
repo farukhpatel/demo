@@ -115,6 +115,76 @@ function SalesReport() {
         console.log(err)
       })
   }
+  const downloadUserReport = (e) => {
+    e.preventDefault()
+    let start_date = moment(from).format('YYYY-MM-DD')
+    let end_date = moment(to).format('YYYY-MM-DD')
+    console.log('user report')
+    let url = `${API.USER_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
+    instance
+      .get(
+        url, {
+        responseType: 'blob'
+      }
+      )
+      .then((response) => {
+        console.log(response)
+        const blob = new Blob([response], {
+          type:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        })
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, 'user-report.xlsx')
+        } else {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'user-report.xlsx')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const downloadShopReport = (e) => {
+    e.preventDefault()
+    let start_date = moment(from).format('YYYY-MM-DD')
+    let end_date = moment(to).format('YYYY-MM-DD')
+    console.log('shop report')
+    let url = `${API.SHOP_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
+    instance
+      .get(
+        url, {
+        responseType: 'blob'
+      }
+      )
+      .then((response) => {
+        console.log(response)
+        const blob = new Blob([response], {
+          type:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        })
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, 'shop-report.xlsx')
+        } else {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'shop.xlsx')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
 
   return (
     <>
@@ -341,7 +411,7 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => { }}
+                      onClick={(e) => { downloadUserReport(e) }}
                       className="assign-btn"
                     >
                       Download User Report{' '}
@@ -350,7 +420,7 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => { }}
+                      onClick={(e) => { downloadShopReport(e) }}
                       className="assign-btn"
                     >
                       Download Vendor Report

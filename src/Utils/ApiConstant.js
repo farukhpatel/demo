@@ -33,6 +33,7 @@ const API = {
   // DASHBOARD API START END
 
   USER: Config.BASE_URL + "api/user/all?role_id=3",
+  USER_REPORT_DOWNLOAD: Config.BASE_URL + "api/user/report",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
   SEARCH_DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4&is_active=1",
   DELIVERY_BOYS_ADD: Config.BASE_URL + "api/user/create",
@@ -41,6 +42,7 @@ const API = {
   DELIVERY_BOYS_ENABLE: Config.BASE_URL + "api/user/delivery-boy/update",
   ASSIGN_DELIVERY_BOY: Config.BASE_URL + "api/order/update",
   VENDOR_API: Config.BASE_URL + "api/shop/all",
+  SHOP_REPORT_DOWNLOAD: Config.BASE_URL + "api/shop/report",
   VENDOR_SEARCH: Config.BASE_URL + "api/shop/active",
   VENDOR_UPDATE: Config.BASE_URL + "api/shop/update",
   VENDOR_DELETE: Config.BASE_URL + "api/shop/delete",
