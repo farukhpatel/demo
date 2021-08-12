@@ -37,10 +37,14 @@ import addCity from "./components/city/addCity";
 import updateCity from "./components/city/updateCity";
 import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
 import Locality from "./components/Locality/Locality";
+import { AddLocation } from "@material-ui/icons";
 import AddLocalities from "./components/Locality/AddLocalities";
 import UpdateLocality from "./components/Locality/UpdateLocality";
 import Notification from "./components/Notification";
 import UpdateShopAddress from "./components/UpdateShopAddress";
+import { getToken, onMessageListener } from "./firebase";
+import { Button, Row, Col, Toast } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import UserDetails from "./components/UserDetails";
 
 Geocode.setLanguage("en");
@@ -55,6 +59,29 @@ function App() {
   };
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
+
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({ title: "", body: "" });
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [a, setA] = useState([]);
+  useEffect(() => {
+    getToken(setTokenFound);
+  }, []);
+
+  onMessageListener()
+    .then((payload) => {
+      setShow(true);
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+      setA([
+        ...a,
+        { title: payload.notification.title, body: payload.notification.body },
+      ]);
+      console.log(payload);
+    })
+    .catch((err) => console.log("failed: ", err));
 
   useEffect(() => {
     function handleResize() {
@@ -76,7 +103,34 @@ function App() {
     </div>
   ) : (
     <>
-      <Switch>
+      <div className="App">
+        {console.log(a)}
+        <Toast
+          onClose={() => setShow(false)}
+          show={show}
+          delay={2000}
+          animation
+          style={{
+            position: "absolute",
+            top: 20,
+            right: 20,
+            minWidth: 200,
+          }}
+        >
+          <Toast.Header>
+            <strong className="mr-auto">{notification.title}</strong>
+            <small>just now</small>
+          </Toast.Header>
+          <Toast.Body>{notification.body}</Toast.Body>
+        </Toast>
+        <header className="App-header">
+          {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>} */}
+          {/* {!isTokenFound && <h1> Need notification permission ❗️ </h1>} */}
+          {/* <img src="ja" className="App-logo" alt="logo" /> */}
+          {/* <button style={{ width: '45px', height: "45px", border: "none", position: 'absolute', right: '0px' }} onClick={() => setShow(true)}><i class="fas fa-bell"></i></button> */}
+        </header>
+      </div>
+      <Switch Switch>
         <Route exact path="/" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={LogIn} />

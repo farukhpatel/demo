@@ -76,11 +76,12 @@ function UpdateVendorForm(props) {
       formdata.append("image", file[0]);
       await instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
         // setProfileImage(response.image_url)
+        // let temp=[res]
         shopUpdateBody = {
           shop_name: shopName,
           shop_phone: phone,
           shop_description: description,
-          shop_profile: response.image_url,
+          shop_profile: [response.image_url],
           shop_license_number: licenseNumber,
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
@@ -96,7 +97,7 @@ function UpdateVendorForm(props) {
       shop_name: shopName,
       shop_phone: phone,
       shop_description: description,
-      shop_profile: profileImage,
+      shop_profile: [profileImage],
       shop_license_number: licenseNumber,
       shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
       shop_delivery_range: deliveryRange,

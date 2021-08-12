@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
 import TableData from "../Utils/TableData";
 
 function AssignedOrders() {
+  const [search, setSearch] = useState('');
+  const [assignOrder, setAssignOrder] = useState([]);
+  const SearchAssignerOrder = (e) => {
+    e.preventDefault();
+    console.log('work', search);
+    instance.get(`${API.ASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
+      console.log(res)
+      if (res?.orders?.length > 0) {
+        setAssignOrder(res.orders);
+      }
+      else {
+        toast.error("not found");
+        // alert("not found");
+      }
+    });
+
+  }
   return (
     <>
       <div className="main-outer-div">
@@ -33,11 +53,26 @@ function AssignedOrders() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Enter order ID"
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={
+                        SearchAssignerOrder
+                      }
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
 
-                <TableData orderType="ASSIGNED_ORDERS" />
+                <TableData orderType="ASSIGNED_ORDERS" searchKey={assignOrder} />
 
               </div>
             </div>

@@ -184,6 +184,7 @@ function OrderDetails(props) {
                       <th scope="col">Item Name</th>
                       <th scope="col">Item Price</th>
                       <th scope="col">Quantity</th>
+                      <th scope="col">Base unit</th>
                       <th scope="col">Total Price</th>
                     </tr>
                   </thead>
@@ -198,6 +199,7 @@ function OrderDetails(props) {
                             </td>
                             <td>₹{value?.product_total_amount}</td>
                             <td>{value?.product_quantity}</td>
+                            <td>{value?.shop_product?.product?.base_unit}</td>
                             <td>₹{value?.product_net_amount}</td>
                           </tr>
                         );

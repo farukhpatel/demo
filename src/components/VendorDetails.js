@@ -17,7 +17,6 @@ import Box from "@material-ui/core/Box";
 import instance from "../Utils/axiosConstants";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import OrderDetails from "./OrderDetails";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,13 +85,16 @@ function VendorDetails(props) {
     longitude: address?.longitude,
   });
   // console.log(addressForm)
+  const [is_shop_active, setIs_shop_active] = useState(
+    vendorDetails?.is_shop_active || true
+  );
   console.log(vendorDetails?.is_shop_active);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const shopActive = (vendorDetails) => {
     let body = {
-      is_shop_active: !vendorDetails.is_shop_active,
+      is_shop_active: !is_shop_active,
     };
     console.log(vendorDetails.id);
     console.log(body);
@@ -100,9 +102,16 @@ function VendorDetails(props) {
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
         toast.success(res.message);
-        window.location.reload();
+        console.log(res);
+        setIs_shop_active(res?.shop?.is_shop_active);
+        console.log(res?.shop?.is_shop_active);
+        // window.location.href = "/vendor"
+        // window.location.reload();
       });
   };
+  useEffect(() => {
+    console.log(is_shop_active, "shop a");
+  }, [is_shop_active]);
   useEffect(() => {
     instance
       .get(
@@ -232,10 +241,12 @@ function VendorDetails(props) {
                   <h5>
                     Shop Status:
                     <button
-                      className="assign-btn"
+                      className={
+                        is_shop_active ? "assign-btn-red" : "assign-btn"
+                      }
                       onClick={() => shopActive(vendorDetails)}
                     >
-                      {vendorDetails?.is_shop_active ? "InActive" : " Active"}
+                      {is_shop_active ? "InActive" : " Active"}
                     </button>
                   </h5>
                 </div>

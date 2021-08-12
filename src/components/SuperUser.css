@@ -1136,6 +1136,18 @@ a {
   width: fit-content;
   border: none;
 }
+.assign-btn-red {
+  margin-left: 2%;
+  padding: 1%;
+  background-color: #c72712;
+  color: white;
+  font-family: 'Poppins';
+  border-radius: 999px;
+  outline: none;
+  width: fit-content;
+  border: none;
+}
+
 .details-content {
   margin-left: 3%;
   width: 100%;
@@ -1538,3 +1550,22 @@ h3 .notificationDescription-text > p {
   padding-left: 10px;
 }
 /* notification css end */
+
+/* setting banner */
+.imagePreview {
+  display: flex;
+  justify-content: space-around;
+}
+.img_main_div {
+  height: 100%;
+  border: solid 2px;
+  display: flex;
+  flex-direction: column;
+}
+.submit_button_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* setting banner end */

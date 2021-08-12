@@ -13,12 +13,28 @@ import instance from "../Utils/axiosConstants";
 const DeliveryManage = () => {
   const arr = [1, 2, 3, 4, 5, 6, 7];
   const [deliveryBoy, setDeliveryBoy] = useState([]);
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     instance.get(API.DELIVERY_BOYS).then(function (response) {
       setDeliveryBoy(response.users);
     });
   }, []);
   const routerHistroy = useHistory();
+  const SearchDeliverBoy = (e) => {
+    e.preventDefault();
+    instance
+      .get(`${API.SEARCH_DELIVERY_BOYS}&user_name=${search}`)
+      .then((res) => {
+        console.log(res);
+        if (res?.users?.length > 0) {
+          toast.success(res.message);
+          setDeliveryBoy(res?.users);
+        } else {
+          toast.error("Delivery boy not found");
+        }
+      });
+  };
   const update = (props) => {
     routerHistroy.push(`updateDeliveryBoy/${props.id}`, props);
   };
@@ -83,8 +99,22 @@ const DeliveryManage = () => {
               >
                 <div className="btn-position">
                   <div className="searchStyle">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+                    <i class="fa fa-search" aria-hidden="true"></i>{" "}
+                    <input
+                      type="text"
+                      placeholder="Delivery Boy"
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        SearchDeliverBoy(e);
+                      }}
+                    >
+                      Search{" "}
+                    </button>
                   </div>
                 </div>
                 <table class="table table-striped">

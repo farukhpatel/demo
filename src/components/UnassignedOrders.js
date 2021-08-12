@@ -42,7 +42,21 @@ function UnassignedOrders() {
   const [deliveryBoysList, setDeliveryBoysList] = useState([]);
 
   const [unassigned, setUnassigned] = useState([]);
+  const [search, setSearch] = useState('');
 
+  const SearchUnAssignerOrder = (e) => {
+    e.preventDefault();
+    console.log('work', search)
+    instance.get(`${API.UNASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
+      if (res?.orders?.length > 0) {
+        setUnassigned(res.orders);
+      } else {
+        toast.error("order not found");
+      }
+
+    })
+
+  }
   function getUnassignedOrders() {
 
     instance.get(API.UNASSIGNED_ORDERS)
@@ -108,7 +122,22 @@ function UnassignedOrders() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Enter order ID..."
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={
+                        SearchUnAssignerOrder
+                      }
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
 
