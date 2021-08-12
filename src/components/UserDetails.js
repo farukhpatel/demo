@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import API from "../Utils/ApiConstant";
-import instance from "../Utils/axiosConstants";
+import React, { useEffect, useState } from 'react'
+import API from '../Utils/ApiConstant'
+import instance from '../Utils/axiosConstants'
 
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import { Box, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import { Box, Typography } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...other } = props
 
   return (
     <div
@@ -26,69 +26,69 @@ function TabPanel(props) {
         </Box>
       )}
     </div>
-  );
+  )
 }
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+    'aria-controls': `simple-tabpanel-${index}`,
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "theme.palette.background.paper",
+    backgroundColor: 'theme.palette.background.paper',
   },
-}));
+}))
 
 const UserDetails = (props) => {
-  const routerHistroy = useHistory();
-  const { userDetails, isDeliveryBoy } = props?.location?.state;
-  const classes = useStyles();
-  const [value, setValue] = useState(0);
-  const [orderDetails, setOrderDetails] = useState([]);
+  const routerHistroy = useHistory()
+  const { userDetails, isDeliveryBoy } = props?.location?.state
+  const classes = useStyles()
+  const [value, setValue] = useState(0)
+  const [orderDetails, setOrderDetails] = useState([])
   const [is_user_blocked, setIs_user_blocked] = useState(
-    userDetails.is_user_blocked
-  );
+    userDetails.is_user_blocked,
+  )
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
   const userOrderDetails = (user_id) => {
     instance
       .get(
-        `${API.VENDOR_TOTAL_ORDER}?user_id=${user_id}&with_order_reviews=1&order_by=desc`
+        `${API.VENDOR_TOTAL_ORDER}?user_id=${user_id}&with_order_reviews=1&order_by=desc`,
       )
       .then((res) => {
-        setOrderDetails(res.orders);
-      });
-  };
+        setOrderDetails(res.orders)
+      })
+  }
   const DeliveryBoyorderDetails = (user_id) => {
     instance.get(`${API.DELIVERYBOY_ORDER_DETAIL}${user_id}`).then((res) => {
-      setOrderDetails(res.orders);
-    });
-  };
+      setOrderDetails(res.orders)
+    })
+  }
 
   useEffect(() => {
     !isDeliveryBoy
       ? userOrderDetails(userDetails.id)
-      : DeliveryBoyorderDetails(userDetails.id);
-  }, []);
+      : DeliveryBoyorderDetails(userDetails.id)
+  }, [])
   const GoOrderDetails = (value) => {
-    routerHistroy.push("/orderdetails", { orderId: value.order_id });
-  };
+    routerHistroy.push('/orderdetails', { orderId: value.order_id })
+  }
   const editDeliveryBoy = () => {
-    routerHistroy.push(`updateDeliveryBoy/${userDetails.id}`, userDetails);
-  };
+    routerHistroy.push(`updateDeliveryBoy/${userDetails.id}`, userDetails)
+  }
   const blockUser = () => {
     instance
       .patch(`${API.USER_UPDATE}${userDetails.id}`, {
         is_user_blocked: !is_user_blocked,
       })
       .then((res) => {
-        setIs_user_blocked(!is_user_blocked);
-      });
-  };
+        setIs_user_blocked(!is_user_blocked)
+      })
+  }
 
   return (
     <>
@@ -97,16 +97,16 @@ const UserDetails = (props) => {
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
               <div className="details-div-left">
-                <i class="fas fa-store fa-3x" style={{ color: "#575353" }}></i>
+                <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
                   <h3>
-                    Name : {userDetails?.name ? userDetails?.name : "Not found"}
+                    Name : {userDetails?.name ? userDetails?.name : 'Not found'}
                   </h3>
-                  <p>{`Phone : ${userDetails?.phone || " "} `}</p>
-                  <p>{`Email : ${userDetails?.email || " "} `}</p>
-                  <p>{`Gender : ${userDetails?.gender || " "} `}</p>
-                  <p>{`D.O.B. : ${userDetails?.birth_date || " "} `}</p>
-                  <div className="customer-details-content-outer-div-bottom">
+                  <p>{`Phone : ${userDetails?.phone || ' '} `}</p>
+                  <p>{`Email : ${userDetails?.email || ' '} `}</p>
+                  <p>{`Gender : ${userDetails?.gender || ' '} `}</p>
+                  <p>{`D.O.B. : ${userDetails?.birth_date || ' '} `}</p>
+                  <div className="">
                     {isDeliveryBoy ? (
                       <button
                         className="btn btn-primary"
@@ -116,10 +116,12 @@ const UserDetails = (props) => {
                       </button>
                     ) : (
                       <button
-                        className="btn btn-primary"
+                        className={
+                          is_user_blocked ? 'assign-btn' : 'assign-btn-red'
+                        }
                         onClick={() => blockUser()}
                       >
-                        {is_user_blocked ? "Un-Block " : "Block"}
+                        {is_user_blocked ? 'Un-Block ' : 'Block'}
                       </button>
                     )}
                   </div>
@@ -128,13 +130,13 @@ const UserDetails = (props) => {
                   <img
                     src={userDetails?.profile_image}
                     alt="image not found"
-                    style={{ width: "20rem", height: "20rem" }}
+                    style={{ width: '20rem', height: '20rem' }}
                   />
                 </div>
               </div>
             </div>
             <div className={classes.root}>
-              <AppBar position="static" style={{ backgroundColor: "#3b1f47" }}>
+              <AppBar position="static" style={{ backgroundColor: '#3b1f47' }}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
@@ -163,7 +165,7 @@ const UserDetails = (props) => {
                         <th scope="col">Delivery date</th>
                       </tr>
                     </thead>
-                    <tbody style={{ textAlign: "center" }}>
+                    <tbody style={{ textAlign: 'center' }}>
                       {orderDetails?.length > 0 ? (
                         orderDetails.map((value, index) => {
                           return (
@@ -178,15 +180,15 @@ const UserDetails = (props) => {
                               <td>{value?.payment_status}</td>
                               <td>{value?.delivery_date}</td>
                             </tr>
-                          );
+                          )
                         })
                       ) : (
                         <tr>
-                          {" "}
+                          {' '}
                           <td colSpan="7">
-                            {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
                         </tr>
                       )}
                     </tbody>
@@ -211,7 +213,7 @@ const UserDetails = (props) => {
                         <th scope="col">Pincode</th>
                       </tr>
                     </thead>
-                    <tbody style={{ textAlign: "center" }}>
+                    <tbody style={{ textAlign: 'center' }}>
                       {userDetails.address?.length > 0 ? (
                         userDetails.address.map((value, index) => {
                           return (
@@ -221,7 +223,7 @@ const UserDetails = (props) => {
                               <td>
                                 {value?.address_line_1}, <br />
                                 {value?.address_line_2}, <br />
-                                {value?.address_line_3}{" "}
+                                {value?.address_line_3}{' '}
                               </td>
                               <td>
                                 {value?.locality.locality}, {value?.city.city}
@@ -230,15 +232,15 @@ const UserDetails = (props) => {
                               </td>
                               <td>{value?.pincode}</td>
                             </tr>
-                          );
+                          )
                         })
                       ) : (
                         <tr>
-                          {" "}
+                          {' '}
                           <td colSpan="5">
-                            {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
                         </tr>
                       )}
                     </tbody>
@@ -250,6 +252,6 @@ const UserDetails = (props) => {
         </div>
       </div>
     </>
-  );
-};
-export default UserDetails;
+  )
+}
+export default UserDetails

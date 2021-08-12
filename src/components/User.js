@@ -120,17 +120,17 @@ function User() {
                         );
                       })
                     ) : (
-                      <>
-                        {" "}
-                        <tr>
+                        <>
                           {" "}
-                          <td colSpan="4">
+                          <tr>
                             {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>{" "}
-                      </>
-                    )}
+                            <td colSpan="4">
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>{" "}
+                        </>
+                      )}
                   </tbody>
                 </table>
               </div>

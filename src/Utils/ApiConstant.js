@@ -71,6 +71,8 @@ const API = {
     Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_LOCALITIES_BY_CITY_ID:
     Config.BASE_URL + "api/address/locality/all?is_active=1",
+  GET_LOCALITIES_ALL:
+    Config.BASE_URL + "api/address/locality/all?is_active=1",
   GET_CITIES:
     Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
   GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",

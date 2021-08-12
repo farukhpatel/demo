@@ -1128,8 +1128,8 @@ a {
 .assign-btn {
   margin-left: 2%;
   padding: 1%;
-  background-color: #77d86a;
-  color: white;
+  background-color: #77d86a !important;
+  color: white !important;
   font-family: 'Poppins';
   border-radius: 999px;
   outline: none;
@@ -1139,8 +1139,8 @@ a {
 .assign-btn-red {
   margin-left: 2%;
   padding: 1%;
-  background-color: #c72712;
-  color: white;
+  background-color: #c72712 !important;
+  color: white !important;
   font-family: 'Poppins';
   border-radius: 999px;
   outline: none;

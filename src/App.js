@@ -41,6 +41,7 @@ import { AddLocation } from '@material-ui/icons'
 import AddLocalities from './components/Locality/AddLocalities'
 import UpdateLocality from './components/Locality/UpdateLocality'
 import Notification from './components/Notification'
+import UserDetails from './components/UserDetails'
 import UpdateShopAddress from './components/UpdateShopAddress'
 import { getToken, onMessageListener } from './firebase'
 import { Button, Row, Col, Toast } from 'react-bootstrap'
@@ -96,89 +97,91 @@ function App() {
       </div>
     </div>
   ) : (
-    <>
-      <div className="App">
-        <Toast
-          onClose={() => setShow(false)}
-          show={show}
-          delay={2000}
-          animation
-          style={{
-            position: 'absolute',
-            top: 20,
-            right: 20,
-            minWidth: 200,
-          }}
-        >
-          <Toast.Header>
-            <strong className="mr-auto">{notification.title}</strong>
-            <small>just now</small>
-          </Toast.Header>
-          <Toast.Body>{notification.body}</Toast.Body>
-        </Toast>
-        <header className="App-header">
-          {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>} */}
-          {/* {!isTokenFound && <h1> Need notification permission ❗️ </h1>} */}
-          {/* <img src="ja" className="App-logo" alt="logo" /> */}
-          {/* <button style={{ width: '45px', height: "45px", border: "none", position: 'absolute', right: '0px' }} onClick={() => setShow(true)}><i class="fas fa-bell"></i></button> */}
-        </header>
-      </div>
-      <Switch Switch>
-        <Route exact path="/" component={LogIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={LogIn} />
-        <div>
-          <Navbar />
-          <Route exact path="/dashboard" component={Home} />
-          <Route exact path="/user" component={User} />
-          <Route exact path="/vendor" component={Vendor} />
-          <Route exact path="/salesreport" component={SalesReport} />
-          <Route exact path="/productlist" component={ProductList} />s
-          <Route
-            exact
-            path="/totalorderrecieved"
-            component={TotalOrderRecievede}
-          />
-          <Route exact path="/customerdetails" component={CustomerDetails} />
-          <Route exact path="/orderdetails" component={OrderDetails} />
-          <Route exact path="/assigned" component={AssignedOrders} />
-          <Route exact path="/outfordelivery" component={PickedOrders} />
-          <Route exact path="/notpicked" component={NotPicked} />
-          <Route exact path="/unassignedorders" component={UnassignedOrders} />
-          <Route exact path="/deliveredorders" component={DeliveredOrders} />
-          <Route exact path="/addvendor" component={AddVendoreForm} />
-          <Route exact path="/updatevendor" component={UpdateVendorForm} />
-          <Route exact path="/vendordetails" component={VendorDetails} />
-          <Route exact path="/addproduct" component={AddProductForm} />
-          <Route exact path="/updateProduct/:id" component={updateProduct} />
-          <Route exact path="/deliverymanage" component={DeliveryManage} />
-          <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
-          <Route exact path="/paymentsettle" component={PaymentSettlement} />
-          <Route exact path="/settings" component={Settings} />
-          <Route exact path="/banner" component={Banner} />
-          <Route exact path="/review" component={Review} />
-          <Route exact path="/coupon" component={Coupon} />
-          <Route exact path="/city" component={city} />
-          <Route exact path="/addcity" component={addCity} />
-          <Route exact path="/updateCity/:id" component={updateCity} />
-          <Route
-            exact
-            path="/updateDeliveryBoy/:id"
-            component={UpdateDeliveryBoy}
-          />
-          <Route exact path="/locality" component={Locality} />
-          <Route exact path="/addLocalities" component={AddLocalities} />
-          <Route exact path="/updateLocality/:id" component={UpdateLocality} />
-          <Route exact path="/notification" component={Notification} />
-          <Route
-            exact
-            path="/updateShopAddress/:id"
-            component={UpdateShopAddress}
-          />
+      <>
+        <div className="App">
+          <Toast
+            onClose={() => setShow(false)}
+            show={show}
+            delay={2000}
+            animation
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              minWidth: 200,
+            }}
+          >
+            <Toast.Header>
+              <strong className="mr-auto">{notification.title}</strong>
+              <small>just now</small>
+            </Toast.Header>
+            <Toast.Body>{notification.body}</Toast.Body>
+          </Toast>
+          <header className="App-header">
+            {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>} */}
+            {/* {!isTokenFound && <h1> Need notification permission ❗️ </h1>} */}
+            {/* <img src="ja" className="App-logo" alt="logo" /> */}
+            {/* <button style={{ width: '45px', height: "45px", border: "none", position: 'absolute', right: '0px' }} onClick={() => setShow(true)}><i class="fas fa-bell"></i></button> */}
+          </header>
         </div>
-      </Switch>
-    </>
-  )
+        <Switch Switch>
+          <Route exact path="/" component={LogIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/login" component={LogIn} />
+          <div>
+            <Navbar />
+            <Route exact path="/dashboard" component={Home} />
+            <Route exact path="/user" component={User} />
+            <Route exact path="/vendor" component={Vendor} />
+            <Route exact path="/salesreport" component={SalesReport} />
+            <Route exact path="/productlist" component={ProductList} />s
+          <Route
+              exact
+              path="/totalorderrecieved"
+              component={TotalOrderRecievede}
+            />
+            <Route exact path="/customerdetails" component={CustomerDetails} />
+            <Route exact path="/orderdetails" component={OrderDetails} />
+            <Route exact path="/userdetails" component={UserDetails} />
+            <Route exact path="/deliveryboydetails" component={UserDetails} />
+            <Route exact path="/assigned" component={AssignedOrders} />
+            <Route exact path="/outfordelivery" component={PickedOrders} />
+            <Route exact path="/notpicked" component={NotPicked} />
+            <Route exact path="/unassignedorders" component={UnassignedOrders} />
+            <Route exact path="/deliveredorders" component={DeliveredOrders} />
+            <Route exact path="/addvendor" component={AddVendoreForm} />
+            <Route exact path="/updatevendor" component={UpdateVendorForm} />
+            <Route exact path="/vendordetails" component={VendorDetails} />
+            <Route exact path="/addproduct" component={AddProductForm} />
+            <Route exact path="/updateProduct/:id" component={updateProduct} />
+            <Route exact path="/deliverymanage" component={DeliveryManage} />
+            <Route exact path="/adddeliveryboy" component={AddDeliveryBoyForm} />
+            <Route exact path="/paymentsettle" component={PaymentSettlement} />
+            <Route exact path="/settings" component={Settings} />
+            <Route exact path="/banner" component={Banner} />
+            <Route exact path="/review" component={Review} />
+            <Route exact path="/coupon" component={Coupon} />
+            <Route exact path="/city" component={city} />
+            <Route exact path="/addcity" component={addCity} />
+            <Route exact path="/updateCity/:id" component={updateCity} />
+            <Route
+              exact
+              path="/updateDeliveryBoy/:id"
+              component={UpdateDeliveryBoy}
+            />
+            <Route exact path="/locality" component={Locality} />
+            <Route exact path="/addLocalities" component={AddLocalities} />
+            <Route exact path="/updateLocality/:id" component={UpdateLocality} />
+            <Route exact path="/notification" component={Notification} />
+            <Route
+              exact
+              path="/updateShopAddress/:id"
+              component={UpdateShopAddress}
+            />
+          </div>
+        </Switch>
+      </>
+    )
 }
 
 export default App
