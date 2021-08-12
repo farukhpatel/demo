@@ -31,6 +31,10 @@ instance.interceptors.response.use(
       return response.data
     else if (response.status === 200 && response?.config?.url?.includes("settlement-report"))
       return response.data
+    else if (response.status === 200 && response?.config?.url?.includes("user/report"))
+      return response.data
+    else if (response.status === 200 && response?.config?.url?.includes("shop/report"))
+      return response.data
     else if (response.status === 200 && response.data.status) {
       if (
         response?.data?.code === 200 &&

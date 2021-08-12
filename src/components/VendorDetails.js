@@ -242,11 +242,11 @@ function VendorDetails(props) {
                     Shop Status:
                     <button
                       className={
-                        is_shop_active ? "assign-btn-red" : "assign-btn"
+                        is_shop_active ? "assign-btn" : "assign-btn-red"
                       }
                       onClick={() => shopActive(vendorDetails)}
                     >
-                      {is_shop_active ? "InActive" : " Active"}
+                      {is_shop_active ? "Active" : " InActive"}
                     </button>
                   </h5>
                 </div>
@@ -435,14 +435,14 @@ function VendorDetails(props) {
                           );
                         })
                       ) : (
-                        <tr>
-                          {" "}
-                          <td colSpan="7">
+                          <tr>
                             {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>
-                      )}
+                            <td colSpan="7">
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>
+                        )}
                     </tbody>
                   </table>
                 </div>

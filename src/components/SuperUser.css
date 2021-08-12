@@ -437,6 +437,7 @@ tbody tr td a {
   margin-top: 4%;
   padding: 1rem;
   border-radius: 1em;
+  overflow-x: scroll;
   /* height: 90vh; */
 }
 

@@ -8,9 +8,20 @@ import API from '../Utils/ApiConstant'
 import { Select } from '@material-ui/core'
 
 import MultiSelect from 'react-multi-select-component'
+import { useHistory } from 'react-router-dom'
+
+const customValueRenderer = (selected, _options) => {
+  return selected.length
+    ? selected.map(({ label }) => '✔️ ' + label)
+    : '😶 No Items Selected'
+}
+
 //for Api
 
 function AddDeliveryBoyForm() {
+  const [selected, setSelected] = useState([])
+  const [options, setOptions] = useState([])
+
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -18,8 +29,19 @@ function AddDeliveryBoyForm() {
   const [password, setPassword] = useState('')
   const [range, setRange] = useState(null)
   const [localities, setLocalities] = useState([])
+  const routerHistroy = useHistory()
   const formSubmit = async (e) => {
     e.preventDefault()
+
+    let temp = []
+    selected.map((value, index) => {
+      temp.push(value.value)
+    })
+
+    let locality_assigned = temp.join()
+    console.log('a', locality_assigned)
+
+    console.log('temp', temp)
     let error = false
     if (name.trim() === '' || password.trim() == '' || phone.trim() == '') {
       toast.error('name ,phone and password are required')
@@ -31,24 +53,34 @@ function AddDeliveryBoyForm() {
         phone: phone,
         email: email,
         aadhaar_number: Number(aadhaar),
+        delivery_range: Number(range),
+        locality_assigned,
         password: password,
         role_id: 4,
       }
       console.log(formData)
       //DELIVERY_BOYS
+
       await instance.post(API.DELIVERY_BOYS_ADD, formData).then((res) => {
-        // console.log(res);
+        console.log(res)
         toast.success(res.message)
-        window.location.href = '/deliverymanage'
+        // window.location.href = '/deliverymanage'
+        // routerHistroy.push(`/deliveryboydetails`, {
+        //   userDetails: res.users,
+        //   isDeliveryBoy: true,
+        // })
       })
     }
   }
-
+  let temp = []
   useEffect(() => {
     instance.get(API.GET_LOCALITIES_ALL).then((res) => {
-      console.log(res.localities)
-      setLocalities(res.localities)
+      res.localities.map((value, index) => {
+        temp.push({ label: value.locality, value: value.locality })
+      })
     })
+    console.log('temp', temp)
+    setOptions(temp)
   }, [])
   return (
     <>
@@ -120,7 +152,17 @@ function AddDeliveryBoyForm() {
                   onChange={(e) => setRange(e.target.value)}
                 />
               </div>
-
+              <div class="form-group">
+                <label for="shopschedule">Select localities</label>
+                {console.log('multi', options)}
+                <MultiSelect
+                  options={options}
+                  value={selected}
+                  onChange={setSelected}
+                  labelledBy="Select"
+                  valueRenderer={customValueRenderer}
+                />
+              </div>
               <div class="form-group">
                 <label for="deliveryboyPhone">Password</label>
                 <input

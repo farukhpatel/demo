@@ -135,7 +135,7 @@ function SalesReport() {
         responseType: 'blob',
       })
       .then((response) => {
-        console.log(response)
+        console.log('response', response)
         const blob = new Blob([response], {
           type:
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

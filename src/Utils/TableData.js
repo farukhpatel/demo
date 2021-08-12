@@ -58,12 +58,20 @@ const columns = [
     minWidth: 170,
     align: "center",
   },
+
   {
     id: "user_id",
     label: "Customer Id",
     minWidth: 170,
     align: "center",
   },
+  {
+    id: "customer_name",
+    label: "Customer_Name",
+    minWidth: 170,
+    align: "center",
+  },
+
   {
     id: "shop",
     label: "Seller Name",
@@ -199,6 +207,7 @@ const TableData = ({ orderType, searchKey }) => {
           <TableBody>
             {assigned && assigned.length > 0
               ? assigned.map((row, rowIndex) => {
+                { console.log(row?.user?.name) }
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns && columns.map((column) => {
@@ -220,37 +229,44 @@ const TableData = ({ orderType, searchKey }) => {
                             ) : column?.id === "shop" &&
                               column?.label === "Locality" ? (
                                 `${value?.address?.locality?.locality}`
-                              ) : column?.id === "order_status" &&
-                                value === "Assigned" ? (
-                                  <>
-                                    {`${value} to ${row?.assigned_to?.name}`}
-                                    <DropDown
-                                      orderId={row?.order_id}
-                                      id={row?.id}
-                                      deliveryBoysList={deliveryBoysList}
-                                    />
-                                  </>
-                                ) : column?.id === "order_status" &&
-                                  value === "Picked" ? (
-                                    `${value} by ${row?.assigned_to?.name}`
-                                  ) : column?.id === "order_status" &&
-                                    value === "Delivered" ? (
+                              ) : column?.id === "customer_name" &&
+                                column?.label === "Customer_Name" ? (
+                                  `${row?.user?.name}`
+                                )
+                                : column?.id === "order_status" &&
+                                  value === "Assigned" ? (
+                                    <>
+                                      {`${value} to ${row?.assigned_to?.name}`}
+                                      <DropDown
+                                        orderId={row?.order_id}
+                                        id={row?.id}
+                                        deliveryBoysList={deliveryBoysList}
+                                      />
+                                    </>
+                                  ) :
+                                  column?.id === "order_status" &&
+                                    value === "Picked" ? (
                                       `${value} by ${row?.assigned_to?.name}`
-                                    ) : column?.id === "shop" &&
-                                      column?.label === "Seller Name" ? (
-                                        value?.shop_name
-                                      ) : column?.id === "index" ? (
-                                        rowIndex + 1
-                                      ) : column?.id === "created_at" ? (
-                                        moment(value).format("D MMMM YYYY, h:mm a")
-                                      ) : column.id === "slot" ? (
-                                        `${moment(
-                                          row?.delivery_date,
-                                          "DD-MM-YYYY"
-                                        ).format("D MMMM")} ${row?.slot}`
-                                      ) : (
-                                              value
-                                            )}
+                                    ) : column?.id === "order_status" &&
+                                      value === "Delivered" ? (
+                                        `${value} by ${row?.assigned_to?.name}`
+                                      ) : column?.id === "shop" &&
+                                        column?.label === "Seller Name" ? (
+                                          value?.shop_name
+                                        ) : column?.id === "index" ? (
+                                          rowIndex + 1
+                                        ) :
+
+                                          column?.id === "created_at" ? (
+                                            moment(value).format("D MMMM YYYY, h:mm a")
+                                          ) : column.id === "slot" ? (
+                                            `${moment(
+                                              row?.delivery_date,
+                                              "DD-MM-YYYY"
+                                            ).format("D MMMM")} ${row?.slot}`
+                                          ) : (
+                                                value
+                                              )}
                         </TableCell>
                       );
                     })}
