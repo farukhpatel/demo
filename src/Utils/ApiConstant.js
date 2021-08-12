@@ -94,6 +94,10 @@ const API = {
   //Report download
   DOWNLOAD_SALES_REPORT: Config.BASE_URL + "api/order/sales-report",
   DOWNLOAD_SETTLEMENT_REPORT: Config.BASE_URL + "api/order/settlement-report",
+
+  //seller wise & data wise
+  SELLER_WISE: Config.BASE_URL + "api/order/sales/seller-wise",
+  DATA_WISE: Config.BASE_URL + "api/order/sales/date-wise",
 };
 
 export default API;

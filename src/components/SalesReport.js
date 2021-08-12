@@ -13,7 +13,6 @@ import instance from '../Utils/axiosConstants'
 import axios from 'axios'
 import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core'
 
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -22,17 +21,20 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-}));
+}))
 
 function SalesReport() {
-  const classes = useStyles();
+  const classes = useStyles()
   let date = new Date()
   date = date.toLocaleDateString()
   const [from, setFrom] = useState(new Date())
   const [to, setTo] = useState(new Date())
-  const [vendor, setVendor] = useState([]);
-  const [id, setId] = useState(0);
+  const [vendor, setVendor] = useState([])
+  const [id, setId] = useState(0)
   const arr = [1, 2, 3, 4, 5, 6, 7]
+  const [dataWise, setDataWise] = useState([])
+  const [sellerWise, setSellerWise] = useState([])
+
   useEffect(() => {
     let date = new Date()
     let start_date = moment(date).add(-1, 'days').format()
@@ -40,7 +42,15 @@ function SalesReport() {
 
     //for shop list
     instance.get(API.GET_ALL_SHOP).then((res) => {
-      setVendor(res.shop);
+      setVendor(res.shop)
+    })
+    //for data-wise
+    instance.get(API.DATA_WISE).then((res) => {
+      setDataWise(res.data)
+    })
+    //for seller-wise
+    instance.get(API.SELLER_WISE).then((res) => {
+      setSellerWise(res.data)
     })
   }, [])
   const downloadSalesReport = (e) => {
@@ -49,13 +59,13 @@ function SalesReport() {
     let end_date = moment(to).format('YYYY-MM-DD')
     console.log('work2')
     console.log(id)
-    let url = `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}` + (id > 0 ? '&shop_id=' + id : '')
+    let url =
+      `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}` +
+      (id > 0 ? '&shop_id=' + id : '')
     instance
-      .get(
-        url, {
-        responseType: 'blob'
-      }
-      )
+      .get(url, {
+        responseType: 'blob',
+      })
       .then((response) => {
         console.log(response)
         const blob = new Blob([response], {
@@ -79,20 +89,19 @@ function SalesReport() {
       })
   }
 
-
   //settlement report download
   const downloadSettlementReport = (e) => {
     e.preventDefault()
     let start_date = moment(from).format('YYYY-MM-DD')
     let end_date = moment(to).format('YYYY-MM-DD')
     console.log('settlement report')
-    let url = `${API.DOWNLOAD_SETTLEMENT_REPORT}?start_date=${start_date}&end_date=${end_date}` + (id > 0 ? '&shop_id=' + id : '')
+    let url =
+      `${API.DOWNLOAD_SETTLEMENT_REPORT}?start_date=${start_date}&end_date=${end_date}` +
+      (id > 0 ? '&shop_id=' + id : '')
     instance
-      .get(
-        url, {
-        responseType: 'blob'
-      }
-      )
+      .get(url, {
+        responseType: 'blob',
+      })
       .then((response) => {
         console.log(response)
         const blob = new Blob([response], {
@@ -120,13 +129,11 @@ function SalesReport() {
     let start_date = moment(from).format('YYYY-MM-DD')
     let end_date = moment(to).format('YYYY-MM-DD')
     console.log('user report')
-    let url = `${API.USER_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
+    let url = `${API.USER_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`
     instance
-      .get(
-        url, {
-        responseType: 'blob'
-      }
-      )
+      .get(url, {
+        responseType: 'blob',
+      })
       .then((response) => {
         console.log(response)
         const blob = new Blob([response], {
@@ -155,13 +162,11 @@ function SalesReport() {
     let start_date = moment(from).format('YYYY-MM-DD')
     let end_date = moment(to).format('YYYY-MM-DD')
     console.log('shop report')
-    let url = `${API.SHOP_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
+    let url = `${API.SHOP_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`
     instance
-      .get(
-        url, {
-        responseType: 'blob'
-      }
-      )
+      .get(url, {
+        responseType: 'blob',
+      })
       .then((response) => {
         console.log(response)
         const blob = new Blob([response], {
@@ -184,7 +189,6 @@ function SalesReport() {
         console.log(err)
       })
   }
-
 
   return (
     <>
@@ -251,20 +255,23 @@ function SalesReport() {
                       <th scope="col">Orders Net Amount</th>
                       <th scope="col">Shipping Charges</th>
                       <th scope="col">Commission</th>
+                      <th scope="col">Tax</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {arr.map((value, index) => {
+                    {dataWise.map((value, index) => {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>
-                          <td className="dateclass">
+                          <td>{value.order_date}</td>
+                          {/* <td className="dateclass">
                             <a href="#">{date}</a>
-                          </td>
-                          <td>5</td>
-                          <td>$6</td>
-                          <td>$0.5</td>
-                          <td>$0.2</td>
+                          </td> */}
+                          <td>{value.number_of_orders}</td>
+                          <td>{`${value.order_net_amount}`}</td>
+                          <td>{value.order_delivery_charge}</td>
+                          <td>{value.order_commission}</td>
+                          <td>{value.order_tax}</td>
                         </tr>
                       )
                     })}
@@ -281,23 +288,25 @@ function SalesReport() {
                   <thead>
                     <tr>
                       <th scope="col">S.No</th>
-                      <th scope="col">Total Sales</th>
-                      <th scope="col">Total Payout</th>
-                      <th scope="col">Total Pending Amount</th>
-                      <th scope="col">Commission</th>
+                      <th scope="col">Shop name</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Total Discount</th>
+                      <th scope="col">Total Commission</th>
+                      <th scope="col">Total tax</th>
+                      <th scope="col">Total Payable Amount</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {arr.map((value, index) => {
+                    {sellerWise.map((value, index) => {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>
-                          <td>
-                            <p>$50 and 20</p>
-                          </td>
-                          <td>$100</td>
-                          <td>$23</td>
-                          <td>$5</td>{' '}
+                          <td>{value.shop_name}</td>
+                          <td>{value.total_amount}</td>
+                          <td>{value.total_discount}</td>
+                          <td>{value.total_commission}</td>
+                          <td>{value.total_tax}</td>
+                          <td>{value.total_payable_amount}</td>
                         </tr>
                       )
                     })}
@@ -359,15 +368,21 @@ function SalesReport() {
                             displayEmpty
                             className={classes.selectEmpty}
                             inputProps={{ 'aria-label': 'Without label' }}
-                            onChange={(e) => { setId(e.target.value) }}
+                            onChange={(e) => {
+                              setId(e.target.value)
+                            }}
                           >
                             <MenuItem value="">
                               <em>All</em>
                             </MenuItem>
                             {vendor.map((items, index) => {
-                              return <MenuItem key={index} value={items.id}> {items.shop_name} </MenuItem>
+                              return (
+                                <MenuItem key={index} value={items.id}>
+                                  {' '}
+                                  {items.shop_name}{' '}
+                                </MenuItem>
+                              )
                             })}
-
                           </Select>
                           {/* <FormHelperText>Without label</FormHelperText> */}
                         </FormControl>
@@ -402,7 +417,9 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => { downloadSettlementReport(e) }}
+                      onClick={(e) => {
+                        downloadSettlementReport(e)
+                      }}
                       className="assign-btn"
                     >
                       Download Settlement Report
@@ -411,7 +428,9 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => { downloadUserReport(e) }}
+                      onClick={(e) => {
+                        downloadUserReport(e)
+                      }}
                       className="assign-btn"
                     >
                       Download User Report{' '}
@@ -420,7 +439,9 @@ function SalesReport() {
                   <div>
                     <button
                       type="submit"
-                      onClick={(e) => { downloadShopReport(e) }}
+                      onClick={(e) => {
+                        downloadShopReport(e)
+                      }}
                       className="assign-btn"
                     >
                       Download Vendor Report
