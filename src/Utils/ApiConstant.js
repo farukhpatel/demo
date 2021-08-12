@@ -7,15 +7,24 @@ const API = {
   // SIGNUP LOGIN API END
 
   // DASHBOARD API START
-  UNASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=1&is_active_subscription=1",
-  ASSIGNED_ORDERS: Config.BASE_URL + "api/order/all?order_status=2&is_active_subscription=1",
-  PICKED: Config.BASE_URL + "api/order/all?order_status=3&is_active_subscription=1",
-  DELIVERED: Config.BASE_URL + "api/order/all?order_status=4&is_active_subscription=1",
+  UNASSIGNED_ORDERS:
+    Config.BASE_URL + "api/order/all?order_status=1&is_active_subscription=1",
+  ORDER_DETAIL: Config.BASE_URL + "api/order/all?order_id=",
+
+  ASSIGNED_ORDERS:
+    Config.BASE_URL + "api/order/all?order_status=2&is_active_subscription=1",
+  PICKED:
+    Config.BASE_URL + "api/order/all?order_status=3&is_active_subscription=1",
+  DELIVERED:
+    Config.BASE_URL + "api/order/all?order_status=4&is_active_subscription=1",
   TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
   VENDOR_TOTAL_ORDER: Config.BASE_URL + "api/order/all",
+  DELIVERYBOY_ORDER_DETAIL:
+    Config.BASE_URL + "api/order/track-deliveries?user_id=",
   GET_DASHBOARD_DATA: Config.BASE_URL + "api/admin/dashboard?",
   GET_SETTING_TAX: Config.BASE_URL + "api/admin/get-tax",
-  GET_SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/get-delivery-charge",
+  GET_SETTING_DELIVERY_CHARGE:
+    Config.BASE_URL + "api/admin/get-delivery-charge",
   GET_SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/get-delivery-slots",
   SETTING_DELIVERY_SLOTS: Config.BASE_URL + "api/admin/set-delivery-slots",
   SETTING_DELIVERY_CHARGE: Config.BASE_URL + "api/admin/set-delivery-charge",
@@ -31,7 +40,8 @@ const API = {
   UPDATE_COUPON: Config.BASE_URL + "api/coupon/update",
   // DASHBOARD API START END
 
-  USER: Config.BASE_URL + "api/user/all?role_id=3",
+  USER: Config.BASE_URL + "api/user/all?role_id=3&with_address=true",
+  USER_UPDATE: Config.BASE_URL + "api/user/update/",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
   DELIVERY_BOYS_ADD: Config.BASE_URL + "api/user/create",
   DELIVERY_BOYS_UPDATE: Config.BASE_URL + "api/user/update",
@@ -53,9 +63,12 @@ const API = {
   UPDATE_PRODUCT: Config.BASE_URL + "api/product/update",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
   DELETE_PRODUCT: Config.BASE_URL + "api/product/delete",
-  GET_LOCALITIES: Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
-  GET_LOCALITIES_BY_CITY_ID: Config.BASE_URL + "api/address/locality/all?is_active=1",
-  GET_CITIES: Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
+  GET_LOCALITIES:
+    Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
+  GET_LOCALITIES_BY_CITY_ID:
+    Config.BASE_URL + "api/address/locality/all?is_active=1",
+  GET_CITIES:
+    Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
   GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",
   CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
   UPDATE_CITIES: Config.BASE_URL + "api/address/city/update",

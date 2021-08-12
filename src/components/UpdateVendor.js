@@ -23,37 +23,51 @@ import MultiSelect from "react-multi-select-component";
 
 function UpdateVendorForm(props) {
   const prop = props.location.state;
-  console.log(prop.shop_schedules)
+  console.log(prop.shop_schedules);
   // form fields var
-  const [timePicker, setTimePicker] = useState(new Date);
+  const [timePicker, setTimePicker] = useState(new Date());
   const [file, setFile] = useState(null);
   const [phone, setPhone] = useState(prop.shop_phone);
   const [description, setDescription] = useState(prop.shop_description);
   const [licenseNumber, setLicenseNumber] = useState(prop.shop_license_number);
+  const [bank_name, setBank_name] = useState(prop.bank_name);
+  const [account_holder_name, setAccount_holder_name] = useState(
+    prop.account_holder_name
+  );
+  const [account_number, setAccount_number] = useState(prop.account_number);
+  const [ifsc_code, setIfsc_code] = useState(prop.ifsc_code);
   const [profileImage, setProfileImage] = useState(prop.shop_profile);
   const [foundationDate, setFoundationDate] = useState(prop.shop_founding_date);
   const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
   const [shopName, setShopName] = useState(prop.shop_name);
-  const [shopSchedule, setShopSchedule] = useState(prop.shop_schedules.filter((value) => value.key !== "Holiday"));
+  const [shopSchedule, setShopSchedule] = useState(
+    prop.shop_schedules.filter((value) => value.key !== "Holiday")
+  );
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
   const handleTimeChange1 = (t, time, index) => {
-    console.log(t)
-    console.log(time)
-    console.log(index)
-    if (time === "start") setShopSchedule((e) => {
-      setTimePicker(t);
-      e[index].start = moment(t).format("HH:mm:ss");
-      return e
-    })
-    else setShopSchedule((e) => { e[index].end = e[index].start = moment(t).format("HH:mm:ss"); console.log(e); return e })
+    console.log(t);
+    console.log(time);
+    console.log(index);
+    if (time === "start")
+      setShopSchedule((e) => {
+        setTimePicker(t);
+        e[index].start = moment(t).format("HH:mm:ss");
+        return e;
+      });
+    else
+      setShopSchedule((e) => {
+        e[index].end = e[index].start = moment(t).format("HH:mm:ss");
+        console.log(e);
+        return e;
+      });
   };
   // form1
   const form1Submit = async (e) => {
     e.preventDefault();
-
+    console.log(profileImage);
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     let shopUpdateBody;
@@ -70,8 +84,12 @@ function UpdateVendorForm(props) {
           shop_license_number: licenseNumber,
           shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
           shop_delivery_range: deliveryRange,
-          shop_schedules: shopSchedule
-        }
+          shop_schedules: shopSchedule,
+          bank_name,
+          account_number,
+          account_holder_name,
+          ifsc_code,
+        };
       });
     }
     let shopUpdateBody2 = {
@@ -82,14 +100,21 @@ function UpdateVendorForm(props) {
       shop_license_number: licenseNumber,
       shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
       shop_delivery_range: deliveryRange,
-      shop_schedules: shopSchedule
+      shop_schedules: shopSchedule,
+      bank_name,
+      account_number,
+      account_holder_name,
+      ifsc_code,
     };
-    instance.patch(`${API.VENDOR_UPDATE}/${prop.id}`, shopUpdateBody ? shopUpdateBody : shopUpdateBody2)
+    instance
+      .patch(
+        `${API.VENDOR_UPDATE}/${prop.id}`,
+        shopUpdateBody ? shopUpdateBody : shopUpdateBody2
+      )
       .then(function (shopCreateResponse) {
         toast.success(shopCreateResponse.message);
-        window.location.href = "/vendor"
+        window.location.href = "/vendor";
       });
-
   };
   return (
     <>
@@ -103,7 +128,6 @@ function UpdateVendorForm(props) {
                   <span className="customSpan"></span>
 
                   <div className="update-form-vendor">
-
                     <div class="form-group">
                       <label for="vendorName">Shop Name</label>
                       <input
@@ -120,7 +144,6 @@ function UpdateVendorForm(props) {
                         type="text"
                         class="form-control"
                         id="shopPhone"
-
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
@@ -141,7 +164,7 @@ function UpdateVendorForm(props) {
                       <label for="shopfoundationdate">
                         Shop Foundation Date
                       </label>
-                      <MuiPickersUtilsProvider utils={MomentUtils} >
+                      <MuiPickersUtilsProvider utils={MomentUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
                             margin="normal"
@@ -178,6 +201,51 @@ function UpdateVendorForm(props) {
                       onChange={(e) => setFile(e.target.files)}
                     />
                   </div>
+
+                  <div className="update-form-vendor">
+                    <div class="form-group ">
+                      <label for="shoplicensenumber">Bank Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="bankname"
+                        value={bank_name}
+                        onChange={(e) => setBank_name(e.target.value)}
+                      />
+                    </div>
+                    <div class="form-group ">
+                      <label for="shoplicensenumber">Account Holder Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="accountholdername"
+                        value={account_holder_name}
+                        onChange={(e) => setAccount_holder_name(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="update-form-vendor">
+                    <div class="form-group ">
+                      <label for="shoplicensenumber">IFSC Code</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="ifsccode"
+                        value={ifsc_code}
+                        onChange={(e) => setIfsc_code(e.target.value)}
+                      />
+                    </div>
+                    <div class="form-group ">
+                      <label for="shoplicensenumber">Account Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="accountNumber"
+                        value={account_number}
+                        onChange={(e) => setAccount_number(e.target.value)}
+                      />
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="shopdescription">Shop Description</label>
                     <textarea
@@ -206,14 +274,20 @@ function UpdateVendorForm(props) {
                             <tr>
                               <td>{value?.key}</td>
                               <td className="datePicker-vendor">
-                                <MuiPickersUtilsProvider utils={MomentUtils} >
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker
                                       margin="normal"
                                       id="time-picker"
                                       ampm={true}
-                                      value={moment(value.start, "HH:mm:ss").format()}
-                                      onChange={(t) => { console.log(t); handleTimeChange1(t, "start", index) }}
+                                      value={moment(
+                                        value.start,
+                                        "HH:mm:ss"
+                                      ).format()}
+                                      onChange={(t) => {
+                                        console.log(t);
+                                        handleTimeChange1(t, "start", index);
+                                      }}
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
                                       }}
@@ -221,29 +295,41 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td><MuiPickersUtilsProvider utils={MomentUtils} >
-                                <Grid container justify="space-around">
-                                  <KeyboardTimePicker
-                                    margin="normal"
-                                    id="time-picker"
-                                    ampm={true}
-                                    value={moment(value.end, "HH:mm:ss").format()}
-                                    onChange={(t) => handleTimeChange1(t, "end", index)}
-                                    KeyboardButtonProps={{
-                                      "aria-label": "change time",
-                                    }}
-                                  />
-                                </Grid>
-                              </MuiPickersUtilsProvider></td>
+                              <td>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                  <Grid container justify="space-around">
+                                    <KeyboardTimePicker
+                                      margin="normal"
+                                      id="time-picker"
+                                      ampm={true}
+                                      value={moment(
+                                        value.end,
+                                        "HH:mm:ss"
+                                      ).format()}
+                                      onChange={(t) =>
+                                        handleTimeChange1(t, "end", index)
+                                      }
+                                      KeyboardButtonProps={{
+                                        "aria-label": "change time",
+                                      }}
+                                    />
+                                  </Grid>
+                                </MuiPickersUtilsProvider>
+                              </td>
                               <td className="datePicker-vendor">
-                                <MuiPickersUtilsProvider utils={MomentUtils} >
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker
                                       margin="normal"
                                       id="time-picker"
                                       ampm={true}
-                                      value={moment(value.start, "HH:mm:ss").format()}
-                                      onChange={(t) => handleTimeChange1(t, "start", index)}
+                                      value={moment(
+                                        value.start,
+                                        "HH:mm:ss"
+                                      ).format()}
+                                      onChange={(t) =>
+                                        handleTimeChange1(t, "start", index)
+                                      }
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
                                       }}
@@ -251,21 +337,28 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td><MuiPickersUtilsProvider utils={MomentUtils} >
-                                <Grid container justify="space-around">
-                                  <KeyboardTimePicker
-                                    margin="normal"
-                                    id="time-picker"
-                                    ampm={true}
-                                    value={moment(value.end, "HH:mm:ss").format()}
-                                    onChange={(t) => { console.log(t); handleTimeChange1(t, "end", index) }}
-                                    KeyboardButtonProps={{
-                                      "aria-label": "change time",
-                                    }}
-                                  />
-                                </Grid>
-                              </MuiPickersUtilsProvider></td>
-
+                              <td>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                  <Grid container justify="space-around">
+                                    <KeyboardTimePicker
+                                      margin="normal"
+                                      id="time-picker"
+                                      ampm={true}
+                                      value={moment(
+                                        value.end,
+                                        "HH:mm:ss"
+                                      ).format()}
+                                      onChange={(t) => {
+                                        console.log(t);
+                                        handleTimeChange1(t, "end", index);
+                                      }}
+                                      KeyboardButtonProps={{
+                                        "aria-label": "change time",
+                                      }}
+                                    />
+                                  </Grid>
+                                </MuiPickersUtilsProvider>
+                              </td>
                             </tr>
                           );
                         })}
