@@ -51,19 +51,27 @@ function UpdateVendorForm(props) {
     console.log(t);
     console.log(time);
     console.log(index);
-    if (time === "start")
-      setShopSchedule((e) => {
-        setTimePicker(t);
-        e[index].start = moment(t).format("HH:mm:ss");
-        return e;
-      });
-    else
-      setShopSchedule((e) => {
-        e[index].end = e[index].start = moment(t).format("HH:mm:ss");
-        console.log(e);
-        return e;
-      });
+    let temp = [...shopSchedule];
+    console.log(temp[index][time], "temp");
+    temp[index][time] = moment(t).format("HH:mm:ss");
+    setShopSchedule(temp);
   };
+  const handleCheckbox = (e, name, index) => {
+    const { checked } = e.target;
+    console.log("name", name, "value", checked, index);
+    // setShopSchedule((slots) => {
+    //   slots[index][name] = checked;
+    //   return slots;
+    // });
+    let temp = [...shopSchedule];
+    console.log(temp[index][name], "temp");
+    temp[index][name] = checked;
+    setShopSchedule(temp);
+  };
+
+  useEffect(() => {
+    console.log(shopSchedule, "shop schedules");
+  }, [shopSchedule]);
   // form1
   const form1Submit = async (e) => {
     e.preventDefault();
@@ -262,10 +270,12 @@ function UpdateVendorForm(props) {
                       <thead>
                         <tr>
                           <th scope="col">Day</th>
+                          <th scope="col">Morning Slot Active</th>
                           <th scope="col">Morning Schedule Start</th>
                           <th scope="col">Morning Schedule End</th>
                           <th scope="col">Evening Schedule Start</th>
                           <th scope="col">Evening Schedule End</th>
+                          <th scope="col">Evening Slot Active</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -274,6 +284,20 @@ function UpdateVendorForm(props) {
                           return (
                             <tr>
                               <td>{value?.key}</td>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  name="is_morning_slot_active"
+                                  onChange={(e) =>
+                                    handleCheckbox(
+                                      e,
+                                      "is_morning_slot_active",
+                                      index
+                                    )
+                                  }
+                                  value={value?.is_morning_slot_active}
+                                ></input>
+                              </td>
                               <td className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
@@ -282,12 +306,17 @@ function UpdateVendorForm(props) {
                                       id="time-picker"
                                       ampm={true}
                                       value={moment(
-                                        value.start,
+                                        value.morning_start_time,
                                         "HH:mm:ss"
                                       ).format()}
+                                      disabled={!value.is_morning_slot_active}
                                       onChange={(t) => {
                                         console.log(t);
-                                        handleTimeChange1(t, "start", index);
+                                        handleTimeChange1(
+                                          t,
+                                          "morning_start_time",
+                                          index
+                                        );
                                       }}
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
@@ -304,11 +333,16 @@ function UpdateVendorForm(props) {
                                       id="time-picker"
                                       ampm={true}
                                       value={moment(
-                                        value.end,
+                                        value.morning_end_time,
                                         "HH:mm:ss"
                                       ).format()}
+                                      disabled={!value.is_morning_slot_active}
                                       onChange={(t) =>
-                                        handleTimeChange1(t, "end", index)
+                                        handleTimeChange1(
+                                          t,
+                                          "morning_end_time",
+                                          index
+                                        )
                                       }
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
@@ -317,6 +351,20 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  name="is_evening_slot_active"
+                                  onChange={(e) =>
+                                    handleCheckbox(
+                                      e,
+                                      "is_evening_slot_active",
+                                      index
+                                    )
+                                  }
+                                  value={value?.is_evening_slot_active}
+                                ></input>
+                              </td>
                               <td className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
@@ -324,12 +372,17 @@ function UpdateVendorForm(props) {
                                       margin="normal"
                                       id="time-picker"
                                       ampm={true}
+                                      disabled={!value.is_evening_slot_active}
                                       value={moment(
-                                        value.start,
+                                        value.evening_start_time,
                                         "HH:mm:ss"
                                       ).format()}
                                       onChange={(t) =>
-                                        handleTimeChange1(t, "start", index)
+                                        handleTimeChange1(
+                                          t,
+                                          "evening_start_time",
+                                          index
+                                        )
                                       }
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
@@ -346,12 +399,17 @@ function UpdateVendorForm(props) {
                                       id="time-picker"
                                       ampm={true}
                                       value={moment(
-                                        value.end,
+                                        value.evening_end_time,
                                         "HH:mm:ss"
                                       ).format()}
+                                      disabled={!value.is_evening_slot_active}
                                       onChange={(t) => {
                                         console.log(t);
-                                        handleTimeChange1(t, "end", index);
+                                        handleTimeChange1(
+                                          t,
+                                          "evening_end_time",
+                                          index
+                                        );
                                       }}
                                       KeyboardButtonProps={{
                                         "aria-label": "change time",
