@@ -55,7 +55,7 @@ function Coupon() {
   const [usage_limit_per_coupon, setUsage_limit_per_coupon] = useState(null)
   const [usage_limit_per_user, setUsage_limit_per_user] = useState(null);
   const [coupon_code, setCoupon_code] = useState(null);
-
+  const [coupon_date, setCoupon_date] = useState(new Date);
   const routerHistory = useHistory()
   const handleChangeCoupon = (coupon) => {
     let body = {
@@ -69,6 +69,14 @@ function Coupon() {
         window.location.reload();
       });
   };
+  useEffect(() => {
+    const date = new Date();
+    let time = `${moment(date).format('YYYY-MM-DD')}` + "T" + `${moment(date).format('HH:MM')}`
+    console.log(time);
+    setCoupon_date(time);
+    setStart_date(time);
+    setEnd_date(time);
+  }, []);
   const Submit = (e) => {
     e.preventDefault();
     let couponData = {
@@ -177,13 +185,15 @@ function Coupon() {
                   />
                 </div>
                 <div class="form-group">
+
                   <label for="startdate">Start Date</label>
                   <br />
                   <TextField
                     id="datetime-local"
                     label=""
                     type="datetime-local"
-                    defaultValue="2017-05-24T10:30"
+                    value={start_date}
+                    // defaultValue={coupon_date}
                     onChange={(e) => setStart_date(e.target.value)}
                     className={classes.textField}
                     InputLabelProps={{
@@ -198,7 +208,7 @@ function Coupon() {
                     id="datetime-local"
                     label=""
                     type="datetime-local"
-                    defaultValue="2017-05-24T10:30"
+                    value={end_date}
                     onChange={(e) => setEnd_date(e.target.value)}
                     className={classes.textField}
                     InputLabelProps={{
@@ -299,6 +309,9 @@ function Coupon() {
                   return (
                     <div className="coupon-details">
                       <div className="coupon-details-text">
+                        {coupon?.coupon_name && (
+                          <h6>{`Coupon name:- ${coupon?.coupon_name}`}</h6>
+                        )}
                         {coupon?.start_date && (
                           <h6>{`Start Date:- ${coupon?.start_date}`}</h6>
                         )}

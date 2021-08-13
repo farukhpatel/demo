@@ -32,7 +32,10 @@ function AddDeliveryBoyForm() {
   const routerHistroy = useHistory()
   const formSubmit = async (e) => {
     e.preventDefault()
-
+    if (phone.length !== 10) {
+      toast.error("Phone number should have exactly 10 digits.");
+      return;
+    }
     let temp = []
     selected.map((value, index) => {
       temp.push(value.value)
@@ -115,6 +118,7 @@ function AddDeliveryBoyForm() {
                   class="form-control"
                   id="deliveryboyPhone"
                   placeholder="Phone"
+                  size="10"
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>

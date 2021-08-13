@@ -48,6 +48,7 @@ function AddProductForm() {
         })
         if (!error) {
           instance.post(API.CREATE_PRODUCT, body).then(function (response) {
+            console.log("product added")
             toast.success('Successful creation of shop')
             window.location.href = '/productlist'
           })
@@ -99,14 +100,14 @@ function AddProductForm() {
               {preview === '' ? (
                 ''
               ) : (
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img
-                      style={{ width: '50%', height: '5~0%' }}
-                      src={preview}
-                      alt="not found image"
-                    />
-                  </div>
-                )}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    style={{ width: '50%', height: '5~0%' }}
+                    src={preview}
+                    alt="not found image"
+                  />
+                </div>
+              )}
               <div class="form-group">
                 <label for="baseUnit">Commission</label>
 
