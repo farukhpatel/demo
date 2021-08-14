@@ -21,7 +21,7 @@ function UpdateDeliveryBoy(props) {
     const prop = props.location.state;
     let locality_value = prop?.delivery_boy?.locality_assigned.split(',');
     let temp2 = []
-    locality_value.map((value, index) => {
+    locality_value?.map((value, index) => {
         temp2.push({ label: value, value: value })
     })
     const [selected, setSelected] = useState(temp2)

@@ -3,9 +3,12 @@ import "./SuperUser.css";
 
 import dairy from "../assets/dairy.jpg";
 
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import Grid from '@material-ui/core/Grid'           //clock
-import MomentUtils from '@date-io/moment'
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import Grid from "@material-ui/core/Grid"; //clock
+import MomentUtils from "@date-io/moment";
 
 //for Api
 import API from "../Utils/ApiConstant";
@@ -14,8 +17,8 @@ import moment from "moment";
 
 function Home() {
   const date = new Date();
-  const [from, setFrom] = useState(new Date);
-  const [to, setTo] = useState(moment(date).add(+1, 'days').format());
+  const [from, setFrom] = useState(new Date());
+  const [to, setTo] = useState(new Date());
   const [dashboardData, setDashboardData] = useState({
     active_users: "",
     total_delivery_boys: "",
@@ -28,24 +31,28 @@ function Home() {
   });
   useEffect(() => {
     // {{Base URL}}/api/admin/dashboard?start_date=2019-05-05&end_date=2021-01-01
-    let start_date = moment(from).format('YYYY-MM-DD');
-    let end_date = moment(to).format('YYYY-MM-DD');
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
     // console.log(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`)
-    instance.get(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`).then(function (response) {
-      const data = {
-        active_users: response.active_users,
-        total_delivery_boys: response.total_delivery_boys,
-        total_orders: response.total_orders,
-        total_orders_delivered: response.total_orders_delivered,
-        total_vendors: response.total_vendors,
-        total_subscription_orders: response.total_subscription_orders,
-        Accepted: response?.order_status_count?.Accepted,
-        Assigned: response?.order_status_count?.Assigned,
-        Delivered: response?.order_status_count?.Delivered,
-        Picked: response?.order_status_count?.Picked,
-      };
-      setDashboardData(data);
-    });
+    instance
+      .get(
+        `${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`
+      )
+      .then(function (response) {
+        const data = {
+          active_users: response.active_users,
+          total_delivery_boys: response.total_delivery_boys,
+          total_orders: response.total_orders,
+          total_orders_delivered: response.total_orders_delivered,
+          total_vendors: response.total_vendors,
+          total_subscription_orders: response.total_subscription_orders,
+          Accepted: response?.order_status_count?.Accepted,
+          Assigned: response?.order_status_count?.Assigned,
+          Delivered: response?.order_status_count?.Delivered,
+          Picked: response?.order_status_count?.Picked,
+        };
+        setDashboardData(data);
+      });
   }, [from, to]);
 
   return (
@@ -58,23 +65,22 @@ function Home() {
       <div className="main-outer-div">
         {/* This is for from-to time */}
         <div className="dashboard_time">
-
           <div className="payment-settlement-inputs">
             <form className="payment-form">
               <div class="form-group">
                 <label for="from">From</label>
-                <MuiPickersUtilsProvider
-                  utils={MomentUtils}
-                >
-                  <Grid container justify='space-around'>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
                     <KeyboardDatePicker
                       margin="normal"
                       id="date-picker-dialog"
                       format="DD/MM/yyyy"
-                      onChange={(e) => { setFrom(e._d) }}
+                      onChange={(e) => {
+                        setFrom(e._d);
+                      }}
                       value={from}
                       KeyboardButtonProps={{
-                        'aria-label': 'change date',
+                        "aria-label": "change date",
                       }}
                     />
                   </Grid>
@@ -82,18 +88,18 @@ function Home() {
               </div>
               <div class="form-group">
                 <label for="to">To</label>
-                <MuiPickersUtilsProvider
-                  utils={MomentUtils}
-                >
-                  <Grid container justify='space-around'>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
                     <KeyboardDatePicker
                       margin="normal"
                       id="date-picker-dialog"
                       format="DD/MM/yyyy"
-                      onChange={(e) => { setTo(e._d) }}
+                      onChange={(e) => {
+                        setTo(e._d);
+                      }}
                       value={to}
                       KeyboardButtonProps={{
-                        'aria-label': 'change date',
+                        "aria-label": "change date",
                       }}
                     />
                   </Grid>
@@ -105,8 +111,6 @@ function Home() {
               {/* <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Submit</button> */}
             </form>
           </div>
-
-
         </div>
         {/* {End of time } */}
         <div className="home-outer-div" style={{ paddingTop: "3%" }}>

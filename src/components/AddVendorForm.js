@@ -22,9 +22,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
-import Back from './BackButton/Back';
+import Back from "./BackButton/Back";
 import { ArrowRightAltRounded } from "@material-ui/icons";
-import Files from 'react-files'
+import Files from "react-files";
 const customValueRenderer = (selected, _options) => {
   return selected.length
     ? selected.map(({ label }) => "✔️ " + label)
@@ -34,15 +34,70 @@ const customValueRenderer = (selected, _options) => {
 function AddVendorForm() {
   // multiselect
   const options = [
-    { label: "Monday", value: "monday" },
-    { label: "Tuesday", value: "tuesday" },
-    { label: "Wednesday", value: "wednesday" },
-    { label: "Thursday", value: "thursday" },
-    { label: "Friday", value: "friday" },
-    { label: "Saturday", value: "saturday" },
-    { label: "Sunday", value: "sunday" },
+    {
+      key: "monday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "tuesday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "wednesday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "thursday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "friday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "saturday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
+    {
+      key: "sunday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_morning_slot_active: false,
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
+      is_evening_slot_active: false,
+    },
   ];
-  const [selected, setSelected] = useState([]);
 
   // form fields var
   const [bannerURL, setBannerURL] = useState([]);
@@ -61,6 +116,7 @@ function AddVendorForm() {
   const [localities, setLocalities] = useState([]);
   const [cities, setCities] = useState([]);
   const [addressableId, setAddressableID] = useState("");
+  const [shopSchedule, setShopSchedule] = useState(options);
   const [addressForm, setAddressForm] = useState({
     addressable_id: addressableId,
     addressable_type: "Shop",
@@ -84,10 +140,10 @@ function AddVendorForm() {
     shop_banner: [],
     shop_delivery_range: "",
     shop_description: "",
-    shop_founding_date: '',
+    shop_founding_date: "",
     shop_license_number: "",
-    shop_name: '',
-    shop_phone: '',
+    shop_name: "",
+    shop_phone: "",
     shop_profile: [],
     shop_schedules: [],
   });
@@ -212,25 +268,20 @@ function AddVendorForm() {
   // date picker
   const handleDateChange = (e) => {
     setFoundationDate(e);
-
   };
 
-  // time picker
-  const [startTime1, setStartTime1] = useState(new Date());
-  const [endTime1, setEndTime1] = useState(new Date());
-
-  const [startTime2, setStartTime2] = useState(new Date());
-  const [endTime2, setEndTime2] = useState(new Date());
-
-  const handleTimeChange1 = (e, time) => {
-    if (time === "start") setStartTime1(e);
-    else setEndTime1(e);
+  const handleTimeChange1 = (t, time, index) => {
+    let temp = [...shopSchedule];
+    console.log(temp[index][time], "temp");
+    temp[index][time] = moment(t).format("HH:mm:ss");
+    setShopSchedule(temp);
   };
-  const handleTimeChange2 = (e, time) => {
-    if (time === "start") setStartTime2(e);
-    else setEndTime2(e);
+  const handleCheckbox = (e, name, index) => {
+    const { checked } = e.target;
+    let temp = [...shopSchedule];
+    temp[index][name] = checked;
+    setShopSchedule(temp);
   };
-
   // form1
   const form1Submit = (e) => {
     e.preventDefault();
@@ -240,8 +291,7 @@ function AddVendorForm() {
       toast.error("Phone number should have exactly 10 digits.");
     } else if (password.length < 5) {
       toast.error("Password must be of atleast 5 charcaters");
-    }
-    else {
+    } else {
       document.querySelector(".vendor-form-1").classList.add("hide__form1");
       document.querySelector(".vendor-form-2").classList.add("show-form2");
     }
@@ -277,14 +327,14 @@ function AddVendorForm() {
     // }
     if (mFile && file) {
       let formdata = new FormData();
-      console.log(file[0])
+      console.log(file[0]);
       formdata.append("image", file[0]);
-      console.log(formdata)
+      console.log(formdata);
       // console.log("shop profile")
       let imgurl;
       await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-        console.log("shop profile res")
-        console.log(res)
+        console.log("shop profile res");
+        console.log(res);
         let temp = profileURL;
         temp[0] = res.image_url;
         setShopBody({ shop_profile: temp });
@@ -296,11 +346,10 @@ function AddVendorForm() {
         alert("You can choose only 3 images at a time");
         setMFile(null);
         return;
-      }
-      else {
+      } else {
         for (let i = 0; i < mFile.length; i++) {
           let formdata = new FormData();
-          formdata.append('image', mFile[i]);
+          formdata.append("image", mFile[i]);
           instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
             let tempBannerURL = bannerURL;
             tempBannerURL[i] = res.image_url;
@@ -310,31 +359,9 @@ function AddVendorForm() {
         }
       }
 
-
-      let temp = selected;
-      let shop_schedule1 = temp.map((item) => {
-        return {
-          key: item.label,
-          start: moment(startTime1._d).format("HH:mm:ss"),
-          end: moment(endTime1._d).format("HH:mm:ss")
-        }
-      });
-
-      let shop_schedule2 = []
-      let d1 = moment(startTime2._d).format("HH:mm");
-      let d2 = moment(endTime2._d).format("HH:mm");
-      if (d1 !== d2) {
-        shop_schedule2 = temp.map((item) => {
-          return {
-            key: item.label,
-            start: moment(startTime2._d).format("HH:mm:ss"),
-            end: moment(endTime2._d).format("HH:mm:ss")
-          }
-        });
-      }
       // console.log(bannerURL)
-      console.log(profileURL)
-      console.log(profileURL.length)
+      console.log(profileURL);
+      console.log(profileURL.length);
       let shopCreateBody = {
         // user_id: userid,
         shop_name: shopName,
@@ -346,10 +373,10 @@ function AddVendorForm() {
         //UPDATE FOUNDING DATE VALUE
         shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
         shop_delivery_range: deliveryRange,
-        shop_schedules: [...shop_schedule1, ...shop_schedule2]
+        shop_schedules: shopSchedule,
       };
 
-      console.log('final', shopCreateBody)
+      console.log("final", shopCreateBody);
       let error = false;
       // Object.keys(shopCreateBody).forEach((key) => {
       //   if (!error && shopCreateBody[key] === "") {
@@ -365,7 +392,7 @@ function AddVendorForm() {
           password: password,
           role_id: 2,
         };
-        console.log(body)
+        console.log(body);
         instance.post(API.CREATE_USER, body).then(function (response) {
           shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
           console.log(shopCreateBody);
@@ -382,7 +409,6 @@ function AddVendorForm() {
             });
         });
       }
-
     } else {
       toast.error("No file Picked.");
     }
@@ -400,7 +426,7 @@ function AddVendorForm() {
         <div className="myorders-outer-div">
           {addressableId === "" ? (
             <>
-              <div className="vendor-form-1" style={{ position: 'relative' }}>
+              <div className="vendor-form-1" style={{ position: "relative" }}>
                 <div className="backButton">
                   <Back></Back>
                 </div>
@@ -554,105 +580,172 @@ function AddVendorForm() {
                         onChange={(e) => setDeliveryRange(e.target.value)}
                       />
                     </div>
-                    <div class="form-group">
-                      <label for="shopschedule">
-                        Shop Schedule (IN 24 HOURS FORMAT)
-                      </label>
-                      <MultiSelect
-                        options={options}
-                        value={selected}
-                        onChange={setSelected}
-                        labelledBy="Select"
-                        valueRenderer={customValueRenderer}
-                      />
-                    </div>
-                    <div className="scheduels-container">
-                      <div class="form-group">
-                        <label for="shopschedulestart">
-                          Schedule 1 (Start)
-                        </label>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              label="Time picker"
-                              ampm={false}
-                              value={startTime1}
-                              onChange={(e) => handleTimeChange1(e, "start")}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="shopscheduleend">Schedule 1 (End)</label>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              label="Time picker"
-                              ampm={false}
-                              value={endTime1}
-                              onChange={(e) => handleTimeChange1(e, "end")}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-                    </div>
-                    <div className="scheduels-container">
-                      <div class="form-group">
-                        <label for="shopschedulestart">
-                          Schedule 2 (Start)
-                        </label>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              label="Time picker"
-                              ampm={false}
-                              value={startTime2}
-                              onChange={(e) => handleTimeChange2(e, "start")}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="shopscheduleend">Schedule 2 (End)</label>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                              margin="normal"
-                              id="time-picker"
-                              label="Time picker"
-                              ampm={false}
-                              value={endTime2}
-                              onChange={(e) => handleTimeChange2(e, "end")}
-                              KeyboardButtonProps={{
-                                "aria-label": "change time",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
+                    <div>
+                      <table class="table table-striped ">
+                        <thead>
+                          <tr>
+                            <th scope="col">Day</th>
+                            <th scope="col">Morning Slot Active</th>
+                            <th scope="col">Morning Schedule Start</th>
+                            <th scope="col">Morning Schedule End</th>
+                            <th scope="col">Evening Schedule Start</th>
+                            <th scope="col">Evening Schedule End</th>
+                            <th scope="col">Evening Slot Active</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {shopSchedule.map((value, index) => {
+                            console.log(value);
+                            return (
+                              <tr>
+                                <td>{value?.key}</td>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="is_morning_slot_active"
+                                    onChange={(e) =>
+                                      handleCheckbox(
+                                        e,
+                                        "is_morning_slot_active",
+                                        index
+                                      )
+                                    }
+                                    value={value?.is_morning_slot_active}
+                                  ></input>
+                                </td>
+                                <td className="datePicker-vendor">
+                                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <Grid container justify="space-around">
+                                      <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        ampm={true}
+                                        value={moment(
+                                          value.morning_start_time,
+                                          "HH:mm:ss"
+                                        ).format()}
+                                        disabled={!value.is_morning_slot_active}
+                                        onChange={(t) => {
+                                          console.log(t);
+                                          handleTimeChange1(
+                                            t,
+                                            "morning_start_time",
+                                            index
+                                          );
+                                        }}
+                                        KeyboardButtonProps={{
+                                          "aria-label": "change time",
+                                        }}
+                                      />
+                                    </Grid>
+                                  </MuiPickersUtilsProvider>
+                                </td>
+                                <td>
+                                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <Grid container justify="space-around">
+                                      <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        ampm={true}
+                                        value={moment(
+                                          value.morning_end_time,
+                                          "HH:mm:ss"
+                                        ).format()}
+                                        disabled={!value.is_morning_slot_active}
+                                        onChange={(t) =>
+                                          handleTimeChange1(
+                                            t,
+                                            "morning_end_time",
+                                            index
+                                          )
+                                        }
+                                        KeyboardButtonProps={{
+                                          "aria-label": "change time",
+                                        }}
+                                      />
+                                    </Grid>
+                                  </MuiPickersUtilsProvider>
+                                </td>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="is_evening_slot_active"
+                                    onChange={(e) =>
+                                      handleCheckbox(
+                                        e,
+                                        "is_evening_slot_active",
+                                        index
+                                      )
+                                    }
+                                    value={value?.is_evening_slot_active}
+                                  ></input>
+                                </td>
+                                <td className="datePicker-vendor">
+                                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <Grid container justify="space-around">
+                                      <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        ampm={true}
+                                        disabled={!value.is_evening_slot_active}
+                                        value={moment(
+                                          value.evening_start_time,
+                                          "HH:mm:ss"
+                                        ).format()}
+                                        onChange={(t) =>
+                                          handleTimeChange1(
+                                            t,
+                                            "evening_start_time",
+                                            index
+                                          )
+                                        }
+                                        KeyboardButtonProps={{
+                                          "aria-label": "change time",
+                                        }}
+                                      />
+                                    </Grid>
+                                  </MuiPickersUtilsProvider>
+                                </td>
+                                <td>
+                                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <Grid container justify="space-around">
+                                      <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        ampm={true}
+                                        value={moment(
+                                          value.evening_end_time,
+                                          "HH:mm:ss"
+                                        ).format()}
+                                        disabled={!value.is_evening_slot_active}
+                                        onChange={(t) => {
+                                          console.log(t);
+                                          handleTimeChange1(
+                                            t,
+                                            "evening_end_time",
+                                            index
+                                          );
+                                        }}
+                                        KeyboardButtonProps={{
+                                          "aria-label": "change time",
+                                        }}
+                                      />
+                                    </Grid>
+                                  </MuiPickersUtilsProvider>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
 
                     <button
                       type="submit"
                       class="btn btn-primary submitBtn"
-                      onClick={(e) => { form2Submit(e); }}
+                      onClick={(e) => {
+                        form2Submit(e);
+                      }}
                     >
                       Submit
                     </button>
@@ -661,148 +754,146 @@ function AddVendorForm() {
               </div>
             </>
           ) : (
-              <div className="vendor-form-1 address-form">
-                <h1>Add Address</h1>
-                <form className="vendor-form">
-                  <span className="customSpan"></span>
-                  <div class="form-group">
-                    <label for="vendorName">Address Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="name"
-                      value={addressForm.name}
-                      id="vendorName"
-                      placeholder="Type here..."
-                      onChange={(e) => handleAddressForm(e)}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="vendorName">Address Line 1</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="address_line_1"
-                      value={addressForm.address_line_1}
-                      id="vendorName"
-                      placeholder="Type here..."
-                      onChange={(e) => handleAddressForm(e)}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="phone">Address Line 2</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="address_line_2"
-                      value={addressForm.address_line_2}
-                      id="phone"
-                      placeholder="Type here..."
-                      onChange={(e) => handleAddressForm(e)}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Address Line 3</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="email"
-                      name="address_line_3"
-                      value={addressForm.address_line_3}
-                      placeholder="Type here..."
-                      onChange={(e) => handleAddressForm(e)}
-                    />
-                  </div>
+            <div className="vendor-form-1 address-form">
+              <h1>Add Address</h1>
+              <form className="vendor-form">
+                <span className="customSpan"></span>
+                <div class="form-group">
+                  <label for="vendorName">Address Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    value={addressForm.name}
+                    id="vendorName"
+                    placeholder="Type here..."
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="vendorName">Address Line 1</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="address_line_1"
+                    value={addressForm.address_line_1}
+                    id="vendorName"
+                    placeholder="Type here..."
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="phone">Address Line 2</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="address_line_2"
+                    value={addressForm.address_line_2}
+                    id="phone"
+                    placeholder="Type here..."
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Address Line 3</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="address_line_3"
+                    value={addressForm.address_line_3}
+                    placeholder="Type here..."
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
 
+                <div class="form-group">
+                  <label for="locality">City</label>
+                  {cities && cities.length > 0 ? (
+                    <select onChange={(event) => handleCitySelect(event)}>
+                      <option value="">Select a City</option>
+                      {cities.map((city) => {
+                        return <option value={city?.id} label={city?.city} />;
+                      })}
+                    </select>
+                  ) : (
+                    "No Cities Found."
+                  )}
+                </div>
 
-                  <div class="form-group">
-                    <label for="locality">City</label>
-                    {cities && cities.length > 0 ? (
-                      <select onChange={(event) => handleCitySelect(event)}>
-                        <option value="">Select a City</option>
-                        {cities.map((city) => {
-                          return <option value={city?.id} label={city?.city} />;
+                <div class="form-group">
+                  <label for="locality">Locality</label>
+
+                  {localities && localities.length > 0 ? (
+                    <select
+                      onChange={(event) => {
+                        handleLocalitySelect(event);
+                      }}
+                    >
+                      <option value="">Select Locality</option>
+                      {addressForm &&
+                        addressForm?.city !== "" &&
+                        localities.map((locality) => {
+                          return (
+                            <option
+                              value={locality?.id}
+                              label={locality?.locality}
+                            />
+                          );
                         })}
-                      </select>
-                    ) : (
-                        "No Cities Found."
-                      )}
-                  </div>
+                    </select>
+                  ) : (
+                    "No Localities Found."
+                  )}
+                </div>
 
-                  <div class="form-group">
-                    <label for="locality">Locality</label>
+                <div class="form-group">
+                  <label for="password">Pincode</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    maxLength="6"
+                    minLength="6"
+                    id="pincode"
+                    name="pincode"
+                    value={addressForm.pincode}
+                    placeholder="Enter pincode"
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
 
-                    {localities && localities.length > 0 ? (
-                      <select
-                        onChange={(event) => {
-                          handleLocalitySelect(event);
-                        }}
-                      >
-                        <option value="">Select Locality</option>
-                        {addressForm &&
-                          addressForm?.city !== "" &&
-                          localities.map((locality) => {
-                            return (
-                              <option
-                                value={locality?.id}
-                                label={locality?.locality}
-                              />
-                            );
-                          })}
-                      </select>
-                    ) : (
-                        "No Localities Found."
-                      )}
-                  </div>
+                <div class="form-group">
+                  <label for="password">State</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="state"
+                    readOnly
+                    value={addressForm.state}
+                  />
+                </div>
 
+                <div class="form-group">
+                  <label for="password">Country</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value={addressForm.country}
+                    name="country"
+                    readOnly
+                  />
+                </div>
 
-                  <div class="form-group">
-                    <label for="password">Pincode</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      maxLength="6"
-                      minLength="6"
-                      id="pincode"
-                      name="pincode"
-                      value={addressForm.pincode}
-                      placeholder="Enter pincode"
-                      onChange={(e) => handleAddressForm(e)}
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="password">State</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="state"
-                      readOnly
-                      value={addressForm.state}
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="password">Country</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      value={addressForm.country}
-                      name="country"
-                      readOnly
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    class="btn btn-primary submitBtn"
-                    onClick={(event) => handleAddressFormSubmit(event)}
-                  >
-                    Submit
+                <button
+                  type="submit"
+                  class="btn btn-primary submitBtn"
+                  onClick={(event) => handleAddressFormSubmit(event)}
+                >
+                  Submit
                 </button>
-                </form>
-              </div>
-            )}
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </>
