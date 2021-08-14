@@ -44,10 +44,13 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDetails = (props) => {
   const routerHistroy = useHistory()
-  const { userDetails, isDeliveryBoy } = props?.location?.state
+
+  let { userId, isDeliveryBoy } = props?.location?.state
+  // console.log('user_id', userId)
   const classes = useStyles()
   const [value, setValue] = useState(0)
   const [orderDetails, setOrderDetails] = useState([])
+  const [userDetails, setUserDetails] = useState({})
   const [is_user_blocked, setIs_user_blocked] = useState(
     userDetails.is_user_blocked,
   )
@@ -60,6 +63,7 @@ const UserDetails = (props) => {
         `${API.VENDOR_TOTAL_ORDER}?user_id=${user_id}&with_order_reviews=1&order_by=desc`,
       )
       .then((res) => {
+        console.log('res', res)
         setOrderDetails(res.orders)
       })
   }
@@ -70,9 +74,21 @@ const UserDetails = (props) => {
   }
 
   useEffect(() => {
+    if (userId) {
+      instance.get(`${API.USER_BY_ID}&user_id=${userId}&with_address=1`).then((res) => {
+        setUserDetails(res?.users[0]);
+      })
+      console.log('id', userDetails);
+    } else {
+      setUserDetails(props?.location?.state?.userDetails);
+      userId = props?.location?.state?.userDetails.id
+    }
     !isDeliveryBoy
-      ? userOrderDetails(userDetails.id)
+      ? userOrderDetails(userId)
       : DeliveryBoyorderDetails(userDetails.id)
+
+
+
   }, [])
   const GoOrderDetails = (value) => {
     routerHistroy.push('/orderdetails', { orderId: value.order_id })
@@ -102,10 +118,10 @@ const UserDetails = (props) => {
                   <h3 >
                     Name : {userDetails?.name ? userDetails?.name : 'Not found'}
                   </h3>
-                  <p>{`Phone : ${userDetails?.phone || ' '} `}</p>
-                  <p>{`Email : ${userDetails?.email || ' '} `}</p>
-                  <p>{`Gender : ${userDetails?.gender || ' '} `}</p>
-                  <p>{`D.O.B. : ${userDetails?.birth_date || ' '} `}</p>
+                  <p>{`Phone : ${userDetails?.phone || ''} `}</p>
+                  <p>{`Email : ${userDetails?.email || ''} `}</p>
+                  <p>{`Gender : ${userDetails?.gender || ''} `}</p>
+                  <p>{`D.O.B. : ${userDetails?.birth_date || ''} `}</p>
                   <div className="">
                     {isDeliveryBoy ? (
                       <button
@@ -221,7 +237,7 @@ const UserDetails = (props) => {
                               <th scope="row">{index + 1}</th>
                               <td>{value?.address_type}</td>
                               <td>
-                                {value?.address_line_1}, <br />
+                                {value?.address_line_1} , <br />
                                 {value?.address_line_2}, <br />
                                 {value?.address_line_3}{' '}
                               </td>

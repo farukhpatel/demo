@@ -35,7 +35,7 @@ function AddVendorForm() {
   // multiselect
   const options = [
     {
-      key: "monday",
+      key: "Monday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -44,7 +44,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "tuesday",
+      key: "Tuesday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -53,7 +53,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "wednesday",
+      key: "Wednesday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -62,7 +62,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "thursday",
+      key: "Thursday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -71,7 +71,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "friday",
+      key: "Friday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -80,7 +80,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "saturday",
+      key: "Saturday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -89,7 +89,7 @@ function AddVendorForm() {
       is_evening_slot_active: false,
     },
     {
-      key: "sunday",
+      key: "Sunday",
       morning_start_time: moment(new Date()).format("HH:mm:ss"),
       morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
@@ -303,28 +303,8 @@ function AddVendorForm() {
   const form2Submit = async (e) => {
     e.preventDefault();
     let headers = new Headers();
-    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    // if (file) {
-    //   let formdata = new FormData();
-    //   console.log(file[0])
-    //   formdata.append("image", file[0]);
-    //   console.log(formdata)
-    //   // console.log("shop profile")
-    //   let imgurl;
-    //   instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-    //     console.log("shop profile res")
-    //     console.log(res)
-    //     let temp = profileURL;
-    //     temp[0] = res.image_url;
-    //     setShopBody({ shop_profile:temp});
-    //     setProfileURL(temp);
-    //   });
 
-    // }
-    // else {
-    //   alert("Please picked profile image");
-    //   return;
-    // }
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (mFile && file) {
       let formdata = new FormData();
       console.log(file[0]);
@@ -378,12 +358,12 @@ function AddVendorForm() {
 
       console.log("final", shopCreateBody);
       let error = false;
-      // Object.keys(shopCreateBody).forEach((key) => {
-      //   if (!error && shopCreateBody[key] === "") {
-      //     toast.error("One or more fields are empty.");
-      //     error = true;
-      //   }
-      // });
+      Object.keys(shopCreateBody).forEach((key) => {
+        if (!error && shopCreateBody[key] === "") {
+          toast.error("One or more fields are empty.");
+          error = true;
+        }
+      });
       if (!error) {
         let body = {
           name: vendorName,
@@ -409,8 +389,6 @@ function AddVendorForm() {
             });
         });
       }
-    } else {
-      toast.error("No file Picked.");
     }
   };
 

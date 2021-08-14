@@ -43,6 +43,7 @@ const API = {
 
   USER: Config.BASE_URL + "api/user/all?role_id=3&with_address=true",
   USER_UPDATE: Config.BASE_URL + "api/user/update/",
+  USER_BY_ID: Config.BASE_URL + "api/user/all?role_id=3",
   USER_REPORT_DOWNLOAD: Config.BASE_URL + "api/user/report",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
   SEARCH_DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4&is_active=1",
@@ -86,6 +87,7 @@ const API = {
   PATCH_LOCALITY: Config.BASE_URL + "api/address/locality/update",
   DELETE_LOCALITY: Config.BASE_URL + "api/address/locality/delete",
   //payment api/order/sales?
+  GET_TOTAL_ORDER: Config.BASE_URL + "api/order/all",
   GET_ORDER_SALES: Config.BASE_URL + "api/order/sales?",
   GET_ALL_SHOP: Config.BASE_URL + "api/shop/all",
   PATCH_ORDER_SETTLE: Config.BASE_URL + "api/order/settle",

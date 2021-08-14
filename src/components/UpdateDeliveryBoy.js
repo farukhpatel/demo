@@ -14,12 +14,12 @@ function UpdateDeliveryBoy(props) {
     const customValueRenderer = (selected, _options) => {
         return selected.length
             ? selected.map(({ label }) => '✔️ ' + label)
-            : '😶 No wItems Selected'
+            : '😶 No Items Selected'
     }
 
     let { id } = useParams();
     const prop = props.location.state;
-    let locality_value = prop?.delivery_boy?.locality_assigned.split(',');
+    let locality_value = prop?.delivery_boy?.locality_assigned?.split(',');
     let temp2 = []
     locality_value?.map((value, index) => {
         temp2.push({ label: value, value: value })

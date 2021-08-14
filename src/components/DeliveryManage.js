@@ -176,7 +176,7 @@ const DeliveryManage = () => {
                                       }}
                                     >
                                       Are you Sure you want to Delete this
-                                      review?
+                                      Delivery boy?
                                     </h6>
                                     <button
                                       className="btn btn-primary"

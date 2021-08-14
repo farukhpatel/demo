@@ -1559,8 +1559,10 @@ h3 .notificationDescription-text > p {
 .imagePreview {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 .img_main_div {
+  margin-top: 12px;
   height: 100%;
   border: solid 2px;
   display: flex;

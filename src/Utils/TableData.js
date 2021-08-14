@@ -139,7 +139,7 @@ const DropDown = (props) => {
 
   return (
     <FormControl variant="outlined" className={selectClasses.formControl}>
-      
+
       <InputLabel id="demo-simple-select-outlined-label">Re-Assign</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
@@ -180,82 +180,113 @@ const TableData = ({ orderType, searchKey }) => {
     });
   }
 
+  // useEffect(() => {
+
+  //   console.log(searchKey)
+  //   if (searchKey?.length > 0) {
+  //     setAssigned(searchKey);
+  //   }
+  //   else {
+
+  //     // instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`);
+  //     instance.get(`${API[orderType]}`).then(function (response) {
+  //       setAssigned(response.orders);
+  //     });
+  //   }
+
+  //   getDeliveryBoys();
+  // }, [searchKey]);
+
   useEffect(() => {
 
-    console.log(searchKey)
+    let start_date = moment(from).format('YYYY-MM-DD');
+    let end_date = moment(to).format('YYYY-MM-DD');
+    console.log('ot', orderType)
+
     if (searchKey?.length > 0) {
       setAssigned(searchKey);
     }
-    else {
-      instance.get(`${API[orderType]}`).then(function (response) {
+    if (orderType !== "TOTAL_ORDER_RECIEVED") {
+      instance.get(`${API[orderType]}&delivery_date=${moment().format('YYYY-MM-DD')}`).then(function (response) {
         setAssigned(response.orders);
       });
     }
-
+    if (orderType === "TOTAL_ORDER_RECIEVED") {
+      instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`).then((res) => {
+        console.log('res', res)
+        setAssigned(res.orders);
+      });
+    }
     getDeliveryBoys();
   }, [searchKey]);
-  
-  const Submits=(e)=>{
-  e.preventDefault();
+
+  const Submits = (e) => {
+    e.preventDefault();
     let start_date = moment(from).format("YYYY-MM-DD");
     let end_date = moment(to).format("YYYY-MM-DD");
-  instance.get(`${API[orderType]}&start_date=${start_date}&end_date=${end_date}`).then(function (response) {
-        setAssigned(response.orders);
+    if (orderType === "TOTAL_ORDER_RECIEVED") {
+      instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`).then((res) => {
+        console.log('res', res)
+        setAssigned(res.orders);
       });
-
+    }
   }
+
+
 
   return (
     <>
       {/* This is for from-to time */}
-      <div className="dashboard_time" style={{marginBottom:'20px'}}>
-        <div className="payment-settlement-inputs">
-          <form className="payment-form">
-            <div class="form-group">
-              <label for="from">From</label>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    format="DD/MM/yyyy"
-                    onChange={(e) => {
-                      setFrom(e._d);
-                    }}
-                    value={from}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </div>
-            <div class="form-group">
-              <label for="to">To</label>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    format="DD/MM/yyyy"
-                    onChange={(e) => {
-                      setTo(e._d);
-                    }}
-                    value={to}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </div>
+      {orderType === "TOTAL_ORDER_RECIEVED" ?
+        <div className="dashboard_time" style={{ marginBottom: '20px' }}>
+          <div className="payment-settlement-inputs">
+            <form className="payment-form">
+              <div class="form-group">
+                <label for="from">From</label>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
+                    <KeyboardDatePicker
+                      margin="normal"
+                      id="date-picker-dialog"
+                      format="DD/MM/yyyy"
+                      onChange={(e) => {
+                        setFrom(e._d);
+                      }}
+                      value={from}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </div>
+              <div class="form-group">
+                <label for="to">To</label>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
+                    <KeyboardDatePicker
+                      margin="normal"
+                      id="date-picker-dialog"
+                      format="DD/MM/yyyy"
+                      onChange={(e) => {
+                        setTo(e._d);
+                      }}
+                      value={to}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </div>
 
-            {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
+              {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
 
-            <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Filter</button>
-          </form>
+              <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Filter</button>
+            </form>
+          </div>
         </div>
-      </div>
+        : ''}
       {/* {End of time } */}
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
@@ -281,14 +312,16 @@ const TableData = ({ orderType, searchKey }) => {
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns && columns.map((column) => {
                         const value = row[column.id];
+                        { console.log('row', row) }
                         return (
+
                           <TableCell key={column.id} align={column.align}>
                             {column?.id === "user_id" ||
                               column?.id === "order_id" ? (
                               <Link
                                 to={{
-                                  pathname: "/orderdetails",
-                                  state: { order: row },
+                                  pathname: "/userdetails",
+                                  state: { userId: row.user_id, isDeliveryBoy: false },
                                 }}
                                 style={{ color: "#0dcaf0" }}
                               >

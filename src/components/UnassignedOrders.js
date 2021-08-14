@@ -58,8 +58,7 @@ function UnassignedOrders() {
 
   }
   function getUnassignedOrders() {
-
-    instance.get(API.UNASSIGNED_ORDERS)
+    instance.get(`${API.UNASSIGNED_ORDERS}&delivery_date=${moment().format('YYYY-MM-DD')}`)
       .then(function (response) {
         setUnassigned(response.orders);
       })

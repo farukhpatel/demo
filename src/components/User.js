@@ -24,9 +24,6 @@ function User() {
       isDeliveryBoy: false,
     });
   };
-  const orderDetails = (value) => {
-    routerHistroy.push("/orderdetails", value);
-  };
   const SearchUser = (e) => {
     e.preventDefault();
     instance.get(`${API.USER}&user_name=${search}`).then(function (response) {
@@ -100,10 +97,7 @@ function User() {
                         return (
                           <tr key={index}>
                             <th style={{}}>
-                              <input
-                                type="checkbox"
-                                style={{ marginRight: "7%" }}
-                              />
+
                               {index + 1}
                             </th>
                             <td

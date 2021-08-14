@@ -358,7 +358,7 @@ function UpdateVendorForm(props) {
                                   style={{ width: '1.5rem' }}
                                   type="checkbox"
                                   name="is_evening_slot_active"
-                                  defaultChecked={value?.is__slot_active}
+                                  defaultChecked={value?.is_evening_slot_active}
                                   onChange={(e) =>
                                     handleCheckbox(
                                       e,
