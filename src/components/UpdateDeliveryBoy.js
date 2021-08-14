@@ -1,22 +1,35 @@
 import React from 'react'
 import './SuperUser.css'
 import Back from './BackButton/Back'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
 import instance from '../Utils/axiosConstants';
 import API from '../Utils/ApiConstant';
 import { useParams } from 'react-router-dom';
+import { Select } from '@material-ui/core'
+import MultiSelect from 'react-multi-select-component'
 //for Api
 
 function UpdateDeliveryBoy(props) {
+    const customValueRenderer = (selected, _options) => {
+        return selected.length
+            ? selected.map(({ label }) => '✔️ ' + label)
+            : '😶 No Items Selected'
+    }
+
     let { id } = useParams();
     const prop = props.location.state;
-    // console.log(prop)
+    let locality_assigned = prop?.delivery_boy?.locality_assigned.split(',');
+    const [selected, setSelected] = useState(locality_assigned)
+    const [options, setOptions] = useState([])
+    console.log(selected)
     const [name, setName] = useState(prop.name);
     const [phone, setPhone] = useState(prop.phone);
     const [aadhaar, setAadhaar] = useState(prop?.delivery_boy?.aadhaar_number);
     const [email, setEmail] = useState(prop.email);
     const [password, setPassword] = useState(prop?.password ? prop?.password : "");
+    const [range, setRange] = useState(prop?.delivery_boy?.delivery_range)
+    const [localities, setLocalities] = useState(prop?.locality_assigned)
     const formSubmit = async (e) => {
         e.preventDefault();
         let formData = {
@@ -35,6 +48,16 @@ function UpdateDeliveryBoy(props) {
         })
 
     }
+    let temp = []
+    useEffect(() => {
+        instance.get(API.GET_LOCALITIES_ALL).then((res) => {
+            res.localities.map((value, index) => {
+                temp.push({ label: value.locality, value: value.locality })
+            })
+        })
+        console.log('temp', temp)
+        setOptions(temp)
+    }, [])
     return (
         <>
             <div className="main-outer-div">
@@ -62,6 +85,30 @@ function UpdateDeliveryBoy(props) {
                             <div class="form-group">
                                 <label for="deliveryboyAadhaar">Aadhaar No</label>
                                 <input type="text" required class="form-control" id="deliveryboyAadhaar" placeholder="Aadhaar" onChange={(e) => setAadhaar(e.target.value)} value={aadhaar} />
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryboyRange">Range</label>
+                                {console.log(range)}
+                                <input
+                                    type="text"
+                                    required
+                                    class="form-control"
+                                    id="deliveryboyAadhaar"
+                                    placeholder="Range in km"
+                                    value={range}
+                                    onChange={(e) => setRange(e.target.value)}
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="shopschedule">Select localities</label>
+                                {console.log('multi', options)}
+                                <MultiSelect
+                                    options={options}
+                                    value={selected}
+                                    onChange={setSelected}
+                                    labelledBy="Select"
+                                    valueRenderer={customValueRenderer}
+                                />
                             </div>
                             <div class="form-group">
                                 <label for="deliveryboyPhone">New Password</label>

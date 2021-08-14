@@ -67,7 +67,7 @@ function AddDeliveryBoyForm() {
       await instance.post(API.DELIVERY_BOYS_ADD, formData).then((res) => {
         console.log(res)
         toast.success(res.message)
-        // window.location.href = '/deliverymanage'
+        window.location.href = '/deliverymanage'
         // routerHistroy.push(`/deliveryboydetails`, {
         //   userDetails: res.users,
         //   isDeliveryBoy: true,
