@@ -19,8 +19,12 @@ function UpdateDeliveryBoy(props) {
 
     let { id } = useParams();
     const prop = props.location.state;
-    let locality_assigned = prop?.delivery_boy?.locality_assigned.split(',');
-    const [selected, setSelected] = useState(locality_assigned)
+    let locality_value = prop?.delivery_boy?.locality_assigned.split(',');
+    let temp2 = []
+    locality_value.map((value, index) => {
+        temp2.push({ label: value, value: value })
+    })
+    const [selected, setSelected] = useState(temp2)
     const [options, setOptions] = useState([])
     console.log(selected)
     const [name, setName] = useState(prop.name);
