@@ -99,7 +99,7 @@ const UserDetails = (props) => {
               <div className="details-div-left">
                 <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
-                  <h3>
+                  <h3 >
                     Name : {userDetails?.name ? userDetails?.name : 'Not found'}
                   </h3>
                   <p>{`Phone : ${userDetails?.phone || ' '} `}</p>
@@ -171,7 +171,7 @@ const UserDetails = (props) => {
                           return (
                             <tr align="center" key={index}>
                               <th scope="row">{index + 1}</th>
-                              <td onClick={() => GoOrderDetails(value)}>
+                              <td style={{ color: '#85c1e9' }} onClick={() => GoOrderDetails(value)}>
                                 {value?.order_id}
                               </td>
                               <td>{value?.user_id}</td>

@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SuperUser.css";
 import TableData from "../Utils/TableData";
+import instance from "../Utils/axiosConstants";
+import API from "../Utils/ApiConstant";
+import { toast } from "react-toastify";
 function TotalOrderRecieved() {
+  const [search, setSearch] = useState('')
+  const [searchKey, setSearchKey] = useState('')
+  const searchOrder = (e) => {
+    e.preventDefault();
+    console.log(search)
 
+    instance.get(`${API["TOTAL_ORDER_RECIEVED"]}&order_id=${search}`).then(function (response) {
+      console.log(response);
+      // setAssigned(response.orders);
+      if (response?.orders?.length > 0) {
+        setSearchKey(response?.orders);
+      } else {
+        toast.error("order not found");
+      }
+    });
+  }
   return (
+
     <>
       <div className="main-outer-div">
         <div className="myorders-outer-div">
@@ -31,13 +50,35 @@ function TotalOrderRecieved() {
                 role="tabpanel"
                 aria-labelledby="total-orders-recieved"
               >
-                <div className="btn-position">
+                {/* <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input placeholder="Search..." className="SearchInput" />
                   </div>
+                </div> */}
+                <div className="btn-position">
+                  <div className="searchStyle">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+
+                    <input
+                      type="text"
+                      placeholder="Order Id"
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      onClick={(e) => {
+                        searchOrder(e);
+                      }}
+                    >
+                      Search
+                    </button>
+                  </div>
                 </div>
-                <TableData orderType="TOTAL_ORDER_RECIEVED" />
+
+                <TableData orderType="TOTAL_ORDER_RECIEVED" searchKey={searchKey} />
               </div>
             </div>
           </div>

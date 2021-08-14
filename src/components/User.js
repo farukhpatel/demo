@@ -107,30 +107,31 @@ function User() {
                               {index + 1}
                             </th>
                             <td
+
                               onClick={() => {
                                 // (window.location.href = "/UserDetails")
                                 UserDetails(value);
                               }}
                               style={{ cursor: "pointer" }}
                             >
-                              <p>{value?.name}</p>
+                              <p style={{ color: '#85c1e9' }} >{value?.name}</p>
                             </td>
                             <td>{value?.phone}</td>
                           </tr>
                         );
                       })
                     ) : (
-                        <>
+                      <>
+                        {" "}
+                        <tr>
                           {" "}
-                          <tr>
+                          <td colSpan="4">
                             {" "}
-                            <td colSpan="4">
-                              {" "}
-                              <h2> No record found </h2>{" "}
-                            </td>{" "}
-                          </tr>{" "}
-                        </>
-                      )}
+                            <h2> No record found </h2>{" "}
+                          </td>{" "}
+                        </tr>{" "}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>

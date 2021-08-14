@@ -12,6 +12,8 @@ import API from '../Utils/ApiConstant'
 import instance from '../Utils/axiosConstants'
 import axios from 'axios'
 import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core'
+import { Link, useHistory } from 'react-router-dom'
+import VendorDetails from './VendorDetails'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,6 +36,7 @@ function SalesReport() {
   const arr = [1, 2, 3, 4, 5, 6, 7]
   const [dataWise, setDataWise] = useState([])
   const [sellerWise, setSellerWise] = useState([])
+  const [vendors, setVendors] = useState([]);
 
   useEffect(() => {
     let date = new Date()
@@ -50,6 +53,7 @@ function SalesReport() {
     })
     //for seller-wise
     instance.get(API.SELLER_WISE).then((res) => {
+      console.log(res)
       setSellerWise(res.data)
     })
   }, [])
@@ -189,7 +193,16 @@ function SalesReport() {
         console.log(err)
       })
   }
+  const routerHistroy = useHistory();
 
+  const VendorDetails = (id) => {
+    instance
+      .get(`${API.VENDOR_API}?shop_id=${id}`)
+      .then(function (response) {
+        console.log('r', response.shop)
+        routerHistroy.push(`/vendordetails`, { vendor: response.shop[0] });
+      });
+  };
   return (
     <>
       <div className="main-outer-div">
@@ -301,7 +314,13 @@ function SalesReport() {
                       return (
                         <tr>
                           <th scope="row">{index + 1}</th>
-                          <td>{value.shop_name}</td>
+                          {/* <td>{value.shop_name}</td> */}
+
+                          {console.log(value)}
+                          <td style={{ color: '#85c1e9' }} onClick={() => VendorDetails(value?.shop_id)}>
+                            {value?.shop_name}
+                          </td>
+
                           <td>{value.total_amount}</td>
                           <td>{value.total_discount}</td>
                           <td>{value.total_commission}</td>

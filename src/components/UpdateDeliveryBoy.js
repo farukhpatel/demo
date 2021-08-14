@@ -14,7 +14,7 @@ function UpdateDeliveryBoy(props) {
     const customValueRenderer = (selected, _options) => {
         return selected.length
             ? selected.map(({ label }) => '✔️ ' + label)
-            : '😶 No Items Selected'
+            : '😶 No wItems Selected'
     }
 
     let { id } = useParams();

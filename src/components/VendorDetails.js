@@ -61,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
 function VendorDetails(props) {
   // console.log(props?.location?.state?.vendor?.address)
   let address = props?.location?.state?.vendor?.address || {};
+
+  console.log('vd', props?.location?.state);
   const vendorDetails = props?.location?.state?.vendor || {};
   const [products, setProducts] = useState({});
   const [totalVendorOrder, setTotalVendorOrder] = useState([]);
@@ -435,14 +437,14 @@ function VendorDetails(props) {
                           );
                         })
                       ) : (
-                          <tr>
+                        <tr>
+                          {" "}
+                          <td colSpan="7">
                             {" "}
-                            <td colSpan="7">
-                              {" "}
-                              <h2> No record found </h2>{" "}
-                            </td>{" "}
-                          </tr>
-                        )}
+                            <h2> No record found </h2>{" "}
+                          </td>{" "}
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

@@ -278,16 +278,18 @@ function UpdateVendorForm(props) {
                           <th scope="col">Evening Slot Active</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody style={{ textAlign: 'center' }}>
                         {shopSchedule.map((value, index) => {
                           console.log(value);
                           return (
                             <tr>
-                              <td>{value?.key}</td>
-                              <td>
+                              <td style={{ paddingTop: '16px !important' }}>{value?.key}</td>
+                              <td style={{ paddingTop: '16px !important' }}>
                                 <input
+                                  style={{ width: '1.5rem' }}
                                   type="checkbox"
                                   name="is_morning_slot_active"
+                                  defaultChecked={value?.is_morning_slot_active}
                                   onChange={(e) =>
                                     handleCheckbox(
                                       e,
@@ -298,7 +300,7 @@ function UpdateVendorForm(props) {
                                   value={value?.is_morning_slot_active}
                                 ></input>
                               </td>
-                              <td className="datePicker-vendor">
+                              <td style={{ paddingTop: '16px !important' }} className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker
@@ -325,7 +327,7 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td>
+                              <td style={{ paddingTop: '16px !important' }}>
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker
@@ -351,10 +353,12 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td>
+                              <td style={{ paddingTop: '16px !important' }}>
                                 <input
+                                  style={{ width: '1.5rem' }}
                                   type="checkbox"
                                   name="is_evening_slot_active"
+                                  defaultChecked={value?.is__slot_active}
                                   onChange={(e) =>
                                     handleCheckbox(
                                       e,
@@ -365,7 +369,7 @@ function UpdateVendorForm(props) {
                                   value={value?.is_evening_slot_active}
                                 ></input>
                               </td>
-                              <td className="datePicker-vendor">
+                              <td style={{ paddingTop: '16px !important' }} className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker
@@ -391,7 +395,7 @@ function UpdateVendorForm(props) {
                                   </Grid>
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td>
+                              <td style={{ paddingTop: '16px !important' }}>
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
                                   <Grid container justify="space-around">
                                     <KeyboardTimePicker

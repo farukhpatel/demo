@@ -46,7 +46,7 @@ function DeliverySlots() {
         setMorningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
         setStartTime2(moment(response.slots[1].value.start, "HH:mm:ss").format());
         setEndTime2(moment(response.slots[1].value.end, "HH:mm:ss").format());
-        setEveningCutoff(moment(response.slots[0].value.cutoff, "HH:mm:ss").format());
+        setEveningCutoff(moment(response.slots[1].value.cutoff, "HH:mm:ss").format());
 
       })
   }, []);
@@ -174,6 +174,7 @@ function DeliverySlots() {
 
             <div class="form-group">
               <label for="shopscheduleend">Cut Off Time</label>
+              {console.log(eveningCutoff)}
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <Grid container justify="space-around">
                   <KeyboardTimePicker

@@ -3,7 +3,7 @@ import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
 
 function OrderDetails(props) {
-  // console.log(props);
+  console.log('orderDetails', props);
   const [orderDetails, setOrderDetails] = useState({});
   const [orderProducts, setOrderProducts] = useState([]);
   useEffect(() => {
@@ -11,6 +11,7 @@ function OrderDetails(props) {
       instance
         .get(`${API.ORDER_DETAIL}${props?.location?.state?.orderId}`)
         .then((res) => {
+          console.log(res)
           setOrderDetails(res.orders[0]);
           setOrderProducts(res.orders[0].order_products);
         });
@@ -19,7 +20,9 @@ function OrderDetails(props) {
       setOrderProducts(props?.location?.state?.order?.order_products);
     }
   }, []);
-
+  const refundApi = () => {
+    console.log('o', orderDetails)
+  }
   return (
     <>
       <div className="main-outer-div">
@@ -35,14 +38,11 @@ function OrderDetails(props) {
                       ? orderDetails?.shop?.shop_name
                       : " "}
                   </h2>
-                  <p>{`${orderDetails?.shop?.address?.address_line_1 || " "} ${
-                    orderDetails?.shop?.address?.address_line_2 || ""
-                  } ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
-                  <p>{`${
-                    orderDetails?.shop?.address?.locality?.locality || " "
-                  } ${orderDetails?.shop?.address?.city?.city || ""} ${
-                    orderDetails?.shop?.address?.state || ""
-                  }`}</p>
+                  <p>{`${orderDetails?.shop?.address?.address_line_1 || " "} ${orderDetails?.shop?.address?.address_line_2 || ""
+                    } ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
+                  <p>{`${orderDetails?.shop?.address?.locality?.locality || " "
+                    } ${orderDetails?.shop?.address?.city?.city || ""} ${orderDetails?.shop?.address?.state || ""
+                    }`}</p>
                   <h5>
                     Delivery Boy:
                     <span
@@ -66,7 +66,7 @@ function OrderDetails(props) {
                     </button>
                   </h5>
                   <div className="customer-details-content-outer-div-bottom">
-                    <button className="btn btn-primary">Refund</button>
+                    <button className="btn btn-primary" onClick={refundApi}>Refund</button>
                   </div>
                 </div>
               </div>
@@ -159,9 +159,8 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                        <p>{`${orderDetails?.address?.address_line_1 || " "} ${
-                          orderDetails?.address?.address_line_2 || ""
-                        } ${orderDetails?.address?.address_line_3 || ""}`}</p>
+                        <p>{`${orderDetails?.address?.address_line_1 || " "} ${orderDetails?.address?.address_line_2 || ""
+                          } ${orderDetails?.address?.address_line_3 || ""}`}</p>
                       </div>
                     </div>
                   </div>
@@ -218,7 +217,17 @@ function OrderDetails(props) {
                     )}
                   </tbody>
                 </table>
+                {/* other details*/}
+                <div style={{ marginLeft: '20px' }}>
+                  {console.log('orderDetails', orderDetails)}
+                  <h5>Tax: {orderDetails?.order_tax}</h5>
+                  <h5>Discount: {orderDetails?.order_discount}</h5>
+                  <h5>Delivery Charge: {orderDetails?.delivery_charge}</h5>
+                  <h4>Total amount: {orderDetails?.order_total_amount}</h4>
+                </div>
+                {/* others details end */}
               </div>
+
             </div>
           </div>
         </div>

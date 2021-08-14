@@ -580,7 +580,7 @@ function AddVendorForm() {
                         onChange={(e) => setDeliveryRange(e.target.value)}
                       />
                     </div>
-                    <div>
+                    <div className="form-group" style={{ width: 'initial', overflowX: 'scroll' }}>
                       <table class="table table-striped ">
                         <thead>
                           <tr>

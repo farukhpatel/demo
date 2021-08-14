@@ -109,6 +109,7 @@ function Vendor() {
                             <th scope="row">{index + 1}</th>
 
                             <td>
+
                               <Link
                                 to={{
                                   pathname: "/vendordetails",
@@ -128,21 +129,18 @@ function Vendor() {
                             </td>
 
                             <td>
-                              {`${
-                                value?.address?.address_line_1
-                                  ? `${value?.address?.address_line_1},`
-                                  : " "
-                              }`}
-                              {`${
-                                value?.address?.address_line_2
-                                  ? `${value?.address?.address_line_2},`
-                                  : ""
-                              }`}
-                              {`${
-                                value?.address?.address_line_3
-                                  ? `${value?.address?.address_line_3},`
-                                  : ""
-                              }`}
+                              {`${value?.address?.address_line_1
+                                ? `${value?.address?.address_line_1},`
+                                : " "
+                                }`}
+                              {`${value?.address?.address_line_2
+                                ? `${value?.address?.address_line_2},`
+                                : ""
+                                }`}
+                              {`${value?.address?.address_line_3
+                                ? `${value?.address?.address_line_3},`
+                                : ""
+                                }`}
                               {value?.locality?.locality}
                             </td>
                             <td>

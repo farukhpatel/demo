@@ -547,6 +547,9 @@ tbody td button:hover {
 .vendor-inner-div {
   margin-top: 4%;
 }
+.tableRowOfAddVendor{
+  padding: 0px !important;
+}
 .add-vendor button {
   width: 15%;
   height: 50px;
