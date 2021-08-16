@@ -10,16 +10,22 @@ function AssignedOrders() {
   const SearchAssignerOrder = (e) => {
     e.preventDefault();
     console.log('work', search);
-    instance.get(`${API.ASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
-      console.log(res)
-      if (res?.orders?.length > 0) {
-        setAssignOrder(res.orders);
-      }
-      else {
-        toast.error("not found");
-        // alert("not found");
-      }
-    });
+    if (search === '') {
+      toast.error("order not found");
+    }
+    else {
+      instance.get(`${API.ASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
+
+        if (res?.orders?.length > 0) {
+          console.log('res search', res)
+          toast.success(res.message);
+          setAssignOrder(res.orders);
+        }
+        else {
+          toast.error("not found");
+        }
+      });
+    }
 
   }
   return (
