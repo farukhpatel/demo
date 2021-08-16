@@ -10,16 +10,20 @@ function TotalOrderRecieved() {
   const searchOrder = (e) => {
     e.preventDefault();
     console.log(search)
-
-    instance.get(`${API["TOTAL_ORDER_RECIEVED"]}&order_id=${search}`).then(function (response) {
-      console.log(response);
-      // setAssigned(response.orders);
-      if (response?.orders?.length > 0) {
-        setSearchKey(response?.orders);
-      } else {
-        toast.error("order not found");
-      }
-    });
+    if (search === '') {
+      toast.error("order not found");
+    } else {
+      instance.get(`${API.GET_TOTAL_ORDER}?order_id=${search}`).then(function (response) {
+        console.log('search res', response);
+        // setAssigned(response.orders);
+        if (response?.orders?.length > 0) {
+          toast.success(response.message);
+          setSearchKey(response?.orders);
+        } else {
+          toast.error("order not found");
+        }
+      });
+    }
   }
   return (
 
