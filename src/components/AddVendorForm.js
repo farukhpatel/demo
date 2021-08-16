@@ -298,6 +298,12 @@ function AddVendorForm() {
       toast.error("shop name or shop delivety range are required");
       error = true;
     }
+    if (mFile.length > 3) {
+      toast.error("You can choose only 3 images at a time");
+      error = true;
+      setMFile(null);
+      return;
+    }
 
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (mFile && file && !error) {
@@ -312,66 +318,50 @@ function AddVendorForm() {
         error = true;
       });
 
-      if (mFile.length > 3) {
-        toast.error("You can choose only 3 images at a time");
-        error = true;
-        setMFile(null);
-        return;
-      } else {
-        for (let i = 0; i < mFile.length; i++) {
-          let formdata = new FormData();
-          formdata.append("image", mFile[i]);
-          instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-            let tempBannerURL = bannerURL;
-            tempBannerURL[i] = res.image_url;
-            setBannerURL([...bannerURL, res.image_url]);
-          }).catch((err) => {
-            error = true;
-          });
-        }
+      let tempBannerURL = bannerURL;
+      for (let i = 0; i < mFile.length; i++) {
+        let formdata = new FormData();
+        formdata.append("image", mFile[i]);
+        await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+          tempBannerURL[i] = res.image_url;
+        }).catch((err) => {
+          error = true;
+        });
+        setBannerURL(tempBannerURL);
       }
+
     }
 
     if (!error) {
-
       let shopCreateBody = {
         // user_id: userid,
+        name: vendorName,
+        phone,
+        ...(email ? { email: email } : {}),
+        password: password,
         shop_name: shopName,
         shop_phone: phone,
         shop_description: description,
-        shop_banner: bannerURL ? bannerURL : [],
-        shop_profile: profileURL ? profileURL : [],
+        shop_banner: bannerURL,
+        shop_profile: profileURL,
         shop_license_number: licenseNumber,
         //UPDATE FOUNDING DATE VALUE
         shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
         shop_delivery_range: deliveryRange,
         shop_schedules: shopSchedule,
       };
-
       if (!error) {
-        let body = {
-          name: vendorName,
-          phone: phone,
-          ...(email ? { email: email } : {}),
-          password: password,
-          role_id: 2,
-        };
-        // console.log('body', body)
-        instance.post(API.CREATE_USER, body).then(function (response) {
-          shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
-          console.log('final', shopCreateBody);
-          instance
-            .post(API.CREATE_SHOP, shopCreateBody)
-            .then(function (shopCreateResponse) {
-              setAddressableID(shopCreateResponse?.shop?.id);
-              setAddressForm({
-                ...addressForm,
-                addressable_id: shopCreateResponse?.shop?.id,
-              });
-              console.log(shopCreateResponse?.shop?.id);
-              toast.success("Vendor Created. Add Address Details Now.");
+        instance
+          .post(API.CREATE_SHOP, shopCreateBody)
+          .then(function (shopCreateResponse) {
+            setAddressableID(shopCreateResponse?.shop?.id);
+            setAddressForm({
+              ...addressForm,
+              addressable_id: shopCreateResponse?.shop?.id,
             });
-        });
+            console.log(shopCreateResponse?.shop?.id);
+            toast.success("Vendor Created. Add Address Details Now.");
+          });
       }
     }
   };
@@ -412,7 +402,7 @@ function AddVendorForm() {
                       class="form-control"
                       id="phone"
                       placeholder="Type here..."
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => setPhone(e.target.value.indexOf(0) === 0 ? e.target.value.substr(1) : e.target.value)}
                     />
                   </div>
                   <div class="form-group">
@@ -848,7 +838,7 @@ function AddVendorForm() {
 
                 <button
                   type="submit"
-                  disabled={buttonDisable}
+                  // disabled={buttonDisable}
                   class="btn btn-primary submitBtn"
                   onClick={(event) => handleAddressFormSubmit(event)}
                 >

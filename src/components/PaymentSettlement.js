@@ -63,10 +63,12 @@ function PaymentSettlement() {
             let l = res.transactions?.unpaid[0]?.orders.length;
             if (l > 0) {
                 let a = new Array(l).fill(true);
+                console.log(a)
                 setChecked(a);
             }
         })
     }
+
     useEffect(() => {
         const date = new Date()
         setFrom(moment(date).add(-1, 'days').format());
@@ -84,6 +86,7 @@ function PaymentSettlement() {
             let l = res.transactions?.unpaid[0]?.orders.length;
             if (l > 0) {
                 let a = new Array(l).fill(true);
+                console.log('l lebgth ', a)
                 setChecked(a);
             }
         })
@@ -92,6 +95,9 @@ function PaymentSettlement() {
             setVendor(res.shop);
         })
     }, []);
+    useEffect(() => {
+        console.log('che', checked)
+    }, [checked]);
     useEffect(() => {
         console.log('state', unpaid2)
     }, [unpaid2]);
@@ -130,7 +136,7 @@ function PaymentSettlement() {
             }
             setUnpaid2({ ...obj });
         }
-        let tempArray = checked;
+        let tempArray = [...checked];
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
         await setChecked(tempArray);
     }
@@ -251,9 +257,10 @@ function PaymentSettlement() {
                                     <tbody style={{ textAlign: 'center' }}>
                                         {
                                             unpaid?.length > 0 ? unpaid.map((order, index) => {
+                                                { console.log(checked[index]) }
                                                 return (
                                                     <tr>
-                                                        <th scope="row"><input type="checkbox" onClick={(e) => { CheckboxHandle(order, index); }} defaultChecked={checked[index]} /> {index + 1}</th>
+                                                        <th scope="row"><input type="checkbox" onClick={(e) => CheckboxHandle(order, index)} checked={checked[index]} /> {index + 1}</th>
                                                         <td>{order.order_id}</td>
                                                         <td>{order.order_total_amount}</td>
                                                         <td>{order.number_of_days}</td>

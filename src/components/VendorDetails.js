@@ -139,6 +139,12 @@ function VendorDetails(props) {
   const OrderDetails = (value) => {
     routerHistroy.push(`/orderdetails`, { orderId: value });
   };
+  const handleDelete = (id) => {
+    instance.delete(`${API.DELETE_SHOP_PRODUCT}/${id}`).then((res) => {
+      toast.success(res.message);
+      window.location.reload();
+    })
+  }
   return (
     <>
       <div className="main-outer-div">
@@ -372,26 +378,65 @@ function VendorDetails(props) {
                                   1 && "%"}
                               </td>
 
-                              <Popup
-                                trigger={
-                                  <tr>
-                                    <td style={{ cursor: "pointer" }}>
-                                      <button>Edit Product</button>
-                                    </td>
-                                    <td style={{ cursor: "pointer" }}>
-                                      <button>Delete Product</button>
-                                    </td>
-                                  </tr>
-                                }
-                                position="right center"
-                                modal
-                              >
-                                <EditProductModal
-                                  shopId={vendorDetails?.id}
-                                  productDetails={value}
-                                  productId={value?.id}
-                                />
-                              </Popup>
+                              <td>
+                                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                                <Popup
+                                  trigger={
+                                    <button className="btn btn-link-light" style={{ cursor: "pointer" }}>
+                                      <i class="fas fa-edit"></i>
+                                    </button>
+                                  }
+                                  position="right center"
+                                  modal
+                                >
+                                  <EditProductModal
+                                    shopId={vendorDetails?.id}
+                                    productDetails={value}
+                                    productId={value?.id}
+                                  />
+                                </Popup>
+                                <Popup
+                                  className="my-popup"
+                                  trigger={
+                                    <button className="btn btn-link-light" style={{ cursor: "pointer" }}>
+                                      <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                  }
+                                  position="right center"
+                                  modal
+                                >
+                                  {(close) => (
+                                    <div className="ReviewSure-text">
+                                      <h6
+                                        style={{
+                                          marginBottom: '1rem',
+                                          marginTop: '2rem',
+                                        }}
+                                      >
+                                        Are you Sure you want to Delete this?
+                                      </h6>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          handleDelete(value?.id)
+                                          close()
+                                        }}
+                                      >
+                                        Yes
+                                      </button>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          close()
+                                        }}
+                                      >
+                                        No
+                                      </button>
+                                    </div>
+                                  )}
+                                </Popup>
+                              </div>
+                              </td>
                             </tr>
                           );
                         })}

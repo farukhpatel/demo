@@ -184,17 +184,17 @@ const ProductList = () => {
                         )
                       })
                     ) : (
-                        <>
+                      <>
+                        {' '}
+                        <tr>
                           {' '}
-                          <tr>
+                          <td colSpan="5">
                             {' '}
-                            <td colSpan="5">
-                              {' '}
-                              <h2> No record found </h2>{' '}
-                            </td>{' '}
-                          </tr>{' '}
-                        </>
-                      )}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>{' '}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>

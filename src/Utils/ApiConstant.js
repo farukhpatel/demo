@@ -64,6 +64,7 @@ const API = {
   UPDATE_SHOP_ADDRESS: Config.BASE_URL + "api/address/update",
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   ADD_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/create",
+  DELETE_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/delete",
   UPDATE_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/update",
   UPDATE_PRODUCT: Config.BASE_URL + "api/product/update",
   PRODUCT_LIST: Config.BASE_URL + "api/product/all",
