@@ -39,6 +39,7 @@ function SettleModal(props) {
   const cancel = (e) => {
     props.handleModal(false);
   };
+  console.log(props.paymentSettlementFilter)
   return (
     <>
       <div className="model_settle_details">

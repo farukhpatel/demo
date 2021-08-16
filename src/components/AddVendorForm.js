@@ -117,6 +117,7 @@ function AddVendorForm() {
   const [cities, setCities] = useState([]);
   const [addressableId, setAddressableID] = useState("");
   const [shopSchedule, setShopSchedule] = useState(options);
+  const [buttonDisable, setButtonDisable] = useState(true);
   const [addressForm, setAddressForm] = useState({
     addressable_id: addressableId,
     addressable_type: "Shop",
@@ -136,17 +137,7 @@ function AddVendorForm() {
     longitude: "",
   });
 
-  const [shopBody, setShopBody] = useState({
-    shop_banner: [],
-    shop_delivery_range: "",
-    shop_description: "",
-    shop_founding_date: "",
-    shop_license_number: "",
-    shop_name: "",
-    shop_phone: "",
-    shop_profile: [],
-    shop_schedules: [],
-  });
+
 
   function getGeo() {
     // Get latitude & longitude from address.
@@ -234,7 +225,6 @@ function AddVendorForm() {
   }
 
   function handleAddressFormSubmit(event) {
-    console.log("handleAddresss");
     event.preventDefault();
 
     let error = false;
@@ -272,7 +262,7 @@ function AddVendorForm() {
 
   const handleTimeChange1 = (t, time, index) => {
     let temp = [...shopSchedule];
-    console.log(temp[index][time], "temp");
+
     temp[index][time] = moment(t).format("HH:mm:ss");
     setShopSchedule(temp);
   };
@@ -296,34 +286,35 @@ function AddVendorForm() {
       document.querySelector(".vendor-form-2").classList.add("show-form2");
     }
   };
-  // useEffect(() => {
-  //   console.log("profileu", profileURL)
-  // }, [profileURL]);
 
   const form2Submit = async (e) => {
     e.preventDefault();
     let headers = new Headers();
+    //check validation here for form-2
+    let error = false;
+    if (shopName !== "" && deliveryRange !== "") {
+      setButtonDisable(false);
+    } else {
+      toast.error("shop name or shop delivety range are required");
+      error = true;
+    }
 
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    if (mFile && file) {
+    if (mFile && file && !error) {
       let formdata = new FormData();
-      console.log(file[0]);
       formdata.append("image", file[0]);
-      console.log(formdata);
-      // console.log("shop profile")
       let imgurl;
       await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-        console.log("shop profile res");
-        console.log(res);
         let temp = profileURL;
         temp[0] = res.image_url;
-        setShopBody({ shop_profile: temp });
         setProfileURL(res.image_url);
+      }).catch((err) => {
+        error = true;
       });
 
-      console.log(mFile.length);
       if (mFile.length > 3) {
-        alert("You can choose only 3 images at a time");
+        toast.error("You can choose only 3 images at a time");
+        error = true;
         setMFile(null);
         return;
       } else {
@@ -333,22 +324,23 @@ function AddVendorForm() {
           instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
             let tempBannerURL = bannerURL;
             tempBannerURL[i] = res.image_url;
-            // setBannerURL(...bannerURL, tempBannerURL);
             setBannerURL([...bannerURL, res.image_url]);
+          }).catch((err) => {
+            error = true;
           });
         }
       }
+    }
 
-      // console.log(bannerURL)
-      console.log(profileURL);
-      console.log(profileURL.length);
+    if (!error) {
+
       let shopCreateBody = {
         // user_id: userid,
         shop_name: shopName,
         shop_phone: phone,
         shop_description: description,
-        shop_banner: bannerURL,
-        shop_profile: profileURL,
+        shop_banner: bannerURL ? bannerURL : [],
+        shop_profile: profileURL ? profileURL : [],
         shop_license_number: licenseNumber,
         //UPDATE FOUNDING DATE VALUE
         shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
@@ -356,14 +348,6 @@ function AddVendorForm() {
         shop_schedules: shopSchedule,
       };
 
-      console.log("final", shopCreateBody);
-      let error = false;
-      Object.keys(shopCreateBody).forEach((key) => {
-        if (!error && shopCreateBody[key] === "") {
-          toast.error("One or more fields are empty.");
-          error = true;
-        }
-      });
       if (!error) {
         let body = {
           name: vendorName,
@@ -372,10 +356,10 @@ function AddVendorForm() {
           password: password,
           role_id: 2,
         };
-        console.log(body);
+        // console.log('body', body)
         instance.post(API.CREATE_USER, body).then(function (response) {
           shopCreateBody = { ...shopCreateBody, user_id: response.user.id };
-          console.log(shopCreateBody);
+          console.log('final', shopCreateBody);
           instance
             .post(API.CREATE_SHOP, shopCreateBody)
             .then(function (shopCreateResponse) {
@@ -573,7 +557,7 @@ function AddVendorForm() {
                         </thead>
                         <tbody>
                           {shopSchedule.map((value, index) => {
-                            console.log(value);
+
                             return (
                               <tr>
                                 <td>{value?.key}</td>
@@ -604,7 +588,7 @@ function AddVendorForm() {
                                         ).format()}
                                         disabled={!value.is_morning_slot_active}
                                         onChange={(t) => {
-                                          console.log(t);
+
                                           handleTimeChange1(
                                             t,
                                             "morning_start_time",
@@ -697,7 +681,7 @@ function AddVendorForm() {
                                         ).format()}
                                         disabled={!value.is_evening_slot_active}
                                         onChange={(t) => {
-                                          console.log(t);
+
                                           handleTimeChange1(
                                             t,
                                             "evening_end_time",
@@ -864,6 +848,7 @@ function AddVendorForm() {
 
                 <button
                   type="submit"
+                  disabled={buttonDisable}
                   class="btn btn-primary submitBtn"
                   onClick={(event) => handleAddressFormSubmit(event)}
                 >

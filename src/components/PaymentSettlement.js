@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function PaymentSettlement() {
     const classes = useStyles();
-    const [unpaid2, setUnpaid2] = useState([]);
+    const [unpaid2, setUnpaid2] = useState({});
     const [paid, setPaid] = useState([]);
     const [unpaid, setUnpaid] = useState([]);
     const [vendor, setVendor] = useState([]);
@@ -46,6 +46,7 @@ function PaymentSettlement() {
     const [toggleIndex, setToggleIndex] = useState(0);
     // let checked;
     let unaccepted_settle = [];
+
     const Submits = (e) => {
         e.preventDefault();
         let start_date = moment(from).format('YYYY-MM-DD');
@@ -91,18 +92,47 @@ function PaymentSettlement() {
             setVendor(res.shop);
         })
     }, []);
+    useEffect(() => {
+        console.log('state', unpaid2)
+    }, [unpaid2]);
     const CheckboxHandle = async (order, index) => {
         if (checked[index]) {
-            unaccepted_settle.push(order.order_id);
+            let paymentfilter = paymentSettlementFilter
+            paymentfilter.push(order.order_id)
+            setPaymentSettlementFilter(paymentfilter)
+            let transaction_commission = parseFloat((unpaid2.transaction_commission - order.order_commission).toFixed(2));
+            let transaction_amount = parseFloat((unpaid2.transaction_amount - (order.order_net_amount - order.delivery_charge)).toFixed(2));
+            let transaction_payable_amount = parseFloat((unpaid2.transaction_payable_amount - order.payable_amount).toFixed(2));
+            let transaction_tax = parseFloat((unpaid2.transaction_tax - order.order_tax).toFixed(2));
+            let obj = {
+                orders: unpaid2.orders,
+                transaction_amount,
+                transaction_commission,
+                transaction_payable_amount,
+                transaction_tax
+            }
+            setUnpaid2({ ...obj });
         } else {
-            unaccepted_settle = unaccepted_settle.filter((value, i) => {
+            let paymentfilter = paymentSettlementFilter
+            setPaymentSettlementFilter(paymentfilter.filter((value, i) => {
                 return value !== order.order_id
-            })
+            }))
+            let transaction_commission = parseFloat((unpaid2.transaction_commission + order.order_commission).toFixed(2));
+            let transaction_amount = parseFloat((unpaid2.transaction_amount + order.order_net_amount - order.delivery_charge).toFixed(2));
+            let transaction_payable_amount = parseFloat((unpaid2.transaction_payable_amount + order.payable_amount).toFixed(2));
+            let transaction_tax = parseFloat((unpaid2.transaction_tax + order.order_tax).toFixed(2));
+            let obj = {
+                orders: unpaid2.orders,
+                transaction_amount,
+                transaction_commission,
+                transaction_payable_amount,
+                transaction_tax
+            }
+            setUnpaid2({ ...obj });
         }
         let tempArray = checked;
         tempArray[index] === true ? tempArray[index] = false : tempArray[index] = true;
         await setChecked(tempArray);
-        // console.log(unaccepted_settle)
     }
     return (
         <>
@@ -182,7 +212,7 @@ function PaymentSettlement() {
                     <div className="main-root-second">
 
                         {toggleIndex === 0 && unpaid?.length > 0 ?
-                            <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => { setPaymentSettlementFilter(unaccepted_settle); setModalOpen(true); }}>All Settle</button></td>} position="right center" modal={modalOpen}>
+                            <Popup trigger={<td style={{ cursor: "pointer" }}><button type="submit" class="btn btn-primary SettlePayBtn" onClick={() => { setModalOpen(true); }}>All Settle</button></td>} position="right center" modal={modalOpen}>
                                 {modalOpen && <SettleModal paymentSettlementFilter={paymentSettlementFilter} unpaid={unpaid2} start_date={from} end_date={to} id={id} handleModal={setModalOpen} />}
                             </Popup>
                             : ''
