@@ -9,7 +9,7 @@ function AssignedOrders() {
   const [assignOrder, setAssignOrder] = useState([]);
   const SearchAssignerOrder = (e) => {
     e.preventDefault();
-    console.log('work', search);
+
     if (search === '') {
       toast.error("order not found");
     }
