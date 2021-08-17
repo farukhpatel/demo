@@ -103,6 +103,9 @@ const API = {
   //seller wise & data wise
   SELLER_WISE: Config.BASE_URL + "api/order/sales/seller-wise",
   DATA_WISE: Config.BASE_URL + "api/order/sales/date-wise",
+
+  //Refund api
+  REFUND_API: Config.BASE_URL + "api/order/refund",
 };
 
 export default API;

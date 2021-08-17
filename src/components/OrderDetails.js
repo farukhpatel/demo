@@ -1,27 +1,71 @@
-import React, { useEffect, useState } from "react";
-import API from "../Utils/ApiConstant";
-import instance from "../Utils/axiosConstants";
+import React, { useEffect, useState } from 'react'
+import Popup from 'reactjs-popup'
+import RefundModal from '../Modal/RefundModal'
+import SettleModal from '../Modal/SettleModal'
+import API from '../Utils/ApiConstant'
+import instance from '../Utils/axiosConstants'
 
 function OrderDetails(props) {
-  console.log('orderDetails', props);
-  const [orderDetails, setOrderDetails] = useState({});
-  const [orderProducts, setOrderProducts] = useState([]);
+  console.log('orderDetails', props)
+  const [orderDetails, setOrderDetails] = useState({})
+  const [orderProducts, setOrderProducts] = useState([])
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [filterId, setFilterId] = useState([])
+  const [checked, setChecked] = useState([])
+  const [modalOpen, setModalOpen] = useState(false)
   useEffect(() => {
     if (props.location.state.orderId) {
       instance
         .get(`${API.ORDER_DETAIL}${props?.location?.state?.orderId}`)
         .then((res) => {
           console.log(res)
-          setOrderDetails(res.orders[0]);
-          setOrderProducts(res.orders[0].order_products);
-        });
+          setOrderDetails(res.orders[0])
+          setOrderProducts(res.orders[0].order_products)
+          let l = res.orders[0].order_products?.length
+          if (l > 0) {
+            let a = new Array(l).fill(false)
+            console.log(a)
+            setChecked(a)
+          }
+        })
     } else {
-      setOrderDetails(props?.location?.state?.order);
-      setOrderProducts(props?.location?.state?.order?.order_products);
+      setOrderDetails(props?.location?.state?.order)
+      setOrderProducts(props?.location?.state?.order?.order_products)
+      let l = props?.location?.state?.order?.order_products.length
+      if (l > 0) {
+        let a = new Array(l).fill(false)
+        console.log(a)
+        setChecked(a)
+      }
     }
-  }, []);
-  const refundApi = () => {
-    console.log('refund api integration:-', orderDetails)
+  }, [])
+  useEffect(() => {
+    console.log('total amount', totalAmount)
+    console.log('filter id', filterId)
+  }, [filterId, totalAmount])
+
+  const CheckboxHandle = (value, index) => {
+    if (!checked[index]) {
+      console.log('if', totalAmount)
+      let tempFilterId = filterId
+      tempFilterId.push(value?.id)
+      setFilterId(tempFilterId)
+      setTotalAmount(totalAmount + value?.product_total_amount)
+    } else {
+      console.log('else', totalAmount)
+      let tempFilterId = filterId
+      setFilterId(
+        tempFilterId.filter((v, i) => {
+          return v !== value.id
+        }),
+      )
+      setTotalAmount(totalAmount - value?.product_total_amount)
+    }
+    let tempArray = [...checked]
+    tempArray[index] === true
+      ? (tempArray[index] = false)
+      : (tempArray[index] = true)
+    setChecked(tempArray)
   }
   return (
     <>
@@ -30,43 +74,71 @@ function OrderDetails(props) {
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
               <div className="details-div-left">
-                <i class="fas fa-store fa-3x" style={{ color: "#575353" }}></i>
+                <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
                   <h2>
-                    Shop Name{" "}
+                    Shop Name{' '}
                     {orderDetails?.shop?.shop_name
                       ? orderDetails?.shop?.shop_name
-                      : " "}
+                      : ' '}
                   </h2>
-                  <p>{`${orderDetails?.shop?.address?.address_line_1 || " "} ${orderDetails?.shop?.address?.address_line_2 || ""
-                    } ${orderDetails?.shop?.address?.address_line_3 || ""}`}</p>
-                  <p>{`${orderDetails?.shop?.address?.locality?.locality || " "
-                    } ${orderDetails?.shop?.address?.city?.city || ""} ${orderDetails?.shop?.address?.state || ""
-                    }`}</p>
+                  <p>{`${orderDetails?.shop?.address?.address_line_1 || ' '} ${
+                    orderDetails?.shop?.address?.address_line_2 || ''
+                  } ${orderDetails?.shop?.address?.address_line_3 || ''}`}</p>
+                  <p>{`${
+                    orderDetails?.shop?.address?.locality?.locality || ' '
+                  } ${orderDetails?.shop?.address?.city?.city || ''} ${
+                    orderDetails?.shop?.address?.state || ''
+                  }`}</p>
                   <h5>
                     Delivery Boy:
                     <span
                       style={{
-                        marginLeft: "2%",
-                        fontWeight: "normal",
-                        color: "#7c7c7c",
+                        marginLeft: '2%',
+                        fontWeight: 'normal',
+                        color: '#7c7c7c',
                       }}
                     >
                       {orderDetails?.assigned_to?.name
                         ? orderDetails?.assigned_to?.name
-                        : " "}
+                        : ' '}
                     </span>
                   </h5>
                   <h5>
                     Delivery Status:
                     <button className="assign-btn">
                       {orderDetails?.delivered_at === null
-                        ? "Pending"
-                        : "Delivered"}
+                        ? 'Pending'
+                        : 'Delivered'}
                     </button>
                   </h5>
                   <div className="customer-details-content-outer-div-bottom">
-                    <button className="btn btn-primary" onClick={refundApi}>Refund</button>
+                    <Popup
+                      trigger={
+                        <td style={{ cursor: 'pointer' }}>
+                          <button
+                            type="submit"
+                            class="btn btn-primary SettlePayBtn"
+                            onClick={() => {
+                              setModalOpen(true)
+                            }}
+                          >
+                            Refund
+                          </button>
+                        </td>
+                      }
+                      position="right center"
+                      modal={modalOpen}
+                    >
+                      {modalOpen && (
+                        <RefundModal
+                          refund_amount={totalAmount}
+                          order_product_ids={filterId}
+                          id={orderDetails?.id}
+                          handleModal={setModalOpen}
+                        />
+                      )}
+                    </Popup>
                   </div>
                 </div>
               </div>
@@ -119,7 +191,7 @@ function OrderDetails(props) {
                         <p>
                           {orderDetails.user?.name
                             ? orderDetails.user?.name
-                            : " "}
+                            : ' '}
                         </p>
                       </div>
                     </div>
@@ -131,7 +203,7 @@ function OrderDetails(props) {
                         <p>
                           {orderDetails.user?.phone
                             ? orderDetails.user?.phone
-                            : " "}
+                            : ' '}
                         </p>
                       </div>
                     </div>
@@ -143,7 +215,7 @@ function OrderDetails(props) {
                         <p>
                           {orderDetails.user?.email
                             ? orderDetails.user?.email
-                            : " "}
+                            : ' '}
                         </p>
                       </div>
                     </div>
@@ -152,8 +224,9 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                        <p>{`${orderDetails?.address?.address_line_1 || " "} ${orderDetails?.address?.address_line_2 || ""
-                          } ${orderDetails?.address?.address_line_3 || ""}`}</p>
+                        <p>{`${orderDetails?.address?.address_line_1 || ' '} ${
+                          orderDetails?.address?.address_line_2 || ''
+                        } ${orderDetails?.address?.address_line_3 || ''}`}</p>
                       </div>
                     </div>
                   </div>
@@ -168,7 +241,7 @@ function OrderDetails(props) {
               >
                 <table
                   class="table table-striped"
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: 'center' }}
                 >
                   <thead>
                     <tr>
@@ -180,12 +253,25 @@ function OrderDetails(props) {
                       <th scope="col">Total Price</th>
                     </tr>
                   </thead>
-                  <tbody style={{ textAlign: "center" }}>
+                  <tbody style={{ textAlign: 'center' }}>
                     {orderProducts && orderProducts?.length > 0 ? (
                       orderProducts.map((value, index) => {
+                        console.log('v', value)
                         return (
                           <tr>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                              <input
+                                type="checkbox"
+                                onClick={(e) => CheckboxHandle(value, index)}
+                                checked={checked[index]}
+                                disabled={
+                                  value.is_product_amount_refunded === 0
+                                    ? false
+                                    : true
+                                }
+                              />{' '}
+                              {index + 1}
+                            </th>
                             <td>
                               {value?.shop_product?.product?.product_name}
                             </td>
@@ -194,18 +280,18 @@ function OrderDetails(props) {
                             <td>{value?.shop_product?.product?.base_unit}</td>
                             <td>₹{value?.product_net_amount}</td>
                           </tr>
-                        );
+                        )
                       })
                     ) : (
                       <>
-                        {" "}
+                        {' '}
                         <tr>
-                          {" "}
+                          {' '}
                           <td colSpan="5">
-                            {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>{" "}
+                            {' '}
+                            <h2> No record found </h2>{' '}
+                          </td>{' '}
+                        </tr>{' '}
                       </>
                     )}
                   </tbody>
@@ -220,12 +306,11 @@ function OrderDetails(props) {
                 </div>
                 {/* others details end */}
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </>
-  );
+  )
 }
-export default OrderDetails;
+export default OrderDetails
