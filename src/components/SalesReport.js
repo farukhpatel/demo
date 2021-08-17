@@ -317,7 +317,7 @@ function SalesReport() {
                           {/* <td>{value.shop_name}</td> */}
 
                           {console.log(value)}
-                          <td style={{ color: '#85c1e9' }} onClick={() => VendorDetails(value?.shop_id)}>
+                          <td style={{ color: '#85c1e9', cursor: 'pointer' }} onClick={() => VendorDetails(value?.shop_id)}>
                             {value?.shop_name}
                           </td>
 

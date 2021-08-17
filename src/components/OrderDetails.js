@@ -6,7 +6,6 @@ import API from '../Utils/ApiConstant'
 import instance from '../Utils/axiosConstants'
 
 function OrderDetails(props) {
-  console.log('orderDetails', props)
   const [orderDetails, setOrderDetails] = useState({})
   const [orderProducts, setOrderProducts] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
@@ -18,13 +17,11 @@ function OrderDetails(props) {
       instance
         .get(`${API.ORDER_DETAIL}${props?.location?.state?.orderId}`)
         .then((res) => {
-          console.log(res)
           setOrderDetails(res.orders[0])
           setOrderProducts(res.orders[0].order_products)
           let l = res.orders[0].order_products?.length
           if (l > 0) {
             let a = new Array(l).fill(false)
-            console.log(a)
             setChecked(a)
           }
         })
@@ -34,7 +31,6 @@ function OrderDetails(props) {
       let l = props?.location?.state?.order?.order_products.length
       if (l > 0) {
         let a = new Array(l).fill(false)
-        console.log(a)
         setChecked(a)
       }
     }
@@ -46,17 +42,15 @@ function OrderDetails(props) {
 
   const CheckboxHandle = (value, index) => {
     if (!checked[index]) {
-      console.log('if', totalAmount)
       let tempFilterId = filterId
       tempFilterId.push(value?.id)
       setFilterId(tempFilterId)
       setTotalAmount(totalAmount + value?.product_total_amount)
     } else {
-      console.log('else', totalAmount)
       let tempFilterId = filterId
       setFilterId(
-        tempFilterId.filter((v, i) => {
-          return v !== value.id
+        tempFilterId.filter((id, i) => {
+          return id !== value.id
         }),
       )
       setTotalAmount(totalAmount - value?.product_total_amount)
@@ -256,7 +250,6 @@ function OrderDetails(props) {
                   <tbody style={{ textAlign: 'center' }}>
                     {orderProducts && orderProducts?.length > 0 ? (
                       orderProducts.map((value, index) => {
-                        console.log('v', value)
                         return (
                           <tr>
                             <th scope="row">
@@ -298,7 +291,6 @@ function OrderDetails(props) {
                 </table>
                 {/* other details*/}
                 <div style={{ marginLeft: '20px' }}>
-                  {console.log('orderDetails', orderDetails)}
                   <h5>Tax: {orderDetails?.order_tax}</h5>
                   <h5>Discount: {orderDetails?.order_discount}</h5>
                   <h5>Delivery Charge: {orderDetails?.delivery_charge}</h5>

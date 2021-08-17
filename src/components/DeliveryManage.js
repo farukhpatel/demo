@@ -134,7 +134,7 @@ const DeliveryManage = () => {
                         return (
                           <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td onClick={() => DeliveryBoyDetail(value)}>
+                            <td style={{ cursor: 'pointer', color: '#85c1e9' }} onClick={() => DeliveryBoyDetail(value)}>
                               {value.name}
                             </td>
                             <td>{value.phone}</td>

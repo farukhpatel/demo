@@ -23,8 +23,8 @@ const classes = makeStyles((theme) => ({
 function RefundModal(props) {
     const Submits = (e) => {
         let body = {
-            "refund_amount": props.refund_amount,
-            "order_product_ids": props.order_product_ids
+            refund_amount: props.refund_amount,
+            order_product_ids: props.order_product_ids
         }
         console.log('body', body)
         instance.patch(`${API.REFUND_API}/${props.id}`, body).then((res) => {

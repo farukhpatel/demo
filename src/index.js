@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
   <BrowserRouter>
-  <ToastContainer/>
+    <ToastContainer />
     <App />
   </BrowserRouter>,
   document.getElementById('root')

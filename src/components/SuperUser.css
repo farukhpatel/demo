@@ -1198,9 +1198,9 @@ a {
 .customer-details-content p {
   font-weight: normal;
 }
-.customer-details-content-outer-div-bottom {
+/* .customer-details-content-outer-div-bottom {
   margin-top: 3%;
-}
+} */
 .customer-details-content-outer-div-bottom button {
   font-family: 'Poppins';
   background-color: #230132 !important;
