@@ -75,7 +75,7 @@ const UserDetails = (props) => {
 
   useEffect(() => {
     if (userId) {
-      instance.get(`${API.USER_BY_ID}&user_id=${userId}&with_address=1`).then((res) => {
+      instance.get(`${API.USER_BY_ID}&user_id=${userId}`).then((res) => {
         console.log('userDeatils', res)
         if (res?.users?.length > 0) {
           setUserDetails(res?.users[0]);

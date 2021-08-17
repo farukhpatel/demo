@@ -95,12 +95,7 @@ function PaymentSettlement() {
             setVendor(res.shop);
         })
     }, []);
-    useEffect(() => {
-        console.log('che', checked)
-    }, [checked]);
-    useEffect(() => {
-        console.log('state', unpaid2)
-    }, [unpaid2]);
+
     const CheckboxHandle = async (order, index) => {
         if (checked[index]) {
             let paymentfilter = paymentSettlementFilter
@@ -155,7 +150,6 @@ function PaymentSettlement() {
                                         <KeyboardDatePicker
                                             margin="normal"
                                             id="date-picker-dialog"
-                                            // label="Date picker dialog"
                                             format="DD/MM/yyyy"
                                             onChange={(e) => { setFrom(e._d) }}
                                             value={from}
@@ -176,12 +170,9 @@ function PaymentSettlement() {
                                         <KeyboardDatePicker
                                             margin="normal"
                                             id="date-picker-dialog"
-                                            // label="Date picker dialog"
                                             format="DD/MM/yyyy"
                                             onChange={(e) => { setTo(e._d) }}
                                             value={to}
-                                            // value={foundationDate}
-                                            // onChange={e => handleDateChange(e)}
                                             KeyboardButtonProps={{
                                                 'aria-label': 'change date',
                                             }}

@@ -5,6 +5,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
+  TimePicker,
 } from "@material-ui/pickers";
 import Grid from "@material-ui/core/Grid"; //clock
 import MomentUtils from "@date-io/moment"; //clock
@@ -283,10 +284,10 @@ function UpdateVendorForm(props) {
                           console.log(value);
                           return (
                             <tr>
-                              <td style={{ paddingTop: '16px !important' }}>{value?.key}</td>
-                              <td style={{ paddingTop: '16px !important' }}>
+                              <td>{value?.key}</td>
+                              <td>
                                 <input
-                                  style={{ width: '1.5rem' }}
+                                  style={{ width: '1.3rem' }}
                                   type="checkbox"
                                   name="is_morning_slot_active"
                                   defaultChecked={value?.is_morning_slot_active}
@@ -300,62 +301,56 @@ function UpdateVendorForm(props) {
                                   value={value?.is_morning_slot_active}
                                 ></input>
                               </td>
-                              <td style={{ paddingTop: '16px !important' }} className="datePicker-vendor">
+                              <td className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                                  <Grid container justify="space-around">
-                                    <KeyboardTimePicker
-                                      margin="normal"
-                                      id="time-picker"
-                                      ampm={true}
-                                      value={moment(
-                                        value.morning_start_time,
-                                        "HH:mm:ss"
-                                      ).format()}
-                                      disabled={!value.is_morning_slot_active}
-                                      onChange={(t) => {
-                                        console.log(t);
-                                        handleTimeChange1(
-                                          t,
-                                          "morning_start_time",
-                                          index
-                                        );
-                                      }}
-                                      KeyboardButtonProps={{
-                                        "aria-label": "change time",
-                                      }}
-                                    />
-                                  </Grid>
+                                  <TimePicker
+                                    id="time-picker"
+                                    ampm={true}
+                                    value={moment(
+                                      value.morning_start_time,
+                                      "HH:mm:ss"
+                                    ).format()}
+                                    disabled={!value.is_morning_slot_active}
+                                    onChange={(t) => {
+                                      console.log(t);
+                                      handleTimeChange1(
+                                        t,
+                                        "morning_start_time",
+                                        index
+                                      );
+                                    }}
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td style={{ paddingTop: '16px !important' }}>
+                              <td>
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                                  <Grid container justify="space-around">
-                                    <KeyboardTimePicker
-                                      margin="normal"
-                                      id="time-picker"
-                                      ampm={true}
-                                      value={moment(
-                                        value.morning_end_time,
-                                        "HH:mm:ss"
-                                      ).format()}
-                                      disabled={!value.is_morning_slot_active}
-                                      onChange={(t) =>
-                                        handleTimeChange1(
-                                          t,
-                                          "morning_end_time",
-                                          index
-                                        )
-                                      }
-                                      KeyboardButtonProps={{
-                                        "aria-label": "change time",
-                                      }}
-                                    />
-                                  </Grid>
+                                  <TimePicker
+                                    id="time-picker"
+                                    ampm={true}
+                                    value={moment(
+                                      value.morning_end_time,
+                                      "HH:mm:ss"
+                                    ).format()}
+                                    disabled={!value.is_morning_slot_active}
+                                    onChange={(t) =>
+                                      handleTimeChange1(
+                                        t,
+                                        "morning_end_time",
+                                        index
+                                      )
+                                    }
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td style={{ paddingTop: '16px !important' }}>
+                              <td>
                                 <input
-                                  style={{ width: '1.5rem' }}
+                                  style={{ width: '1.3rem' }}
                                   type="checkbox"
                                   name="is_evening_slot_active"
                                   defaultChecked={value?.is_evening_slot_active}
@@ -369,57 +364,51 @@ function UpdateVendorForm(props) {
                                   value={value?.is_evening_slot_active}
                                 ></input>
                               </td>
-                              <td style={{ paddingTop: '16px !important' }} className="datePicker-vendor">
+                              <td className="datePicker-vendor">
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                                  <Grid container justify="space-around">
-                                    <KeyboardTimePicker
-                                      margin="normal"
-                                      id="time-picker"
-                                      ampm={true}
-                                      disabled={!value.is_evening_slot_active}
-                                      value={moment(
-                                        value.evening_start_time,
-                                        "HH:mm:ss"
-                                      ).format()}
-                                      onChange={(t) =>
-                                        handleTimeChange1(
-                                          t,
-                                          "evening_start_time",
-                                          index
-                                        )
-                                      }
-                                      KeyboardButtonProps={{
-                                        "aria-label": "change time",
-                                      }}
-                                    />
-                                  </Grid>
+                                  <TimePicker
+                                    id="time-picker"
+                                    ampm={true}
+                                    disabled={!value.is_evening_slot_active}
+                                    value={moment(
+                                      value.evening_start_time,
+                                      "HH:mm:ss"
+                                    ).format()}
+                                    onChange={(t) =>
+                                      handleTimeChange1(
+                                        t,
+                                        "evening_start_time",
+                                        index
+                                      )
+                                    }
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
                                 </MuiPickersUtilsProvider>
                               </td>
-                              <td style={{ paddingTop: '16px !important' }}>
+                              <td>
                                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                                  <Grid container justify="space-around">
-                                    <KeyboardTimePicker
-                                      margin="normal"
-                                      id="time-picker"
-                                      ampm={true}
-                                      value={moment(
-                                        value.evening_end_time,
-                                        "HH:mm:ss"
-                                      ).format()}
-                                      disabled={!value.is_evening_slot_active}
-                                      onChange={(t) => {
-                                        console.log(t);
-                                        handleTimeChange1(
-                                          t,
-                                          "evening_end_time",
-                                          index
-                                        );
-                                      }}
-                                      KeyboardButtonProps={{
-                                        "aria-label": "change time",
-                                      }}
-                                    />
-                                  </Grid>
+                                  <TimePicker
+                                    id="time-picker"
+                                    ampm={true}
+                                    value={moment(
+                                      value.evening_end_time,
+                                      "HH:mm:ss"
+                                    ).format()}
+                                    disabled={!value.is_evening_slot_active}
+                                    onChange={(t) => {
+                                      console.log(t);
+                                      handleTimeChange1(
+                                        t,
+                                        "evening_end_time",
+                                        index
+                                      );
+                                    }}
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change time",
+                                    }}
+                                  />
                                 </MuiPickersUtilsProvider>
                               </td>
                             </tr>

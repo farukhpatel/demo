@@ -547,7 +547,7 @@ tbody td button:hover {
 .vendor-inner-div {
   margin-top: 4%;
 }
-.tableRowOfAddVendor{
+.tableRowOfAddVendor {
   padding: 0px !important;
 }
 .add-vendor button {
@@ -586,7 +586,7 @@ tbody td button:hover {
   overflow: hidden;
 }
 .vendor-form-2 form {
-  width: 50%;
+  width: 90%;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   position: relative;
@@ -699,6 +699,10 @@ tbody td button:hover {
   padding-left: 12px;
   border-radius: 4px;
 }
+.tbodyOfTimeSlote tr td {
+  /* padding:0px !important */
+  /* padding-left: 0px !important; */
+}
 /* VendorAdd css end */
 
 /*Update Vendor*/
@@ -715,11 +719,11 @@ tbody td button:hover {
   flex-direction: row;
   width: 100% !important;
 }
-.datePicker-vendor div {
+/* .datePicker-vendor div {
   border: 0px !important;
   display: flex;
   justify-content: flex-end;
-}
+} */
 /*update vendor css end*/
 
 /*productlist and Productadd Css start*/
@@ -1203,6 +1207,7 @@ a {
   height: 50px;
   font-family: 'Poppins';
   background-color: #230132 !important;
+  border-radius: 12px;
 }
 .customer-details-content .content {
   width: 100%;

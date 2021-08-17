@@ -21,7 +21,7 @@ function OrderDetails(props) {
     }
   }, []);
   const refundApi = () => {
-    console.log('o', orderDetails)
+    console.log('refund api integration:-', orderDetails)
   }
   return (
     <>
@@ -62,7 +62,7 @@ function OrderDetails(props) {
                     <button className="assign-btn">
                       {orderDetails?.delivered_at === null
                         ? "Pending"
-                        : "Deliverd"}
+                        : "Delivered"}
                     </button>
                   </h5>
                   <div className="customer-details-content-outer-div-bottom">
@@ -109,13 +109,6 @@ function OrderDetails(props) {
                 role="tabpanel"
                 aria-labelledby="customer-details"
               >
-                {/* <div className="btn-position">
-                                    <div className="searchStyle">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                        <input placeholder="Search..." className="SearchInput" />
-                                    </div>
-                                </div> */}
-
                 <div className="customer-details-content-outer-div">
                   <div className="customer-details-content-outer-div-top">
                     <div className="customer-details-content">
