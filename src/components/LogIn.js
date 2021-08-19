@@ -5,32 +5,41 @@ import "./SuperUser.css";
 import instance from "../Utils/axiosConstants"
 import cookie from "react-cookies";
 import "react-toastify/dist/ReactToastify.css";
-
+import firebase from '../components/firebase'
 function LogIn(props) {
 
   // api
   const [phoneno, setPhoneno] = useState("");
   const [password, setPassword] = useState("");
+  const [device_token, setdevice_token] = useState("");
+
+
 
   useEffect(() => {
-    if(cookie.load("Authorization"))
-    props.history.push("/dashboard")
+    const messaging = firebase.messaging();
+    messaging.getToken().then((token) => {
+      console.log('token', token)
+      setdevice_token(token);
+    })
+    if (cookie.load("Authorization"))
+      props.history.push("/dashboard")
   }, [])
 
   const login = (e) => {
     e.preventDefault();
-    let body ={
+    let body = {
       phone: phoneno,
       password: password,
       device: "web",
+      device_token
     }
 
-    instance.post(API.LOGIN,body)
-    .then(function(response){
-      localStorage.setItem("token", response?.accessToken?.toString());
-      cookie.save("Authorization",`Bearer ${response?.accessToken}`)
-      props.history.push("/dashboard")
-    })
+    instance.post(API.LOGIN, body)
+      .then(function (response) {
+        localStorage.setItem("token", response?.accessToken?.toString());
+        cookie.save("Authorization", `Bearer ${response?.accessToken}`)
+        props.history.push("/dashboard")
+      })
 
   };
 

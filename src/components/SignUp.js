@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants"
+import firebase from './../components/firebase'
 
 function SignUp() {
   // api
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+
 
   const register = (e) => {
     e.preventDefault();
@@ -18,9 +20,9 @@ function SignUp() {
       device: "web",
     }
     instance.post(API.SIGNUP, body)
-    .then(function(response){
-      
-    })
+      .then(function (response) {
+
+      })
   };
 
   return (
