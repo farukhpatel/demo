@@ -4,9 +4,9 @@ import RefundModal from "../Modal/RefundModal";
 import SettleModal from "../Modal/SettleModal";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
+import Back from "./BackButton/Back";
 
 function OrderDetails(props) {
-  console.log("orderDetails", props);
   const [orderDetails, setOrderDetails] = useState({});
   const [orderProducts, setOrderProducts] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -18,13 +18,11 @@ function OrderDetails(props) {
       instance
         .get(`${API.ORDER_DETAIL}${props?.location?.state?.orderId}`)
         .then((res) => {
-          console.log(res);
           setOrderDetails(res.orders[0]);
-          setOrderProducts(res.orders[0].order_products);
-          let l = res.orders[0].order_products?.length;
+          setOrderProducts(res.orders[0]?.order_products);
+          let l = res.orders[0]?.order_products?.length;
           if (l > 0) {
             let a = new Array(l).fill(false);
-            console.log(a);
             setChecked(a);
           }
         });
@@ -34,7 +32,6 @@ function OrderDetails(props) {
       let l = props?.location?.state?.order?.order_products.length;
       if (l > 0) {
         let a = new Array(l).fill(false);
-        console.log(a);
         setChecked(a);
       }
     }
@@ -46,17 +43,15 @@ function OrderDetails(props) {
 
   const CheckboxHandle = (value, index) => {
     if (!checked[index]) {
-      console.log("if", totalAmount);
       let tempFilterId = filterId;
       tempFilterId.push(value?.id);
       setFilterId(tempFilterId);
       setTotalAmount(totalAmount + value?.product_total_amount);
     } else {
-      console.log("else", totalAmount);
       let tempFilterId = filterId;
       setFilterId(
-        tempFilterId.filter((v, i) => {
-          return v !== value.id;
+        tempFilterId.filter((id, i) => {
+          return id !== value.id;
         })
       );
       setTotalAmount(totalAmount - value?.product_total_amount);
@@ -70,6 +65,9 @@ function OrderDetails(props) {
   return (
     <>
       <div className="main-outer-div">
+        <div>
+          <Back></Back>
+        </div>
         <div className="myorders-outer-div">
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">

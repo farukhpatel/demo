@@ -41,7 +41,7 @@ function UpdateDeliveryBoy(props) {
             phone: phone,
             email: email,
             aadhaar_number: Number(aadhaar),
-            password: password,
+            new_password: password,
             role_id: 4
         }
         //DELIVERY_BOYS_UPDATE

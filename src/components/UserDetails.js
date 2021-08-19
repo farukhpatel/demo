@@ -8,6 +8,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Box, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import Back from "./BackButton/Back";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -109,6 +110,9 @@ const UserDetails = (props) => {
   return (
     <>
       <div className="main-outer-div">
+        <div>
+          <Back></Back>
+        </div>
         <div className="myorders-outer-div">
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">

@@ -46,7 +46,7 @@ const API = {
   USER_BY_ID: Config.BASE_URL + "api/user/all?role_id=3",
   USER_REPORT_DOWNLOAD: Config.BASE_URL + "api/user/report",
   DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
-  SEARCH_DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4&is_active=1",
+  SEARCH_DELIVERY_BOYS: Config.BASE_URL + "api/user/all?role_id=4",
   DELIVERY_BOYS_ADD: Config.BASE_URL + "api/user/create",
   DELIVERY_BOYS_UPDATE: Config.BASE_URL + "api/user/update",
   DELIVERY_BOYS_DELETE: Config.BASE_URL + "api/user/delete",

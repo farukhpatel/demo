@@ -17,6 +17,7 @@ import Box from "@material-ui/core/Box";
 import instance from "../Utils/axiosConstants";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import Back from "./BackButton/Back";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -148,6 +149,9 @@ function VendorDetails(props) {
   return (
     <>
       <div className="main-outer-div">
+        <div>
+          <Back></Back>
+        </div>
         <div className="myorders-outer-div">
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">

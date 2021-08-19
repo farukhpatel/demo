@@ -447,9 +447,10 @@ function AddVendorForm() {
               </div>
 
               <div className="vendor-form-2">
-                <div className="add-vendor-details-heading">
-                  <h1>Add Vendor Details</h1>
+                <div>
+                  <Back></Back>
                 </div>
+                <h1>Add Vendor Details</h1>
                 <div className="vendor-form2-container">
                   <form className="vendor-form">
                     <span className="customSpan"></span>
@@ -713,6 +714,9 @@ function AddVendorForm() {
             </>
           ) : (
             <div className="vendor-form-1 address-form">
+              <div className="backButtonAddAddress">
+                <Back></Back>
+              </div>
               <h1>Add Address</h1>
               <form className="vendor-form">
                 <span className="customSpan"></span>

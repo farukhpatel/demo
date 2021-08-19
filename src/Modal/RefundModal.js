@@ -45,6 +45,7 @@ function RefundModal(props) {
   return (
     <>
       <div className="model_settle_details">
+        <h4>Are you Sure you want to refund this amount?</h4>
         <div className="modelTableDiv">
           <table className="modelTable">
             <tbody>
