@@ -1,34 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SuperUser.css";
 import cookie from "react-cookies";
-import {
-  AppBar,
-  IconButton,
-  makeStyles,
-  Menu,
-  Toolbar,
-} from "@material-ui/core";
-import { Button } from "bootstrap";
+import { Menu } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
 function Home() {
+  const getWindowsSize = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
+
   const signout = (next) => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
       cookie.remove("Authorization");
     }
   };
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowsSize());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -130,9 +129,12 @@ function Home() {
     );
   };
 
-  return (
+  return windowDimensions.width > 500 ? (
     <>
       <Sidebar />
+    </>
+  ) : (
+    <>
       <button
         aria-controls="simple-menu"
         aria-haspopup="true"
