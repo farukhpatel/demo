@@ -4,6 +4,7 @@ import RefundModal from '../Modal/RefundModal'
 import SettleModal from '../Modal/SettleModal'
 import API from '../Utils/ApiConstant'
 import instance from '../Utils/axiosConstants'
+import Back from './BackButton/Back'
 
 function OrderDetails(props) {
   const [orderDetails, setOrderDetails] = useState({})
@@ -18,8 +19,8 @@ function OrderDetails(props) {
         .get(`${API.ORDER_DETAIL}${props?.location?.state?.orderId}`)
         .then((res) => {
           setOrderDetails(res.orders[0])
-          setOrderProducts(res.orders[0].order_products)
-          let l = res.orders[0].order_products?.length
+          setOrderProducts(res.orders[0]?.order_products)
+          let l = res.orders[0]?.order_products?.length
           if (l > 0) {
             let a = new Array(l).fill(false)
             setChecked(a)
@@ -64,6 +65,9 @@ function OrderDetails(props) {
   return (
     <>
       <div className="main-outer-div">
+        <div>
+          <Back></Back>
+        </div>
         <div className="myorders-outer-div">
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
@@ -76,14 +80,11 @@ function OrderDetails(props) {
                       ? orderDetails?.shop?.shop_name
                       : ' '}
                   </h2>
-                  <p>{`${orderDetails?.shop?.address?.address_line_1 || ' '} ${
-                    orderDetails?.shop?.address?.address_line_2 || ''
-                  } ${orderDetails?.shop?.address?.address_line_3 || ''}`}</p>
-                  <p>{`${
-                    orderDetails?.shop?.address?.locality?.locality || ' '
-                  } ${orderDetails?.shop?.address?.city?.city || ''} ${
-                    orderDetails?.shop?.address?.state || ''
-                  }`}</p>
+                  <p>{`${orderDetails?.shop?.address?.address_line_1 || ' '} ${orderDetails?.shop?.address?.address_line_2 || ''
+                    } ${orderDetails?.shop?.address?.address_line_3 || ''}`}</p>
+                  <p>{`${orderDetails?.shop?.address?.locality?.locality || ' '
+                    } ${orderDetails?.shop?.address?.city?.city || ''} ${orderDetails?.shop?.address?.state || ''
+                    }`}</p>
                   <h5>
                     Delivery Boy:
                     <span
@@ -218,9 +219,8 @@ function OrderDetails(props) {
                         <h4>Address</h4>
                       </div>
                       <div className="content">
-                        <p>{`${orderDetails?.address?.address_line_1 || ' '} ${
-                          orderDetails?.address?.address_line_2 || ''
-                        } ${orderDetails?.address?.address_line_3 || ''}`}</p>
+                        <p>{`${orderDetails?.address?.address_line_1 || ' '} ${orderDetails?.address?.address_line_2 || ''
+                          } ${orderDetails?.address?.address_line_3 || ''}`}</p>
                       </div>
                     </div>
                   </div>

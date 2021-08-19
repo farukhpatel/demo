@@ -1515,6 +1515,10 @@ a {
   top: 0%;
   left: 0%;
 }
+.backButtonAddAddress {
+  position: relative;
+  left: -48%;
+}
 
 /* Notification */
 .notificationDiv {

@@ -298,7 +298,7 @@ function AddVendorForm() {
       toast.error('shop name or shop delivety range are required')
       error = true
     }
-    if (mFile.length > 3) {
+    if (mFile?.length > 3) {
       toast.error('You can choose only 3 images at a time')
       error = true
       setMFile(null)
@@ -447,6 +447,9 @@ function AddVendorForm() {
               </div>
 
               <div className="vendor-form-2">
+                <div>
+                  <Back></Back>
+                </div>
                 <h1>Add Vendor Details</h1>
                 <div className="vendor-form2-container">
                   <form className="vendor-form">
@@ -711,6 +714,9 @@ function AddVendorForm() {
             </>
           ) : (
             <div className="vendor-form-1 address-form">
+              <div className="backButtonAddAddress">
+                <Back></Back>
+              </div>
               <h1>Add Address</h1>
               <form className="vendor-form">
                 <span className="customSpan"></span>

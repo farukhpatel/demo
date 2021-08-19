@@ -43,9 +43,10 @@ import UpdateLocality from './components/Locality/UpdateLocality'
 import Notification from './components/Notification'
 import UserDetails from './components/UserDetails'
 import UpdateShopAddress from './components/UpdateShopAddress'
-import { getToken, onMessageListener } from './firebase'
+// import { getToken, onMessageListener } from './firebase'
 import { Button, Row, Col, Toast } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import firebase from './components/firebase'
 
 Geocode.setLanguage('en')
 Geocode.setApiKey('AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4')
@@ -63,20 +64,27 @@ function App() {
   const [show, setShow] = useState(false)
   const [notification, setNotification] = useState({ title: '', body: '' })
   const [isTokenFound, setTokenFound] = useState(false)
-  useEffect(() => {
-    getToken(setTokenFound)
-  }, [])
 
-  onMessageListener()
-    .then((payload) => {
-      setShow(true)
-      setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-      })
-      console.log(payload)
+  useEffect(() => {
+    const messaging = firebase.messaging();
+    messaging.getToken().then((token) => {
+      console.log('token', token)
     })
-    .catch((err) => console.log('failed: ', err))
+  }, [])
+  // useEffect(() => {
+  //   getToken(setTokenFound)
+  // }, [])
+
+  // onMessageListener()
+  //   .then((payload) => {
+  //     setShow(true)
+  //     setNotification({
+  //       title: payload.notification.title,
+  //       body: payload.notification.body,
+  //     })
+  //     console.log(payload)
+  //   })
+  //   .catch((err) => console.log('failed: ', err))
 
   useEffect(() => {
     function handleResize() {

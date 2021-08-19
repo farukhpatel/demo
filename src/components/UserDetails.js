@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { Box, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
+import Back from './BackButton/Back'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -78,21 +79,17 @@ const UserDetails = (props) => {
       instance.get(`${API.USER_BY_ID}&user_id=${userId}`).then((res) => {
         console.log('userDeatils', res)
         if (res?.users?.length > 0) {
-          setUserDetails(res?.users[0]);
+          setUserDetails(res?.users[0])
         }
-
       })
-      console.log('id', userDetails);
+      console.log('id', userDetails)
     } else {
-      setUserDetails(props?.location?.state?.userDetails);
+      setUserDetails(props?.location?.state?.userDetails)
       userId = props?.location?.state?.userDetails.id
     }
     !isDeliveryBoy
       ? userOrderDetails(userId)
       : DeliveryBoyorderDetails(userDetails.id)
-
-
-
   }, [])
   const GoOrderDetails = (value) => {
     routerHistroy.push('/orderdetails', { orderId: value.order_id })
@@ -113,13 +110,16 @@ const UserDetails = (props) => {
   return (
     <>
       <div className="main-outer-div">
+        <div>
+          <Back></Back>
+        </div>
         <div className="myorders-outer-div">
           <div className="myorders-inner-div details-outer-div">
             <div className="details-div">
               <div className="details-div-left">
                 <i class="fas fa-store fa-3x" style={{ color: '#575353' }}></i>
                 <div className="details-content">
-                  <h3 >
+                  <h3>
                     Name : {userDetails?.name ? userDetails?.name : 'Not found'}
                   </h3>
                   <p>{`Phone : ${userDetails?.phone || ''} `}</p>
@@ -191,7 +191,10 @@ const UserDetails = (props) => {
                           return (
                             <tr align="center" key={index}>
                               <th scope="row">{index + 1}</th>
-                              <td style={{ color: '#85c1e9' }} onClick={() => GoOrderDetails(value)}>
+                              <td
+                                style={{ color: '#85c1e9' }}
+                                onClick={() => GoOrderDetails(value)}
+                              >
                                 {value?.order_id}
                               </td>
                               <td>{value?.user_id}</td>

@@ -2,7 +2,6 @@
 
 importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js');
-
 var config = {
 
     apiKey: "AIzaSyA0G6lLOIX4oPNgDlDNbohB4UnkgqDakDk",
@@ -27,6 +26,6 @@ messaging.onBackgroundMessage(function (payload) {
         body: payload.notification.body,
     };
 
-    return self.registration.showNotification(notificationTitle,
+    self.registration.showNotification(notificationTitle,
         notificationOptions);
 });
