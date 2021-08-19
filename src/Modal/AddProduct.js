@@ -47,7 +47,7 @@ function AddProduct(props) {
   }
   return (
     <>
-      <div className="main-outer-div Modal">
+      <div className="main-outer-div Modal popup-add-product">
         <div className="myorders-outer-div">
           <div className=" paymentsettle-inner-div">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

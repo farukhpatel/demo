@@ -1,102 +1,93 @@
-import React, { useEffect, useState } from 'react'
-import './App.css'
-import { Route, Switch } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
 
-import Geocode from 'react-geocode'
+import Geocode from "react-geocode";
 
-import Navbar from './components/Navbar'
-import Home from './components/Home'
-import User from './components/User'
-import Vendor from './components/Vendor'
-import SalesReport from './components/SalesReport'
-import ProductList from './components/ProductList'
-import TotalOrderRecievede from './components/TotalOrderRecieved'
-import CustomerDetails from './components/CustomerDetails'
-import OrderDetails from './components/OrderDetails'
-import AssignedOrders from './components/AssignedOrders'
-import PickedOrders from './components/PickedOrders'
-import NotPicked from './components/NotPicked'
-import AddVendoreForm from './components/AddVendorForm'
-import UnassignedOrders from './components/UnassignedOrders'
-import DeliveredOrders from './components/DeliveredOrders'
-import SignUp from './components/SignUp'
-import LogIn from './components/LogIn'
-import AddProductForm from './components/AddProductForm'
-import DeliveryManage from './components/DeliveryManage'
-import AddDeliveryBoyForm from './components/AddDeliveryBoyForm'
-import PaymentSettlement from './components/PaymentSettlement'
-import Settings from './components/Settings'
-import Banner from './components/Banner'
-import Review from './components/Review'
-import Coupon from './components/Coupon'
-import VendorDetails from './components/VendorDetails'
-import UpdateVendorForm from './components/UpdateVendor'
-import updateProduct from './components/updateProduct'
-import city from './components/city/City'
-import addCity from './components/city/addCity'
-import updateCity from './components/city/updateCity'
-import UpdateDeliveryBoy from './components/UpdateDeliveryBoy'
-import Locality from './components/Locality/Locality'
-import { AddLocation } from '@material-ui/icons'
-import AddLocalities from './components/Locality/AddLocalities'
-import UpdateLocality from './components/Locality/UpdateLocality'
-import Notification from './components/Notification'
-import UserDetails from './components/UserDetails'
-import UpdateShopAddress from './components/UpdateShopAddress'
-import { getToken, onMessageListener } from './firebase'
-import { Button, Row, Col, Toast } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import User from "./components/User";
+import Vendor from "./components/Vendor";
+import SalesReport from "./components/SalesReport";
+import ProductList from "./components/ProductList";
+import TotalOrderRecievede from "./components/TotalOrderRecieved";
+import CustomerDetails from "./components/CustomerDetails";
+import OrderDetails from "./components/OrderDetails";
+import AssignedOrders from "./components/AssignedOrders";
+import PickedOrders from "./components/PickedOrders";
+import NotPicked from "./components/NotPicked";
+import AddVendoreForm from "./components/AddVendorForm";
+import UnassignedOrders from "./components/UnassignedOrders";
+import DeliveredOrders from "./components/DeliveredOrders";
+import SignUp from "./components/SignUp";
+import LogIn from "./components/LogIn";
+import AddProductForm from "./components/AddProductForm";
+import DeliveryManage from "./components/DeliveryManage";
+import AddDeliveryBoyForm from "./components/AddDeliveryBoyForm";
+import PaymentSettlement from "./components/PaymentSettlement";
+import Settings from "./components/Settings";
+import Banner from "./components/Banner";
+import Review from "./components/Review";
+import Coupon from "./components/Coupon";
+import VendorDetails from "./components/VendorDetails";
+import UpdateVendorForm from "./components/UpdateVendor";
+import updateProduct from "./components/updateProduct";
+import city from "./components/city/City";
+import addCity from "./components/city/addCity";
+import updateCity from "./components/city/updateCity";
+import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
+import Locality from "./components/Locality/Locality";
+import { AddLocation } from "@material-ui/icons";
+import AddLocalities from "./components/Locality/AddLocalities";
+import UpdateLocality from "./components/Locality/UpdateLocality";
+import Notification from "./components/Notification";
+import UserDetails from "./components/UserDetails";
+import UpdateShopAddress from "./components/UpdateShopAddress";
+import { getToken, onMessageListener } from "./firebase";
+import { Button, Row, Col, Toast } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-Geocode.setLanguage('en')
-Geocode.setApiKey('AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4')
+Geocode.setLanguage("en");
+Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
 function App() {
   const getWindowsSize = () => {
-    const { innerWidth: width, innerHeight: height } = window
+    const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
       height,
-    }
-  }
+    };
+  };
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowsSize())
+  const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
 
-  const [show, setShow] = useState(false)
-  const [notification, setNotification] = useState({ title: '', body: '' })
-  const [isTokenFound, setTokenFound] = useState(false)
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({ title: "", body: "" });
+  const [isTokenFound, setTokenFound] = useState(false);
   useEffect(() => {
-    getToken(setTokenFound)
-  }, [])
+    getToken(setTokenFound);
+  }, []);
 
   onMessageListener()
     .then((payload) => {
-      setShow(true)
+      setShow(true);
       setNotification({
         title: payload.notification.title,
         body: payload.notification.body,
-      })
-      console.log(payload)
+      });
+      console.log(payload);
     })
-    .catch((err) => console.log('failed: ', err))
+    .catch((err) => console.log("failed: ", err));
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowsSize())
+      setWindowDimensions(getWindowsSize());
     }
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  return windowDimensions.width < 768 ? (
-    <div className="notSupported">
-      <div>
-        <i class="fas fa-bug fa-4x "></i>
-        <h1>Oops!!</h1>
-        <h3>Not Compatible With Mobile Phones</h3>
-        <p>For Best User Experience Open It Again In Desktop </p>
-      </div>
-    </div>
-  ) : (
+  return (
     <>
       <div className="App">
         <Toast
@@ -105,7 +96,7 @@ function App() {
           delay={2000}
           animation
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 20,
             right: 20,
             minWidth: 200,
@@ -181,7 +172,7 @@ function App() {
         </div>
       </Switch>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

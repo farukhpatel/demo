@@ -49,14 +49,14 @@ function Coupon() {
   const [end_date, setEnd_date] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [id, setId] = useState(0);
-  const [isCouponActive, setIsCouponActive] = useState(1)
+  const [isCouponActive, setIsCouponActive] = useState(1);
   const [minimum_spend, setMinimum_spend] = useState(null);
   const [maximum_spend, setMaximum_spend] = useState(null);
-  const [usage_limit_per_coupon, setUsage_limit_per_coupon] = useState(null)
+  const [usage_limit_per_coupon, setUsage_limit_per_coupon] = useState(null);
   const [usage_limit_per_user, setUsage_limit_per_user] = useState(null);
   const [coupon_code, setCoupon_code] = useState(null);
-  const [coupon_date, setCoupon_date] = useState(new Date);
-  const routerHistory = useHistory()
+  const [coupon_date, setCoupon_date] = useState(new Date());
+  const routerHistory = useHistory();
   const handleChangeCoupon = (coupon) => {
     let body = {
       is_active: coupon?.is_active === 0 ? 1 : 0,
@@ -71,7 +71,10 @@ function Coupon() {
   };
   useEffect(() => {
     const date = new Date();
-    let time = `${moment(date).format('YYYY-MM-DD')}` + "T" + `${moment(date).format('HH:MM')}`
+    let time =
+      `${moment(date).format("YYYY-MM-DD")}` +
+      "T" +
+      `${moment(date).format("HH:MM")}`;
     console.log(time);
     setCoupon_date(time);
     setStart_date(time);
@@ -83,23 +86,32 @@ function Coupon() {
       coupon_name,
       coupon_description,
       coupon_code,
-      start_date: start_date === null ? start_date : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
-      end_date: end_date === null ? end_date : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
+      start_date:
+        start_date === null
+          ? start_date
+          : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
+      end_date:
+        end_date === null
+          ? end_date
+          : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
       coupon_type: 1,
       coupon_value: discount ? Number(discount) : null,
       ...(id > 0 ? { shop_id: id } : {}),
       is_active: isCouponActive,
       minimum_spend: minimum_spend ? Number(minimum_spend) : null,
       maximum_spend: maximum_spend ? Number(maximum_spend) : null,
-      usage_limit_per_coupon: usage_limit_per_coupon ? Number(usage_limit_per_coupon) : null,
-      usage_limit_per_user: usage_limit_per_user ? Number(usage_limit_per_user) : null
+      usage_limit_per_coupon: usage_limit_per_coupon
+        ? Number(usage_limit_per_coupon)
+        : null,
+      usage_limit_per_user: usage_limit_per_user
+        ? Number(usage_limit_per_user)
+        : null,
     };
     console.log(couponData);
     instance.post(API.POST_COUPONS_CREATE, couponData).then((res) => {
-      toast.success(res.message)
-      window.location.href = '/coupon'
-    })
-
+      toast.success(res.message);
+      window.location.href = "/coupon";
+    });
   };
   const handleDelete = (val) => {
     let newArray = [...ar];
@@ -108,11 +120,10 @@ function Coupon() {
   };
   const CouponDelete = (coupon) => {
     instance.delete(`${API.DELETE_COUPONS}/${coupon.id}`).then((res) => {
-      toast.success(res.message)
-      window.location.href = '/coupon';
-    })
-
-  }
+      toast.success(res.message);
+      window.location.href = "/coupon";
+    });
+  };
 
   function getCoupons() {
     instance.get(API.GET_COUPONS).then(function (response) {
@@ -122,10 +133,9 @@ function Coupon() {
   useEffect(() => {
     getCoupons();
     instance.get(API.GET_ALL_SHOP).then((res) => {
-      console.log(res)
+      console.log(res);
       setVendor(res.shop);
     });
-
   }, []);
 
   return (
@@ -185,7 +195,6 @@ function Coupon() {
                   />
                 </div>
                 <div class="form-group">
-
                   <label for="startdate">Start Date</label>
                   <br />
                   <TextField
@@ -216,7 +225,7 @@ function Coupon() {
                     }}
                   />
                 </div>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: "flex" }}>
                   <div class="form-group">
                     <label>Vendor Name</label>
 
@@ -229,9 +238,7 @@ function Coupon() {
                         setId(e.target.value);
                       }}
                     >
-                      <option value={0}>
-                        All
-                      </option>
+                      <option value={0}>All</option>
                       {vendor.map((items, index) => {
                         return (
                           <option key={index} value={items.id}>
@@ -243,7 +250,10 @@ function Coupon() {
                   </div>
                   <div className="form-group">
                     <label for="isActiveCity">Is Active Coupon</label>
-                    <select id="isActiveCity" onChange={(e) => setIsCouponActive(e.target.value)}>
+                    <select
+                      id="isActiveCity"
+                      onChange={(e) => setIsCouponActive(e.target.value)}
+                    >
                       <option value={1}>Yes</option>
                       <option value={0}>No</option>
                     </select>
@@ -327,101 +337,108 @@ function Coupon() {
                         {coupon?.minimum_spend && (
                           <h6>{`Minimum Spend: ${coupon?.minimum_spend}`}</h6>
                         )}
-
                       </div>
                       <div className="coupon-details-btn">
-                        <Popup
-                          Open
-                          nested
-                          className="my-popup"
-                          trigger={
-                            <button
-                              className="btn btn-primary"
-                              style={{ cursor: "pointer" }}
-                            >
-                              {/* {console.log(coupon.is_active)} */}
-                              {coupon?.is_active === 1 ? "Deactive" : "Active"}
-                            </button>
-                          }
-                          position="right center"
-                          modal
-                        >
-                          {(close) => (
-                            <div className="ReviewSure-text">
-                              <h6
-                                style={{
-                                  marginBottom: "1rem",
-                                  marginTop: "2rem",
-                                }}
-                              >
-                                Are you Sure you want to{" "}
-                                {coupon?.is_active === 0 ? "Activate" : "Deactivate"}{" "}
-                                this coupon?
-                              </h6>
+                        <div>
+                          <Popup
+                            Open
+                            nested
+                            className="my-popup"
+                            trigger={
                               <button
                                 className="btn btn-primary"
-                                onClick={() => {
-                                  handleChangeCoupon(coupon);
-                                  close();
-                                }}
+                                style={{ cursor: "pointer" }}
                               >
-                                Yes
+                                {/* {console.log(coupon.is_active)} */}
+                                {coupon?.is_active === 1
+                                  ? "Deactive"
+                                  : "Active"}
                               </button>
+                            }
+                            position="right center"
+                            modal
+                          >
+                            {(close) => (
+                              <div className="ReviewSure-text">
+                                <h6
+                                  style={{
+                                    marginBottom: "1rem",
+                                    marginTop: "2rem",
+                                  }}
+                                >
+                                  Are you Sure you want to{" "}
+                                  {coupon?.is_active === 0
+                                    ? "Activate"
+                                    : "Deactivate"}{" "}
+                                  this coupon?
+                                </h6>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    handleChangeCoupon(coupon);
+                                    close();
+                                  }}
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                                >
+                                  No
+                                </button>
+                              </div>
+                            )}
+                          </Popup>
+                        </div>
+                        <div>
+                          <Popup
+                            className="my-popup"
+                            trigger={
                               <button
                                 className="btn btn-primary"
-                                onClick={() => {
-                                  close();
-                                }}
+                                style={{ cursor: "pointer" }}
                               >
-                                No
+                                Delete
                               </button>
-                            </div>
-                          )}
-                        </Popup>
-                        <Popup
-                          className="my-popup"
-                          trigger={
-                            <button
-                              className="btn btn-primary"
-                              style={{ cursor: "pointer" }}
-                            >
-                              Delete
-                            </button>
-                          }
-                          position="right center"
-                          modal
-                        >
-                          {(close) => (
-                            <div className="ReviewSure-text">
-                              <h6
-                                style={{
-                                  marginBottom: "1rem",
-                                  marginTop: "2rem",
-                                }}
-                              >
-                                Are you Sure you want to Delete this coupon?
-                              </h6>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                  CouponDelete(coupon)
-                                  handleDelete(coupon);
-                                  close();
-                                }}
-                              >
-                                Yes
-                              </button>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                  close();
-                                }}
-                              >
-                                No
-                              </button>
-                            </div>
-                          )}
-                        </Popup>
+                            }
+                            position="right center"
+                            modal
+                          >
+                            {(close) => (
+                              <div className="ReviewSure-text">
+                                <h6
+                                  style={{
+                                    marginBottom: "1rem",
+                                    marginTop: "2rem",
+                                  }}
+                                >
+                                  Are you Sure you want to Delete this coupon?
+                                </h6>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    CouponDelete(coupon);
+                                    handleDelete(coupon);
+                                    close();
+                                  }}
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    close();
+                                  }}
+                                >
+                                  No
+                                </button>
+                              </div>
+                            )}
+                          </Popup>
+                        </div>
                       </div>
                     </div>
                   );

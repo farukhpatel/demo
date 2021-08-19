@@ -88,140 +88,144 @@ function Vendor() {
                     </button>
                   </div>
                 </div>
-                <table class="table table-striped">
-                  <thead>
-                    <tr align="center">
-                      <th scope="col">S No.</th>
-                      <th scope="col">Owner Name</th>
-                      <th scope="col">Dairy Name</th>
-                      <th scope="col">Dairy Address</th>
-                      <th scope="col">Bank Details</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Shop Founding Date</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ textAlign: "center" }}>
-                    {vendors.length > 0 ? (
-                      vendors.map((value, index) => {
-                        return (
-                          <tr align="center" key={index}>
-                            <th scope="row">{index + 1}</th>
+                <div className="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr align="center">
+                        <th scope="col">S No.</th>
+                        <th scope="col">Owner Name</th>
+                        <th scope="col">Dairy Name</th>
+                        <th scope="col">Dairy Address</th>
+                        <th scope="col">Bank Details</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Shop Founding Date</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ textAlign: "center" }}>
+                      {vendors.length > 0 ? (
+                        vendors.map((value, index) => {
+                          return (
+                            <tr align="center" key={index}>
+                              <th scope="row">{index + 1}</th>
 
-                            <td>
-
-                              <Link
-                                to={{
-                                  pathname: "/vendordetails",
-                                  state: { vendor: value },
-                                }}
-                                style={{ color: "#0dcaf0" }}
-                              >
+                              <td>
+                                <Link
+                                  to={{
+                                    pathname: "/vendordetails",
+                                    state: { vendor: value },
+                                  }}
+                                  style={{ color: "#0dcaf0" }}
+                                >
+                                  <p style={{ fontWeight: "bold " }}>
+                                    {value?.shop_owner?.name}
+                                  </p>
+                                </Link>
+                              </td>
+                              <td>
                                 <p style={{ fontWeight: "bold " }}>
-                                  {value?.shop_owner?.name}
+                                  {value?.shop_name}
                                 </p>
-                              </Link>
-                            </td>
-                            <td>
-                              <p style={{ fontWeight: "bold " }}>
-                                {value?.shop_name}
-                              </p>
-                            </td>
+                              </td>
 
-                            <td>
-                              {`${value?.address?.address_line_1
-                                ? `${value?.address?.address_line_1},`
-                                : " "
+                              <td>
+                                {`${
+                                  value?.address?.address_line_1
+                                    ? `${value?.address?.address_line_1},`
+                                    : " "
                                 }`}
-                              {`${value?.address?.address_line_2
-                                ? `${value?.address?.address_line_2},`
-                                : ""
+                                {`${
+                                  value?.address?.address_line_2
+                                    ? `${value?.address?.address_line_2},`
+                                    : ""
                                 }`}
-                              {`${value?.address?.address_line_3
-                                ? `${value?.address?.address_line_3},`
-                                : ""
+                                {`${
+                                  value?.address?.address_line_3
+                                    ? `${value?.address?.address_line_3},`
+                                    : ""
                                 }`}
-                              {value?.locality?.locality}
-                            </td>
-                            <td>
-                              {value?.bank_name}
-                              <br />
-                              {value?.account_holder_name}
-                              <br />
-                              {value?.account_number}
-                              <br />
-                              {value?.ifsc_code}
-                            </td>
+                                {value?.locality?.locality}
+                              </td>
+                              <td>
+                                {value?.bank_name}
+                                <br />
+                                {value?.account_holder_name}
+                                <br />
+                                {value?.account_number}
+                                <br />
+                                {value?.ifsc_code}
+                              </td>
 
-                            <td>{value?.shop_approval}</td>
-                            <td>{value?.shop_founding_date}</td>
-                            <td>
-                              <button
-                                className="btn btn-link-light "
-                                onClick={() => update(value)}
-                              >
-                                <i class="fas fa-user-edit"></i>
-                              </button>
+                              <td>{value?.shop_approval}</td>
+                              <td>{value?.shop_founding_date}</td>
+                              <td>
+                                <button
+                                  className="btn btn-link-light "
+                                  onClick={() => update(value)}
+                                >
+                                  <i class="fas fa-user-edit"></i>
+                                </button>
 
-                              <Popup
-                                className="my-popup"
-                                trigger={
-                                  <button className="btn btn-link-light">
-                                    <i class="fas fa-trash-alt"></i>
-                                  </button>
-                                }
-                                position="right center"
-                                modal
-                              >
-                                {(close) => (
-                                  <div className="ReviewSure-text">
-                                    <h6
-                                      style={{
-                                        marginBottom: "1rem",
-                                        marginTop: "2rem",
-                                      }}
-                                    >
-                                      Are you Sure you want to Delete this
-                                      review?
-                                    </h6>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() => {
-                                        handleDelete(value.id);
-                                        close();
-                                      }}
-                                    >
-                                      Yes
+                                <Popup
+                                  className="my-popup"
+                                  trigger={
+                                    <button className="btn btn-link-light">
+                                      <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() => {
-                                        close();
-                                      }}
-                                    >
-                                      No
-                                    </button>
-                                  </div>
-                                )}
-                              </Popup>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <>
-                        {" "}
-                        <tr>
+                                  }
+                                  position="right center"
+                                  modal
+                                >
+                                  {(close) => (
+                                    <div className="ReviewSure-text">
+                                      <h6
+                                        style={{
+                                          marginBottom: "1rem",
+                                          marginTop: "2rem",
+                                        }}
+                                      >
+                                        Are you Sure you want to Delete this
+                                        review?
+                                      </h6>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          handleDelete(value.id);
+                                          close();
+                                        }}
+                                      >
+                                        Yes
+                                      </button>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          close();
+                                        }}
+                                      >
+                                        No
+                                      </button>
+                                    </div>
+                                  )}
+                                </Popup>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <>
                           {" "}
-                          <td colSpan="7">
+                          <tr>
                             {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>{" "}
-                      </>
-                    )}
-                  </tbody>
-                </table>
+                            <td colSpan="7">
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>{" "}
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div
                 class="tab-pane fade"

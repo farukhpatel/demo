@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react'
-import './SuperUser.css'
+import React, { useState, useEffect } from "react";
+import "./SuperUser.css";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from '@material-ui/pickers'
-import Grid from '@material-ui/core/Grid' //clock
-import MomentUtils from '@date-io/moment'
-import moment from 'moment'
-import API from '../Utils/ApiConstant'
-import instance from '../Utils/axiosConstants'
-import axios from 'axios'
-import { FormControl, makeStyles, MenuItem, Select } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
-import VendorDetails from './VendorDetails'
+} from "@material-ui/pickers";
+import Grid from "@material-ui/core/Grid"; //clock
+import MomentUtils from "@date-io/moment";
+import moment from "moment";
+import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
+import axios from "axios";
+import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
+import VendorDetails from "./VendorDetails";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -23,185 +23,179 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-}))
+}));
 
 function SalesReport() {
-  const classes = useStyles()
-  let date = new Date()
-  date = date.toLocaleDateString()
-  const [from, setFrom] = useState(new Date())
-  const [to, setTo] = useState(new Date())
-  const [vendor, setVendor] = useState([])
-  const [id, setId] = useState(0)
-  const arr = [1, 2, 3, 4, 5, 6, 7]
-  const [dataWise, setDataWise] = useState([])
-  const [sellerWise, setSellerWise] = useState([])
+  const classes = useStyles();
+  let date = new Date();
+  date = date.toLocaleDateString();
+  const [from, setFrom] = useState(new Date());
+  const [to, setTo] = useState(new Date());
+  const [vendor, setVendor] = useState([]);
+  const [id, setId] = useState(0);
+  const arr = [1, 2, 3, 4, 5, 6, 7];
+  const [dataWise, setDataWise] = useState([]);
+  const [sellerWise, setSellerWise] = useState([]);
   const [vendors, setVendors] = useState([]);
 
   useEffect(() => {
-    let date = new Date()
-    let start_date = moment(date).add(-1, 'days').format()
-    setFrom(start_date)
+    let date = new Date();
+    let start_date = moment(date).add(-1, "days").format();
+    setFrom(start_date);
 
     //for shop list
     instance.get(API.GET_ALL_SHOP).then((res) => {
-      setVendor(res.shop)
-    })
+      setVendor(res.shop);
+    });
     //for data-wise
     instance.get(API.DATA_WISE).then((res) => {
-      setDataWise(res.data)
-    })
+      setDataWise(res.data);
+    });
     //for seller-wise
     instance.get(API.SELLER_WISE).then((res) => {
-      console.log(res)
-      setSellerWise(res.data)
-    })
-  }, [])
+      console.log(res);
+      setSellerWise(res.data);
+    });
+  }, []);
   const downloadSalesReport = (e) => {
-    e.preventDefault()
-    let start_date = moment(from).format('YYYY-MM-DD')
-    let end_date = moment(to).format('YYYY-MM-DD')
-    console.log('work2')
-    console.log(id)
+    e.preventDefault();
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
+    console.log("work2");
+    console.log(id);
     let url =
       `${API.DOWNLOAD_SALES_REPORT}?start_date=${start_date}&end_date=${end_date}` +
-      (id > 0 ? '&shop_id=' + id : '')
+      (id > 0 ? "&shop_id=" + id : "");
     instance
       .get(url, {
-        responseType: 'blob',
+        responseType: "blob",
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         const blob = new Blob([response], {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         if (window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveBlob(blob, 'order-sales.xlsx')
+          window.navigator.msSaveBlob(blob, "order-sales.xlsx");
         } else {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'order-sales.xlsx')
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "order-sales.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   //settlement report download
   const downloadSettlementReport = (e) => {
-    e.preventDefault()
-    let start_date = moment(from).format('YYYY-MM-DD')
-    let end_date = moment(to).format('YYYY-MM-DD')
-    console.log('settlement report')
+    e.preventDefault();
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
+    console.log("settlement report");
     let url =
       `${API.DOWNLOAD_SETTLEMENT_REPORT}?start_date=${start_date}&end_date=${end_date}` +
-      (id > 0 ? '&shop_id=' + id : '')
+      (id > 0 ? "&shop_id=" + id : "");
     instance
       .get(url, {
-        responseType: 'blob',
+        responseType: "blob",
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         const blob = new Blob([response], {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         if (window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveBlob(blob, 'order-settlements.xlsx')
+          window.navigator.msSaveBlob(blob, "order-settlements.xlsx");
         } else {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'order-settlements.xlsx')
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "order-settlements.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const downloadUserReport = (e) => {
-    e.preventDefault()
-    let start_date = moment(from).format('YYYY-MM-DD')
-    let end_date = moment(to).format('YYYY-MM-DD')
-    console.log('user report')
-    let url = `${API.USER_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`
+    e.preventDefault();
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
+    console.log("user report");
+    let url = `${API.USER_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
     instance
       .get(url, {
-        responseType: 'blob',
+        responseType: "blob",
       })
       .then((response) => {
-        console.log('response', response)
+        console.log("response", response);
         const blob = new Blob([response], {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         if (window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveBlob(blob, 'user-report.xlsx')
+          window.navigator.msSaveBlob(blob, "user-report.xlsx");
         } else {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'user-report.xlsx')
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "user-report.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const downloadShopReport = (e) => {
-    e.preventDefault()
-    let start_date = moment(from).format('YYYY-MM-DD')
-    let end_date = moment(to).format('YYYY-MM-DD')
-    console.log('shop report')
-    let url = `${API.SHOP_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`
+    e.preventDefault();
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
+    console.log("shop report");
+    let url = `${API.SHOP_REPORT_DOWNLOAD}?start_date=${start_date}&end_date=${end_date}`;
     instance
       .get(url, {
-        responseType: 'blob',
+        responseType: "blob",
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         const blob = new Blob([response], {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         if (window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveBlob(blob, 'shop-report.xlsx')
+          window.navigator.msSaveBlob(blob, "shop-report.xlsx");
         } else {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'shop.xlsx')
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "shop.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const routerHistroy = useHistory();
 
   const VendorDetails = (id) => {
-    instance
-      .get(`${API.VENDOR_API}?shop_id=${id}`)
-      .then(function (response) {
-        console.log('r', response.shop)
-        routerHistroy.push(`/vendordetails`, { vendor: response.shop[0] });
-      });
+    instance.get(`${API.VENDOR_API}?shop_id=${id}`).then(function (response) {
+      console.log("r", response.shop);
+      routerHistroy.push(`/vendordetails`, { vendor: response.shop[0] });
+    });
   };
   return (
     <>
@@ -254,7 +248,7 @@ function SalesReport() {
             </ul>
             <div class="tab-content" id="myTabContent">
               <div
-                class="tab-pane fade show active "
+                class="tab-pane fade show active table-responsive"
                 id="datewise"
                 role="tabpanel"
                 aria-labelledby="date-wise"
@@ -286,13 +280,13 @@ function SalesReport() {
                           <td>{value.order_commission}</td>
                           <td>{value.order_tax}</td>
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
               </div>
               <div
-                class="tab-pane fade"
+                class="tab-pane fade table-responsive"
                 id="sellerwise"
                 role="tabpanel"
                 aria-labelledby="seller-wise"
@@ -317,7 +311,10 @@ function SalesReport() {
                           {/* <td>{value.shop_name}</td> */}
 
                           {console.log(value)}
-                          <td style={{ color: '#85c1e9' }} onClick={() => VendorDetails(value?.shop_id)}>
+                          <td
+                            style={{ color: "#85c1e9" }}
+                            onClick={() => VendorDetails(value?.shop_id)}
+                          >
                             {value?.shop_name}
                           </td>
 
@@ -327,7 +324,7 @@ function SalesReport() {
                           <td>{value.total_tax}</td>
                           <td>{value.total_payable_amount}</td>
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
@@ -340,7 +337,7 @@ function SalesReport() {
               >
                 <div className="dashboard_time">
                   <div className="payment-settlement-inputs">
-                    <form className="payment-form">
+                    <form className="payment-form row">
                       <div class="form-group">
                         <label for="from">From</label>
                         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -350,11 +347,11 @@ function SalesReport() {
                               id="date-picker-dialog"
                               format="DD/MM/yyyy"
                               onChange={(e) => {
-                                setFrom(e._d)
+                                setFrom(e._d);
                               }}
                               value={from}
                               KeyboardButtonProps={{
-                                'aria-label': 'change date',
+                                "aria-label": "change date",
                               }}
                             />
                           </Grid>
@@ -369,11 +366,11 @@ function SalesReport() {
                               id="date-picker-dialog"
                               format="DD/MM/yyyy"
                               onChange={(e) => {
-                                setTo(e._d)
+                                setTo(e._d);
                               }}
                               value={to}
                               KeyboardButtonProps={{
-                                'aria-label': 'change date',
+                                "aria-label": "change date",
                               }}
                             />
                           </Grid>
@@ -386,9 +383,9 @@ function SalesReport() {
                             value={id}
                             displayEmpty
                             className={classes.selectEmpty}
-                            inputProps={{ 'aria-label': 'Without label' }}
+                            inputProps={{ "aria-label": "Without label" }}
                             onChange={(e) => {
-                              setId(e.target.value)
+                              setId(e.target.value);
                             }}
                           >
                             <MenuItem value="">
@@ -397,10 +394,10 @@ function SalesReport() {
                             {vendor.map((items, index) => {
                               return (
                                 <MenuItem key={index} value={items.id}>
-                                  {' '}
-                                  {items.shop_name}{' '}
+                                  {" "}
+                                  {items.shop_name}{" "}
                                 </MenuItem>
-                              )
+                              );
                             })}
                           </Select>
                           {/* <FormHelperText>Without label</FormHelperText> */}
@@ -416,17 +413,18 @@ function SalesReport() {
 
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '5%',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "5%",
+                    flexWrap: "wrap",
                   }}
                 >
                   <div>
                     <button
                       type="submit"
                       onClick={(e) => {
-                        downloadSalesReport(e)
+                        downloadSalesReport(e);
                       }}
                       className="assign-btn"
                     >
@@ -437,7 +435,7 @@ function SalesReport() {
                     <button
                       type="submit"
                       onClick={(e) => {
-                        downloadSettlementReport(e)
+                        downloadSettlementReport(e);
                       }}
                       className="assign-btn"
                     >
@@ -448,18 +446,18 @@ function SalesReport() {
                     <button
                       type="submit"
                       onClick={(e) => {
-                        downloadUserReport(e)
+                        downloadUserReport(e);
                       }}
                       className="assign-btn"
                     >
-                      Download User Report{' '}
+                      Download User Report{" "}
                     </button>
                   </div>
                   <div>
                     <button
                       type="submit"
                       onClick={(e) => {
-                        downloadShopReport(e)
+                        downloadShopReport(e);
                       }}
                       className="assign-btn"
                     >
@@ -473,6 +471,6 @@ function SalesReport() {
         </div>
       </div>
     </>
-  )
+  );
 }
-export default SalesReport
+export default SalesReport;

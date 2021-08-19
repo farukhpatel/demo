@@ -62,7 +62,7 @@ function VendorDetails(props) {
   // console.log(props?.location?.state?.vendor?.address)
   let address = props?.location?.state?.vendor?.address || {};
 
-  console.log('vd', props?.location?.state);
+  console.log("vd", props?.location?.state);
   const vendorDetails = props?.location?.state?.vendor || {};
   const [products, setProducts] = useState({});
   const [totalVendorOrder, setTotalVendorOrder] = useState([]);
@@ -143,8 +143,8 @@ function VendorDetails(props) {
     instance.delete(`${API.DELETE_SHOP_PRODUCT}/${id}`).then((res) => {
       toast.success(res.message);
       window.location.reload();
-    })
-  }
+    });
+  };
   return (
     <>
       <div className="main-outer-div">
@@ -258,13 +258,13 @@ function VendorDetails(props) {
                     </button>
                   </h5>
                 </div>
-              </div>
-              <div>
-                <img
-                  src={vendorDetails?.shop_profile}
-                  alt="image not found"
-                  style={{ width: "30rem", height: "20rem" }}
-                />
+                <div>
+                  <img
+                    src={vendorDetails?.shop_profile}
+                    alt="image not found"
+                    style={{ width: "30rem", height: "20rem" }}
+                  />
+                </div>
               </div>
             </div>
 
@@ -282,7 +282,7 @@ function VendorDetails(props) {
               </AppBar>
               <TabPanel value={value} index={0}>
                 <div
-                  class="tab-pane fade show active"
+                  class="tab-pane fade show active table-responsive"
                   id="ordersdetails"
                   role="tabpanel"
                   aria-labelledby="orders-details"
@@ -341,7 +341,7 @@ function VendorDetails(props) {
 
               <TabPanel value={value} index={1}>
                 <div
-                  class="tab-pane fade show active"
+                  class="tab-pane fade show active table-responsive"
                   id="ordersdetails"
                   role="tabpanel"
                   aria-labelledby="orders-details"
@@ -379,63 +379,74 @@ function VendorDetails(props) {
                               </td>
 
                               <td>
-                                <div style={{ display: 'flex', justifyContent: 'center'}}>
-                                <Popup
-                                  trigger={
-                                    <button className="btn btn-link-light" style={{ cursor: "pointer" }}>
-                                      <i class="fas fa-edit"></i>
-                                    </button>
-                                  }
-                                  position="right center"
-                                  modal
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
                                 >
-                                  <EditProductModal
-                                    shopId={vendorDetails?.id}
-                                    productDetails={value}
-                                    productId={value?.id}
-                                  />
-                                </Popup>
-                                <Popup
-                                  className="my-popup"
-                                  trigger={
-                                    <button className="btn btn-link-light" style={{ cursor: "pointer" }}>
-                                      <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                  }
-                                  position="right center"
-                                  modal
-                                >
-                                  {(close) => (
-                                    <div className="ReviewSure-text">
-                                      <h6
-                                        style={{
-                                          marginBottom: '1rem',
-                                          marginTop: '2rem',
-                                        }}
-                                      >
-                                        Are you Sure you want to Delete this?
-                                      </h6>
+                                  <Popup
+                                    trigger={
                                       <button
-                                        className="btn btn-primary"
-                                        onClick={() => {
-                                          handleDelete(value?.id)
-                                          close()
-                                        }}
+                                        className="btn btn-link-light"
+                                        style={{ cursor: "pointer" }}
                                       >
-                                        Yes
+                                        <i class="fas fa-edit"></i>
                                       </button>
+                                    }
+                                    position="right center"
+                                    modal
+                                  >
+                                    <EditProductModal
+                                      shopId={vendorDetails?.id}
+                                      productDetails={value}
+                                      productId={value?.id}
+                                    />
+                                  </Popup>
+                                  <Popup
+                                    className="my-popup"
+                                    trigger={
                                       <button
-                                        className="btn btn-primary"
-                                        onClick={() => {
-                                          close()
-                                        }}
+                                        className="btn btn-link-light"
+                                        style={{ cursor: "pointer" }}
                                       >
-                                        No
+                                        <i class="fas fa-trash-alt"></i>
                                       </button>
-                                    </div>
-                                  )}
-                                </Popup>
-                              </div>
+                                    }
+                                    position="right center"
+                                    modal
+                                  >
+                                    {(close) => (
+                                      <div className="ReviewSure-text">
+                                        <h6
+                                          style={{
+                                            marginBottom: "1rem",
+                                            marginTop: "2rem",
+                                          }}
+                                        >
+                                          Are you Sure you want to Delete this?
+                                        </h6>
+                                        <button
+                                          className="btn btn-primary"
+                                          onClick={() => {
+                                            handleDelete(value?.id);
+                                            close();
+                                          }}
+                                        >
+                                          Yes
+                                        </button>
+                                        <button
+                                          className="btn btn-primary"
+                                          onClick={() => {
+                                            close();
+                                          }}
+                                        >
+                                          No
+                                        </button>
+                                      </div>
+                                    )}
+                                  </Popup>
+                                </div>
                               </td>
                             </tr>
                           );

@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import instance from "../Utils/axiosConstants";
 import MultiSelect from "react-multi-select-component";
+import Back from "./BackButton/Back";
 
 function UpdateVendorForm(props) {
   const prop = props.location.state;
@@ -132,6 +133,9 @@ function UpdateVendorForm(props) {
         <div className="myorders-outer-div">
           <>
             <div className="vendor-form-1 ">
+              <div className="backButton">
+                <Back></Back>
+              </div>
               <h1>Edit Vendor</h1>
               <div className="vendor-update">
                 <form className="vendor-form update-form">
@@ -266,7 +270,7 @@ function UpdateVendorForm(props) {
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <div>
+                  <div className="table-responsive">
                     <table class="table table-striped ">
                       <thead>
                         <tr>
@@ -279,7 +283,7 @@ function UpdateVendorForm(props) {
                           <th scope="col">Evening Slot Active</th>
                         </tr>
                       </thead>
-                      <tbody style={{ textAlign: 'center' }}>
+                      <tbody style={{ textAlign: "center" }}>
                         {shopSchedule.map((value, index) => {
                           console.log(value);
                           return (
@@ -287,7 +291,7 @@ function UpdateVendorForm(props) {
                               <td>{value?.key}</td>
                               <td>
                                 <input
-                                  style={{ width: '1.3rem' }}
+                                  style={{ width: "1.3rem" }}
                                   type="checkbox"
                                   name="is_morning_slot_active"
                                   defaultChecked={value?.is_morning_slot_active}
@@ -350,7 +354,7 @@ function UpdateVendorForm(props) {
                               </td>
                               <td>
                                 <input
-                                  style={{ width: '1.3rem' }}
+                                  style={{ width: "1.3rem" }}
                                   type="checkbox"
                                   name="is_evening_slot_active"
                                   defaultChecked={value?.is_evening_slot_active}

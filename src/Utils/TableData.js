@@ -139,7 +139,6 @@ const DropDown = (props) => {
 
   return (
     <FormControl variant="outlined" className={selectClasses.formControl}>
-
       <InputLabel id="demo-simple-select-outlined-label">Re-Assign</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
@@ -198,24 +197,29 @@ const TableData = ({ orderType, searchKey }) => {
   // }, [searchKey]);
 
   useEffect(() => {
-
-    let start_date = moment(from).format('YYYY-MM-DD');
-    let end_date = moment(to).format('YYYY-MM-DD');
-    console.log('ot', orderType)
+    let start_date = moment(from).format("YYYY-MM-DD");
+    let end_date = moment(to).format("YYYY-MM-DD");
+    console.log("ot", orderType);
 
     if (searchKey?.length > 0) {
       setAssigned(searchKey);
     }
     if (orderType !== "TOTAL_ORDER_RECIEVED") {
-      instance.get(`${API[orderType]}&delivery_date=${moment().format('YYYY-MM-DD')}`).then(function (response) {
-        setAssigned(response.orders);
-      });
+      instance
+        .get(`${API[orderType]}&delivery_date=${moment().format("YYYY-MM-DD")}`)
+        .then(function (response) {
+          setAssigned(response.orders);
+        });
     }
     if (orderType === "TOTAL_ORDER_RECIEVED") {
-      instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`).then((res) => {
-        console.log('res', res)
-        setAssigned(res.orders);
-      });
+      instance
+        .get(
+          `${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`
+        )
+        .then((res) => {
+          console.log("res", res);
+          setAssigned(res.orders);
+        });
     }
     getDeliveryBoys();
   }, [searchKey]);
@@ -225,20 +229,22 @@ const TableData = ({ orderType, searchKey }) => {
     let start_date = moment(from).format("YYYY-MM-DD");
     let end_date = moment(to).format("YYYY-MM-DD");
     if (orderType === "TOTAL_ORDER_RECIEVED") {
-      instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`).then((res) => {
-        console.log('res', res)
-        setAssigned(res.orders);
-      });
+      instance
+        .get(
+          `${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`
+        )
+        .then((res) => {
+          console.log("res", res);
+          setAssigned(res.orders);
+        });
     }
-  }
-
-
+  };
 
   return (
     <>
       {/* This is for from-to time */}
-      {orderType === "TOTAL_ORDER_RECIEVED" ?
-        <div className="dashboard_time" style={{ marginBottom: '20px' }}>
+      {orderType === "TOTAL_ORDER_RECIEVED" ? (
+        <div className="dashboard_time" style={{ marginBottom: "20px" }}>
           <div className="payment-settlement-inputs">
             <form className="payment-form">
               <div class="form-group">
@@ -282,60 +288,75 @@ const TableData = ({ orderType, searchKey }) => {
 
               {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
 
-              <button type="submit" class="btn btn-primary DateSelectSubmitBtn" onClick={(e) => { Submits(e) }} >Filter</button>
+              <button
+                type="submit"
+                class="btn btn-primary DateSelectSubmitBtn"
+                onClick={(e) => {
+                  Submits(e);
+                }}
+              >
+                Filter
+              </button>
             </form>
           </div>
         </div>
-        : ''}
+      ) : (
+        ""
+      )}
       {/* {End of time } */}
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns && columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
+                {columns &&
+                  columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {assigned && assigned.length > 0
-                ? assigned.map((row, rowIndex) => {
-                  { console.log(row?.user?.name) }
+              {assigned && assigned.length > 0 ? (
+                assigned.map((row, rowIndex) => {
+                  {
+                    console.log(row?.user?.name);
+                  }
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns && columns.map((column) => {
-                        const value = row[column.id];
-                        { console.log('row', row) }
-                        return (
+                      {columns &&
+                        columns.map((column) => {
+                          const value = row[column.id];
 
-                          <TableCell key={column.id} align={column.align}>
-                            {column?.id === "user_id" ||
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column?.id === "user_id" ||
                               column?.id === "order_id" ? (
-                              <Link
-                                to={{
-                                  pathname: "/userdetails",
-                                  state: { userId: row.user_id, isDeliveryBoy: false },
-                                }}
-                                style={{ color: "#0dcaf0" }}
-                              >
-                                {" "}
-                                {`${value}`}
-                              </Link>
-                            ) : column?.id === "shop" &&
-                              column?.label === "Locality" ? (
-                              `${value?.address?.locality?.locality}`
-                            ) : column?.id === "customer_name" &&
-                              column?.label === "Customer_Name" ? (
-                              `${row?.user?.name}`
-                            )
-                              : column?.id === "order_status" &&
+                                <Link
+                                  to={{
+                                    pathname: "/userdetails",
+                                    state: {
+                                      userId: row.user_id,
+                                      isDeliveryBoy: false,
+                                    },
+                                  }}
+                                  style={{ color: "#0dcaf0" }}
+                                >
+                                  {" "}
+                                  {`${value}`}
+                                </Link>
+                              ) : column?.id === "shop" &&
+                                column?.label === "Locality" ? (
+                                `${value?.address?.locality?.locality}`
+                              ) : column?.id === "customer_name" &&
+                                column?.label === "Customer_Name" ? (
+                                `${row?.user?.name}`
+                              ) : column?.id === "order_status" &&
                                 value === "Assigned" ? (
                                 <>
                                   {`${value} to ${row?.assigned_to?.name}`}
@@ -345,37 +366,36 @@ const TableData = ({ orderType, searchKey }) => {
                                     deliveryBoysList={deliveryBoysList}
                                   />
                                 </>
-                              ) :
-                                column?.id === "order_status" &&
-                                  value === "Picked" ? (
-                                  `${value} by ${row?.assigned_to?.name}`
-                                ) : column?.id === "order_status" &&
-                                  value === "Delivered" ? (
-                                  `${value} by ${row?.assigned_to?.name}`
-                                ) : column?.id === "shop" &&
-                                  column?.label === "Seller Name" ? (
-                                  value?.shop_name
-                                ) : column?.id === "index" ? (
-                                  rowIndex + 1
-                                ) :
-
-                                  column?.id === "created_at" ? (
-                                    moment(value).format("D MMMM YYYY, h:mm a")
-                                  ) : column.id === "slot" ? (
-                                    `${moment(
-                                      row?.delivery_date,
-                                      "DD-MM-YYYY"
-                                    ).format("D MMMM")} ${row?.slot}`
-                                  ) : (
-                                    value
-                                  )}
-                          </TableCell>
-                        );
-                      })}
+                              ) : column?.id === "order_status" &&
+                                value === "Picked" ? (
+                                `${value} by ${row?.assigned_to?.name}`
+                              ) : column?.id === "order_status" &&
+                                value === "Delivered" ? (
+                                `${value} by ${row?.assigned_to?.name}`
+                              ) : column?.id === "shop" &&
+                                column?.label === "Seller Name" ? (
+                                value?.shop_name
+                              ) : column?.id === "index" ? (
+                                rowIndex + 1
+                              ) : column?.id === "created_at" ? (
+                                moment(value).format("D MMMM YYYY, h:mm a")
+                              ) : column.id === "slot" ? (
+                                `${moment(
+                                  row?.delivery_date,
+                                  "DD-MM-YYYY"
+                                ).format("D MMMM")} ${row?.slot}`
+                              ) : (
+                                value
+                              )}
+                            </TableCell>
+                          );
+                        })}
                     </TableRow>
                   );
                 })
-                : "No Data"}
+              ) : (
+                <TableCell>No Data</TableCell>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

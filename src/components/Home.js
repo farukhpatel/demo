@@ -19,7 +19,7 @@ function Home() {
   const date = new Date();
   const [from, setFrom] = useState(new Date());
   const [to, setTo] = useState(new Date());
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [dashboardData, setDashboardData] = useState({
     active_users: "",
     total_delivery_boys: "",
@@ -270,7 +270,7 @@ function Home() {
                 </a>
               </div>
             </div>
-            <div className="home-middle-right">
+            <div className="home-middle-right img-hidden">
               <img
                 src={dairy}
                 style={{ width: "400px", height: "400px" }}

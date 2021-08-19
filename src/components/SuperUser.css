@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -14,7 +14,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 /* Navebar Css Start */
 .sidebar {
@@ -42,7 +42,7 @@ body {
 }
 .headerText h1 {
   color: white;
-  font-family: 'Kaushan Script', cursive;
+  font-family: "Kaushan Script", cursive;
 }
 
 .sidebar ul a {
@@ -56,7 +56,7 @@ body {
   box-sizing: border-box;
   /* border-bottom: 1px solid #fff; */
   transition: 0.4s;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 .sidebar > ul > li {
@@ -87,12 +87,12 @@ ul li:hover a {
   margin-left: 3%;
 }
 .innerDashboardHeading h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   color: #3b1f47;
 }
 .innerDashboardHeading h1::after {
-  content: ' ';
+  content: " ";
   display: block;
   width: 100px;
   height: 2px;
@@ -106,6 +106,7 @@ ul li:hover a {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .home-top,
 .home-middle,
@@ -117,6 +118,7 @@ ul li:hover a {
   justify-content: space-between;
   align-items: center;
   height: 10rem;
+  flex-wrap: wrap;
 }
 .home-top-left,
 .home-top-right {
@@ -168,14 +170,14 @@ ul li:hover a {
 }
 .home-top-left .item-1 h5,
 .home-top-right .item-1 h5 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   font-size: 16px;
   color: #7c7c7c;
 }
 .home-top-left .item-1 h3,
 .home-top-right .item-1 h3 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 400;
   font-size: 2.8rem;
   color: #85c1e9;
@@ -229,20 +231,20 @@ ul li:hover a {
   top: 1em;
 }
 .home-middle-left-top h5 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-left-top h2 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 400;
   color: #474249;
   font-size: 18px;
   color: #d3d2d4;
 }
 .home-middle-left-top h3 {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -276,13 +278,13 @@ ul li:hover a {
 }
 
 .home-middle-left-bottom h5 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-left-bottom h3 {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -315,20 +317,20 @@ ul li:hover a {
   position: relative;
 }
 .home-middle-right-top h5 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-right-top h2 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 400;
   color: #474249;
   font-size: 18px;
   color: #d3d2d4;
 }
 .home-middle-right-top h3 {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -361,13 +363,13 @@ ul li:hover a {
   position: relative;
 }
 .home-middle-right-bottom h5 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: bold;
   color: #7c7c7c;
   font-size: 1.1rem;
 }
 .home-middle-right-bottom h3 {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-weight: bolder;
   font-size: 2.8rem;
   color: #000;
@@ -388,7 +390,7 @@ thead tr {
   width: 100%;
 }
 thead tr th {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   /* font-weight: bold; */
   font-weight: 400;
   color: rgb(255, 255, 255);
@@ -400,7 +402,7 @@ thead tr th {
   padding: 16px !important;
 }
 tbody tr td {
-  font-family: 'Poppins' !important;
+  font-family: "Poppins" !important;
   font-size: 0.875rem !important;
   letter-spacing: 0.01071em !important;
   padding: 16px !important;
@@ -453,7 +455,7 @@ tbody tr td a {
   --rmsc-h: 10px; /* Height */
 }
 
-.select-item > input[type='checkbox'] {
+.select-item > input[type="checkbox"] {
   width: 34px !important;
   height: 34px;
   border: 4px solid #ffcb9a !important;
@@ -471,7 +473,7 @@ tbody tr td a {
   border-radius: 95px;
   background-color: hsl(282, 96%, 10%);
   color: white;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   outline: none !important;
   border: none;
   margin-left: -22px;
@@ -521,15 +523,15 @@ tbody td button:hover {
   background-color: transparent;
   margin-left: 10px;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-size: 18px;
 }
 .myorders-inner-div .nav .nav-item .nav-link {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #7c7c7c;
 }
 .myorders-inner-div .nav .nav-item .nav-link.active {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #000 !important;
 }
 .myorders-inner-div ul {
@@ -553,7 +555,7 @@ tbody td button:hover {
 .add-vendor button {
   width: 15%;
   height: 50px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
   margin-top: 3%;
   margin-left: 3%;
@@ -564,7 +566,7 @@ tbody td button:hover {
 .vendor-form-1,
 .vendor-form-2 {
   box-shadow: none !important;
-  width: 98% !important;
+  width: 98vw;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -611,13 +613,13 @@ tbody td button:hover {
 }
 .vendor-form-1 h1,
 .vendor-form-2 h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin-bottom: 2%;
   font-weight: bold;
 }
 .vendor-form-1 h1::after,
 .vendor-form-2 h1::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 2px;
   display: block;
@@ -633,7 +635,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -646,7 +648,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .vendor-form-1 input:focus,
@@ -656,7 +658,7 @@ tbody td button:hover {
 }
 .vendor-form-1 form div label,
 .vendor-form-2 form div label {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #999;
   font-weight: 400 !important;
 }
@@ -674,14 +676,14 @@ tbody td button:hover {
 }
 .vendor-form .form-group {
   width: 40%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding: 1%;
 }
 
 .vendor-form .form-group {
   display: flex;
   align-items: center;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   justify-content: space-between;
   padding: 1%;
 }
@@ -695,7 +697,7 @@ tbody td button:hover {
   padding-right: 1rem;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -737,7 +739,7 @@ tbody td button:hover {
   margin-bottom: -1%;
   width: 15%;
   height: 50px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .productlist-inner-div-form {
@@ -771,12 +773,12 @@ tbody td button:hover {
   border-radius: 999px;
 }
 .productlist-inner-div-form h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin-bottom: 2%;
   font-weight: bold;
 }
 .productlist-inner-div-form h1::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 2px;
   display: block;
@@ -791,7 +793,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -802,7 +804,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .productlist-inner-div-form input:focus {
@@ -810,12 +812,12 @@ tbody td button:hover {
   border: none;
 }
 .productlist-inner-div-form form div label {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #999;
   font-weight: 400 !important;
 }
 .productadd-form .form-group {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding: 1%;
   display: flex;
   align-items: center;
@@ -829,7 +831,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -855,7 +857,7 @@ tbody td button:hover {
   margin-bottom: -1%;
   width: 20%;
   height: 50px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .deliveryboy-inner-div-form {
@@ -895,12 +897,12 @@ tbody td button:hover {
   border-radius: 999px;
 }
 .deliveryboy-inner-div-form h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin-bottom: 2%;
   font-weight: bold;
 }
 .deliveryboy-inner-div-form h1::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 2px;
   display: block;
@@ -915,7 +917,7 @@ tbody td button:hover {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -926,7 +928,7 @@ tbody td button:hover {
   float: right;
   width: 40%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .deliveryboy-inner-div-form input:focus {
@@ -934,13 +936,13 @@ tbody td button:hover {
   border: none;
 }
 .deliveryboy-inner-div-form form div label {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #999;
   font-weight: 400 !important;
 }
 .addDeliveryboy-form .form-group {
   width: 40%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding: 1%;
 }
 .addDeliveryboy-form .form-group label {
@@ -949,7 +951,7 @@ tbody td button:hover {
 .DisableDeliveryBoyBtn {
   width: 100%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 /* deliverymanage and delivery boy add Css End */
@@ -965,7 +967,7 @@ tbody td button:hover {
   margin-left: 3%;
   margin-bottom: -1%;
   padding: 1%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   border-radius: 999px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
   width: 70%;
@@ -977,7 +979,7 @@ tbody td button:hover {
 }
 .payment-form .form-group {
   width: 25%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding: 1%;
 }
 .payment-form .form-group label {
@@ -1017,7 +1019,7 @@ th {
   /* float: right; */
   width: 15%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 .SettlePayBtn {
@@ -1028,6 +1030,7 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .main-root-second {
   display: flex;
@@ -1074,12 +1077,12 @@ th {
   border-radius: 999px;
 }
 .signup-login-form-div h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin-bottom: 2%;
   font-weight: bold;
 }
 .signup-login-form-div h1::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 2px;
   display: block;
@@ -1094,7 +1097,7 @@ th {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1105,7 +1108,7 @@ th {
   float: right;
   width: 35%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
 }
 /* signup-login-form css end */
@@ -1130,15 +1133,17 @@ a {
   width: 100%;
   padding: 2%;
   display: flex;
-  font-family: 'Poppins';
+  font-family: "Poppins";
+  flex-wrap: wrap;
 }
 
 .assign-btn {
   margin-left: 2%;
+  margin: 0.5rem 0;
   padding: 1%;
   background-color: #77d86a !important;
   color: white !important;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   border-radius: 999px;
   outline: none;
   width: fit-content;
@@ -1149,7 +1154,7 @@ a {
   padding: 1%;
   background-color: #c72712 !important;
   color: white !important;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   border-radius: 999px;
   outline: none;
   width: fit-content;
@@ -1157,8 +1162,8 @@ a {
 }
 
 .details-content {
-  margin-left: 3%;
-  width: 100%;
+  margin: 3%;
+  width: 60%;
 }
 .details-content h2,
 .details-content h5 {
@@ -1202,7 +1207,7 @@ a {
   margin-top: 3%;
 }
 .customer-details-content-outer-div-bottom button {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
   border-radius: 12px;
 }
@@ -1283,7 +1288,7 @@ a {
   background-color: #3b1f47;
   color: white;
   font-weight: 500;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 .banner-images > .banner-btns > button:hover {
   background-color: #26132e;
@@ -1328,11 +1333,11 @@ a {
 }
 .reviewDescription-text > h3,
 .reviewDescription-text > p {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #3a4a55;
 }
 .reviewDescription-text > p {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 10px;
 }
 .reviewDescription-Btn {
@@ -1346,7 +1351,7 @@ a {
 .reviewDescription-Btn button {
   width: 40%;
   height: 50px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132;
 }
 
@@ -1366,12 +1371,12 @@ a {
 }
 .ReviewSure-text h6 {
   font-weight: normal;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 .ReviewSure-text button {
   width: 25%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
   margin-left: 10px;
   text-align: center;
@@ -1430,14 +1435,14 @@ a {
   width: 100% !important;
 }
 .coupon-form form .form-group label {
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 .coupon-form form .customSelect {
   width: 100%;
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1446,7 +1451,7 @@ a {
   margin-top: 4px;
   height: 45px;
   border: 1px solid #f2f2f2;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 12px;
   border-radius: 4px;
 }
@@ -1464,7 +1469,7 @@ a {
 .coupounBtn {
   width: 25%;
   height: 50px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
   color: #fff;
   /* text-transform: uppercase; */
@@ -1491,11 +1496,13 @@ a {
   align-items: center;
   justify-content: space-evenly;
   border-left: 1px solid violet;
+  display: flex;
+  flex-wrap: wrap;
 }
 .coupon-details-btn button {
-  width: 25%;
+  width: 90%;
   height: 45px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: #230132 !important;
   margin-left: 10px;
   text-align: center;
@@ -1540,19 +1547,19 @@ a {
   font-size: medium;
 }
 .notificationDescription-text > h4 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #3a4a55;
   font-size: medium;
 }
 .notificationDescription-text > h6,
 h4,
 h3 .notificationDescription-text > p {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #3a4a55;
   font-size: small;
 }
 .notificationDescription-text > p {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 10px;
 }
 /* notification css end */
@@ -1577,3 +1584,207 @@ h3 .notificationDescription-text > p {
 }
 
 /* setting banner end */
+
+@media only screen and (max-width: 500px) {
+  .sidebar {
+    top: 0;
+    position: fixed;
+    font-size: 10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #230132;
+    transition: all 0.5s ease;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar ul {
+    margin-top: 0;
+  }
+
+  .headerText h1 {
+    color: white;
+    font-family: "Kaushan Script", cursive;
+  }
+
+  .sidebar ul a {
+    display: block;
+    height: 100%;
+    /* width: 80%; */
+    line-height: 40px;
+    font-size: 16px;
+    color: white;
+    padding-left: 18px;
+    box-sizing: border-box;
+    /* border-bottom: 1px solid #fff; */
+    transition: 0.4s;
+    font-family: "Poppins";
+  }
+
+  .sidebar > ul > li {
+    padding-bottom: 5px;
+  }
+  ul {
+    padding-left: 0;
+  }
+
+  ul li:hover a {
+    padding-left: 20px;
+    color: orangered;
+  }
+  .sidebar ul a i {
+    margin-right: 1rem;
+  }
+  .mainDashboardHeading {
+    margin-left: 0;
+    width: 70%;
+  }
+  .innerDashboardHeading {
+    width: 50%;
+    margin-top: 3%;
+  }
+  .main-outer-div {
+    margin-left: 0%;
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .payment-settlement-inputs {
+    margin-top: 3%;
+    margin-left: 3%;
+    margin-bottom: -1%;
+    padding: 1%;
+    font-family: "Poppins";
+    border-radius: 999px;
+    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  .payment-form .form-group {
+    width: 40%;
+    font-family: "Poppins";
+    padding: 1%;
+  }
+  .home-top-left,
+  .home-top-right {
+    width: 75%;
+    justify-content: space-around;
+    margin: 15px auto;
+    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .home-middle {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .home-top {
+    display: flex;
+    flex-wrap: wrap;
+    height: max-content;
+    width: 70%;
+  }
+  .home-middle-left,
+  .home-middle-right {
+    /* width: 43%; */
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    height: max-content;
+  }
+  .img-hidden {
+    display: none;
+  }
+  .home-middle-left-bottom
+    .home-middle-left-top
+    .home-middle-right-bottom
+    .home-middle-right-bottom {
+    width: 15rem;
+  }
+  .myorders-outer-div,
+  .addDeliveryboy-form {
+    width: 100vw !important;
+  }
+  .myorders-inner-div {
+    width: 100vw;
+    justify-content: center;
+  }
+  .myorders-inner-div > ul,
+  .btn-position {
+    justify-content: center;
+  }
+  .searchStyle {
+    width: 75%;
+  }
+  .table-edit {
+    height: 400px;
+  }
+  .add-delivery-boy button {
+    width: 60%;
+  }
+  .add-vendor button,
+  .add-product button {
+    width: 65%;
+  }
+  .main-root-settlement {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .payment-settlement-inputs {
+    margin-bottom: 3%;
+    border-radius: 5%;
+  }
+  .main-root-second {
+    width: 100%;
+    margin-bottom: 1%;
+  }
+
+  .payment-settlement-inputs button {
+    width: auto;
+  }
+  .searchStyle {
+    width: 68%;
+  }
+  .customer-details-content-outer-div-top,
+  .vendor-update {
+    width: 100% !important;
+  }
+  .productlist-inner-div-form form {
+    width: 98%;
+  }
+  .update-form-vendor {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .vendor-form-1 form {
+    padding: 1rem;
+  }
+
+  .vendor-form-1,
+  .vendor-form-2 {
+    width: 100vw;
+    height: 100vh;
+  }
+  .vendor-form-1 form,
+  .vendor-form-2 form {
+    width: 100%;
+    padding: 1rem;
+  }
+  .add-vendor-details-heading {
+    display: flex;
+    justify-content: center;
+  }
+  .responsiveButton {
+    position: absolute;
+    top: 13%;
+    left: 0%;
+  }
+  .popup-content {
+    width: fit-content !important;
+  }
+  .button-popup button {
+    width: fit-content;
+  }
+}

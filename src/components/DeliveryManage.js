@@ -117,105 +117,107 @@ const DeliveryManage = () => {
                     </button>
                   </div>
                 </div>
-                <table class="table table-striped">
-                  <thead style={{ textAlign: "center" }}>
-                    <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Locality</th>
-                      <th scope="col">Disable</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ textAlign: "center" }}>
-                    {deliveryBoy.length > 0 ? (
-                      deliveryBoy.map((value, index) => {
-                        return (
-                          <tr key={index}>
-                            <th scope="row">{index + 1}</th>
-                            <td onClick={() => DeliveryBoyDetail(value)}>
-                              {value.name}
-                            </td>
-                            <td>{value.phone}</td>
-                            <td>{value.locality}</td>
-                            <td style={{ cursor: "pointer" }}>
-                              <button onClick={() => Disable(value)}>
-                                {" "}
-                                {value?.delivery_boy?.is_active === 1
-                                  ? "Disable"
-                                  : "Enable"}
-                              </button>
-                            </td>
-                            <td>
-                              <button
-                                className="btn btn-link-light "
-                                onClick={() => {
-                                  update(value);
-                                }}
-                              >
-                                <i class="fas fa-edit"></i>
-                              </button>
+                <div className="table-responsive">
+                  <table class="table table-striped">
+                    <thead style={{ textAlign: "center" }}>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Locality</th>
+                        <th scope="col">Disable</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ textAlign: "center" }}>
+                      {deliveryBoy.length > 0 ? (
+                        deliveryBoy.map((value, index) => {
+                          return (
+                            <tr key={index}>
+                              <th scope="row">{index + 1}</th>
+                              <td onClick={() => DeliveryBoyDetail(value)}>
+                                {value.name}
+                              </td>
+                              <td>{value.phone}</td>
+                              <td>{value.locality}</td>
+                              <td style={{ cursor: "pointer" }}>
+                                <button onClick={() => Disable(value)}>
+                                  {" "}
+                                  {value?.delivery_boy?.is_active === 1
+                                    ? "Disable"
+                                    : "Enable"}
+                                </button>
+                              </td>
+                              <td>
+                                <button
+                                  className="btn btn-link-light "
+                                  onClick={() => {
+                                    update(value);
+                                  }}
+                                >
+                                  <i class="fas fa-edit"></i>
+                                </button>
 
-                              <Popup
-                                className="my-popup"
-                                trigger={
-                                  <button className="btn btn-link-light">
-                                    <i class="fas fa-trash-alt"></i>
-                                  </button>
-                                }
-                                position="right center"
-                                modal
-                              >
-                                {(close) => (
-                                  <div className="ReviewSure-text">
-                                    <h6
-                                      style={{
-                                        marginBottom: "1rem",
-                                        marginTop: "2rem",
-                                      }}
-                                    >
-                                      Are you Sure you want to Delete this
-                                      Delivery boy?
-                                    </h6>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() => {
-                                        handleDelete(value.id);
-                                        close();
-                                      }}
-                                    >
-                                      Yes
+                                <Popup
+                                  className="my-popup"
+                                  trigger={
+                                    <button className="btn btn-link-light">
+                                      <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() => {
-                                        close();
-                                      }}
-                                    >
-                                      No
-                                    </button>
-                                  </div>
-                                )}
-                              </Popup>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <>
-                        {" "}
-                        <tr>
+                                  }
+                                  position="right center"
+                                  modal
+                                >
+                                  {(close) => (
+                                    <div className="ReviewSure-text">
+                                      <h6
+                                        style={{
+                                          marginBottom: "1rem",
+                                          marginTop: "2rem",
+                                        }}
+                                      >
+                                        Are you Sure you want to Delete this
+                                        Delivery boy?
+                                      </h6>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          handleDelete(value.id);
+                                          close();
+                                        }}
+                                      >
+                                        Yes
+                                      </button>
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                          close();
+                                        }}
+                                      >
+                                        No
+                                      </button>
+                                    </div>
+                                  )}
+                                </Popup>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <>
                           {" "}
-                          <td colSpan="6">
+                          <tr>
                             {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>{" "}
-                      </>
-                    )}
-                  </tbody>
-                </table>
+                            <td colSpan="6">
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>{" "}
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

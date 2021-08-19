@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
-import instance from "../Utils/axiosConstants"
+import instance from "../Utils/axiosConstants";
 
 // select
 const useStyles = makeStyles((theme) => ({
@@ -42,26 +42,29 @@ function UnassignedOrders() {
   const [deliveryBoysList, setDeliveryBoysList] = useState([]);
 
   const [unassigned, setUnassigned] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const SearchUnAssignerOrder = (e) => {
     e.preventDefault();
-    console.log('work', search)
+    console.log("work", search);
     instance.get(`${API.UNASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
       if (res?.orders?.length > 0) {
         setUnassigned(res.orders);
       } else {
         toast.error("order not found");
       }
-
-    })
-
-  }
+    });
+  };
   function getUnassignedOrders() {
-    instance.get(`${API.UNASSIGNED_ORDERS}&delivery_date=${moment().format('YYYY-MM-DD')}`)
+    instance
+      .get(
+        `${API.UNASSIGNED_ORDERS}&delivery_date=${moment().format(
+          "YYYY-MM-DD"
+        )}`
+      )
       .then(function (response) {
         setUnassigned(response.orders);
-      })
+      });
   }
 
   function getDeliveryBoys() {
@@ -71,11 +74,10 @@ function UnassignedOrders() {
   }
 
   function handleDeliveryBoyAssignment(deliveryBoyId, orderId) {
-
     let body = {
       order_status: 2,
       assigned_to: deliveryBoyId,
-    }
+    };
 
     instance
       .patch(`${API.ASSIGN_DELIVERY_BOY}/${orderId}`, body)
@@ -129,99 +131,99 @@ function UnassignedOrders() {
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button
-                      type="submit"
-                      onClick={
-                        SearchUnAssignerOrder
-                      }
-                    >
+                    <button type="submit" onClick={SearchUnAssignerOrder}>
                       Search
                     </button>
                   </div>
                 </div>
-
-                <table class="table table-striped ">
-                  <thead>
-                    <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Order Id</th>
-                      <th scope="col">Customer Name</th>
-                      <th scope="col">Seller Name</th>
-                      <th scope="col">Order Placed Time</th>
-                      <th scope="col">Delivery Slot</th>
-                      <th scope="col">Locality</th>
-                      <th scope="col">Order Status</th>
-                      <th scope="col">Payment Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {unassigned && unassigned.map((value, index) => {
-                      return (
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>
-                            <Link
-                              to={{
-                                pathname: "/orderdetails",
-                                state: { order: value },
-                              }}
-                              style={{ color: "#0dcaf0" }}
-                            >
-                              {value?.order_id}
-                            </Link>
-                          </td>
-                          <td>{value?.user?.name}</td>
-                          <td>{value?.shop?.shop_name}</td>
-                          <td>{moment(value).format("D MMMM YYYY, h:mm a")}</td>
-                          <td>{`${moment(
-                            value?.delivery_date,
-                            "DD-MM-YYYY"
-                          ).format("D MMMM")} ${value?.slot}`}</td>
-                          <td>{value?.address?.locality?.locality}</td>
-                          <td>
-                            <FormControl
-                              variant="outlined"
-                              className={classes.formControl}
-                            >
-                              <InputLabel id="demo-simple-select-outlined-label">
-                                Assign
-                              </InputLabel>
-                              <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={deliveryBoy[value?.order_id] || ""}
-                                onChange={(event) =>
-                                  handleChange(event, value?.order_id)
-                                }
-                                label="Age"
-                              >
-                                <MenuItem value="">
-                                  <em>None</em>
-                                </MenuItem>
-                                {deliveryBoysList && deliveryBoysList.map((deliveryBoy) => {
-                                  return (
-                                    <MenuItem
-                                      value={deliveryBoy.id}
-                                      onClick={() =>
-                                        handleDeliveryBoyAssignment(
-                                          deliveryBoy.id,
-                                          value?.id
-                                        )
-                                      }
-                                    >
-                                      {deliveryBoy.name}
+                <div className="table-responsive">
+                  <table class="table table-striped table-edit">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Seller Name</th>
+                        <th scope="col">Order Placed Time</th>
+                        <th scope="col">Delivery Slot</th>
+                        <th scope="col">Locality</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Payment Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {unassigned &&
+                        unassigned.map((value, index) => {
+                          return (
+                            <tr>
+                              <td>{index + 1}</td>
+                              <td>
+                                <Link
+                                  to={{
+                                    pathname: "/orderdetails",
+                                    state: { order: value },
+                                  }}
+                                  style={{ color: "#0dcaf0" }}
+                                >
+                                  {value?.order_id}
+                                </Link>
+                              </td>
+                              <td>{value?.user?.name}</td>
+                              <td>{value?.shop?.shop_name}</td>
+                              <td>
+                                {moment(value).format("D MMMM YYYY, h:mm a")}
+                              </td>
+                              <td>{`${moment(
+                                value?.delivery_date,
+                                "DD-MM-YYYY"
+                              ).format("D MMMM")} ${value?.slot}`}</td>
+                              <td>{value?.address?.locality?.locality}</td>
+                              <td>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Assign
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={deliveryBoy[value?.order_id] || ""}
+                                    onChange={(event) =>
+                                      handleChange(event, value?.order_id)
+                                    }
+                                    label="Age"
+                                  >
+                                    <MenuItem value="">
+                                      <em>None</em>
                                     </MenuItem>
-                                  );
-                                })}
-                              </Select>
-                            </FormControl>
-                          </td>
-                          <td>{value?.payment_status}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                                    {deliveryBoysList &&
+                                      deliveryBoysList.map((deliveryBoy) => {
+                                        return (
+                                          <MenuItem
+                                            value={deliveryBoy.id}
+                                            onClick={() =>
+                                              handleDeliveryBoyAssignment(
+                                                deliveryBoy.id,
+                                                value?.id
+                                              )
+                                            }
+                                          >
+                                            {deliveryBoy.name}
+                                          </MenuItem>
+                                        );
+                                      })}
+                                  </Select>
+                                </FormControl>
+                              </td>
+                              <td>{value?.payment_status}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

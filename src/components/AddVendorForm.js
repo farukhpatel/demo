@@ -1,143 +1,143 @@
 // import { FilePicker } from 'react-file-picker'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-import MultiSelect from 'react-multi-select-component'
+import MultiSelect from "react-multi-select-component";
 import {
   KeyboardTimePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
-} from '@material-ui/pickers'
-import Geocode from 'react-geocode'
-import Grid from '@material-ui/core/Grid' //clock
-import MomentUtils from '@date-io/moment' //clock
-import moment from 'moment' //for clock time
-import 'date-fns'
+} from "@material-ui/pickers";
+import Geocode from "react-geocode";
+import Grid from "@material-ui/core/Grid"; //clock
+import MomentUtils from "@date-io/moment"; //clock
+import moment from "moment"; //for clock time
+import "date-fns";
 
-import './SuperUser.css'
+import "./SuperUser.css";
 
 //for Api
-import API from '../Utils/ApiConstant'
+import API from "../Utils/ApiConstant";
 
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import instance from '../Utils/axiosConstants'
-import Back from './BackButton/Back'
-import { ArrowRightAltRounded } from '@material-ui/icons'
-import Files from 'react-files'
+import instance from "../Utils/axiosConstants";
+import Back from "./BackButton/Back";
+import { ArrowRightAltRounded } from "@material-ui/icons";
+import Files from "react-files";
 const customValueRenderer = (selected, _options) => {
   return selected.length
-    ? selected.map(({ label }) => '✔️ ' + label)
-    : '😶 No Items Selected'
-}
+    ? selected.map(({ label }) => "✔️ " + label)
+    : "😶 No Items Selected";
+};
 
 function AddVendorForm() {
   // multiselect
   const options = [
     {
-      key: 'Monday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Monday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Tuesday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Tuesday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Wednesday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Wednesday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Thursday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Thursday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Friday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Friday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Saturday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Saturday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
     {
-      key: 'Sunday',
-      morning_start_time: moment(new Date()).format('HH:mm:ss'),
-      morning_end_time: moment(new Date()).format('HH:mm:ss'),
+      key: "Sunday",
+      morning_start_time: moment(new Date()).format("HH:mm:ss"),
+      morning_end_time: moment(new Date()).format("HH:mm:ss"),
       is_morning_slot_active: false,
-      evening_start_time: moment(new Date()).format('HH:mm:ss'),
-      evening_end_time: moment(new Date()).format('HH:mm:ss'),
+      evening_start_time: moment(new Date()).format("HH:mm:ss"),
+      evening_end_time: moment(new Date()).format("HH:mm:ss"),
       is_evening_slot_active: false,
     },
-  ]
+  ];
 
   // form fields var
-  const [bannerURL, setBannerURL] = useState([])
-  const [profileURL, setProfileURL] = useState([])
-  const [file, setFile] = useState(null)
-  const [mFile, setMFile] = useState(null)
-  const [vendorName, setVendorName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [description, setDescription] = useState('')
-  const [licenseNumber, setLicenseNumber] = useState('')
-  const [foundationDate, setFoundationDate] = useState(new Date())
-  const [deliveryRange, setDeliveryRange] = useState('')
-  const [shopName, setShopName] = useState('')
-  const [password, setPassword] = useState('')
-  const [localities, setLocalities] = useState([])
-  const [cities, setCities] = useState([])
-  const [addressableId, setAddressableID] = useState('')
-  const [shopSchedule, setShopSchedule] = useState(options)
-  const [buttonDisable, setButtonDisable] = useState(true)
+  const [bannerURL, setBannerURL] = useState([]);
+  const [profileURL, setProfileURL] = useState([]);
+  const [file, setFile] = useState(null);
+  const [mFile, setMFile] = useState(null);
+  const [vendorName, setVendorName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [foundationDate, setFoundationDate] = useState(new Date());
+  const [deliveryRange, setDeliveryRange] = useState("");
+  const [shopName, setShopName] = useState("");
+  const [password, setPassword] = useState("");
+  const [localities, setLocalities] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [addressableId, setAddressableID] = useState("");
+  const [shopSchedule, setShopSchedule] = useState(options);
+  const [buttonDisable, setButtonDisable] = useState(true);
   const [addressForm, setAddressForm] = useState({
     addressable_id: addressableId,
-    addressable_type: 'Shop',
-    name: '',
-    address_type: 'Shop',
-    address_line_1: '',
-    address_line_2: '',
-    address_line_3: '',
-    locality_id: '',
-    locality: '',
-    city_id: '',
-    city: '',
-    pincode: '',
-    state: 'Madhya Pradesh',
-    country: 'India',
-    latitude: '',
-    longitude: '',
-  })
+    addressable_type: "Shop",
+    name: "",
+    address_type: "Shop",
+    address_line_1: "",
+    address_line_2: "",
+    address_line_3: "",
+    locality_id: "",
+    locality: "",
+    city_id: "",
+    city: "",
+    pincode: "",
+    state: "Madhya Pradesh",
+    country: "India",
+    latitude: "",
+    longitude: "",
+  });
 
   function getGeo() {
     // Get latitude & longitude from address.
@@ -150,190 +150,190 @@ function AddVendorForm() {
       pincode,
       state,
       country,
-    } = addressForm
-    const address = `${address_line_1}, ${address_line_2}, ${address_line_3}, ${locality}, ${city}, ${pincode}, ${state}, ${country}`
+    } = addressForm;
+    const address = `${address_line_1}, ${address_line_2}, ${address_line_3}, ${locality}, ${city}, ${pincode}, ${state}, ${country}`;
 
     Geocode.fromAddress(address).then(
       (response) => {
-        const { lat, lng } = response.results[0].geometry.location
-        if (lat === '' || lng === '')
-          toast.error('Something is wrong with the address provided')
-        else setAddressForm({ ...addressForm, latitude: lat, longitude: lng })
+        const { lat, lng } = response.results[0].geometry.location;
+        if (lat === "" || lng === "")
+          toast.error("Something is wrong with the address provided");
+        else setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
       },
       (error) => {
-        console.error(error)
-      },
-    )
+        console.error(error);
+      }
+    );
   }
 
   function handleCitySelect(event) {
-    const { value } = event.target
+    const { value } = event.target;
 
-    if (value === '') {
+    if (value === "") {
       setAddressForm({
         ...addressForm,
-        city_id: '',
-        city: '',
-        locality: '',
-        locality_id: '',
-      })
-      setLocalities([])
+        city_id: "",
+        city: "",
+        locality: "",
+        locality_id: "",
+      });
+      setLocalities([]);
     } else if (value !== addressForm.city_id) {
-      let index = event.nativeEvent.target.selectedIndex
-      let label = event.nativeEvent.target[index].label
+      let index = event.nativeEvent.target.selectedIndex;
+      let label = event.nativeEvent.target[index].label;
       setAddressForm({
         ...addressForm,
         city_id: value,
         city: label,
-        locality: '',
-        locality_id: '',
-      })
+        locality: "",
+        locality_id: "",
+      });
 
       for (let i = 0; i < cities.length; i++) {
         if (cities[i].id.toString() === value) {
-          setLocalities(cities[i].localities)
-          break
+          setLocalities(cities[i].localities);
+          break;
         }
       }
     }
   }
 
   function handleLocalitySelect(event) {
-    const { value } = event.target
-    if (value === '') {
-      setAddressForm({ ...addressForm, locality: '', locality_id: '' })
+    const { value } = event.target;
+    if (value === "") {
+      setAddressForm({ ...addressForm, locality: "", locality_id: "" });
     } else {
-      let index = event.nativeEvent.target.selectedIndex
-      let label = event.nativeEvent.target[index].label
-      setAddressForm({ ...addressForm, locality: label, locality_id: value })
+      let index = event.nativeEvent.target.selectedIndex;
+      let label = event.nativeEvent.target[index].label;
+      setAddressForm({ ...addressForm, locality: label, locality_id: value });
     }
   }
 
   function handleAddressForm(event) {
-    let { name, value } = event.target
-    if (name === 'pincode' && value.length > 6) {
-      value = value.slice(0, 6)
+    let { name, value } = event.target;
+    if (name === "pincode" && value.length > 6) {
+      value = value.slice(0, 6);
     }
-    setAddressForm({ ...addressForm, [name]: value })
+    setAddressForm({ ...addressForm, [name]: value });
   }
 
   function createAddress() {
     instance.post(API.CREATE_ADDRESS, addressForm).then(function (response) {
-      toast.success('Address Successfully Added.')
-      window.location.href = '/vendor'
-    })
+      toast.success("Address Successfully Added.");
+      window.location.href = "/vendor";
+    });
   }
 
   function handleAddressFormSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    let error = false
+    let error = false;
     let optionalKeys = [
-      'address_line_2',
-      'address_line_3',
-      'city_id',
-      'locality_id',
-      'latitude',
-      'longitude',
-    ]
+      "address_line_2",
+      "address_line_3",
+      "city_id",
+      "locality_id",
+      "latitude",
+      "longitude",
+    ];
     Object.keys(addressForm).forEach((key) => {
-      if (!error && addressForm[key] === '' && !optionalKeys.includes(key)) {
-        toast.error(`${key} can't be empty.`)
-        error = true
+      if (!error && addressForm[key] === "" && !optionalKeys.includes(key)) {
+        toast.error(`${key} can't be empty.`);
+        error = true;
       }
-    })
+    });
     if (!error) {
-      getGeo()
+      getGeo();
     }
   }
 
   useEffect(() => {
     instance.get(API.GET_CITIES).then(function (response) {
-      setCities(response.cities)
-      if (cities.length > 0) setLocalities(cities[0]?.localities)
-    })
+      setCities(response.cities);
+      if (cities.length > 0) setLocalities(cities[0]?.localities);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addressableId])
+  }, [addressableId]);
 
   // date picker
   const handleDateChange = (e) => {
-    setFoundationDate(e)
-  }
+    setFoundationDate(e);
+  };
 
   const handleTimeChange1 = (t, time, index) => {
-    let temp = [...shopSchedule]
+    let temp = [...shopSchedule];
 
-    temp[index][time] = moment(t).format('HH:mm:ss')
-    setShopSchedule(temp)
-  }
+    temp[index][time] = moment(t).format("HH:mm:ss");
+    setShopSchedule(temp);
+  };
   const handleCheckbox = (e, name, index) => {
-    const { checked } = e.target
-    let temp = [...shopSchedule]
-    temp[index][name] = checked
-    setShopSchedule(temp)
-  }
+    const { checked } = e.target;
+    let temp = [...shopSchedule];
+    temp[index][name] = checked;
+    setShopSchedule(temp);
+  };
   // form1
   const form1Submit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (vendorName.length < 5) {
-      toast.error('Shop name must be atleast 5 characters.')
+      toast.error("Shop name must be atleast 5 characters.");
     } else if (phone.length !== 10) {
-      toast.error('Phone number should have exactly 10 digits.')
+      toast.error("Phone number should have exactly 10 digits.");
     } else if (password.length < 5) {
-      toast.error('Password must be of atleast 5 charcaters')
+      toast.error("Password must be of atleast 5 charcaters");
     } else {
-      document.querySelector('.vendor-form-1').classList.add('hide__form1')
-      document.querySelector('.vendor-form-2').classList.add('show-form2')
+      document.querySelector(".vendor-form-1").classList.add("hide__form1");
+      document.querySelector(".vendor-form-2").classList.add("show-form2");
     }
-  }
+  };
 
   const form2Submit = async (e) => {
-    e.preventDefault()
-    let headers = new Headers()
+    e.preventDefault();
+    let headers = new Headers();
     //check validation here for form-2
-    let error = false
-    if (shopName !== '' && deliveryRange !== '') {
-      setButtonDisable(false)
+    let error = false;
+    if (shopName !== "" && deliveryRange !== "") {
+      setButtonDisable(false);
     } else {
-      toast.error('shop name or shop delivety range are required')
-      error = true
+      toast.error("shop name or shop delivety range are required");
+      error = true;
     }
-    if (mFile.length > 3) {
-      toast.error('You can choose only 3 images at a time')
-      error = true
-      setMFile(null)
-      return
+    if (mFile?.length > 3) {
+      toast.error("You can choose only 3 images at a time");
+      error = true;
+      setMFile(null);
+      return;
     }
 
-    headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`)
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (mFile && file && !error) {
-      let formdata = new FormData()
-      formdata.append('image', file[0])
-      let imgurl
+      let formdata = new FormData();
+      formdata.append("image", file[0]);
+      let imgurl;
       await instance
         .post(API.IMAGE_UPLOAD, formdata)
         .then((res) => {
-          let temp = profileURL
-          temp[0] = res.image_url
-          setProfileURL(res.image_url)
+          let temp = profileURL;
+          temp[0] = res.image_url;
+          setProfileURL(res.image_url);
         })
         .catch((err) => {
-          error = true
-        })
+          error = true;
+        });
 
-      let tempBannerURL = bannerURL
+      let tempBannerURL = bannerURL;
       for (let i = 0; i < mFile.length; i++) {
-        let formdata = new FormData()
-        formdata.append('image', mFile[i])
+        let formdata = new FormData();
+        formdata.append("image", mFile[i]);
         await instance
           .post(API.IMAGE_UPLOAD, formdata)
           .then((res) => {
-            tempBannerURL[i] = res.image_url
+            tempBannerURL[i] = res.image_url;
           })
           .catch((err) => {
-            error = true
-          })
-        setBannerURL(tempBannerURL)
+            error = true;
+          });
+        setBannerURL(tempBannerURL);
       }
     }
 
@@ -351,39 +351,39 @@ function AddVendorForm() {
         shop_profile: profileURL,
         shop_license_number: licenseNumber,
         //UPDATE FOUNDING DATE VALUE
-        shop_founding_date: moment(foundationDate).format('YYYY-MM-DD'),
+        shop_founding_date: moment(foundationDate).format("YYYY-MM-DD"),
         shop_delivery_range: deliveryRange,
         shop_schedules: shopSchedule,
-      }
+      };
       if (!error) {
         instance
           .post(API.CREATE_SHOP, shopCreateBody)
           .then(function (shopCreateResponse) {
-            setAddressableID(shopCreateResponse?.shop?.id)
+            setAddressableID(shopCreateResponse?.shop?.id);
             setAddressForm({
               ...addressForm,
               addressable_id: shopCreateResponse?.shop?.id,
-            })
-            console.log(shopCreateResponse?.shop?.id)
-            toast.success('Vendor Created. Add Address Details Now.')
-          })
+            });
+            console.log(shopCreateResponse?.shop?.id);
+            toast.success("Vendor Created. Add Address Details Now.");
+          });
       }
     }
-  }
+  };
   useEffect(() => {
-    if (addressForm.latitude !== '' && addressForm.longitude !== '') {
-      createAddress()
+    if (addressForm.latitude !== "" && addressForm.longitude !== "") {
+      createAddress();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addressForm])
+  }, [addressForm]);
   return (
     <>
       <div className="main-outer-div">
         <div className="myorders-outer-div">
-          {addressableId === '' ? (
+          {addressableId === "" ? (
             <>
-              <div className="vendor-form-1" style={{ position: 'relative' }}>
-                <div className="backButton">
+              <div className="vendor-form-1">
+                <div className="backButton ">
                   <Back></Back>
                 </div>
                 <h1>Add Vendor</h1>
@@ -410,7 +410,7 @@ function AddVendorForm() {
                         setPhone(
                           e.target.value.indexOf(0) === 0
                             ? e.target.value.substr(1)
-                            : e.target.value,
+                            : e.target.value
                         )
                       }
                     />
@@ -447,18 +447,20 @@ function AddVendorForm() {
               </div>
 
               <div className="vendor-form-2">
-                <h1>Add Vendor Details</h1>
+                <div className="add-vendor-details-heading">
+                  <h1>Add Vendor Details</h1>
+                </div>
                 <div className="vendor-form2-container">
                   <form className="vendor-form">
                     <span className="customSpan"></span>
-                    <div style={{ display: 'flex' }}>
+                    <div className="update-form-vendor">
                       <div class="form-group">
                         <label for="vendorName">Shop Name</label>
                         <input
                           type="text"
                           class="form-control"
                           id="vendorName"
-                          placeholder={'Enter Shop Name'}
+                          placeholder={"Enter Shop Name"}
                           onChange={(e) => setShopName(e.target.value)}
                         />
                       </div>
@@ -473,7 +475,7 @@ function AddVendorForm() {
                         />
                       </div>
                     </div>
-                    <div style={{ display: 'flex' }}>
+                    <div className="update-form-vendor">
                       <div class="form-group">
                         <label for="shoplicensenumber">
                           Shop License Number
@@ -498,13 +500,13 @@ function AddVendorForm() {
                             maxDate={new Date()}
                             onChange={(e) => handleDateChange(e)}
                             KeyboardButtonProps={{
-                              'aria-label': 'change date',
+                              "aria-label": "change date",
                             }}
                           />
                         </MuiPickersUtilsProvider>
                       </div>
                     </div>
-                    <div style={{ display: 'flex' }}>
+                    <div className="update-form-vendor">
                       <div class="form-group">
                         <label for="profile">Profile:</label>
                         <input
@@ -550,7 +552,7 @@ function AddVendorForm() {
                     </div>
                     <div
                       className="form-group"
-                      style={{ width: 'initial', overflowX: 'scroll' }}
+                      style={{ width: "initial", overflowX: "scroll" }}
                     >
                       <table class="table table-striped ">
                         <thead>
@@ -569,15 +571,15 @@ function AddVendorForm() {
                             return (
                               <tr>
                                 <td>{value?.key}</td>
-                                <td style={{ paddingLeft: '0 px !important' }}>
+                                <td style={{ paddingLeft: "0 px !important" }}>
                                   <input
                                     type="checkbox"
                                     name="is_morning_slot_active"
                                     onChange={(e) =>
                                       handleCheckbox(
                                         e,
-                                        'is_morning_slot_active',
-                                        index,
+                                        "is_morning_slot_active",
+                                        index
                                       )
                                     }
                                     value={value?.is_morning_slot_active}
@@ -590,18 +592,18 @@ function AddVendorForm() {
                                       ampm={true}
                                       value={moment(
                                         value.morning_start_time,
-                                        'HH:mm:ss',
+                                        "HH:mm:ss"
                                       ).format()}
                                       disabled={!value.is_morning_slot_active}
                                       onChange={(t) => {
                                         handleTimeChange1(
                                           t,
-                                          'morning_start_time',
-                                          index,
-                                        )
+                                          "morning_start_time",
+                                          index
+                                        );
                                       }}
                                       KeyboardButtonProps={{
-                                        'aria-label': 'change time',
+                                        "aria-label": "change time",
                                       }}
                                     />
                                   </MuiPickersUtilsProvider>
@@ -613,18 +615,18 @@ function AddVendorForm() {
                                       ampm={true}
                                       value={moment(
                                         value.morning_end_time,
-                                        'HH:mm:ss',
+                                        "HH:mm:ss"
                                       ).format()}
                                       disabled={!value.is_morning_slot_active}
                                       onChange={(t) =>
                                         handleTimeChange1(
                                           t,
-                                          'morning_end_time',
-                                          index,
+                                          "morning_end_time",
+                                          index
                                         )
                                       }
                                       KeyboardButtonProps={{
-                                        'aria-label': 'change time',
+                                        "aria-label": "change time",
                                       }}
                                     />
                                   </MuiPickersUtilsProvider>
@@ -636,8 +638,8 @@ function AddVendorForm() {
                                     onChange={(e) =>
                                       handleCheckbox(
                                         e,
-                                        'is_evening_slot_active',
-                                        index,
+                                        "is_evening_slot_active",
+                                        index
                                       )
                                     }
                                     value={value?.is_evening_slot_active}
@@ -651,17 +653,17 @@ function AddVendorForm() {
                                       disabled={!value.is_evening_slot_active}
                                       value={moment(
                                         value.evening_start_time,
-                                        'HH:mm:ss',
+                                        "HH:mm:ss"
                                       ).format()}
                                       onChange={(t) =>
                                         handleTimeChange1(
                                           t,
-                                          'evening_start_time',
-                                          index,
+                                          "evening_start_time",
+                                          index
                                         )
                                       }
                                       KeyboardButtonProps={{
-                                        'aria-label': 'change time',
+                                        "aria-label": "change time",
                                       }}
                                     />
                                   </MuiPickersUtilsProvider>
@@ -673,24 +675,24 @@ function AddVendorForm() {
                                       ampm={true}
                                       value={moment(
                                         value.evening_end_time,
-                                        'HH:mm:ss',
+                                        "HH:mm:ss"
                                       ).format()}
                                       disabled={!value.is_evening_slot_active}
                                       onChange={(t) => {
                                         handleTimeChange1(
                                           t,
-                                          'evening_end_time',
-                                          index,
-                                        )
+                                          "evening_end_time",
+                                          index
+                                        );
                                       }}
                                       KeyboardButtonProps={{
-                                        'aria-label': 'change time',
+                                        "aria-label": "change time",
                                       }}
                                     />
                                   </MuiPickersUtilsProvider>
                                 </td>
                               </tr>
-                            )
+                            );
                           })}
                         </tbody>
                       </table>
@@ -700,7 +702,7 @@ function AddVendorForm() {
                       type="submit"
                       class="btn btn-primary submitBtn"
                       onClick={(e) => {
-                        form2Submit(e)
+                        form2Submit(e);
                       }}
                     >
                       Submit
@@ -769,11 +771,11 @@ function AddVendorForm() {
                     <select onChange={(event) => handleCitySelect(event)}>
                       <option value="">Select a City</option>
                       {cities.map((city) => {
-                        return <option value={city?.id} label={city?.city} />
+                        return <option value={city?.id} label={city?.city} />;
                       })}
                     </select>
                   ) : (
-                    'No Cities Found.'
+                    "No Cities Found."
                   )}
                 </div>
 
@@ -783,23 +785,23 @@ function AddVendorForm() {
                   {localities && localities.length > 0 ? (
                     <select
                       onChange={(event) => {
-                        handleLocalitySelect(event)
+                        handleLocalitySelect(event);
                       }}
                     >
                       <option value="">Select Locality</option>
                       {addressForm &&
-                        addressForm?.city !== '' &&
+                        addressForm?.city !== "" &&
                         localities.map((locality) => {
                           return (
                             <option
                               value={locality?.id}
                               label={locality?.locality}
                             />
-                          )
+                          );
                         })}
                     </select>
                   ) : (
-                    'No Localities Found.'
+                    "No Localities Found."
                   )}
                 </div>
 
@@ -854,7 +856,7 @@ function AddVendorForm() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AddVendorForm
+export default AddVendorForm;

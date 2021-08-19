@@ -83,51 +83,51 @@ function User() {
                     </button>
                   </div>
                 </div>
-                <table class="table table-striped">
-                  <thead style={{ textAlign: "center" }}>
-                    <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Phone No.</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ textAlign: "center" }}>
-                    {user.length > 0 ? (
-                      user.map((value, index) => {
-                        return (
-                          <tr key={index}>
-                            <th style={{}}>
-
-                              {index + 1}
-                            </th>
-                            <td
-
-                              onClick={() => {
-                                // (window.location.href = "/UserDetails")
-                                UserDetails(value);
-                              }}
-                              style={{ cursor: "pointer" }}
-                            >
-                              <p style={{ color: '#85c1e9' }} >{value?.name}</p>
-                            </td>
-                            <td>{value?.phone}</td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <>
-                        {" "}
-                        <tr>
+                <div className="table-responsive">
+                  <table class="table table-striped ">
+                    <thead style={{ textAlign: "center" }}>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No.</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ textAlign: "center" }}>
+                      {user.length > 0 ? (
+                        user.map((value, index) => {
+                          return (
+                            <tr key={index}>
+                              <th style={{}}>{index + 1}</th>
+                              <td
+                                onClick={() => {
+                                  // (window.location.href = "/UserDetails")
+                                  UserDetails(value);
+                                }}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <p style={{ color: "#85c1e9" }}>
+                                  {value?.name}
+                                </p>
+                              </td>
+                              <td>{value?.phone}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <>
                           {" "}
-                          <td colSpan="4">
+                          <tr>
                             {" "}
-                            <h2> No record found </h2>{" "}
-                          </td>{" "}
-                        </tr>{" "}
-                      </>
-                    )}
-                  </tbody>
-                </table>
+                            <td colSpan="4">
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>{" "}
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

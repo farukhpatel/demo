@@ -28,7 +28,7 @@ function SettleModal(props) {
       start_date,
       end_date,
       removed_order_ids: props.paymentSettlementFilter,
-      ...(props.id > 0 ? { shop_id: props.id } : {})
+      ...(props.id > 0 ? { shop_id: props.id } : {}),
     };
     instance.patch(API.PATCH_ORDER_SETTLE, settleData).then((res) => {
       toast.success(res.message);
@@ -39,7 +39,7 @@ function SettleModal(props) {
   const cancel = (e) => {
     props.handleModal(false);
   };
-  console.log(props.paymentSettlementFilter)
+  console.log(props.paymentSettlementFilter);
   return (
     <>
       <div className="model_settle_details">
@@ -64,16 +64,16 @@ function SettleModal(props) {
               </tr>
               <tr>
                 <th>From</th>
-                <td>{moment(props.start_date).format('YYYY-MM-DD')}</td>
+                <td>{moment(props.start_date).format("YYYY-MM-DD")}</td>
               </tr>
               <tr>
                 <th>To</th>
-                <td>{moment(props.end_date).format('YYYY-MM-DD')}</td>
+                <td>{moment(props.end_date).format("YYYY-MM-DD")}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div>
+        <div className="button-popup">
           <button
             class="btn btn-primary DateSelectSubmitBtn"
             onClick={(e) => {
