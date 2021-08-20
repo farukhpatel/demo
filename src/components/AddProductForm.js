@@ -1,33 +1,33 @@
 // import { FilePicker } from 'react-file-picker'
-import React, { useState } from 'react'
-import './SuperUser.css'
+import React, { useState } from "react";
+import "./SuperUser.css";
 //for Api
-import API from '../Utils/ApiConstant'
-import { Select } from '@material-ui/core'
+import API from "../Utils/ApiConstant";
+import { Select } from "@material-ui/core";
 
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import instance from '../Utils/axiosConstants'
-import Back from './BackButton/Back'
+import instance from "../Utils/axiosConstants";
+import Back from "./BackButton/Back";
 function AddProductForm() {
-  const [productName, setProductName] = useState('')
-  const [productImage, setProductImage] = useState('')
-  const [baseUnit, setBaseUnit] = useState('')
-  const [unitType, setUnitType] = useState('gm')
-  const [percentage, setPercentage] = useState(1)
-  const [commission, setCommission] = useState(0)
-  const [subscribable, setSubscribable] = useState(null)
-  const [preview, setPreview] = useState('')
+  const [productName, setProductName] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [baseUnit, setBaseUnit] = useState("");
+  const [unitType, setUnitType] = useState("gm");
+  const [percentage, setPercentage] = useState(1);
+  const [commission, setCommission] = useState(0);
+  const [subscribable, setSubscribable] = useState(null);
+  const [preview, setPreview] = useState("");
   const submit = (e) => {
-    e.preventDefault()
-    console.log(subscribable)
-    let headers = new Headers()
-    headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`)
+    e.preventDefault();
+    console.log(subscribable);
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     if (productImage) {
-      console.log(productImage, 'prodcut')
-      let formdata = new FormData()
-      formdata.append('image', productImage[0])
+      console.log(productImage, "prodcut");
+      let formdata = new FormData();
+      formdata.append("image", productImage[0]);
 
       instance.post(API.IMAGE_UPLOAD, formdata).then(function (response) {
         let body = {
@@ -37,34 +37,34 @@ function AddProductForm() {
           is_percentage_commission: percentage,
           base_unit: `${baseUnit}${unitType}`,
           is_subscribable_product: subscribable,
-        }
+        };
 
-        let error = false
+        let error = false;
         Object.keys(body).forEach((key) => {
-          if (!error && body[key] === '') {
-            toast.error('One or more fields are empty.')
-            error = true
+          if (!error && body[key] === "") {
+            toast.error("One or more fields are empty.");
+            error = true;
           }
-        })
+        });
         if (!error) {
           instance.post(API.CREATE_PRODUCT, body).then(function (response) {
-            console.log("product added")
-            toast.success('Successful creation of shop')
-            window.location.href = '/productlist'
-          })
+            console.log("product added");
+            toast.success("Successful creation of shop");
+            window.location.href = "/productlist";
+          });
         }
-      })
+      });
     } else {
-      toast.error('No file Picked.')
+      toast.error("No file Picked.");
     }
-  }
+  };
   return (
     <>
       <div className="main-outer-div">
         <div className="myorders-outer-div">
           <div
             className="productlist-inner-div-form"
-            style={{ position: 'relative' }}
+            style={{ position: "relative" }}
           >
             <div className="backButton">
               <Back></Back>
@@ -92,19 +92,19 @@ function AddProductForm() {
                   id="productImage"
                   placeholder="Product Image"
                   onChange={(e) => {
-                    setProductImage(e.target.files)
-                    setPreview(URL.createObjectURL(e.target.files[0]))
+                    setProductImage(e.target.files);
+                    setPreview(URL.createObjectURL(e.target.files[0]));
                   }}
                 />
               </div>
-              {preview === '' ? (
-                ''
+              {preview === "" ? (
+                ""
               ) : (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <img
-                    style={{ width: '50%', height: '5~0%' }}
+                    style={{ width: "50%", height: "5~0%" }}
                     src={preview}
-                    alt="not found image"
+                    alt="product"
                   />
                 </div>
               )}
@@ -146,11 +146,11 @@ function AddProductForm() {
                   value={unitType}
                   onChange={(event) => setUnitType(event.target.value)}
                 >
-                  <option value={'ml'}>ml</option>
-                  <option value={'gm'}>gm</option>
-                  <option value={'mg'}>mg</option>
-                  <option value={'ltr'}>ltr</option>
-                  <option value={'kg'}>kg</option>
+                  <option value={"ml"}>ml</option>
+                  <option value={"gm"}>gm</option>
+                  <option value={"mg"}>mg</option>
+                  <option value={"ltr"}>ltr</option>
+                  <option value={"kg"}>kg</option>
                 </Select>
               </div>
               <div class="form-group">
@@ -175,7 +175,7 @@ function AddProductForm() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AddProductForm
+export default AddProductForm;

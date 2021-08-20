@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
@@ -149,7 +150,7 @@ const UserDetails = (props) => {
                 <div>
                   <img
                     src={userDetails?.profile_image}
-                    alt="image not found"
+                    alt="profile"
                     style={{ width: "20rem", height: "20rem" }}
                   />
                 </div>

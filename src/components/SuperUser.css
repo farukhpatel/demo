@@ -701,10 +701,6 @@ tbody td button:hover {
   padding-left: 12px;
   border-radius: 4px;
 }
-.tbodyOfTimeSlote tr td {
-  /* padding:0px !important */
-  /* padding-left: 0px !important; */
-}
 /* VendorAdd css end */
 
 /*Update Vendor*/
@@ -1700,11 +1696,12 @@ h3 .notificationDescription-text > p {
   .img-hidden {
     display: none;
   }
-  .home-middle-left-bottom
-    .home-middle-left-top
-    .home-middle-right-bottom
-    .home-middle-right-bottom {
+  .home-middle-left-bottom,
+  .home-middle-left-top,
+  .home-middle-right-bottom,
+  .home-middle-right-bottom {
     width: 15rem;
+    padding: 4px;
   }
   .myorders-outer-div,
   .addDeliveryboy-form {
@@ -1719,7 +1716,7 @@ h3 .notificationDescription-text > p {
     justify-content: center;
   }
   .searchStyle {
-    width: 75%;
+    width: fit-content;
   }
   .table-edit {
     height: 400px;
@@ -1748,9 +1745,7 @@ h3 .notificationDescription-text > p {
   .payment-settlement-inputs button {
     width: auto;
   }
-  .searchStyle {
-    width: 68%;
-  }
+
   .customer-details-content-outer-div-top,
   .vendor-update {
     width: 100% !important;
@@ -1790,5 +1785,13 @@ h3 .notificationDescription-text > p {
   }
   .button-popup button {
     width: fit-content;
+  }
+  .signup-login-form-div form {
+    box-shadow: 0 2px 4px 2px rgb(0 0 0 / 20%);
+    min-width: 100vw;
+    padding: 2rem;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
   }
 }

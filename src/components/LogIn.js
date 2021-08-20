@@ -2,28 +2,29 @@
 import React, { useState, useEffect } from "react";
 import API from "../Utils/ApiConstant";
 import "./SuperUser.css";
-import instance from "../Utils/axiosConstants"
+import instance from "../Utils/axiosConstants";
 import cookie from "react-cookies";
 import "react-toastify/dist/ReactToastify.css";
-import firebase from '../components/firebase'
+import firebase from "../components/firebase";
+import { toast } from "react-toastify";
 function LogIn(props) {
-
   // api
   const [phoneno, setPhoneno] = useState("");
   const [password, setPassword] = useState("");
   const [device_token, setdevice_token] = useState("");
 
-
-
   useEffect(() => {
-    const messaging = firebase.messaging();
-    messaging.getToken().then((token) => {
-      console.log('token', token)
-      setdevice_token(token);
-    })
-    if (cookie.load("Authorization"))
-      props.history.push("/dashboard")
-  }, [])
+    if (window.Notification.permission === "denied") {
+      toast.error("please allow notification permission");
+    } else {
+      const messaging = firebase.messaging();
+      messaging.getToken().then((token) => {
+        console.log("token", token);
+        setdevice_token(token);
+      });
+    }
+    if (cookie.load("Authorization")) props.history.push("/dashboard");
+  }, []);
 
   const login = (e) => {
     e.preventDefault();
@@ -31,18 +32,15 @@ function LogIn(props) {
       phone: phoneno,
       password: password,
       device: "web",
-      device_token
-    }
+      device_token,
+    };
 
-    instance.post(API.LOGIN, body)
-      .then(function (response) {
-        localStorage.setItem("token", response?.accessToken?.toString());
-        cookie.save("Authorization", `Bearer ${response?.accessToken}`)
-        props.history.push("/dashboard")
-      })
-
+    instance.post(API.LOGIN, body).then(function (response) {
+      localStorage.setItem("token", response?.accessToken?.toString());
+      cookie.save("Authorization", `Bearer ${response?.accessToken}`);
+      props.history.push("/dashboard");
+    });
   };
-
 
   return (
     <>

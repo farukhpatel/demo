@@ -7,23 +7,27 @@ import { Select } from "@material-ui/core";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import instance from "../Utils/axiosConstants"
+import instance from "../Utils/axiosConstants";
 import { useParams } from "react-router-dom";
 
 function UpdateProduct(props) {
   let { id } = useParams();
-  const prop = props.location.state
+  const prop = props.location.state;
   // console.log(prop.is_percentage_commission)
   const [file, setFile] = useState(null);
   const [productName, setProductName] = useState(prop.product_name);
-  const [productImage, setProductImage] = useState(prop.product_image);
+  const productImage = prop.product_image;
   const [baseUnit, setBaseUnit] = useState(prop.base_unit.match(/\d+/g)[0]);
-  const [unitType, setUnitType] = useState(prop.base_unit.match(/[a-zA-Z]+/g)[0]);
+  const [unitType, setUnitType] = useState(
+    prop.base_unit.match(/[a-zA-Z]+/g)[0]
+  );
   const [commission, setCommission] = useState(prop.commission);
-  const [subscribable, setSubscribable] = useState(prop.is_subscribable_product);
+  const [subscribable, setSubscribable] = useState(
+    prop.is_subscribable_product
+  );
   const [percentage, setPercentage] = useState(prop.is_percentage_commission);
-  console.log(percentage)
-  console.log(subscribable)
+  console.log(percentage);
+  console.log(subscribable);
   const submit = async (e) => {
     e.preventDefault();
     let headers = new Headers();
@@ -32,18 +36,17 @@ function UpdateProduct(props) {
     if (file) {
       let formdata = new FormData();
       formdata.append("image", file[0]);
-      await instance.post(API.IMAGE_UPLOAD, formdata)
-        .then((response) => {
-          updateProductData = {
-            id: prop.id,
-            product_name: productName,
-            product_image: response.image_url,
-            base_unit: `${baseUnit}${unitType}`,
-            commission: commission,
-            is_percentage_commission: percentage,
-            is_subscribable_product: subscribable,
-          }
-        })
+      await instance.post(API.IMAGE_UPLOAD, formdata).then((response) => {
+        updateProductData = {
+          id: prop.id,
+          product_name: productName,
+          product_image: response.image_url,
+          base_unit: `${baseUnit}${unitType}`,
+          commission: commission,
+          is_percentage_commission: percentage,
+          is_subscribable_product: subscribable,
+        };
+      });
     }
     let updateProductData2 = {
       id: prop.id,
@@ -53,14 +56,17 @@ function UpdateProduct(props) {
       commission: commission,
       is_percentage_commission: percentage,
       is_subscribable_product: subscribable,
-    }
-    console.log(updateProductData ? updateProductData : updateProductData2)
-    instance.patch(`${API.UPDATE_PRODUCT}/${id}`, updateProductData ? updateProductData : updateProductData2)
-      .then(res => {
+    };
+    console.log(updateProductData ? updateProductData : updateProductData2);
+    instance
+      .patch(
+        `${API.UPDATE_PRODUCT}/${id}`,
+        updateProductData ? updateProductData : updateProductData2
+      )
+      .then((res) => {
         toast.success(res.message);
         window.location.href = "/productlist";
-      })
-
+      });
   };
   return (
     <>
@@ -82,8 +88,9 @@ function UpdateProduct(props) {
                 />
               </div>
               <div class="form-group">
-
-                <label for="productImage" name="Change file">Product Image</label>
+                <label for="productImage" name="Change file">
+                  Product Image
+                </label>
                 <input
                   type="file"
                   class="form-control"

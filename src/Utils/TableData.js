@@ -324,9 +324,6 @@ const TableData = ({ orderType, searchKey }) => {
             <TableBody>
               {assigned && assigned.length > 0 ? (
                 assigned.map((row, rowIndex) => {
-                  {
-                    console.log(row?.user?.name);
-                  }
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns &&

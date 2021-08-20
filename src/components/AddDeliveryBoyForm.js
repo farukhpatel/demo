@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import "./SuperUser.css";
 import Back from "./BackButton/Back";
@@ -5,10 +6,8 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import instance from "../Utils/axiosConstants";
 import API from "../Utils/ApiConstant";
-import { Select } from "@material-ui/core";
 
 import MultiSelect from "react-multi-select-component";
-import { useHistory } from "react-router-dom";
 
 const customValueRenderer = (selected, _options) => {
   return selected.length
@@ -28,8 +27,6 @@ function AddDeliveryBoyForm() {
   const [aadhaar, setAadhaar] = useState(null);
   const [password, setPassword] = useState("");
   const [range, setRange] = useState(null);
-  const [localities, setLocalities] = useState([]);
-  const routerHistroy = useHistory();
   const formSubmit = async (e) => {
     e.preventDefault();
     if (phone.length !== 10) {
@@ -37,7 +34,7 @@ function AddDeliveryBoyForm() {
       return;
     }
     let temp = [];
-    selected.map((value, index) => {
+    selected.forEach((value, index) => {
       temp.push(value.value);
     });
 
@@ -46,7 +43,7 @@ function AddDeliveryBoyForm() {
 
     console.log("temp", temp);
     let error = false;
-    if (name.trim() === "" || password.trim() == "" || phone.trim() == "") {
+    if (name.trim() === "" || password.trim() === "" || phone.trim() === "") {
       toast.error("name ,phone and password are required");
       error = true;
     }
@@ -78,7 +75,7 @@ function AddDeliveryBoyForm() {
   let temp = [];
   useEffect(() => {
     instance.get(API.GET_LOCALITIES_ALL).then((res) => {
-      res.localities.map((value, index) => {
+      res.localities.forEach((value, index) => {
         temp.push({ label: value.locality, value: value.locality });
       });
     });

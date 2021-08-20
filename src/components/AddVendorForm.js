@@ -1,16 +1,12 @@
 // import { FilePicker } from 'react-file-picker'
 import React, { useState, useEffect } from "react";
 
-import MultiSelect from "react-multi-select-component";
 import {
-  KeyboardTimePicker,
-  KeyboardDatePicker,
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
 } from "@material-ui/pickers";
 import Geocode from "react-geocode";
-import Grid from "@material-ui/core/Grid"; //clock
 import MomentUtils from "@date-io/moment"; //clock
 import moment from "moment"; //for clock time
 import "date-fns";
@@ -25,13 +21,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../Utils/axiosConstants";
 import Back from "./BackButton/Back";
-import { ArrowRightAltRounded } from "@material-ui/icons";
-import Files from "react-files";
-const customValueRenderer = (selected, _options) => {
-  return selected.length
-    ? selected.map(({ label }) => "✔️ " + label)
-    : "😶 No Items Selected";
-};
 
 function AddVendorForm() {
   // multiselect
@@ -119,7 +108,6 @@ function AddVendorForm() {
   const [cities, setCities] = useState([]);
   const [addressableId, setAddressableID] = useState("");
   const [shopSchedule, setShopSchedule] = useState(options);
-  const [buttonDisable, setButtonDisable] = useState(true);
   const [addressForm, setAddressForm] = useState({
     addressable_id: addressableId,
     addressable_type: "Shop",
@@ -292,9 +280,7 @@ function AddVendorForm() {
     let headers = new Headers();
     //check validation here for form-2
     let error = false;
-    if (shopName !== "" && deliveryRange !== "") {
-      setButtonDisable(false);
-    } else {
+    if (!(shopName !== "" && deliveryRange !== "")) {
       toast.error("shop name or shop delivety range are required");
       error = true;
     }
@@ -309,7 +295,6 @@ function AddVendorForm() {
     if (mFile && file && !error) {
       let formdata = new FormData();
       formdata.append("image", file[0]);
-      let imgurl;
       await instance
         .post(API.IMAGE_UPLOAD, formdata)
         .then((res) => {
@@ -330,8 +315,10 @@ function AddVendorForm() {
           .then((res) => {
             tempBannerURL[i] = res.image_url;
           })
+          // eslint-disable-next-line no-loop-func
           .catch((err) => {
             error = true;
+            console.log(err);
           });
         setBannerURL(tempBannerURL);
       }

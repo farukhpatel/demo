@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 // import API from '../Utils/ApiConstant'
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
@@ -16,7 +17,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 // modal
-import ItemModal from "../Modal/ItemModalPayment";
 import SettleModal from "../Modal/SettleModal";
 import moment from "moment";
 import { useEffect } from "react";
@@ -48,7 +48,6 @@ function PaymentSettlement() {
   const [paymentSettlementFilter, setPaymentSettlementFilter] = useState([]);
   const [toggleIndex, setToggleIndex] = useState(0);
   // let checked;
-  let unaccepted_settle = [];
 
   const Submits = (e) => {
     e.preventDefault();
@@ -345,9 +344,6 @@ function PaymentSettlement() {
                   <tbody style={{ textAlign: "center" }}>
                     {unpaid?.length > 0 ? (
                       unpaid.map((order, index) => {
-                        {
-                          console.log(checked[index]);
-                        }
                         return (
                           <tr>
                             <th scope="row">

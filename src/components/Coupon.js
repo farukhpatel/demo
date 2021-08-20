@@ -9,14 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
 import moment from "moment";
-import {
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -55,8 +48,6 @@ function Coupon() {
   const [usage_limit_per_coupon, setUsage_limit_per_coupon] = useState(null);
   const [usage_limit_per_user, setUsage_limit_per_user] = useState(null);
   const [coupon_code, setCoupon_code] = useState(null);
-  const [coupon_date, setCoupon_date] = useState(new Date());
-  const routerHistory = useHistory();
   const handleChangeCoupon = (coupon) => {
     let body = {
       is_active: coupon?.is_active === 0 ? 1 : 0,
@@ -76,7 +67,6 @@ function Coupon() {
       "T" +
       `${moment(date).format("HH:MM")}`;
     console.log(time);
-    setCoupon_date(time);
     setStart_date(time);
     setEnd_date(time);
   }, []);

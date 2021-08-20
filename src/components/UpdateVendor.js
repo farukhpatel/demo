@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  KeyboardTimePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
   TimePicker,
@@ -20,14 +19,12 @@ import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import instance from "../Utils/axiosConstants";
-import MultiSelect from "react-multi-select-component";
 import Back from "./BackButton/Back";
 
 function UpdateVendorForm(props) {
   const prop = props.location.state;
   console.log(prop.shop_schedules);
   // form fields var
-  const [timePicker, setTimePicker] = useState(new Date());
   const [file, setFile] = useState(null);
   const [phone, setPhone] = useState(prop.shop_phone);
   const [description, setDescription] = useState(prop.shop_description);
@@ -38,7 +35,7 @@ function UpdateVendorForm(props) {
   );
   const [account_number, setAccount_number] = useState(prop.account_number);
   const [ifsc_code, setIfsc_code] = useState(prop.ifsc_code);
-  const [profileImage, setProfileImage] = useState(prop.shop_profile);
+  const profileImage = prop.shop_profile;
   const [foundationDate, setFoundationDate] = useState(prop.shop_founding_date);
   const [deliveryRange, setDeliveryRange] = useState(prop.shop_delivery_range);
   const [shopName, setShopName] = useState(prop.shop_name);

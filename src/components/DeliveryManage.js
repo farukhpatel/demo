@@ -1,4 +1,3 @@
-import { instanceOf } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,12 +5,10 @@ import { toast } from "react-toastify";
 //popup
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import DisableModal from "../Modal/DisableModal";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
 
 const DeliveryManage = () => {
-  const arr = [1, 2, 3, 4, 5, 6, 7];
   const [deliveryBoy, setDeliveryBoy] = useState([]);
   const [search, setSearch] = useState("");
 

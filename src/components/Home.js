@@ -16,10 +16,8 @@ import instance from "../Utils/axiosConstants";
 import moment from "moment";
 
 function Home() {
-  const date = new Date();
   const [from, setFrom] = useState(new Date());
   const [to, setTo] = useState(new Date());
-  const [search, setSearch] = useState("");
   const [dashboardData, setDashboardData] = useState({
     active_users: "",
     total_delivery_boys: "",

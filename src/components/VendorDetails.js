@@ -69,9 +69,8 @@ function VendorDetails(props) {
   const [totalVendorOrder, setTotalVendorOrder] = useState([]);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [addressForm, setAddressForm] = useState({
+  const addressForm = {
     addressable_id: address?.addressable_id,
-    // addressable_type: address?.addressable_type,
     addressable_type: "Shop",
     name: address?.name,
     address_type: address?.address_type,
@@ -86,8 +85,7 @@ function VendorDetails(props) {
     country: address?.country,
     latitude: address?.latitude,
     longitude: address?.longitude,
-  });
-  // console.log(addressForm)
+  };
   const [is_shop_active, setIs_shop_active] = useState(
     vendorDetails?.is_shop_active || true
   );
@@ -265,7 +263,7 @@ function VendorDetails(props) {
                 <div>
                   <img
                     src={vendorDetails?.shop_profile}
-                    alt="image not found"
+                    alt="shop profile"
                     style={{ width: "30rem", height: "20rem" }}
                   />
                 </div>

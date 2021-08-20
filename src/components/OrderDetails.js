@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import RefundModal from "../Modal/RefundModal";
-import SettleModal from "../Modal/SettleModal";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
 import Back from "./BackButton/Back";
@@ -35,6 +34,7 @@ function OrderDetails(props) {
         setChecked(a);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     console.log("total amount", totalAmount);

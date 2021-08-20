@@ -10,10 +10,8 @@ import MomentUtils from "@date-io/moment";
 import moment from "moment";
 import API from "../Utils/ApiConstant";
 import instance from "../Utils/axiosConstants";
-import axios from "axios";
 import { FormControl, makeStyles, MenuItem, Select } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
-import VendorDetails from "./VendorDetails";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -27,16 +25,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SalesReport() {
   const classes = useStyles();
-  let date = new Date();
-  date = date.toLocaleDateString();
   const [from, setFrom] = useState(new Date());
   const [to, setTo] = useState(new Date());
   const [vendor, setVendor] = useState([]);
   const [id, setId] = useState(0);
-  const arr = [1, 2, 3, 4, 5, 6, 7];
   const [dataWise, setDataWise] = useState([]);
   const [sellerWise, setSellerWise] = useState([]);
-  const [vendors, setVendors] = useState([]);
 
   useEffect(() => {
     let date = new Date();
@@ -309,19 +303,12 @@ function SalesReport() {
                         <tr>
                           <th scope="row">{index + 1}</th>
                           {/* <td>{value.shop_name}</td> */}
-
-                          {console.log(value)}
-<<<<<<< HEAD
                           <td
                             style={{ color: "#85c1e9" }}
                             onClick={() => VendorDetails(value?.shop_id)}
                           >
-=======
-                          <td style={{ color: '#85c1e9', cursor: 'pointer' }} onClick={() => VendorDetails(value?.shop_id)}>
->>>>>>> dashboard-f
                             {value?.shop_name}
                           </td>
-
                           <td>{value.total_amount}</td>
                           <td>{value.total_discount}</td>
                           <td>{value.total_commission}</td>
@@ -420,7 +407,7 @@ function SalesReport() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    margin: "5%",
+                    marginTop: "5%",
                     flexWrap: "wrap",
                   }}
                 >

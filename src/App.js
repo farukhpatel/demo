@@ -37,39 +37,43 @@ import addCity from "./components/city/addCity";
 import updateCity from "./components/city/updateCity";
 import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
 import Locality from "./components/Locality/Locality";
-import { AddLocation } from "@material-ui/icons";
+// import { AddLocation } from "@material-ui/icons";
 import AddLocalities from "./components/Locality/AddLocalities";
 import UpdateLocality from "./components/Locality/UpdateLocality";
 import Notification from "./components/Notification";
 import UserDetails from "./components/UserDetails";
 import UpdateShopAddress from "./components/UpdateShopAddress";
 // import { getToken, onMessageListener } from './firebase'
-import { Button, Row, Col, Toast } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firebase from "./components/firebase";
+// import { toast } from "react-toastify";
 
 Geocode.setLanguage("en");
 Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
 function App() {
-  const getWindowsSize = () => {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
-    };
-  };
+  // const getWindowsSize = () => {
+  //   const { innerWidth: width, innerHeight: height } = window;
+  //   return {
+  //     width,
+  //     height,
+  //   };
+  // };
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
+  // const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
 
   const [show, setShow] = useState(false);
-  const [notification, setNotification] = useState({ title: "", body: "" });
-  const [isTokenFound, setTokenFound] = useState(false);
+  const notification = { title: "", body: "" };
 
   useEffect(() => {
-    const messaging = firebase.messaging();
-    messaging.getToken().then((token) => {
-      console.log("token", token);
-    });
+    if (window.Notification.permission === "denied") {
+      // toast.error("please allow notification permission");
+    } else {
+      const messaging = firebase.messaging();
+      messaging.getToken().then((token) => {
+        console.log("token", token);
+      });
+    }
   }, []);
   // useEffect(() => {
   //   getToken(setTokenFound)
@@ -86,14 +90,14 @@ function App() {
   //   })
   //   .catch((err) => console.log('failed: ', err))
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowsSize());
-    }
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowDimensions(getWindowsSize());
+  //   }
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <>
