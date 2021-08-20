@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import API from "../Utils/ApiConstant";
 import "./SuperUser.css";
 import instance from "../Utils/axiosConstants"
-import firebase from './../components/firebase'
 
 function SignUp() {
   // api

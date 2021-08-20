@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import Geocode from "react-geocode";
 
@@ -44,7 +44,6 @@ import Notification from "./components/Notification";
 import UserDetails from "./components/UserDetails";
 import UpdateShopAddress from "./components/UpdateShopAddress";
 // import { getToken, onMessageListener } from './firebase'
-import { Toast } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firebase from "./components/firebase";
 // import { toast } from "react-toastify";
@@ -62,10 +61,11 @@ function App() {
 
   // const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
 
-  const [show, setShow] = useState(false);
-  const notification = { title: "", body: "" };
-
+  const routerHistory = useHistory();
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      routerHistory.push("/login");
+    }
     if (window.Notification.permission === "denied") {
       // toast.error("please allow notification permission");
     } else {
@@ -87,32 +87,6 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <Toast
-          onClose={() => setShow(false)}
-          show={show}
-          delay={2000}
-          animation
-          style={{
-            position: "absolute",
-            top: 20,
-            right: 20,
-            minWidth: 200,
-          }}
-        >
-          <Toast.Header>
-            <strong className="mr-auto">{notification.title}</strong>
-            <small>just now</small>
-          </Toast.Header>
-          <Toast.Body>{notification.body}</Toast.Body>
-        </Toast>
-        <header className="App-header">
-          {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>} */}
-          {/* {!isTokenFound && <h1> Need notification permission ❗️ </h1>} */}
-          {/* <img src="ja" className="App-logo" alt="logo" /> */}
-          {/* <button style={{ width: '45px', height: "45px", border: "none", position: 'absolute', right: '0px' }} onClick={() => setShow(true)}><i class="fas fa-bell"></i></button> */}
-        </header>
-      </div>
       <Switch Switch>
         <Route exact path="/" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
@@ -123,7 +97,7 @@ function App() {
           <Route exact path="/user" component={User} />
           <Route exact path="/vendor" component={Vendor} />
           <Route exact path="/salesreport" component={SalesReport} />
-          <Route exact path="/productlist" component={ProductList} />s
+          <Route exact path="/productlist" component={ProductList} />
           <Route
             exact
             path="/totalorderrecieved"
