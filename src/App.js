@@ -1,55 +1,55 @@
-import React, { useEffect } from "react";
-import "./App.css";
-import { Route, Switch, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react'
+import './App.css'
+import { Route, Switch, useHistory } from 'react-router-dom'
 
-import Geocode from "react-geocode";
+import Geocode from 'react-geocode'
 
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import User from "./components/User";
-import Vendor from "./components/Vendor";
-import SalesReport from "./components/SalesReport";
-import ProductList from "./components/ProductList";
-import TotalOrderRecievede from "./components/TotalOrderRecieved";
-import CustomerDetails from "./components/CustomerDetails";
-import OrderDetails from "./components/OrderDetails";
-import AssignedOrders from "./components/AssignedOrders";
-import PickedOrders from "./components/PickedOrders";
-import NotPicked from "./components/NotPicked";
-import AddVendoreForm from "./components/AddVendorForm";
-import UnassignedOrders from "./components/UnassignedOrders";
-import DeliveredOrders from "./components/DeliveredOrders";
-import SignUp from "./components/SignUp";
-import LogIn from "./components/LogIn";
-import AddProductForm from "./components/AddProductForm";
-import DeliveryManage from "./components/DeliveryManage";
-import AddDeliveryBoyForm from "./components/AddDeliveryBoyForm";
-import PaymentSettlement from "./components/PaymentSettlement";
-import Settings from "./components/Settings";
-import Banner from "./components/Banner";
-import Review from "./components/Review";
-import Coupon from "./components/Coupon";
-import VendorDetails from "./components/VendorDetails";
-import UpdateVendorForm from "./components/UpdateVendor";
-import updateProduct from "./components/updateProduct";
-import city from "./components/city/City";
-import addCity from "./components/city/addCity";
-import updateCity from "./components/city/updateCity";
-import UpdateDeliveryBoy from "./components/UpdateDeliveryBoy";
-import Locality from "./components/Locality/Locality";
+import Navbar from './components/Navbar'
+import Home from './components/Home'
+import User from './components/User'
+import Vendor from './components/Vendor'
+import SalesReport from './components/SalesReport'
+import ProductList from './components/ProductList'
+import TotalOrderRecievede from './components/TotalOrderRecieved'
+import CustomerDetails from './components/CustomerDetails'
+import OrderDetails from './components/OrderDetails'
+import AssignedOrders from './components/AssignedOrders'
+import PickedOrders from './components/PickedOrders'
+import NotPicked from './components/NotPicked'
+import AddVendoreForm from './components/AddVendorForm'
+import UnassignedOrders from './components/UnassignedOrders'
+import DeliveredOrders from './components/DeliveredOrders'
+import SignUp from './components/SignUp'
+import LogIn from './components/LogIn'
+import AddProductForm from './components/AddProductForm'
+import DeliveryManage from './components/DeliveryManage'
+import AddDeliveryBoyForm from './components/AddDeliveryBoyForm'
+import PaymentSettlement from './components/PaymentSettlement'
+import Settings from './components/Settings'
+import Banner from './components/Banner'
+import Review from './components/Review'
+import Coupon from './components/Coupon'
+import VendorDetails from './components/VendorDetails'
+import UpdateVendorForm from './components/UpdateVendor'
+import updateProduct from './components/updateProduct'
+import city from './components/city/City'
+import addCity from './components/city/addCity'
+import updateCity from './components/city/updateCity'
+import UpdateDeliveryBoy from './components/UpdateDeliveryBoy'
+import Locality from './components/Locality/Locality'
 // import { AddLocation } from "@material-ui/icons";
-import AddLocalities from "./components/Locality/AddLocalities";
-import UpdateLocality from "./components/Locality/UpdateLocality";
-import Notification from "./components/Notification";
-import UserDetails from "./components/UserDetails";
-import UpdateShopAddress from "./components/UpdateShopAddress";
+import AddLocalities from './components/Locality/AddLocalities'
+import UpdateLocality from './components/Locality/UpdateLocality'
+import Notification from './components/Notification'
+import UserDetails from './components/UserDetails'
+import UpdateShopAddress from './components/UpdateShopAddress'
 // import { getToken, onMessageListener } from './firebase'
-import "bootstrap/dist/css/bootstrap.min.css";
-import firebase from "./components/firebase";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import firebase from './components/firebase'
 // import { toast } from "react-toastify";
 
-Geocode.setLanguage("en");
-Geocode.setApiKey("AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4");
+Geocode.setLanguage('en')
+Geocode.setApiKey('AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4')
 function App() {
   // const getWindowsSize = () => {
   //   const { innerWidth: width, innerHeight: height } = window;
@@ -61,20 +61,21 @@ function App() {
 
   // const [windowDimensions, setWindowDimensions] = useState(getWindowsSize());
 
-  const routerHistory = useHistory();
+  const routerHistory = useHistory()
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      routerHistory.push("/login");
+    if (!localStorage.getItem('token')) {
+      routerHistory.push('/login')
     }
-    if (window.Notification.permission === "denied") {
+    if (window.Notification.permission === 'denied') {
       // toast.error("please allow notification permission");
     } else {
-      const messaging = firebase.messaging();
+      const messaging = firebase.messaging()
       messaging.getToken().then((token) => {
-        console.log("token", token);
-      });
+        console.log('token', token)
+      })
     }
-  }, []);
+    // eslint-disable-next-line
+  }, [])
 
   // useEffect(() => {
   //   function handleResize() {
@@ -144,7 +145,7 @@ function App() {
         </div>
       </Switch>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
