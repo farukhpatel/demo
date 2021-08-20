@@ -307,14 +307,11 @@ const TableData = ({ orderType, searchKey }) => {
             <TableBody>
               {assigned && assigned.length > 0
                 ? assigned.map((row, rowIndex) => {
-                  { console.log(row?.user?.name) }
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns && columns.map((column) => {
                         const value = row[column.id];
-                        { console.log('row', row) }
                         return (
-
                           <TableCell key={column.id} align={column.align}>
                             {column?.id === "user_id" ||
                               column?.id === "order_id" ? (

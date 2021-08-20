@@ -1,9 +1,7 @@
-// import { toast } from "react-toastify";
+
 
 importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js');
-// import firebase from 'firebase/app';
-// import 'firebase/messaging';
 
 var config = {
     apiKey: "AIzaSyBtdGTnJIjsjV1nRKXS_OWdv8IBjiewhg8",

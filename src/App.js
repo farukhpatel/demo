@@ -37,17 +37,14 @@ import addCity from './components/city/addCity'
 import updateCity from './components/city/updateCity'
 import UpdateDeliveryBoy from './components/UpdateDeliveryBoy'
 import Locality from './components/Locality/Locality'
-import { AddLocation } from '@material-ui/icons'
 import AddLocalities from './components/Locality/AddLocalities'
 import UpdateLocality from './components/Locality/UpdateLocality'
 import Notification from './components/Notification'
 import UserDetails from './components/UserDetails'
 import UpdateShopAddress from './components/UpdateShopAddress'
-// import { getToken, onMessageListener } from './firebase'
-import { Button, Row, Col, Toast } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import firebase from './components/firebase'
-
+import { toast } from 'react-toastify'
 Geocode.setLanguage('en')
 Geocode.setApiKey('AIzaSyAhyWjQvLVO658WHjnlIpn7V_q7wtdOXp4')
 function App() {
@@ -61,30 +58,17 @@ function App() {
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowsSize())
 
-  const [show, setShow] = useState(false)
-  const [notification, setNotification] = useState({ title: '', body: '' })
-  const [isTokenFound, setTokenFound] = useState(false)
-
   useEffect(() => {
-    const messaging = firebase.messaging();
-    messaging.getToken().then((token) => {
-      console.log('token', token)
-    })
-  }, [])
-  // useEffect(() => {
-  //   getToken(setTokenFound)
-  // }, [])
 
-  // onMessageListener()
-  //   .then((payload) => {
-  //     setShow(true)
-  //     setNotification({
-  //       title: payload.notification.title,
-  //       body: payload.notification.body,
-  //     })
-  //     console.log(payload)
-  //   })
-  //   .catch((err) => console.log('failed: ', err))
+    if (window.Notification.permission === "denied") {
+      toast.error("Please allow notification permission");
+    } else {
+      const messaging = firebase.messaging();
+      messaging.getToken().then((token) => {
+        console.log('token', token)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     function handleResize() {
@@ -107,24 +91,6 @@ function App() {
   ) : (
     <>
       <div className="App">
-        <Toast
-          onClose={() => setShow(false)}
-          show={show}
-          delay={2000}
-          animation
-          style={{
-            position: 'absolute',
-            top: 20,
-            right: 20,
-            minWidth: 200,
-          }}
-        >
-          <Toast.Header>
-            <strong className="mr-auto">{notification.title}</strong>
-            <small>just now</small>
-          </Toast.Header>
-          <Toast.Body>{notification.body}</Toast.Body>
-        </Toast>
         <header className="App-header">
           {/* {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>} */}
           {/* {!isTokenFound && <h1> Need notification permission ❗️ </h1>} */}
