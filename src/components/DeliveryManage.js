@@ -15,6 +15,7 @@ const DeliveryManage = () => {
   useEffect(() => {
     instance.get(API.DELIVERY_BOYS).then(function (response) {
       setDeliveryBoy(response.users);
+      console.log(response.users);
     });
   }, []);
   const routerHistroy = useHistory();
@@ -136,7 +137,7 @@ const DeliveryManage = () => {
                                 {value.name}
                               </td>
                               <td>{value.phone}</td>
-                              <td>{value.locality}</td>
+                              <td>{value.delivery_boy?.locality_assigned}</td>
                               <td style={{ cursor: "pointer" }}>
                                 <button onClick={() => Disable(value)}>
                                   {" "}

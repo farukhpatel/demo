@@ -29,6 +29,14 @@ function UpdateDeliveryBoy(props) {
   const [name, setName] = useState(prop.name);
   const [phone, setPhone] = useState(prop.phone);
   const [aadhaar, setAadhaar] = useState(prop?.delivery_boy?.aadhaar_number);
+  const [account_holder_name, setAccount_holder_name] = useState(
+    prop?.delivery_boy?.account_holder_name
+  );
+  const [account_number, setAccount_number] = useState(
+    prop?.delivery_boy?.account_number
+  );
+  const [bank_name, setBank_name] = useState(prop?.delivery_boy?.bank_name);
+  const [ifsc_code, setIfsc_code] = useState(prop?.delivery_boy?.ifsc_code);
   const [email, setEmail] = useState(prop.email);
   const [password, setPassword] = useState(
     prop?.password ? prop?.password : ""
@@ -123,6 +131,54 @@ function UpdateDeliveryBoy(props) {
                   placeholder="Aadhaar"
                   onChange={(e) => setAadhaar(e.target.value)}
                   value={aadhaar}
+                />
+              </div>
+              <div class="form-group">
+                <label for="bank_name">Bank Name</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  id="bank_name"
+                  placeholder="Bank Name"
+                  onChange={(e) => setBank_name(e.target.value)}
+                  value={bank_name}
+                />
+              </div>
+              <div class="form-group">
+                <label for="account_holder_name">Account Holder Name</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  id="account_holder_name"
+                  placeholder="Account Holder Name"
+                  onChange={(e) => setAccount_holder_name(e.target.value)}
+                  value={account_holder_name}
+                />
+              </div>
+              <div class="form-group">
+                <label for="account_number">Account Number</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  id="account_number"
+                  placeholder="Account Number"
+                  onChange={(e) => setAccount_number(e.target.value)}
+                  value={account_number}
+                />
+              </div>
+              <div class="form-group">
+                <label for="ifsc_code">IFSC Code</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  id="IFSC Code"
+                  placeholder="Aadhaar"
+                  onChange={(e) => setIfsc_code(e.target.value)}
+                  value={ifsc_code}
                 />
               </div>
               <div class="form-group">

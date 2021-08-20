@@ -127,6 +127,24 @@ const UserDetails = (props) => {
                   <p>{`Email : ${userDetails?.email || ""} `}</p>
                   <p>{`Gender : ${userDetails?.gender || ""} `}</p>
                   <p>{`D.O.B. : ${userDetails?.birth_date || ""} `}</p>
+                  {isDeliveryBoy ? (
+                    <div>
+                      <p>{`Bank Name : ${
+                        userDetails?.delivery_boy?.bank_name || ""
+                      } `}</p>
+                      <p>{`Account Holder Name: ${
+                        userDetails?.delivery_boy?.account_holder_name || ""
+                      } `}</p>
+                      <p>{`Account Number : ${
+                        userDetails?.delivery_boy?.account_name || ""
+                      } `}</p>
+                      <p>{`IFSC Code : ${
+                        userDetails?.delivery_boy?.ifsc_code || ""
+                      } `}</p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div className="">
                     {isDeliveryBoy ? (
                       <button
