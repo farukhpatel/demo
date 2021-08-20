@@ -135,15 +135,21 @@ function Home() {
     </>
   ) : (
     <>
-      <button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <div className="headerText">
-          <h1>Bandhify</h1>
+      <nav>
+        <div className="navHeaderText">
+          <i
+            className="fas fa-bars "
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          ></i>
+
+          <div className="company__name">
+            <h1>Bandhify</h1>
+          </div>
         </div>
-      </button>
+      </nav>
+
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

@@ -239,7 +239,7 @@ function PaymentSettlement() {
                 </FormControl>
               </div>
               {/* <button type="submit" onClick={(e) => Submits(e)}>Submit</button> */}
-              <div class="form-group">
+              <div class="form-group settlement-button">
                 <button
                   type="submit"
                   class="btn btn-primary DateSelectSubmitBtn"

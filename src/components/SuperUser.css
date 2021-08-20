@@ -968,6 +968,11 @@ tbody td button:hover {
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
   width: 70%;
 }
+.settlement-button button,
+.settlement-button {
+  width: auto !important;
+}
+
 .payment-settlement-inputs .payment-form {
   display: flex;
   align-items: center;
@@ -1159,7 +1164,7 @@ a {
 
 .details-content {
   margin: 3%;
-  width: 60%;
+  width: 50%;
 }
 .details-content h2,
 .details-content h5 {
@@ -1598,10 +1603,30 @@ h3 .notificationDescription-text > p {
     z-index: 100;
     overflow-y: auto;
   }
+
+  .navHeaderText {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #3b1f47;
+    padding: 1rem;
+    position: relative;
+  }
+
+  .navHeaderText > i {
+    margin-left: 1rem;
+    color: white;
+  }
+
+  .navHeaderText > .company__name {
+    width: 65%;
+  }
+
   .sidebar ul {
     margin-top: 0;
   }
-
+  .company__name h1,
   .headerText h1 {
     color: white;
     font-family: "Kaushan Script", cursive;
