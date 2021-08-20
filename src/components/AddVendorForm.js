@@ -6,7 +6,6 @@ import {
   TimePicker,
   DatePicker,
 } from "@material-ui/pickers";
-import Geocode from "react-geocode";
 import MomentUtils from "@date-io/moment"; //clock
 import moment from "moment"; //for clock time
 import "date-fns";
@@ -127,33 +126,6 @@ function AddVendorForm() {
     longitude: "",
   });
 
-  function getGeo() {
-    // Get latitude & longitude from address.
-    const {
-      address_line_1,
-      address_line_2,
-      address_line_3,
-      locality,
-      city,
-      pincode,
-      state,
-      country,
-    } = addressForm;
-    const address = `${address_line_1}, ${address_line_2}, ${address_line_3}, ${locality}, ${city}, ${pincode}, ${state}, ${country}`;
-
-    Geocode.fromAddress(address).then(
-      (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        if (lat === "" || lng === "")
-          toast.error("Something is wrong with the address provided");
-        else setAddressForm({ ...addressForm, latitude: lat, longitude: lng });
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
   function handleCitySelect(event) {
     const { value } = event.target;
 
@@ -202,36 +174,29 @@ function AddVendorForm() {
     if (name === "pincode" && value.length > 6) {
       value = value.slice(0, 6);
     }
-    setAddressForm({ ...addressForm, [name]: value });
-  }
-
-  function createAddress() {
-    instance.post(API.CREATE_ADDRESS, addressForm).then(function (response) {
-      toast.success("Address Successfully Added.");
-      window.location.href = "/vendor";
+    console.log(name);
+    setAddressForm({
+      ...addressForm,
+      [name]:
+        name === "latitude" || name === "longitude" ? Number(value) : value,
     });
   }
 
   function handleAddressFormSubmit(event) {
     event.preventDefault();
-
+    console.log(addressForm);
     let error = false;
-    let optionalKeys = [
-      "address_line_2",
-      "address_line_3",
-      "city_id",
-      "locality_id",
-      "latitude",
-      "longitude",
-    ];
     Object.keys(addressForm).forEach((key) => {
-      if (!error && addressForm[key] === "" && !optionalKeys.includes(key)) {
+      if (!error && addressForm[key] === "") {
         toast.error(`${key} can't be empty.`);
         error = true;
       }
     });
     if (!error) {
-      getGeo();
+      instance.post(API.CREATE_ADDRESS, addressForm).then(function (response) {
+        toast.success("Address Successfully Added.");
+        window.location.href = "/vendor";
+      });
     }
   }
 
@@ -357,12 +322,6 @@ function AddVendorForm() {
       }
     }
   };
-  useEffect(() => {
-    if (addressForm.latitude !== "" && addressForm.longitude !== "") {
-      createAddress();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addressForm]);
   return (
     <>
       <div className="main-outer-div">
@@ -832,10 +791,27 @@ function AddVendorForm() {
                     readOnly
                   />
                 </div>
+                <div class="form-group">
+                  <label for="latitude">Latitude</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="latitude"
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="longitude">Longitude</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="longitude"
+                    onChange={(e) => handleAddressForm(e)}
+                  />
+                </div>
 
                 <button
                   type="submit"
-                  // disabled={buttonDisable}
                   class="btn btn-primary submitBtn"
                   onClick={(event) => handleAddressFormSubmit(event)}
                 >

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import '../components/SuperUser.css'
-import API from '../Utils/ApiConstant'
-import instance from '../Utils/axiosConstants'
-import moment from 'moment'
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "../components/SuperUser.css";
+import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
+import moment from "moment";
 
 const Notification = () => {
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     instance.get(API.GET_ALL_NOTIFICATIONS).then((res) => {
       toast.success(res.message);
-      setNotifications(res.notifications)
-    })
-  }, [])
+      setNotifications(res.notifications);
+    });
+  }, []);
   return (
     <>
       <div className="main-outer-div">
@@ -28,27 +28,27 @@ const Notification = () => {
                     {notification.read_at === null ? (
                       <i
                         class="fas fa-circle fa-xm"
-                        style={{ fontSize: '0.8rem' }}
+                        style={{ fontSize: "0.8rem" }}
                       ></i>
                     ) : (
-                        ''
-                      )}
+                      ""
+                    )}
                     Notification
                   </h5>
                   <h6>{notification.data}</h6>
                   <h4>
                     Date :
-                    {moment(notification.created_at).format('DD-MM-YYYY HH:MM')}
+                    {moment(notification.created_at).format("DD-MM-YYYY HH:mm")}
                   </h4>
                 </div>
               </div>
-            )
+            );
           })
         ) : (
-            <h1 style={{ textAlign: 'center' }}>Notification not found</h1>
-          )}
+          <h1 style={{ textAlign: "center" }}>Notification not found</h1>
+        )}
       </div>
     </>
-  )
-}
-export default Notification
+  );
+};
+export default Notification;

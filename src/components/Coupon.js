@@ -65,13 +65,14 @@ function Coupon() {
     let time =
       `${moment(date).format("YYYY-MM-DD")}` +
       "T" +
-      `${moment(date).format("HH:MM")}`;
+      `${moment(date).format("HH:mm")}`;
     console.log(time);
     setStart_date(time);
     setEnd_date(time);
   }, []);
   const Submit = (e) => {
     e.preventDefault();
+
     let couponData = {
       coupon_name,
       coupon_description,
@@ -79,11 +80,11 @@ function Coupon() {
       start_date:
         start_date === null
           ? start_date
-          : moment(start_date).format("YYYY-MM-DD HH:MM:SS"),
+          : moment(start_date).format("YYYY-MM-DD HH:mm:ss"),
       end_date:
         end_date === null
           ? end_date
-          : moment(end_date).format("YYYY-MM-DD HH:MM:SS"),
+          : moment(end_date).format("YYYY-MM-DD HH:mm:ss"),
       coupon_type: 1,
       coupon_value: discount ? Number(discount) : null,
       ...(id > 0 ? { shop_id: id } : {}),
@@ -97,7 +98,7 @@ function Coupon() {
         ? Number(usage_limit_per_user)
         : null,
     };
-    console.log(couponData);
+
     instance.post(API.POST_COUPONS_CREATE, couponData).then((res) => {
       toast.success(res.message);
       window.location.href = "/coupon";
@@ -192,7 +193,7 @@ function Coupon() {
                     label=""
                     type="datetime-local"
                     value={start_date}
-                    // defaultValue={coupon_date}
+                    defaultValue={start_date}
                     onChange={(e) => setStart_date(e.target.value)}
                     className={classes.textField}
                     InputLabelProps={{

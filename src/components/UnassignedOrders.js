@@ -154,6 +154,7 @@ function UnassignedOrders() {
                     <tbody>
                       {unassigned &&
                         unassigned.map((value, index) => {
+                          console.log(value);
                           return (
                             <tr>
                               <td>{index + 1}</td>
@@ -171,7 +172,9 @@ function UnassignedOrders() {
                               <td>{value?.user?.name}</td>
                               <td>{value?.shop?.shop_name}</td>
                               <td>
-                                {moment(value).format("D MMMM YYYY, h:mm a")}
+                                {moment(value.created_at).format(
+                                  "D MMMM YYYY, h:mm a"
+                                )}
                               </td>
                               <td>{`${moment(
                                 value?.delivery_date,
