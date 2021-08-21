@@ -106,18 +106,6 @@ const ProductList = () => {
                       </tr>
                     </thead>
                     <tbody style={{ textAlign: "center" }}>
-                      {/* {
-                                            arr.map((value, index) => {
-                                                return (
-                                                    <tr>
-                                                        <th scope="row">{index + 1}</th>
-                                                        <td>Milk</td>
-                                                        <td><img src="" alt="Milk"></img></td>
-                                                        <td>5L</td>
-                                                    </tr>
-                                                )
-                                            })
-                                        } */}
                       {productList?.length > 0 ? (
                         productList.map((value, index) => {
                           return (

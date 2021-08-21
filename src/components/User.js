@@ -97,13 +97,12 @@ function User() {
                         user.map((value, index) => {
                           return (
                             <tr key={index}>
-                              <th style={{}}>{index + 1}</th>
+                              <th>{index + 1}</th>
                               <td
                                 onClick={() => {
-                                  // (window.location.href = "/UserDetails")
                                   UserDetails(value);
                                 }}
-                                style={{ cursor: "pointer" }}
+                                style={{ cursor: "pointer", color: "#0dcaf0" }}
                               >
                                 <p style={{ color: "#85c1e9" }}>
                                   {value?.name}

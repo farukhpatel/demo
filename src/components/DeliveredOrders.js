@@ -3,7 +3,6 @@ import React from "react";
 import "./SuperUser.css";
 import TableData from "../Utils/TableData";
 function Delivered() {
-
   return (
     <>
       <div className="main-outer-div">
@@ -21,7 +20,7 @@ function Delivered() {
                   aria-controls="total-orders-recieved"
                   aria-selected="true"
                 >
-                  Total Orders Recieved
+                  Delivered Orders
                 </button>
               </li>
             </ul>

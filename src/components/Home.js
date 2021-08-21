@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from "react";
-import "./SuperUser.css";
+import React, { useEffect, useState } from 'react'
+import './SuperUser.css'
 
-import dairy from "../assets/dairy.jpg";
+import dairy from '../assets/dairy.jpg'
 
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import Grid from "@material-ui/core/Grid"; //clock
-import MomentUtils from "@date-io/moment";
+} from '@material-ui/pickers'
+import Grid from '@material-ui/core/Grid' //clock
+import MomentUtils from '@date-io/moment'
 
 //for Api
-import API from "../Utils/ApiConstant";
-import instance from "../Utils/axiosConstants";
-import moment from "moment";
+import API from '../Utils/ApiConstant'
+import instance from '../Utils/axiosConstants'
+import moment from 'moment'
 
 function Home() {
-  const [from, setFrom] = useState(new Date());
-  const [to, setTo] = useState(new Date());
+  const [from, setFrom] = useState(new Date())
+  const [to, setTo] = useState(new Date())
   const [dashboardData, setDashboardData] = useState({
-    active_users: "",
-    total_delivery_boys: "",
-    total_orders: "",
-    total_orders_delivered: "",
-    Accepted: "",
-    Assigned: "",
-    Delivered: "",
-    Picked: "",
-  });
+    active_users: '',
+    total_delivery_boys: '',
+    total_orders: '',
+    total_orders_delivered: '',
+    Accepted: '',
+    Assigned: '',
+    Delivered: '',
+    Picked: '',
+  })
   useEffect(() => {
     // {{Base URL}}/api/admin/dashboard?start_date=2019-05-05&end_date=2021-01-01
-    let start_date = moment(from).format("YYYY-MM-DD");
-    let end_date = moment(to).format("YYYY-MM-DD");
+    let start_date = moment(from).format('YYYY-MM-DD')
+    let end_date = moment(to).format('YYYY-MM-DD')
     // console.log(`${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`)
     instance
       .get(
-        `${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`
+        `${API.GET_DASHBOARD_DATA}start_date=${start_date}&end_date=${end_date}`,
       )
       .then(function (response) {
         const data = {
@@ -49,10 +49,10 @@ function Home() {
           Assigned: response?.order_status_count?.Assigned,
           Delivered: response?.order_status_count?.Delivered,
           Picked: response?.order_status_count?.Picked,
-        };
-        setDashboardData(data);
-      });
-  }, [from, to]);
+        }
+        setDashboardData(data)
+      })
+  }, [from, to])
 
   return (
     <>
@@ -75,11 +75,11 @@ function Home() {
                       id="date-picker-dialog"
                       format="DD/MM/yyyy"
                       onChange={(e) => {
-                        setFrom(e._d);
+                        setFrom(e._d)
                       }}
                       value={from}
                       KeyboardButtonProps={{
-                        "aria-label": "change date",
+                        'aria-label': 'change date',
                       }}
                     />
                   </Grid>
@@ -94,11 +94,11 @@ function Home() {
                       id="date-picker-dialog"
                       format="DD/MM/yyyy"
                       onChange={(e) => {
-                        setTo(e._d);
+                        setTo(e._d)
                       }}
                       value={to}
                       KeyboardButtonProps={{
-                        "aria-label": "change date",
+                        'aria-label': 'change date',
                       }}
                     />
                   </Grid>
@@ -112,7 +112,7 @@ function Home() {
           </div>
         </div>
         {/* {End of time } */}
-        <div className="home-outer-div" style={{ paddingTop: "3%" }}>
+        <div className="home-outer-div" style={{ paddingTop: '3%' }}>
           <div className="home-top">
             <div className="home-top-left">
               <a href="/unassignedorders">
@@ -125,7 +125,7 @@ function Home() {
               <a href="/assigned">
                 <div className="item-1">
                   <h3>{dashboardData.Assigned}</h3>
-                  <h5>Assigned Orders</h5>{" "}
+                  <h5>Assigned Orders</h5>{' '}
                 </div>
               </a>
             </div>
@@ -135,7 +135,7 @@ function Home() {
               <a href="/outfordelivery">
                 <div className="item-1">
                   <h3>{dashboardData.Picked}</h3>
-                  <h5>Picked</h5>{" "}
+                  <h5>Picked</h5>{' '}
                 </div>
               </a>
               {/* <a href="/unassignedorders"> */}
@@ -156,12 +156,12 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-atom fa-2x "
-                    style={{ color: "#D7DBDD" }}
+                    style={{ color: '#D7DBDD' }}
                   ></i>
                 </div>
                 <div>
                   <a href="/totalorderrecieved">
-                    {" "}
+                    {' '}
                     <h3>{dashboardData.total_orders}</h3>
                   </a>
                 </div>
@@ -176,16 +176,16 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-atom fa-2x "
-                    style={{ color: "#D7DBDD" }}
+                    style={{ color: '#D7DBDD' }}
                   ></i>
                 </div>
                 <div>
-                  <a href="/totalorderrecieved">
-                    {" "}
+                  <a href="/totalsubcriptionrecieved">
+                    {' '}
                     <h3>{dashboardData.total_subscription_orders}</h3>
                   </a>
                 </div>
-                <a href="/totalorderrecieved">
+                <a href="/totalsubcriptionrecieved">
                   <div className="total_orders_received">
                     <h5>Total Subscription Received</h5>
                   </div>
@@ -196,14 +196,18 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-chart-pie fa-2x "
-                    style={{ color: " #D7DBDD" }}
+                    style={{ color: ' #D7DBDD' }}
                   ></i>
                 </div>
                 <div>
-                  <h3>{dashboardData.total_orders_delivered}</h3>
+                  <a href="deliveredorders">
+                    <h3>{dashboardData.total_orders_delivered}</h3>
+                  </a>
                 </div>
                 <div className="total_orders_received">
-                  <h5>Total Orders Delivered</h5>
+                  <a href="/deliveredorders">
+                    <h5>Total Orders Delivered</h5>
+                  </a>
                 </div>
               </div>
             </div>
@@ -212,16 +216,16 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-users fa-2x"
-                    style={{ color: "#D7DBDD" }}
+                    style={{ color: '#D7DBDD' }}
                   ></i>
                 </div>
                 <div>
-                  <a href="/totalorderrecieved">
-                    {" "}
+                  <a href="/user">
+                    {' '}
                     <h3>{dashboardData.active_users}</h3>
                   </a>
                 </div>
-                <a href="/totalorderrecieved">
+                <a href="/user">
                   <div className="active_user_count">
                     <h5>Total Active Users</h5>
                   </div>
@@ -232,16 +236,16 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-store fa-2x"
-                    style={{ color: "#D7DBDD" }}
+                    style={{ color: '#D7DBDD' }}
                   ></i>
                 </div>
                 <div>
-                  <a href="/totalorderrecieved">
-                    {" "}
+                  <a href="/vendor">
+                    {' '}
                     <h3>{dashboardData.total_vendors}</h3>
                   </a>
                 </div>
-                <a href="/totalorderrecieved">
+                <a href="/vendor">
                   <div className="total_orders_received">
                     <h5>Total Vendors</h5>
                   </div>
@@ -252,12 +256,12 @@ function Home() {
                 <div className="icon-position">
                   <i
                     class="fas fa-truck fa-2x"
-                    style={{ color: "#D7DBDD" }}
+                    style={{ color: '#D7DBDD' }}
                   ></i>
                 </div>
                 <div>
                   <a href="/deliverymanage">
-                    {" "}
+                    {' '}
                     <h3>{dashboardData.total_delivery_boys}</h3>
                   </a>
                 </div>
@@ -271,7 +275,7 @@ function Home() {
             <div className="home-middle-right img-hidden">
               <img
                 src={dairy}
-                style={{ width: "400px", height: "400px" }}
+                style={{ width: '400px', height: '400px' }}
                 alt=""
               />
             </div>
@@ -279,6 +283,6 @@ function Home() {
         </div>
       </div>
     </>
-  );
+  )
 }
-export default Home;
+export default Home

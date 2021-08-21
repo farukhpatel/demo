@@ -18,6 +18,8 @@ const API = {
   DELIVERED:
     Config.BASE_URL + "api/order/all?order_status=4&is_active_subscription=1",
   TOTAL_ORDER_RECIEVED: Config.BASE_URL + "api/order/all?order_status=4",
+  SUBCRIPTION_ORDERS:
+    Config.BASE_URL + "api/order/all?subscription_order=1&order_by=desc",
   VENDOR_TOTAL_ORDER: Config.BASE_URL + "api/order/all",
   DELIVERYBOY_ORDER_DETAIL:
     Config.BASE_URL + "api/order/track-deliveries?user_id=",
@@ -73,8 +75,7 @@ const API = {
     Config.BASE_URL + "api/address/locality/all?is_active=1&city_id=1",
   GET_LOCALITIES_BY_CITY_ID:
     Config.BASE_URL + "api/address/locality/all?is_active=1",
-  GET_LOCALITIES_ALL:
-    Config.BASE_URL + "api/address/locality/all?is_active=1",
+  GET_LOCALITIES_ALL: Config.BASE_URL + "api/address/locality/all?is_active=1",
   GET_CITIES:
     Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
   GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",

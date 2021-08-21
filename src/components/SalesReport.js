@@ -304,7 +304,7 @@ function SalesReport() {
                           <th scope="row">{index + 1}</th>
                           {/* <td>{value.shop_name}</td> */}
                           <td
-                            style={{ color: "#85c1e9" }}
+                            style={{ cursor: "pointer", color: "#0dcaf0" }}
                             onClick={() => VendorDetails(value?.shop_id)}
                           >
                             {value?.shop_name}

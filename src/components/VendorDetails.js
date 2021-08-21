@@ -103,16 +103,12 @@ function VendorDetails(props) {
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
         toast.success(res.message);
-        console.log(res);
         setIs_shop_active(res?.shop?.is_shop_active);
         console.log(res?.shop?.is_shop_active);
-        // window.location.href = "/vendor"
-        // window.location.reload();
+        window.location.reload();
       });
   };
-  useEffect(() => {
-    console.log(is_shop_active, "shop a");
-  }, [is_shop_active]);
+
   useEffect(() => {
     instance
       .get(
@@ -483,7 +479,10 @@ function VendorDetails(props) {
                           return (
                             <tr align="center" key={index}>
                               <th scope="row">{index + 1}</th>
-                              <td onClick={() => OrderDetails(value?.order_id)}>
+                              <td
+                                style={{ cursor: "pointer", color: "#0dcaf0" }}
+                                onClick={() => OrderDetails(value?.order_id)}
+                              >
                                 {value?.order_id}
                               </td>
                               <td>{value?.user_id}</td>
