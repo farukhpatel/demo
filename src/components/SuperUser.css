@@ -566,7 +566,7 @@ tbody td button:hover {
 .vendor-form-1,
 .vendor-form-2 {
   box-shadow: none !important;
-  width: 98vw;
+  width: 89%;
   height: 100vh;
   display: flex;
   justify-content: center;

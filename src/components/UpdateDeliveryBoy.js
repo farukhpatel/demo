@@ -51,6 +51,10 @@ function UpdateDeliveryBoy(props) {
       aadhaar_number: Number(aadhaar),
       new_password: password,
       role_id: 4,
+      bank_name,
+      account_holder_name,
+      account_number,
+      ifsc_code,
     };
     //DELIVERY_BOYS_UPDATE
     console.log(formData);
