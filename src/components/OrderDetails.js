@@ -36,11 +36,6 @@ function OrderDetails(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    console.log("total amount", totalAmount);
-    console.log("filter id", filterId);
-  }, [filterId, totalAmount]);
-
   const CheckboxHandle = (value, index) => {
     if (!checked[index]) {
       let tempFilterId = filterId;
@@ -255,7 +250,6 @@ function OrderDetails(props) {
                     <tbody style={{ textAlign: "center" }}>
                       {orderProducts && orderProducts?.length > 0 ? (
                         orderProducts.map((value, index) => {
-                          console.log("v", value);
                           return (
                             <tr>
                               <th scope="row">
@@ -298,7 +292,6 @@ function OrderDetails(props) {
                 </div>
                 {/* other details*/}
                 <div style={{ marginLeft: "20px" }}>
-                  {console.log("orderDetails", orderDetails)}
                   <h5>Tax: {orderDetails?.order_tax}</h5>
                   <h5>Discount: {orderDetails?.order_discount}</h5>
                   <h5>Delivery Charge: {orderDetails?.delivery_charge}</h5>

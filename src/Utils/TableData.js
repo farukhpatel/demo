@@ -167,7 +167,6 @@ const DropDown = (props) => {
 
 const TableData = ({ orderType, searchKey }) => {
   const classes = useStyles();
-
   // API integration
   const [assigned, setAssigned] = useState([]);
   const [deliveryBoysList, setDeliveryBoysList] = useState([]);
@@ -178,40 +177,20 @@ const TableData = ({ orderType, searchKey }) => {
       setDeliveryBoysList(response.users);
     });
   }
-
-  // useEffect(() => {
-
-  //   console.log(searchKey)
-  //   if (searchKey?.length > 0) {
-  //     setAssigned(searchKey);
-  //   }
-  //   else {
-
-  //     // instance.get(`${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`);
-  //     instance.get(`${API[orderType]}`).then(function (response) {
-  //       setAssigned(response.orders);
-  //     });
-  //   }
-
-  //   getDeliveryBoys();
-  // }, [searchKey]);
-
   useEffect(() => {
     let start_date = moment(from).format("YYYY-MM-DD");
     let end_date = moment(to).format("YYYY-MM-DD");
-    console.log("ot", orderType);
-
     if (searchKey?.length > 0) {
       setAssigned(searchKey);
     }
-    if (orderType !== "TOTAL_ORDER_RECIEVED") {
+    if (!searchKey?.length > 0 && orderType !== "TOTAL_ORDER_RECIEVED") {
       instance
         .get(`${API[orderType]}&delivery_date=${moment().format("YYYY-MM-DD")}`)
         .then(function (response) {
           setAssigned(response.orders);
         });
     }
-    if (orderType === "TOTAL_ORDER_RECIEVED") {
+    if (!searchKey?.length > 0 && orderType === "TOTAL_ORDER_RECIEVED") {
       instance
         .get(
           `${API.GET_TOTAL_ORDER}?start_date=${start_date}&end_date=${end_date}`

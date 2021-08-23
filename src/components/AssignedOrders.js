@@ -5,29 +5,24 @@ import instance from "../Utils/axiosConstants";
 import TableData from "../Utils/TableData";
 
 function AssignedOrders() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [assignOrder, setAssignOrder] = useState([]);
   const SearchAssignerOrder = (e) => {
     e.preventDefault();
 
-    if (search === '') {
+    if (search === "") {
       toast.error("order not found");
-    }
-    else {
+    } else {
       instance.get(`${API.ASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
-
         if (res?.orders?.length > 0) {
-          console.log('res search', res)
           toast.success(res.message);
           setAssignOrder(res.orders);
-        }
-        else {
+        } else {
           toast.error("not found");
         }
       });
     }
-
-  }
+  };
   return (
     <>
       <div className="main-outer-div">
@@ -67,19 +62,16 @@ function AssignedOrders() {
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button
-                      type="submit"
-                      onClick={
-                        SearchAssignerOrder
-                      }
-                    >
+                    <button type="submit" onClick={SearchAssignerOrder}>
                       Search
                     </button>
                   </div>
                 </div>
 
-                <TableData orderType="ASSIGNED_ORDERS" searchKey={assignOrder} />
-
+                <TableData
+                  orderType="ASSIGNED_ORDERS"
+                  searchKey={assignOrder}
+                />
               </div>
             </div>
           </div>

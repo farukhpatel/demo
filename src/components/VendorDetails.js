@@ -60,10 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function VendorDetails(props) {
-  // console.log(props?.location?.state?.vendor?.address)
   let address = props?.location?.state?.vendor?.address || {};
-
-  console.log("vd", props?.location?.state);
   const vendorDetails = props?.location?.state?.vendor || {};
   const [products, setProducts] = useState({});
   const [totalVendorOrder, setTotalVendorOrder] = useState([]);
@@ -97,15 +94,11 @@ function VendorDetails(props) {
     let body = {
       is_shop_active: !is_shop_active,
     };
-    console.log(vendorDetails.id);
-    console.log(body);
     instance
       .patch(`${API.VENDOR_UPDATE}/${vendorDetails.id}`, body)
       .then(function (res) {
         toast.success(res.message);
         setIs_shop_active(res?.shop?.is_shop_active);
-        console.log(res?.shop?.is_shop_active);
-        window.location.reload();
       });
   };
 

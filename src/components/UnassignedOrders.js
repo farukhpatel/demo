@@ -46,7 +46,6 @@ function UnassignedOrders() {
 
   const SearchUnAssignerOrder = (e) => {
     e.preventDefault();
-    console.log("work", search);
     instance.get(`${API.UNASSIGNED_ORDERS}&order_id=${search}`).then((res) => {
       if (res?.orders?.length > 0) {
         setUnassigned(res.orders);

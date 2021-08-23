@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 // import List from './List';
 import "./SuperUser.css";
 import TableData from "../Utils/TableData";
+import { toast } from "react-toastify";
+import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
+
 function Delivered() {
+  const [search, setSearch] = useState("");
+  const [deliveredOrder, setDeliveredOrder] = useState([]);
+  const SearchAssignerOrder = (e) => {
+    e.preventDefault();
+
+    if (search === "") {
+      toast.error("order not found");
+    } else {
+      instance.get(`${API.DELIVERED}&order_id=${search}`).then((res) => {
+        if (res?.orders?.length > 0) {
+          toast.success(res.message);
+          setDeliveredOrder(res.orders);
+        } else {
+          toast.error("not found");
+        }
+      });
+    }
+  };
   return (
     <>
       <div className="main-outer-div">
@@ -34,10 +56,20 @@ function Delivered() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Enter order ID"
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button type="submit" onClick={SearchAssignerOrder}>
+                      Search
+                    </button>
                   </div>
                 </div>
-                <TableData orderType="DELIVERED" />
+                <TableData orderType="DELIVERED" searchKey={deliveredOrder} />
               </div>
             </div>
           </div>

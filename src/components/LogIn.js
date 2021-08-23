@@ -42,6 +42,7 @@ function LogIn(props) {
     instance.post(API.LOGIN, body).then(function (response) {
       localStorage.setItem("token", response?.accessToken?.toString());
       cookie.save("Authorization", `Bearer ${response?.accessToken}`);
+
       props.history.push("/dashboard");
     });
   };

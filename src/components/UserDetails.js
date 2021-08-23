@@ -53,9 +53,7 @@ const UserDetails = (props) => {
   const [value, setValue] = useState(0);
   const [orderDetails, setOrderDetails] = useState([]);
   const [userDetails, setUserDetails] = useState({});
-  const [is_user_blocked, setIs_user_blocked] = useState(
-    userDetails.is_user_blocked
-  );
+  const [is_user_blocked, setIs_user_blocked] = useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -81,12 +79,14 @@ const UserDetails = (props) => {
         console.log("userDeatils", res);
         if (res?.users?.length > 0) {
           setUserDetails(res?.users[0]);
+          setIs_user_blocked(res?.users[0]?.is_user_blocked);
         }
       });
       console.log("id", userDetails);
     } else {
       setUserDetails(props?.location?.state?.userDetails);
       userId = props?.location?.state?.userDetails.id;
+      setIs_user_blocked(props?.location?.state?.userDetails?.is_user_blocked);
     }
     !isDeliveryBoy
       ? userOrderDetails(userId)

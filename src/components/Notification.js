@@ -38,7 +38,9 @@ const Notification = () => {
                   <h6>{notification.data}</h6>
                   <h4>
                     Date :
-                    {moment(notification.created_at).format("DD-MM-YYYY HH:mm")}
+                    {moment(notification.created_at).format(
+                      "DD-MM-YYYY hh:mm a"
+                    )}
                   </h4>
                 </div>
               </div>

@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import API from "../Utils/ApiConstant";
+import instance from "../Utils/axiosConstants";
 import TableData from "../Utils/TableData";
 function OutForDelivery() {
+  const [search, setSearch] = useState("");
+  const [pickedOrder, setPickedOrder] = useState([]);
+  const SearchPickedOrder = (e) => {
+    e.preventDefault();
+    if (search === "") {
+      toast.error("order not found");
+    } else {
+      instance.get(`${API.PICKED}&order_id=${search}`).then((res) => {
+        if (res?.orders?.length > 0) {
+          toast.success(res.message);
+          setPickedOrder(res.orders);
+        } else {
+          toast.error("not found");
+        }
+      });
+    }
+  };
   return (
     <>
       <div className="main-outer-div">
@@ -32,10 +52,20 @@ function OutForDelivery() {
                 <div className="btn-position">
                   <div className="searchStyle">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input placeholder="Search..." className="SearchInput" />
+
+                    <input
+                      type="text"
+                      placeholder="Enter order ID"
+                      className="SearchInput"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button type="submit" onClick={SearchPickedOrder}>
+                      Search
+                    </button>
                   </div>
                 </div>
-                <TableData orderType="PICKED" />
+                <TableData orderType="PICKED" searchKey={pickedOrder} />
               </div>
             </div>
           </div>
