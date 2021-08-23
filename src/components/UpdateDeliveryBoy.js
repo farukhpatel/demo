@@ -38,6 +38,8 @@ function UpdateDeliveryBoy(props) {
   const [bank_name, setBank_name] = useState(prop?.delivery_boy?.bank_name);
   const [ifsc_code, setIfsc_code] = useState(prop?.delivery_boy?.ifsc_code);
   const [email, setEmail] = useState(prop.email);
+  const deliverBoyImageURL = prop?.profile_image;
+  const [deliverBoyImage, setDeliverBoyImage] = useState(null);
   const [password, setPassword] = useState(
     prop?.password ? prop?.password : ""
   );
@@ -49,19 +51,42 @@ function UpdateDeliveryBoy(props) {
       temp.push(value.value);
     });
     let locality_assigned = temp.join();
-    let formData = {
-      name: name,
-      phone: phone,
-      email: email,
-      aadhaar_number: Number(aadhaar),
-      new_password: password,
-      role_id: 4,
-      bank_name,
-      account_holder_name,
-      account_number,
-      ifsc_code,
-      locality_assigned,
-    };
+    let formData;
+    if (deliverBoyImage) {
+      let formdata = new FormData();
+      formdata.append("image", deliverBoyImage[0]);
+      await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+        formData = {
+          name: name,
+          phone: phone,
+          email: email,
+          aadhaar_number: Number(aadhaar),
+          new_password: password,
+          role_id: 4,
+          bank_name,
+          account_holder_name,
+          account_number,
+          ifsc_code,
+          locality_assigned,
+          profile_image: res.image_url,
+        };
+      });
+    } else {
+      formData = {
+        name: name,
+        phone: phone,
+        email: email,
+        aadhaar_number: Number(aadhaar),
+        new_password: password,
+        role_id: 4,
+        bank_name,
+        account_holder_name,
+        account_number,
+        ifsc_code,
+        locality_assigned,
+        profile_image: deliverBoyImageURL,
+      };
+    }
     //DELIVERY_BOYS_UPDATE
     console.log(formData);
     await instance
@@ -213,6 +238,18 @@ function UpdateDeliveryBoy(props) {
                   onChange={setSelected}
                   labelledBy="Select"
                   valueRenderer={customValueRenderer}
+                />
+              </div>
+              <div class="form-group">
+                <label for="deliveryImage">Delivey Boy Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="deliveryImage"
+                  placeholder="Delivery Boy Image"
+                  onChange={(e) => {
+                    setDeliverBoyImage(e.target.files);
+                  }}
                 />
               </div>
               <div class="form-group">

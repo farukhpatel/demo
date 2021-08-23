@@ -1,99 +1,103 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import API from "../Utils/ApiConstant";
-import instance from "../Utils/axiosConstants";
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import API from '../Utils/ApiConstant'
+import instance from '../Utils/axiosConstants'
+import Back from './BackButton/Back'
 
 const UpdateShopAddress = (props) => {
-  let { id } = useParams();
+  let { id } = useParams()
   // console.log(id)
-  console.log(props.location.state);
-  const [addressForm, setAddressForm] = useState(props?.location?.state);
-  const [cities, setCities] = useState([]);
-  const [localities, setLocalities] = useState([]);
-  console.log(addressForm);
+  console.log(props.location.state)
+  const [addressForm, setAddressForm] = useState(props?.location?.state)
+  const [cities, setCities] = useState([])
+  const [localities, setLocalities] = useState([])
+  console.log(addressForm)
   useEffect(() => {
     instance
       .get(`${API.GET_LOCALITIES_BY_CITY_ID}&city_id=${addressForm.city_id}`)
       .then((res) => {
-        setLocalities(res.localities);
-      });
+        setLocalities(res.localities)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
   useEffect(() => {
     instance.get(API.GET_CITIES).then(function (response) {
-      setCities(response.cities);
-      if (cities.length > 0) setLocalities(cities[0]?.localities);
-    });
+      setCities(response.cities)
+      if (cities.length > 0) setLocalities(cities[0]?.localities)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   function handleAddressForm(event) {
-    let { name, value } = event.target;
-    if (name === "pincode" && value.length > 6) {
-      value = value.slice(0, 6);
+    let { name, value } = event.target
+    if (name === 'pincode' && value.length > 6) {
+      value = value.slice(0, 6)
     }
-    setAddressForm({ ...addressForm, [name]: value });
+    setAddressForm({ ...addressForm, [name]: value })
   }
   function handleLocalitySelect(event) {
-    const { value } = event.target;
-    if (value === "") {
-      setAddressForm({ ...addressForm, locality: "", locality_id: "" });
+    const { value } = event.target
+    if (value === '') {
+      setAddressForm({ ...addressForm, locality: '', locality_id: '' })
     } else {
-      let index = event.nativeEvent.target.selectedIndex;
-      let label = event.nativeEvent.target[index].label;
-      setAddressForm({ ...addressForm, locality: label, locality_id: value });
+      let index = event.nativeEvent.target.selectedIndex
+      let label = event.nativeEvent.target[index].label
+      setAddressForm({ ...addressForm, locality: label, locality_id: value })
     }
   }
   function handleCitySelect(event) {
-    const { value } = event.target;
+    const { value } = event.target
 
-    if (value === "") {
+    if (value === '') {
       setAddressForm({
         ...addressForm,
-        city_id: "",
-        city: "",
-        locality: "",
-        locality_id: "",
-      });
-      setLocalities([]);
+        city_id: '',
+        city: '',
+        locality: '',
+        locality_id: '',
+      })
+      setLocalities([])
     } else if (value !== addressForm.city_id) {
-      let index = event.nativeEvent.target.selectedIndex;
-      let label = event.nativeEvent.target[index].label;
+      let index = event.nativeEvent.target.selectedIndex
+      let label = event.nativeEvent.target[index].label
       setAddressForm({
         ...addressForm,
         city_id: value,
         city: label,
-        locality: "",
-        locality_id: "",
-      });
+        locality: '',
+        locality_id: '',
+      })
 
       for (let i = 0; i < cities.length; i++) {
         if (cities[i].id.toString() === value) {
-          setLocalities(cities[i].localities);
-          break;
+          setLocalities(cities[i].localities)
+          break
         }
       }
     }
   }
   //from submit
   const UpdateShopAddressFormSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    console.log(addressForm);
+    console.log(addressForm)
 
     instance
       .patch(`${API.UPDATE_SHOP_ADDRESS}/${id}`, addressForm)
       .then(function (response) {
-        toast.success("Address Successfully Upadted.");
-        window.location.href = "/vendor";
+        toast.success('Address Successfully Upadted.')
+        window.location.href = '/vendor'
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
   return (
     <>
       <div className="main-outer-div">
         <div className="vendor-form-1 address-form">
+          <div className="backButton">
+            <Back></Back>
+          </div>
           <h1>Update Address</h1>
           <form className="vendor-form">
             <span className=""></span>
@@ -155,15 +159,15 @@ const UpdateShopAddress = (props) => {
                       <option
                         value={city?.id}
                         selected={
-                          addressForm.city_id === city?.id ? "selected" : ""
+                          addressForm.city_id === city?.id ? 'selected' : ''
                         }
                         label={city?.city}
                       />
-                    );
+                    )
                   })}
                 </select>
               ) : (
-                "No Cities Found."
+                'No Cities Found.'
               )}
             </div>
 
@@ -173,28 +177,28 @@ const UpdateShopAddress = (props) => {
               {localities && localities.length > 0 ? (
                 <select
                   onChange={(event) => {
-                    handleLocalitySelect(event);
+                    handleLocalitySelect(event)
                   }}
                 >
                   <option value="">Select Locality</option>
                   {addressForm &&
-                    addressForm?.city !== "" &&
+                    addressForm?.city !== '' &&
                     localities.map((locality) => {
                       return (
                         <option
                           value={locality?.id}
                           selected={
                             addressForm?.locality_id === locality?.id
-                              ? "selected"
-                              : ""
+                              ? 'selected'
+                              : ''
                           }
                           label={locality?.locality}
                         />
-                      );
+                      )
                     })}
                 </select>
               ) : (
-                ""
+                ''
               )}
             </div>
 
@@ -235,11 +239,32 @@ const UpdateShopAddress = (props) => {
               />
             </div>
 
+            <div class="form-group">
+              <label for="latitude">Latitude</label>
+              <input
+                type="number"
+                class="form-control"
+                value={addressForm.latitude}
+                name="latitude"
+                onChange={(e) => handleAddressForm(e)}
+              />
+            </div>
+            <div class="form-group">
+              <label for="longitude">Longitude</label>
+              <input
+                type="number"
+                class="form-control"
+                value={addressForm.longitude}
+                name="longitude"
+                onChange={(e) => handleAddressForm(e)}
+              />
+            </div>
+
             <button
               type="submit"
               class="btn btn-primary submitBtn"
               onClick={(event) => {
-                UpdateShopAddressFormSubmit(event);
+                UpdateShopAddressFormSubmit(event)
               }}
             >
               Submit
@@ -248,6 +273,6 @@ const UpdateShopAddress = (props) => {
         </div>
       </div>
     </>
-  );
-};
-export default UpdateShopAddress;
+  )
+}
+export default UpdateShopAddress

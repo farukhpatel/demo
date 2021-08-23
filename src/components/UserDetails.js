@@ -80,6 +80,7 @@ const UserDetails = (props) => {
         if (res?.users?.length > 0) {
           setUserDetails(res?.users[0]);
           setIs_user_blocked(res?.users[0]?.is_user_blocked);
+          console.log("api", res?.users[0]);
         }
       });
       console.log("id", userDetails);
@@ -87,6 +88,7 @@ const UserDetails = (props) => {
       setUserDetails(props?.location?.state?.userDetails);
       userId = props?.location?.state?.userDetails.id;
       setIs_user_blocked(props?.location?.state?.userDetails?.is_user_blocked);
+      console.log("props", props?.location?.state?.userDetails);
     }
     !isDeliveryBoy
       ? userOrderDetails(userId)

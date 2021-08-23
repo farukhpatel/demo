@@ -20,7 +20,7 @@ const customValueRenderer = (selected, _options) => {
 function AddDeliveryBoyForm() {
   const [selected, setSelected] = useState([]);
   const [options, setOptions] = useState([]);
-
+  const [deliverBoyImage, setDeliverBoyImage] = useState(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -39,36 +39,45 @@ function AddDeliveryBoyForm() {
     });
 
     let locality_assigned = temp.join();
-    console.log("a", locality_assigned);
-
-    console.log("temp", temp);
     let error = false;
     if (name.trim() === "" || password.trim() === "" || phone.trim() === "") {
       toast.error("name ,phone and password are required");
       error = true;
     }
-    if (!error) {
-      let formData = {
-        name: name,
-        phone: phone,
-        email: email,
-        aadhaar_number: Number(aadhaar),
-        delivery_range: Number(range),
-        locality_assigned,
-        password: password,
-        role_id: 4,
-      };
-      console.log(formData);
-      //DELIVERY_BOYS
 
+    if (!error) {
+      let formData;
+      if (deliverBoyImage) {
+        let formdata = new FormData();
+        formdata.append("image", deliverBoyImage[0]);
+        await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
+          formData = {
+            name: name,
+            phone: phone,
+            email: email,
+            aadhaar_number: Number(aadhaar),
+            delivery_range: Number(range),
+            locality_assigned,
+            password: password,
+            role_id: 4,
+            profile_image: res.image_url,
+          };
+        });
+      } else {
+        formData = {
+          name: name,
+          phone: phone,
+          email: email,
+          aadhaar_number: Number(aadhaar),
+          delivery_range: Number(range),
+          locality_assigned,
+          password: password,
+          role_id: 4,
+        };
+      }
       await instance.post(API.DELIVERY_BOYS_ADD, formData).then((res) => {
-        console.log(res);
         toast.success(res.message);
         window.location.href = "/deliverymanage";
-        // routerHistroy.push(`/deliveryboydetails`, {
-        //   userDetails: res.users,
-        //   isDeliveryBoy: true,
-        // })
       });
     }
   };
@@ -164,6 +173,18 @@ function AddDeliveryBoyForm() {
                   onChange={setSelected}
                   labelledBy="Select"
                   valueRenderer={customValueRenderer}
+                />
+              </div>
+              <div class="form-group">
+                <label for="deliveryImage">Delivey Boy Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="deliveryImage"
+                  placeholder="Delivery Boy Image"
+                  onChange={(e) => {
+                    setDeliverBoyImage(e.target.files);
+                  }}
                 />
               </div>
               <div class="form-group">

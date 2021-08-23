@@ -76,14 +76,13 @@ const API = {
   GET_LOCALITIES_BY_CITY_ID:
     Config.BASE_URL + "api/address/locality/all?is_active=1",
   GET_LOCALITIES_ALL: Config.BASE_URL + "api/address/locality/all?is_active=1",
-  GET_CITIES:
-    Config.BASE_URL + "api/address/city/all?&is_active=1&with_localities=1",
+  GET_CITIES: Config.BASE_URL + "api/address/city/all?&with_localities=1",
   GET_CITIES_SEARCH: Config.BASE_URL + "api/address/city/all",
   CREATE_CITIES: Config.BASE_URL + "api/address/city/create",
   UPDATE_CITIES: Config.BASE_URL + "api/address/city/update",
   DELETE_CITIES: Config.BASE_URL + "api/address/city/delete",
   //locality
-  GET_LOCALITY: Config.BASE_URL + "api/address/locality/all?is_active=1",
+  GET_LOCALITY: Config.BASE_URL + "api/address/locality/all",
   GET_LOCALITY_SEARCH: Config.BASE_URL + "api/address/locality/all",
   POST_LOCALITY: Config.BASE_URL + "api/address/locality/create",
   PATCH_LOCALITY: Config.BASE_URL + "api/address/locality/update",

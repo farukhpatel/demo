@@ -47,23 +47,17 @@ function DeliveryCharge() {
       alert("please choose file for banner");
       return;
     }
-    console.log(bannerURL);
-    let imgObj = {
-      banner: bannerURL,
-    };
-    console.log(imgObj);
+
+    let temp = [...bannerURL, ...getImageURL];
+
+    console.log("ba", temp);
+
     instance
-      .post(API.SETTING_BANNER_IMG, { banner: bannerURL })
+      .post(API.SETTING_BANNER_IMG, { banner: temp })
       .then(function (response) {
         toast.success("Image Upload Successfully");
         window.location.href = "/settings";
       });
-
-    // let formdata = new FormData()
-    // formdata.append('image', images[0])
-    // await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-    //   setImagesURL(res.image_url)
-    // })
   };
 
   const multipleBanner = (e) => {
@@ -95,7 +89,9 @@ function DeliveryCharge() {
   };
   const updateImage = (e) => {
     e.preventDefault();
-    console.log(getImageURL);
+    // console.log(getImageURL);
+    // let temp = temp.concat(getImageURL, bannerURL);
+    //{ banner: getImageURL }
     instance
       .post(API.SETTING_BANNER_IMG, { banner: getImageURL })
       .then(function (response) {
