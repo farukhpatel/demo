@@ -596,7 +596,9 @@ tbody td button:hover {
   border-radius: 8px;
   /* overflow: hidden; */
 }
-
+.validatorDiv {
+  flex-wrap: wrap;
+}
 .address-form form {
   width: unset;
   overflow-y: scroll;

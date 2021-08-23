@@ -102,6 +102,10 @@ function AddVendorForm() {
   const [foundationDate, setFoundationDate] = useState(new Date());
   const [deliveryRange, setDeliveryRange] = useState("");
   const [shopName, setShopName] = useState("");
+  const [numberValidate, setNumberValidate] = useState(false);
+  const [emailValidate, setEmailValidate] = useState(false);
+  const [numberAvailable, setNumberAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
   const [password, setPassword] = useState("");
   const [localities, setLocalities] = useState([]);
   const [cities, setCities] = useState([]);
@@ -212,7 +216,31 @@ function AddVendorForm() {
   const handleDateChange = (e) => {
     setFoundationDate(e);
   };
-
+  const numberValidator = (number) => {
+    setNumberValidate(false);
+    instance.get(`${API.VALIDATE_PHONE}${number}`).then(function (response) {
+      if (response.is_phone_already_available) setNumberAvailable(true);
+      else {
+        setNumberAvailable(false);
+        setPhone(number);
+      }
+    });
+  };
+  function validateEmail(email) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+  const emailValidator = (email) => {
+    setEmailValidate(false);
+    instance.get(`${API.VALIDATE_EMAIL}${email}`).then(function (response) {
+      if (response.is_email_already_available) setEmailAvailable(true);
+      else {
+        setEmail(email);
+        setEmailAvailable(false);
+      }
+    });
+  };
   const handleTimeChange1 = (t, time, index) => {
     let temp = [...shopSchedule];
 
@@ -345,33 +373,91 @@ function AddVendorForm() {
                       onChange={(e) => setVendorName(e.target.value)}
                     />
                   </div>
-                  <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="phone"
-                      placeholder="Type here..."
-                      onChange={(e) =>
-                        setPhone(
-                          e.target.value.indexOf(0) === 0
-                            ? e.target.value.substr(1)
-                            : e.target.value
-                        )
-                      }
-                    />
+                  <div class="form-group validatorDiv">
+                    <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        maxLength={10}
+                        placeholder="Type here..."
+                        onChange={(e) => {
+                          if (e.target.value.length === 10)
+                            numberValidator(e.target.value);
+                          else {
+                            setNumberValidate(true);
+                            setNumberAvailable(false);
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="validatorMessage">
+                      {numberValidate ? (
+                        <small
+                          id="fileFormatError"
+                          class="form-text text-danger"
+                        >
+                          <strong>Number should be of 10 digit</strong>
+                        </small>
+                      ) : null}
+                      {numberAvailable ? (
+                        <small
+                          id="fileFormatError"
+                          class="form-text text-danger"
+                        >
+                          <strong>Number already existed</strong>
+                        </small>
+                      ) : null}
+                      {!numberAvailable && !numberValidate && phone !== "" ? (
+                        <small id="fileFormatError" class="form-text">
+                          <strong>Number Matched</strong>
+                        </small>
+                      ) : null}
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      placeholder="Type here..."
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
+                  <div class="form-group validatorDiv">
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        placeholder="Type here..."
+                        onChange={(e) => {
+                          if (validateEmail(e.target.value))
+                            emailValidator(e.target.value);
+                          else {
+                            setEmailValidate(true);
+                            setNumberAvailable(false);
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="validatorMessage">
+                      {emailValidate ? (
+                        <small
+                          id="fileFormatError"
+                          class="form-text text-danger"
+                        >
+                          <strong>Please enter correct email</strong>
+                        </small>
+                      ) : null}
+                      {emailAvailable ? (
+                        <small
+                          id="fileFormatError"
+                          class="form-text text-danger"
+                        >
+                          <strong>Email already existed</strong>
+                        </small>
+                      ) : null}
+                      {!emailAvailable && !emailValidate && email !== "" ? (
+                        <small id="fileFormatError" class="form-text">
+                          <strong>Email Matched</strong>
+                        </small>
+                      ) : null}
+                    </div>
                   </div>
-
                   <div class="form-group">
                     <label for="password">Password</label>
                     <input
@@ -386,6 +472,16 @@ function AddVendorForm() {
                     type="submit"
                     class="btn btn-primary submitBtn"
                     onClick={form1Submit}
+                    disabled={
+                      !numberAvailable &&
+                      !numberValidate &&
+                      phone !== "" &&
+                      !emailAvailable &&
+                      !emailValidate &&
+                      email !== ""
+                        ? false
+                        : true
+                    }
                   >
                     Submit
                   </button>

@@ -63,6 +63,8 @@ const API = {
   CREATE_USER: Config.BASE_URL + "api/user/create",
   CREATE_SHOP: Config.BASE_URL + "api/shop/create",
   CREATE_ADDRESS: Config.BASE_URL + "api/address/create",
+  VALIDATE_PHONE: Config.BASE_URL + "api/user/validate?phone=",
+  VALIDATE_EMAIL: Config.BASE_URL + "api/user/validate?email=",
   UPDATE_SHOP_ADDRESS: Config.BASE_URL + "api/address/update",
   CREATE_PRODUCT: Config.BASE_URL + "api/product/create",
   ADD_SHOP_PRODUCT: Config.BASE_URL + "api/shop/product/create",
