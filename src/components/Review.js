@@ -116,7 +116,7 @@ function Review() {
     <>
       <div className="main-outer-div">
         <div className="payment-settlement-inputs">
-          <form className="payment-form">
+          <form className="payment-form row">
             <div class="form-group">
               <label for="from">From</label>
               <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -185,15 +185,17 @@ function Review() {
               </FormControl>
             </div>
 
-            <button
-              type="submit"
-              class="btn btn-primary DateSelectSubmitBtn"
-              onClick={(e) => {
-                Submits(e);
-              }}
-            >
-              Submit
-            </button>
+            <div class="form-group">
+              <button
+                type="submit"
+                class="btn btn-primary DateSelectSubmitBtn"
+                onClick={(e) => {
+                  Submits(e);
+                }}
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
         <div className="innerDashboardHeading">
@@ -201,132 +203,134 @@ function Review() {
         </div>
         <div className="">
           <div className="reviewMain-div">
-            <img className="reviewImage" src={reviewPhoto} alt="" />
+            <img className="reviewImage img-hidden" src={reviewPhoto} alt="" />
 
-            {reviews?.length > 0
-              ? reviews?.map((review, index) => {
-                  return (
-                    <div className="reviewDiv">
-                      <div className="reviewImg">
-                        <img
-                          src={avatar}
-                          alt=""
-                          style={{
-                            borderRadius: "50%",
-                            width: "60px",
-                            height: "60px",
-                          }}
-                        />
+            {reviews?.length > 0 ? (
+              reviews?.map((review, index) => {
+                return (
+                  <div className="reviewDiv">
+                    <div className="reviewImg ">
+                      <img
+                        src={avatar}
+                        alt=""
+                        style={{
+                          borderRadius: "50%",
+                          width: "60px",
+                          height: "60px",
+                        }}
+                      />
+                    </div>
+                    <div className="reviewDescription">
+                      <div className="reviewDescription-text">
+                        <h3>{review?.reviewed_by?.name}</h3>
+                        <h>{review?.reviewable?.shop_name}</h>
+                        <p>{review?.review}</p>
                       </div>
-                      <div className="reviewDescription">
-                        <div className="reviewDescription-text">
-                          <h3>{review?.reviewed_by?.name}</h3>
-                          <h>{review?.reviewable?.shop_name}</h>
-                          <p>{review?.review}</p>
-                        </div>
 
-                        <div className="reviewDescription-Btn">
-                          <Popup
-                            Open
-                            nested
-                            className="my-popup"
-                            trigger={
-                              <button
-                                className="btn btn-primary"
-                                style={{ cursor: "pointer" }}
+                      <div className="reviewDescription-Btn">
+                        <Popup
+                          Open
+                          nested
+                          className="my-popup"
+                          trigger={
+                            <button
+                              className="btn btn-primary"
+                              style={{ cursor: "pointer" }}
+                            >
+                              {review?.is_review_published === 1
+                                ? "UnPublish"
+                                : "Publish"}
+                            </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                          {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
                               >
+                                Are you Sure you want to{" "}
                                 {review?.is_review_published === 1
-                                  ? "UnPublish"
-                                  : "Publish"}
-                              </button>
-                            }
-                            position="right center"
-                            modal
-                          >
-                            {(close) => (
-                              <div className="ReviewSure-text">
-                                <h6
-                                  style={{
-                                    marginBottom: "1rem",
-                                    marginTop: "2rem",
-                                  }}
-                                >
-                                  Are you Sure you want to{" "}
-                                  {review?.is_review_published === 1
-                                    ? "Unpublish"
-                                    : "Publish"}{" "}
-                                  this review?
-                                </h6>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() => {
-                                    handleChangeReview(review);
-                                    close();
-                                  }}
-                                >
-                                  Yes
-                                </button>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() => {
-                                    close();
-                                  }}
-                                >
-                                  No
-                                </button>
-                              </div>
-                            )}
-                          </Popup>
-                          <Popup
-                            className="my-popup"
-                            trigger={
+                                  ? "Unpublish"
+                                  : "Publish"}{" "}
+                                this review?
+                              </h6>
                               <button
                                 className="btn btn-primary"
-                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  handleChangeReview(review);
+                                  close();
+                                }}
                               >
-                                Delete
+                                Yes
                               </button>
-                            }
-                            position="right center"
-                            modal
-                          >
-                            {(close) => (
-                              <div className="ReviewSure-text">
-                                <h6
-                                  style={{
-                                    marginBottom: "1rem",
-                                    marginTop: "2rem",
-                                  }}
-                                >
-                                  Are you Sure you want to Delete this review?
-                                </h6>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() => {
-                                    handleDelete(review);
-                                    DeleteReview(review);
-                                    close();
-                                  }}
-                                >
-                                  Yes
-                                </button>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() => {
-                                    close();
-                                  }}
-                                >
-                                  No
-                                </button>
-                              </div>
-                            )}
-                          </Popup>
-                        </div>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  close();
+                                }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
+                        <Popup
+                          className="my-popup"
+                          trigger={
+                            <button
+                              className="btn btn-primary"
+                              style={{ cursor: "pointer" }}
+                            >
+                              Delete
+                            </button>
+                          }
+                          position="right center"
+                          modal
+                        >
+                          {(close) => (
+                            <div className="ReviewSure-text">
+                              <h6
+                                style={{
+                                  marginBottom: "1rem",
+                                  marginTop: "2rem",
+                                }}
+                              >
+                                Are you Sure you want to Delete this review?
+                              </h6>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  handleDelete(review);
+                                  DeleteReview(review);
+                                  close();
+                                }}
+                              >
+                                Yes
+                              </button>
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                  close();
+                                }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          )}
+                        </Popup>
                       </div>
                     </div>
-                  );
-                })
-              : "Review not found"}
+                  </div>
+                );
+              })
+            ) : (
+              <div className="review-not-div">Review not found</div>
+            )}
           </div>
         </div>
       </div>

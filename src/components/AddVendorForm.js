@@ -329,7 +329,7 @@ function AddVendorForm() {
           {addressableId === "" ? (
             <>
               <div className="vendor-form-1">
-                <div className="backButton ">
+                <div className="backButton">
                   <Back></Back>
                 </div>
                 <h1>Add Vendor</h1>

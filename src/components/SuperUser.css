@@ -572,6 +572,7 @@ tbody td button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
 .vendor-form2-container {
   display: flex;
@@ -1728,6 +1729,9 @@ h3 .notificationDescription-text > p {
     width: 15rem;
     padding: 4px;
   }
+  .review-not-div {
+    width: 50vw;
+  }
   .myorders-outer-div,
   .addDeliveryboy-form {
     width: 100vw !important;
@@ -1818,5 +1822,19 @@ h3 .notificationDescription-text > p {
     position: relative;
     border-radius: 8px;
     overflow: hidden;
+  }
+  .reviewMain-div {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .reviewDiv {
+    width: 100%;
+    border: 1px solid #dec1eb;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .reviewDescription-Btn {
+    width: 68%;
   }
 }
