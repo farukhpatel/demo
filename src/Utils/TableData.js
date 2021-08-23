@@ -308,11 +308,11 @@ const TableData = ({ orderType, searchKey }) => {
                       {columns &&
                         columns.map((column) => {
                           const value = row[column.id];
-
+                          console.log("c", column.id);
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {column?.id === "user_id" ||
-                              column?.id === "order_id" ? (
+                              {column?.id === "user_id" &&
+                              column?.label === "Customer Id" ? (
                                 <Link
                                   to={{
                                     pathname: "/userdetails",
@@ -360,8 +360,20 @@ const TableData = ({ orderType, searchKey }) => {
                                   row?.delivery_date,
                                   "DD-MM-YYYY"
                                 ).format("D MMMM")} ${row?.slot}`
+                              ) : column.id === "order_id" &&
+                                value?.label === "Order Id" ? (
+                                "Hi"
                               ) : (
-                                value
+                                <Link
+                                  to={{
+                                    pathname: "/orderdetails",
+                                    state: { orderId: value },
+                                  }}
+                                  style={{ color: "#0dcaf0" }}
+                                >
+                                  {" "}
+                                  {`${value}`}
+                                </Link>
                               )}
                             </TableCell>
                           );

@@ -42,7 +42,8 @@ function AddProduct(props) {
         .then(function (response) {
           toast.success("Product Added Successdully.");
           window.location.href = "/vendordetails";
-        });
+        })
+        .catch((err) => console.log(err));
     }
   }
   return (

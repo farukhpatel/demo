@@ -1,52 +1,52 @@
-import React, { useState, useEffect } from 'react'
-import API from '../Utils/ApiConstant'
+import React, { useState, useEffect } from "react";
+import API from "../Utils/ApiConstant";
 
-import { Link, useHistory } from 'react-router-dom'
-import './SuperUser.css'
-import instance from '../Utils/axiosConstants'
-import { Modal } from '@material-ui/core'
-import Popup from 'reactjs-popup'
-import { toast } from 'react-toastify'
+import { Link, useHistory } from "react-router-dom";
+import "./SuperUser.css";
+import instance from "../Utils/axiosConstants";
+import { Modal } from "@material-ui/core";
+import Popup from "reactjs-popup";
+import { toast } from "react-toastify";
 
 function Vendor() {
-  const arr = [1, 2, 3, 4, 5, 6, 7]
-  const routerHistroy = useHistory()
-  const [vendors, setVendors] = useState([])
-  const [open, setOpen] = useState(false)
-  const [search, setSearch] = useState('')
+  const arr = [1, 2, 3, 4, 5, 6, 7];
+  const routerHistroy = useHistory();
+  const [vendors, setVendors] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const update = (prop) => {
-    routerHistroy.push('/updatevendor', prop)
-  }
+    routerHistroy.push("/updatevendor", prop);
+  };
   const handleDelete = (id) => {
     instance.delete(`${API.VENDOR_DELETE}/${id}`).then(function (response) {
-      toast.success(response.message)
-      window.location.href = '/vendor'
-    })
-  }
+      toast.success(response.message);
+      window.location.href = "/vendor";
+    });
+  };
   const searchVendor = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     instance
       .get(`${API.VENDOR_API}?search=${search}`)
       .then(function (response) {
         if (response.shop?.length > 0) {
-          toast.success(response.message)
-          setVendors(response.shop)
-          setSearch('')
+          toast.success(response.message);
+          setVendors(response.shop);
+          setSearch("");
         } else {
-          toast.error('Vendor not found')
+          toast.error("Vendor not found");
         }
-      })
-  }
+      });
+  };
 
-  const closeModal = () => setOpen(true)
+  const closeModal = () => setOpen(true);
 
   useEffect(() => {
     instance.get(API.VENDOR_API).then(function (response) {
-      console.log(response)
-      setVendors(response.shop)
-    })
-  }, [])
+      console.log(response);
+      setVendors(response.shop);
+    });
+  }, []);
 
   return (
     <>
@@ -81,7 +81,7 @@ function Vendor() {
                     <button
                       type="submit"
                       onClick={(e) => {
-                        searchVendor(e)
+                        searchVendor(e);
                       }}
                     >
                       Search
@@ -96,17 +96,16 @@ function Vendor() {
                         <th scope="col">Owner Name</th>
                         <th scope="col">Dairy Name</th>
                         <th scope="col">Dairy Address</th>
-                        <th scope="col">Locality</th>
                         <th scope="col">Bank Details</th>
                         <th scope="col">Status</th>
                         <th scope="col">Shop Founding Date</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
-                    <tbody style={{ textAlign: 'center' }}>
+                    <tbody style={{ textAlign: "center" }}>
                       {vendors.length > 0 ? (
                         vendors.map((value, index) => {
-                          console.log('value', value)
+                          console.log("value", value);
                           return (
                             <tr align="center" key={index}>
                               <th scope="row">{index + 1}</th>
@@ -114,40 +113,40 @@ function Vendor() {
                               <td>
                                 <Link
                                   to={{
-                                    pathname: '/vendordetails',
+                                    pathname: "/vendordetails",
                                     state: { vendor: value },
                                   }}
-                                  style={{ color: '#0dcaf0' }}
+                                  style={{ color: "#0dcaf0" }}
                                 >
-                                  <p style={{ fontWeight: 'bold ' }}>
+                                  <p style={{ fontWeight: "bold " }}>
                                     {value?.shop_owner?.name}
                                   </p>
                                 </Link>
                               </td>
                               <td>
-                                <p style={{ fontWeight: 'bold ' }}>
+                                <p style={{ fontWeight: "bold " }}>
                                   {value?.shop_name}
                                 </p>
                               </td>
 
-                              <td>
+                              {/* <td>
                                 {`${
                                   value?.address?.address_line_1
                                     ? `${value?.address?.address_line_1},`
-                                    : ' '
+                                    : " "
                                 }`}
                                 {`${
                                   value?.address?.address_line_2
                                     ? `${value?.address?.address_line_2},`
-                                    : ''
+                                    : ""
                                 }`}
                                 {`${
                                   value?.address?.address_line_3
                                     ? `${value?.address?.address_line_3},`
-                                    : ''
+                                    : ""
                                 }`}
                                 {value?.address?.locality?.locality}
-                              </td>
+                              </td> */}
 
                               <td>{value?.address?.locality?.locality}</td>
                               <td>
@@ -184,8 +183,8 @@ function Vendor() {
                                     <div className="ReviewSure-text">
                                       <h6
                                         style={{
-                                          marginBottom: '1rem',
-                                          marginTop: '2rem',
+                                          marginBottom: "1rem",
+                                          marginTop: "2rem",
                                         }}
                                       >
                                         Are you Sure you want to Delete this
@@ -194,8 +193,8 @@ function Vendor() {
                                       <button
                                         className="btn btn-primary"
                                         onClick={() => {
-                                          handleDelete(value.id)
-                                          close()
+                                          handleDelete(value.id);
+                                          close();
                                         }}
                                       >
                                         Yes
@@ -203,7 +202,7 @@ function Vendor() {
                                       <button
                                         className="btn btn-primary"
                                         onClick={() => {
-                                          close()
+                                          close();
                                         }}
                                       >
                                         No
@@ -213,18 +212,18 @@ function Vendor() {
                                 </Popup>
                               </td>
                             </tr>
-                          )
+                          );
                         })
                       ) : (
                         <>
-                          {' '}
+                          {" "}
                           <tr>
-                            {' '}
+                            {" "}
                             <td colSpan="7">
-                              {' '}
-                              <h2> No record found </h2>{' '}
-                            </td>{' '}
-                          </tr>{' '}
+                              {" "}
+                              <h2> No record found </h2>{" "}
+                            </td>{" "}
+                          </tr>{" "}
                         </>
                       )}
                     </tbody>
@@ -263,17 +262,17 @@ function Vendor() {
                           <th scope="row">{index + 1}</th>
                           <td>Shubham Kumar</td>
                           <td>
-                            <p style={{ fontWeight: 'bold' }}>
+                            <p style={{ fontWeight: "bold" }}>
                               Panchamrat Dairy
                             </p>
                           </td>
                           <td>302BF 27 Sica School Road</td>
-                          <td style={{ color: 'red' }}>Offline</td>
+                          <td style={{ color: "red" }}>Offline</td>
                           <td>
                             <button>Disabled</button>
                           </td>
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
@@ -291,12 +290,12 @@ function Vendor() {
         <div
           style={{
             transform: `translate(-50% -50%)`,
-            backgroundColor: 'white',
+            backgroundColor: "white",
           }}
         ></div>
       </Modal>
     </>
-  )
+  );
 }
 
-export default Vendor
+export default Vendor;
