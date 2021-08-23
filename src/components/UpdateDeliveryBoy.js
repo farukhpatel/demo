@@ -44,6 +44,11 @@ function UpdateDeliveryBoy(props) {
   const [range, setRange] = useState(prop?.delivery_boy?.delivery_range);
   const formSubmit = async (e) => {
     e.preventDefault();
+    let temp = [];
+    selected.forEach((value) => {
+      temp.push(value.value);
+    });
+    let locality_assigned = temp.join();
     let formData = {
       name: name,
       phone: phone,
@@ -55,6 +60,7 @@ function UpdateDeliveryBoy(props) {
       account_holder_name,
       account_number,
       ifsc_code,
+      locality_assigned,
     };
     //DELIVERY_BOYS_UPDATE
     console.log(formData);

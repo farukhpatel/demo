@@ -14,16 +14,20 @@ function LogIn(props) {
   const [device_token, setdevice_token] = useState("");
 
   useEffect(() => {
-    if (window.Notification.permission === "denied") {
-      toast.error("please allow notification permission");
+    if (localStorage.getItem("token")) {
+      props.history.push("/dashboard");
     } else {
-      const messaging = firebase.messaging();
-      messaging.getToken().then((token) => {
-        console.log("token", token);
-        setdevice_token(token);
-      });
+      if (window.Notification.permission === "denied") {
+        toast.error("please allow notification permission");
+      } else {
+        const messaging = firebase.messaging();
+        messaging.getToken().then((token) => {
+          console.log("token", token);
+          setdevice_token(token);
+        });
+      }
+      if (cookie.load("Authorization")) props.history.push("/dashboard");
     }
-    if (cookie.load("Authorization")) props.history.push("/dashboard");
   }, []);
 
   const login = (e) => {

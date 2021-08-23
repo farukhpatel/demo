@@ -140,7 +140,7 @@ function DeliverySlots() {
           <div className="scheduels-container">
             <div>
               <h4>Evening Time</h4>
-              <label for="shopschedulestart">End Time</label>
+              <label for="shopschedulestart">Start Time</label>
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <Grid container justify="space-around">
                   <KeyboardTimePicker
