@@ -66,7 +66,7 @@ function DeliverySlots() {
     instance
       .post(API.SETTING_DELIVERY_SLOTS, Delivery_slot)
       .then(function (response) {
-        toast.success("Delivery Slots Successfully Added.");
+        toast.success(response.message);
         window.location.href = "/settings";
       });
   };
@@ -150,7 +150,6 @@ function DeliverySlots() {
                     ampm={false}
                     value={startTime2}
                     onChange={(e) => {
-                      console.log(e);
                       setStartTime2(e);
                     }}
                     KeyboardButtonProps={{
@@ -182,7 +181,6 @@ function DeliverySlots() {
 
             <div class="form-group">
               <label for="shopscheduleend">Cut Off Time</label>
-              {console.log(eveningCutoff)}
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <Grid container justify="space-around">
                   <KeyboardTimePicker

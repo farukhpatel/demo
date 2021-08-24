@@ -48,7 +48,6 @@ function AddProductForm() {
         });
         if (!error) {
           instance.post(API.CREATE_PRODUCT, body).then(function (response) {
-            console.log("product added");
             toast.success("Successful creation of shop");
             window.location.href = "/productlist";
           });

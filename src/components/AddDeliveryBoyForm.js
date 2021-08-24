@@ -166,7 +166,6 @@ function AddDeliveryBoyForm() {
               </div>
               <div class="form-group">
                 <label for="shopschedule">Select localities</label>
-                {console.log("multi", options)}
                 <MultiSelect
                   options={options}
                   value={selected}

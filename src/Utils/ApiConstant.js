@@ -110,6 +110,11 @@ const API = {
 
   //Refund api
   REFUND_API: Config.BASE_URL + "api/order/refund",
+  //setting
+  GET_REFERRAL_COUPOUN: Config.BASE_URL + "api/admin/get-referral",
+  POST_REFERRAL_COUPOUN: Config.BASE_URL + "api/admin/set-referral",
+  GET_REWARD_COUPOUN: Config.BASE_URL + "api/admin/get-reward",
+  POST_REWARD_COUPOUN: Config.BASE_URL + "api/admin/set-reward",
 };
 
 export default API;

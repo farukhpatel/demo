@@ -25,13 +25,10 @@ function Locality() {
   };
   const searchLocality = (e) => {
     e.preventDefault();
-    console.log(search);
     instance
       .get(`${API.GET_LOCALITY_SEARCH}?locality_name=${search}`)
       .then(function (response) {
-        console.log(response);
         if (response.localities?.length > 0) {
-          console.log(response);
           toast.success(response.message);
           setLocal(response.localities);
           setSearch("");

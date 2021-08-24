@@ -124,7 +124,6 @@ function Coupon() {
   useEffect(() => {
     getCoupons();
     instance.get(API.GET_ALL_SHOP).then((res) => {
-      console.log(res);
       setVendor(res.shop);
     });
   }, []);
@@ -340,7 +339,6 @@ function Coupon() {
                                 className="btn btn-primary"
                                 style={{ cursor: "pointer" }}
                               >
-                                {/* {console.log(coupon.is_active)} */}
                                 {coupon?.is_active === 1
                                   ? "Deactive"
                                   : "Active"}

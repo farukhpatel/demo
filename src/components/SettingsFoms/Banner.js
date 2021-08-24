@@ -23,35 +23,28 @@ function DeliveryCharge() {
 
   useEffect(() => {
     instance.get(API.GET_BANNER_IMG).then((res) => {
-      // console.log('res', res.banner[0].value)
       setGetImageURL(res.banner[0].value.banner);
     });
   }, []);
 
   const form2Submit = async (e) => {
     e.preventDefault();
-    console.log(file);
     if (file.length > 0) {
       for (let i = 0; i < file.length; i++) {
         let formdata = new FormData();
         formdata.append("image", file[i]);
         await instance.post(API.IMAGE_UPLOAD, formdata).then((res) => {
-          // temp.push(res.image_url)
           let tempBannerURL = bannerURL;
           tempBannerURL[i] = res.image_url;
           setBannerURL([...bannerURL, res.image_url]);
         });
       }
-      // setBannerURL(temp)
     } else {
-      alert("please choose file for banner");
+      toast.error("please choose file for banner");
       return;
     }
 
     let temp = [...bannerURL, ...getImageURL];
-
-    console.log("ba", temp);
-
     instance
       .post(API.SETTING_BANNER_IMG, { banner: temp })
       .then(function (response) {
@@ -61,7 +54,6 @@ function DeliveryCharge() {
   };
 
   const multipleBanner = (e) => {
-    // console.log(e.target.files.length)
     let file = [];
     let tempArray = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -89,9 +81,6 @@ function DeliveryCharge() {
   };
   const updateImage = (e) => {
     e.preventDefault();
-    // console.log(getImageURL);
-    // let temp = temp.concat(getImageURL, bannerURL);
-    //{ banner: getImageURL }
     instance
       .post(API.SETTING_BANNER_IMG, { banner: getImageURL })
       .then(function (response) {
