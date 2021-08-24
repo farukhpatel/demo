@@ -97,6 +97,8 @@ const API = {
 
   //notification
   GET_ALL_NOTIFICATIONS: Config.BASE_URL + "api/user/notifications/all",
+  NOTIFICATIONS_AS_READ: Config.BASE_URL + "api/user/notifications/mark-read",
+  NOTIFICATIONS_COUNT: Config.BASE_URL + "api/user/notifications/count",
 
   //Report download
   DOWNLOAD_SALES_REPORT: Config.BASE_URL + "api/order/sales-report",

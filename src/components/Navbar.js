@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./SuperUser.css";
 import cookie from "react-cookies";
-import { Menu } from "@material-ui/core";
+import { Badge, Menu } from "@material-ui/core";
+import instance from "../Utils/axiosConstants";
+import API from "../Utils/ApiConstant";
 
 function Home() {
   const getWindowsSize = () => {
@@ -24,7 +26,6 @@ function Home() {
     function handleResize() {
       setWindowDimensions(getWindowsSize());
     }
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -35,6 +36,13 @@ function Home() {
     setAnchorEl(null);
   };
   const Sidebar = () => {
+    const [notificationCount, setNotificationCount] = useState(0);
+    useEffect(() => {
+      instance.get(API.NOTIFICATIONS_COUNT).then((res) => {
+        setNotificationCount(res.notifications);
+      });
+      // eslint-disable-next-line
+    }, []);
     return (
       <div class="sidebar">
         <div className="headerText" onClick={handleClose}>
@@ -54,11 +62,13 @@ function Home() {
               <i class="fas fa-home"></i>Home
             </a>
           </li>
-          <li>
-            <a href="/notification" onClick={handleClose}>
-              <i class="fas fa-bell"></i>Notification
-            </a>
-          </li>
+          <Badge badgeContent={notificationCount} color="primary">
+            <li>
+              <a href="/notification" onClick={handleClose}>
+                <i class="fas fa-bell"></i>Notification
+              </a>
+            </li>
+          </Badge>
           <li>
             <a href="/user" onClick={handleClose}>
               <i class="far fa-user"></i>User

@@ -354,6 +354,7 @@ function VendorDetails(props) {
                     <tbody>
                       {products?.selling_products?.length > 0 &&
                         products?.selling_products?.map((value, index) => {
+                          console.log("value", value);
                           return (
                             <tr align="center">
                               <th scope="row">{index + 1}</th>

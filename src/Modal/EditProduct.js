@@ -13,11 +13,13 @@ function EditProduct(props) {
   const [editProductData, setEditProductdata] = useState({
     shop_id: props?.shopId,
     product_id: productDetails?.product?.id,
-    product_price: productDetails?.product_price,
+    product_price: productDetails?.original_price,
     original_price: productDetails?.original_price,
     product_discount: productDetails?.product_discount,
     product_daily_stock: productDetails?.product_daily_stock,
     product_approval: "Accepted",
+    product_discount_in_percentage:
+      productDetails?.product_discount_in_percentage,
   });
 
   function handleChange(event) {
@@ -44,7 +46,7 @@ function EditProduct(props) {
           editProductData
         )
         .then(function (response) {
-          toast.success("Product Added Successdully.");
+          toast.success(response.message);
           window.location.href = "/vendordetails";
         });
     }
@@ -87,7 +89,7 @@ function EditProduct(props) {
                         <input
                           type="number"
                           name="product_price"
-                          value={editProductData?.original_price}
+                          defaultValue={editProductData?.original_price}
                           onChange={(event) => handleChange(event)}
                         />
                       </div>
@@ -101,7 +103,9 @@ function EditProduct(props) {
                         <input
                           type="number"
                           name="product_discount"
-                          value={editProductData?.product_discount}
+                          defaultValue={
+                            editProductData?.product_discount_in_percentage
+                          }
                           onChange={(event) => handleChange(event)}
                         />
                       </div>

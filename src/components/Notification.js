@@ -8,6 +8,9 @@ import moment from "moment";
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   useEffect(() => {
+    instance.patch(API.NOTIFICATIONS_AS_READ).then((res) => {
+      // console.log("notification", res);
+    });
     instance.get(API.GET_ALL_NOTIFICATIONS).then((res) => {
       toast.success(res.message);
       setNotifications(res.notifications);
