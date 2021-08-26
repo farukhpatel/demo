@@ -92,7 +92,7 @@ function AddProductForm() {
                   placeholder="Product Image"
                   onChange={(e) => {
                     setProductImage(e.target.files);
-                    setPreview(URL.createObjectURL(e.target.files[0]));
+                    setPreview(URL.createObjectURL(e.target?.files[0]));
                   }}
                 />
               </div>
