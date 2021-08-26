@@ -980,6 +980,7 @@ tbody td button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 1%;
 }
 .payment-form .form-group {
   width: 25%;
@@ -1025,6 +1026,9 @@ th {
   height: 45px;
   font-family: "Poppins";
   background-color: #230132 !important;
+}
+.reivewBtn {
+  width: fit-content;
 }
 .SettlePayBtn {
   width: 100%;
