@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reportWebVitals from "./reportWebVitals";
+import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -16,3 +17,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 reportWebVitals();
+serviceWorker.register();
